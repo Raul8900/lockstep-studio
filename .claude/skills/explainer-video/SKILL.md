@@ -119,8 +119,8 @@ colour, type and motion rules: **reference/design.md**. Sound cues: **reference/
 bin/lockstep build <slug>
 ```
 meta → scan → audio → render → assemble → srt → validate → docs → report, then the verdict.
-A 160 s video takes roughly 15 minutes (render ≈ 2, encode ≈ 6, validation ≈ 5). Run it in the
-background and keep working.
+A 160 s video takes about 17 minutes (scan and audio ≈ 3, render ≈ 2, encode ≈ 6,
+validation ≈ 6). Run it in the background and keep working.
 
 ### 9. Review and fix
 Open `dist/contact_sheet.jpg` and both `dist/mobile_preview_*.jpg`. Work through
