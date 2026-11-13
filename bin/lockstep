@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+# lockstep — one entry point for the whole pipeline.
+# <video> is a folder under videos/ (give its name) or a path to any folder with a video.json.
+set -euo pipefail
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+E="$REPO/engine"
+
+usage() {
+  cat <<'EOF'
+lockstep <command> [<video>] [options]
+
+  setup [--with-asr]            install dependencies and models (scripts/setup.sh)
+  doctor                        report what is installed, change nothing
+  new <slug> ["Title"]          scaffold videos/<slug>/ from the template
+  list                          list video projects
+
+  voice <video> [voice] [speed] record the narration from script.py -> audio/narration_24k.wav, data/words.json
+                                ("voice <video> list" prints the available voices)
+  check-voice <video>           transcribe the narration back and compare with the script (needs --with-asr)
+  captions <video> [--draft]    check caption_phrases.json against the narration, or draft it
+  words <video> [beat]          print every spoken word with its start time (for choosing cues)
+
+  meta <video>                  export data/timeline.json (scenes, captions, sound cues); also proves the scenes load
+  still <video> [--safe] T...   render single frames, e.g. 3.2s 12s 450   -> out/stills/
+  sheet <video> [--cols N] T... render frames and tile them into out/sheet.jpg for review
+  scan <video>                  draw every 2nd frame; report script errors and near-black frames
+  filmstrip <video> A:B[:n]...  rows of consecutive frames from out/frames -> out/filmstrip.jpg (motion check)
+
+  audio <video>                 synthesise score + sound effects and mix with the voice
+  render <video> [--from s] [--to s] [--workers N]   render frames -> out/frames/
+  assemble <video> [--crf 16] [--preset slow] [--remux]   master audio + encode -> dist/<output>.mp4
+  srt <video>                   dist/subtitles.srt
+  validate <video>              technical, sync and layout checks -> data/validation.json, dist/contact_sheet.jpg
+  docs <video>                  docs/narration_script.md and docs/visual_storyboard.md
+  report <video>                docs/production_report.md
+
+  build <video>                 meta -> scan -> audio -> render -> assemble -> srt -> validate -> docs -> report
+  selftest                      scaffold a throw-away video and run the whole pipeline on it
+EOF
+}
+
+resolve() {
+  local a="${1:-}"
+  [ -n "$a" ] || { echo "missing <video> argument" >&2; exit 1; }
+  if [ -f "$a/video.json" ]; then (cd "$a" && pwd)
+  elif [ -f "$REPO/videos/$a/video.json" ]; then echo "$REPO/videos/$a"
+  else echo "no video project '$a' (expected videos/$a/video.json)" >&2; exit 1; fi
+}
+
+cmd="${1:-help}"; [ $# -gt 0 ] && shift
+case "$cmd" in
+  help|-h|--help) usage ;;
+  setup)   exec bash "$REPO/scripts/setup.sh" "$@" ;;
+  doctor)  exec bash "$REPO/scripts/setup.sh" --check ;;
+  new)     exec python3 "$E/new_video.py" "$@" ;;
+  list)    for d in "$REPO"/videos/*/; do [ -f "$d/video.json" ] && basename "$d"; done ;;
+  voice)        V=$(resolve "${1:-}"); shift; python3 "$E/tts/synth.py" "$V" "$@" ;;
+  check-voice)  V=$(resolve "${1:-}"); python3 "$E/tts/asr_check.py" "$V" 2> >(grep -v -e 'Creating a resampler' -e '_sample_rate:' -e '^[[:space:]]*$' >&2) ;;
+  captions)     V=$(resolve "${1:-}"); shift; python3 "$E/make_captions.py" "$V" "$@" ;;
+  words)        V=$(resolve "${1:-}"); shift; python3 "$E/words.py" "$V" "$@" ;;
+  meta)         V=$(resolve "${1:-}"); node "$E/render.js" "$V" meta ;;
+  still)        V=$(resolve "${1:-}"); shift; node "$E/render.js" "$V" still "$@" ;;
+  scan)         V=$(resolve "${1:-}"); node "$E/render.js" "$V" scan ;;
+  sheet)
+    V=$(resolve "${1:-}"); shift
+    COLS=6; if [ "${1:-}" = "--cols" ]; then COLS="$2"; shift 2; fi
+    rm -rf "$V/out/sheet_stills"
+    node "$E/render.js" "$V" still --out "$V/out/sheet_stills" "$@"
+    python3 "$E/sheet.py" "$V/out/sheet_stills/*.jpg" "$V/out/sheet.jpg" "$COLS" 360 ;;
+  filmstrip)    V=$(resolve "${1:-}"); shift; python3 "$E/filmstrip.py" "$V" "$V/out/filmstrip.jpg" "$@" ;;
+  audio)        V=$(resolve "${1:-}"); python3 "$E/audio/make_audio.py" "$V" ;;
+  render)       V=$(resolve "${1:-}"); shift; node "$E/render.js" "$V" video "$@" ;;
+  assemble)     V=$(resolve "${1:-}"); shift; python3 "$E/assemble.py" "$V" "$@" ;;
+  srt)          V=$(resolve "${1:-}"); python3 "$E/make_srt.py" "$V" ;;
+  validate)     V=$(resolve "${1:-}"); shift; python3 "$E/validate.py" "$V" "$@" ;;
+  docs)         V=$(resolve "${1:-}"); python3 "$E/make_docs.py" "$V" ;;
+  report)       V=$(resolve "${1:-}"); python3 "$E/make_report.py" "$V" ;;
+  build)
+    V=$(resolve "${1:-}"); shift
+    [ -f "$V/data/words.json" ] || { echo "no narration yet: run 'lockstep voice $(basename "$V")' first" >&2; exit 1; }
+    if [ "$V/script.py" -nt "$V/data/words.json" ]; then
+      echo "script.py is newer than the recorded narration: run 'lockstep voice $(basename "$V")' first (or touch data/words.json if only notes changed)" >&2; exit 1
+    fi
+    mkdir -p "$V/out"
+    echo "== captions"; python3 "$E/make_captions.py" "$V"
+    echo "== meta";     node "$E/render.js" "$V" meta
+    echo "== scan";     node "$E/render.js" "$V" scan
+    echo "== audio";    python3 "$E/audio/make_audio.py" "$V" | tail -4
+    echo "== render";   node "$E/render.js" "$V" video | tail -1
+    echo "== assemble"; python3 "$E/assemble.py" "$V" "$@" 2>&1 | tr '\r' '\n' | grep -v '^frame=' | tail -2
+    echo "== srt";      python3 "$E/make_srt.py" "$V" | head -1
+    echo "== validate"; python3 "$E/validate.py" "$V" > "$V/out/validate.log" 2>&1 && echo "data/validation.json written" || { tail -5 "$V/out/validate.log"; exit 1; }
+    echo "== docs";     python3 "$E/make_docs.py" "$V"
+    echo "== report";   python3 "$E/make_report.py" "$V"
+    python3 "$E/summary.py" "$V" ;;
+  selftest) exec bash "$REPO/scripts/selftest.sh" "$@" ;;
+  *) echo "unknown command: $cmd" >&2; usage; exit 1 ;;
+esac

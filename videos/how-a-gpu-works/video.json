@@ -1,0 +1,17 @@
+{
+  "title": "How Does a Modern GPU Actually Work Internally?",
+  "tag": "HOW A GPU WORKS",
+  "output": "how_a_gpu_works_vertical",
+  "chapters": [
+    { "id": "hook",         "name": "THE MYTH",        "mood": "drone" },
+    { "id": "cpu_gpu",      "name": "CPU vs GPU",      "mood": "light" },
+    { "id": "dispatch",     "name": "THE HAND-OFF",    "mood": "groove" },
+    { "id": "architecture", "name": "INSIDE THE CHIP", "mood": "build" },
+    { "id": "warps",        "name": "THREADS & WARPS", "mood": "mechanical" },
+    { "id": "inside",       "name": "INSIDE ONE UNIT", "mood": "drive" },
+    { "id": "memory",       "name": "MEMORY",          "mood": "dark" },
+    { "id": "workloads",    "name": "PIXELS & AI",     "mood": "bright" },
+    { "id": "limits",       "name": "THE LIMITS",      "mood": "tense" },
+    { "id": "payoff",       "name": "THE TAKEAWAY",    "mood": "finale" }
+  ]
+}

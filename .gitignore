@@ -1,0 +1,14 @@
+# downloaded models (bin/lockstep setup fetches them)
+/models/
+
+# generated per video: frames, stills, stems, the mix. Rebuilt by `lockstep voice` + `lockstep build`.
+/videos/*/out/
+/videos/*/audio/
+# finished MP4s exceed GitHub's 100 MB file limit; keep them outside git (or attach to a release)
+/videos/*/dist/*.mp4
+/videos/_*/
+
+__pycache__/
+*.pyc
+node_modules/
+.DS_Store

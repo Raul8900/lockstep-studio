@@ -1,0 +1,3122 @@
+[
+{
+"w": "This",
+"t0": 0.3879,
+"t1": 0.5629,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "chip",
+"t0": 0.6379,
+"t1": 0.8379,
+"beat": "hook",
+"take": 0,
+"cls": "k"
+},
+{
+"w": "has",
+"t0": 0.8879,
+"t1": 1.0129,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "over",
+"t0": 1.0379,
+"t1": 1.2379,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "twenty",
+"t0": 1.3129,
+"t1": 1.5879,
+"beat": "hook",
+"take": 0,
+"cls": "n"
+},
+{
+"w": "thousand",
+"t0": 1.6379,
+"t1": 1.9629,
+"beat": "hook",
+"take": 0,
+"cls": "n"
+},
+{
+"w": "cores.",
+"t0": 2.0129,
+"t1": 2.6629,
+"beat": "hook",
+"take": 0,
+"cls": "k"
+},
+{
+"w": "And",
+"t0": 3.1545,
+"t1": 3.2795,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "not",
+"t0": 3.3295,
+"t1": 3.5045,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "one",
+"t0": 3.5545,
+"t1": 3.6545,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "of",
+"t0": 3.6795,
+"t1": 3.7295,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "them",
+"t0": 3.7545,
+"t1": 3.9795,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "can",
+"t0": 4.0295,
+"t1": 4.1795,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "think",
+"t0": 4.2545,
+"t1": 4.4295,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "for",
+"t0": 4.4795,
+"t1": 4.5795,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "itself.",
+"t0": 4.6295,
+"t1": 5.3545,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "That's",
+"t0": 5.8856,
+"t1": 6.1356,
+"beat": "hook",
+"take": 2,
+"cls": null
+},
+{
+"w": "exactly",
+"t0": 6.1606,
+"t1": 6.6606,
+"beat": "hook",
+"take": 2,
+"cls": null
+},
+{
+"w": "why",
+"t0": 6.7106,
+"t1": 6.8606,
+"beat": "hook",
+"take": 2,
+"cls": null
+},
+{
+"w": "it's",
+"t0": 6.8856,
+"t1": 6.9606,
+"beat": "hook",
+"take": 2,
+"cls": null
+},
+{
+"w": "so",
+"t0": 7.0106,
+"t1": 7.1606,
+"beat": "hook",
+"take": 2,
+"cls": null
+},
+{
+"w": "fast.",
+"t0": 7.2106,
+"t1": 7.8606,
+"beat": "hook",
+"take": 2,
+"cls": "n"
+},
+{
+"w": "A",
+"t0": 8.787,
+"t1": 8.837,
+"beat": "cpu_gpu",
+"take": 3,
+"cls": null
+},
+{
+"w": "CPU",
+"t0": 8.912,
+"t1": 9.537,
+"beat": "cpu_gpu",
+"take": 3,
+"cls": "k"
+},
+{
+"w": "is",
+"t0": 9.587,
+"t1": 9.687,
+"beat": "cpu_gpu",
+"take": 3,
+"cls": null
+},
+{
+"w": "built",
+"t0": 9.737,
+"t1": 9.937,
+"beat": "cpu_gpu",
+"take": 3,
+"cls": null
+},
+{
+"w": "for",
+"t0": 9.987,
+"t1": 10.062,
+"beat": "cpu_gpu",
+"take": 3,
+"cls": null
+},
+{
+"w": "decisions.",
+"t0": 10.087,
+"t1": 10.912,
+"beat": "cpu_gpu",
+"take": 3,
+"cls": "k"
+},
+{
+"w": "A",
+"t0": 11.3683,
+"t1": 11.4183,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": null
+},
+{
+"w": "few",
+"t0": 11.4933,
+"t1": 11.6933,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": null
+},
+{
+"w": "brilliant",
+"t0": 11.7683,
+"t1": 12.1183,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": null
+},
+{
+"w": "cores,",
+"t0": 12.1683,
+"t1": 12.8433,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": "k"
+},
+{
+"w": "each",
+"t0": 13.0183,
+"t1": 13.2183,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": null
+},
+{
+"w": "spending",
+"t0": 13.2683,
+"t1": 13.5933,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": null
+},
+{
+"w": "most",
+"t0": 13.6433,
+"t1": 13.8683,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": null
+},
+{
+"w": "of",
+"t0": 13.8933,
+"t1": 13.9433,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": null
+},
+{
+"w": "its",
+"t0": 13.9683,
+"t1": 14.0683,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": null
+},
+{
+"w": "silicon",
+"t0": 14.1183,
+"t1": 14.5933,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": null
+},
+{
+"w": "on",
+"t0": 14.6183,
+"t1": 14.6933,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": null
+},
+{
+"w": "prediction,",
+"t0": 14.7433,
+"t1": 15.4683,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": "k"
+},
+{
+"w": "caching,",
+"t0": 15.6183,
+"t1": 16.1183,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": "k"
+},
+{
+"w": "and",
+"t0": 16.1933,
+"t1": 16.2683,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": null
+},
+{
+"w": "control—",
+"t0": 16.3183,
+"t1": 17.1683,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": "k"
+},
+{
+"w": "to",
+"t0": 17.3183,
+"t1": 17.3933,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": null
+},
+{
+"w": "finish",
+"t0": 17.4433,
+"t1": 17.6933,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": null
+},
+{
+"w": "one",
+"t0": 17.7683,
+"t1": 17.9433,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": null
+},
+{
+"w": "task",
+"t0": 18.0183,
+"t1": 18.4433,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": null
+},
+{
+"w": "as",
+"t0": 18.5183,
+"t1": 18.6183,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": null
+},
+{
+"w": "fast",
+"t0": 18.6933,
+"t1": 18.9683,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": "n"
+},
+{
+"w": "as",
+"t0": 18.9933,
+"t1": 19.0933,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": null
+},
+{
+"w": "possible.",
+"t0": 19.1433,
+"t1": 19.9433,
+"beat": "cpu_gpu",
+"take": 4,
+"cls": null
+},
+{
+"w": "A",
+"t0": 20.6687,
+"t1": 20.7187,
+"beat": "cpu_gpu",
+"take": 5,
+"cls": null
+},
+{
+"w": "GPU",
+"t0": 20.7937,
+"t1": 21.3437,
+"beat": "cpu_gpu",
+"take": 5,
+"cls": "k"
+},
+{
+"w": "makes",
+"t0": 21.3937,
+"t1": 21.6187,
+"beat": "cpu_gpu",
+"take": 5,
+"cls": null
+},
+{
+"w": "the",
+"t0": 21.6437,
+"t1": 21.7187,
+"beat": "cpu_gpu",
+"take": 5,
+"cls": null
+},
+{
+"w": "opposite",
+"t0": 21.7937,
+"t1": 22.1687,
+"beat": "cpu_gpu",
+"take": 5,
+"cls": null
+},
+{
+"w": "bet.",
+"t0": 22.2187,
+"t1": 22.7687,
+"beat": "cpu_gpu",
+"take": 5,
+"cls": null
+},
+{
+"w": "It",
+"t0": 23.1987,
+"t1": 23.3487,
+"beat": "cpu_gpu",
+"take": 6,
+"cls": null
+},
+{
+"w": "strips",
+"t0": 23.3987,
+"t1": 23.6987,
+"beat": "cpu_gpu",
+"take": 6,
+"cls": null
+},
+{
+"w": "most",
+"t0": 23.7487,
+"t1": 23.9987,
+"beat": "cpu_gpu",
+"take": 6,
+"cls": null
+},
+{
+"w": "of",
+"t0": 24.0237,
+"t1": 24.0737,
+"beat": "cpu_gpu",
+"take": 6,
+"cls": null
+},
+{
+"w": "that",
+"t0": 24.1237,
+"t1": 24.2737,
+"beat": "cpu_gpu",
+"take": 6,
+"cls": null
+},
+{
+"w": "cleverness",
+"t0": 24.3237,
+"t1": 24.7237,
+"beat": "cpu_gpu",
+"take": 6,
+"cls": null
+},
+{
+"w": "out,",
+"t0": 24.7737,
+"t1": 25.2487,
+"beat": "cpu_gpu",
+"take": 6,
+"cls": null
+},
+{
+"w": "and",
+"t0": 25.3737,
+"t1": 25.4487,
+"beat": "cpu_gpu",
+"take": 6,
+"cls": null
+},
+{
+"w": "spends",
+"t0": 25.4987,
+"t1": 25.7487,
+"beat": "cpu_gpu",
+"take": 6,
+"cls": null
+},
+{
+"w": "the",
+"t0": 25.7987,
+"t1": 25.8737,
+"beat": "cpu_gpu",
+"take": 6,
+"cls": null
+},
+{
+"w": "silicon",
+"t0": 25.9487,
+"t1": 26.4737,
+"beat": "cpu_gpu",
+"take": 6,
+"cls": null
+},
+{
+"w": "on",
+"t0": 26.5237,
+"t1": 26.6737,
+"beat": "cpu_gpu",
+"take": 6,
+"cls": null
+},
+{
+"w": "raw",
+"t0": 26.7487,
+"t1": 26.9737,
+"beat": "cpu_gpu",
+"take": 6,
+"cls": null
+},
+{
+"w": "arithmetic—",
+"t0": 27.0237,
+"t1": 27.8987,
+"beat": "cpu_gpu",
+"take": 6,
+"cls": "k"
+},
+{
+"w": "copied",
+"t0": 28.0487,
+"t1": 28.3987,
+"beat": "cpu_gpu",
+"take": 6,
+"cls": null
+},
+{
+"w": "thousands",
+"t0": 28.4737,
+"t1": 28.8737,
+"beat": "cpu_gpu",
+"take": 6,
+"cls": null
+},
+{
+"w": "of",
+"t0": 28.8987,
+"t1": 28.9487,
+"beat": "cpu_gpu",
+"take": 6,
+"cls": null
+},
+{
+"w": "times.",
+"t0": 28.9987,
+"t1": 29.7237,
+"beat": "cpu_gpu",
+"take": 6,
+"cls": null
+},
+{
+"w": "It",
+"t0": 30.5681,
+"t1": 30.6681,
+"beat": "dispatch",
+"take": 7,
+"cls": null
+},
+{
+"w": "doesn't",
+"t0": 30.6931,
+"t1": 30.9181,
+"beat": "dispatch",
+"take": 7,
+"cls": null
+},
+{
+"w": "even",
+"t0": 30.9431,
+"t1": 31.1931,
+"beat": "dispatch",
+"take": 7,
+"cls": null
+},
+{
+"w": "run",
+"t0": 31.2431,
+"t1": 31.3931,
+"beat": "dispatch",
+"take": 7,
+"cls": null
+},
+{
+"w": "your",
+"t0": 31.4181,
+"t1": 31.4931,
+"beat": "dispatch",
+"take": 7,
+"cls": null
+},
+{
+"w": "program.",
+"t0": 31.5431,
+"t1": 32.1931,
+"beat": "dispatch",
+"take": 7,
+"cls": null
+},
+{
+"w": "The",
+"t0": 32.4131,
+"t1": 32.4881,
+"beat": "dispatch",
+"take": 7,
+"cls": null
+},
+{
+"w": "CPU",
+"t0": 32.5631,
+"t1": 33.0631,
+"beat": "dispatch",
+"take": 7,
+"cls": "k"
+},
+{
+"w": "does.",
+"t0": 33.1131,
+"t1": 33.6631,
+"beat": "dispatch",
+"take": 7,
+"cls": null
+},
+{
+"w": "It",
+"t0": 34.153,
+"t1": 34.253,
+"beat": "dispatch",
+"take": 8,
+"cls": null
+},
+{
+"w": "copies",
+"t0": 34.303,
+"t1": 34.653,
+"beat": "dispatch",
+"take": 8,
+"cls": null
+},
+{
+"w": "your",
+"t0": 34.678,
+"t1": 34.778,
+"beat": "dispatch",
+"take": 8,
+"cls": null
+},
+{
+"w": "data",
+"t0": 34.828,
+"t1": 35.103,
+"beat": "dispatch",
+"take": 8,
+"cls": "m"
+},
+{
+"w": "into",
+"t0": 35.153,
+"t1": 35.303,
+"beat": "dispatch",
+"take": 8,
+"cls": null
+},
+{
+"w": "the",
+"t0": 35.328,
+"t1": 35.378,
+"beat": "dispatch",
+"take": 8,
+"cls": null
+},
+{
+"w": "GPU's",
+"t0": 35.453,
+"t1": 36.028,
+"beat": "dispatch",
+"take": 8,
+"cls": "k"
+},
+{
+"w": "memory,",
+"t0": 36.078,
+"t1": 36.703,
+"beat": "dispatch",
+"take": 8,
+"cls": "m"
+},
+{
+"w": "then",
+"t0": 36.828,
+"t1": 36.978,
+"beat": "dispatch",
+"take": 8,
+"cls": null
+},
+{
+"w": "sends",
+"t0": 37.053,
+"t1": 37.353,
+"beat": "dispatch",
+"take": 8,
+"cls": null
+},
+{
+"w": "one",
+"t0": 37.428,
+"t1": 37.603,
+"beat": "dispatch",
+"take": 8,
+"cls": null
+},
+{
+"w": "small",
+"t0": 37.653,
+"t1": 37.928,
+"beat": "dispatch",
+"take": 8,
+"cls": null
+},
+{
+"w": "function,",
+"t0": 38.003,
+"t1": 38.503,
+"beat": "dispatch",
+"take": 8,
+"cls": null
+},
+{
+"w": "with",
+"t0": 38.603,
+"t1": 38.703,
+"beat": "dispatch",
+"take": 8,
+"cls": null
+},
+{
+"w": "a",
+"t0": 38.728,
+"t1": 38.778,
+"beat": "dispatch",
+"take": 8,
+"cls": null
+},
+{
+"w": "single",
+"t0": 38.878,
+"t1": 39.203,
+"beat": "dispatch",
+"take": 8,
+"cls": null
+},
+{
+"w": "order:",
+"t0": 39.253,
+"t1": 40.003,
+"beat": "dispatch",
+"take": 8,
+"cls": null
+},
+{
+"w": "run",
+"t0": 40.253,
+"t1": 40.453,
+"beat": "dispatch",
+"take": 8,
+"cls": null
+},
+{
+"w": "this,",
+"t0": 40.503,
+"t1": 40.853,
+"beat": "dispatch",
+"take": 8,
+"cls": null
+},
+{
+"w": "a",
+"t0": 40.978,
+"t1": 41.028,
+"beat": "dispatch",
+"take": 8,
+"cls": null
+},
+{
+"w": "million",
+"t0": 41.103,
+"t1": 41.428,
+"beat": "dispatch",
+"take": 8,
+"cls": "n"
+},
+{
+"w": "times.",
+"t0": 41.478,
+"t1": 42.178,
+"beat": "dispatch",
+"take": 8,
+"cls": null
+},
+{
+"w": "Zoom",
+"t0": 43.1283,
+"t1": 43.3533,
+"beat": "architecture",
+"take": 9,
+"cls": null
+},
+{
+"w": "into",
+"t0": 43.3783,
+"t1": 43.5282,
+"beat": "architecture",
+"take": 9,
+"cls": null
+},
+{
+"w": "the",
+"t0": 43.5532,
+"t1": 43.6033,
+"beat": "architecture",
+"take": 9,
+"cls": null
+},
+{
+"w": "chip,",
+"t0": 43.6782,
+"t1": 44.1283,
+"beat": "architecture",
+"take": 9,
+"cls": "k"
+},
+{
+"w": "and",
+"t0": 44.2533,
+"t1": 44.3282,
+"beat": "architecture",
+"take": 9,
+"cls": null
+},
+{
+"w": "you",
+"t0": 44.3533,
+"t1": 44.4282,
+"beat": "architecture",
+"take": 9,
+"cls": null
+},
+{
+"w": "find",
+"t0": 44.4783,
+"t1": 44.7032,
+"beat": "architecture",
+"take": 9,
+"cls": null
+},
+{
+"w": "one",
+"t0": 44.7533,
+"t1": 44.9282,
+"beat": "architecture",
+"take": 9,
+"cls": null
+},
+{
+"w": "block,",
+"t0": 44.9783,
+"t1": 45.3783,
+"beat": "architecture",
+"take": 9,
+"cls": "k"
+},
+{
+"w": "stamped",
+"t0": 45.5033,
+"t1": 45.8282,
+"beat": "architecture",
+"take": 9,
+"cls": null
+},
+{
+"w": "out",
+"t0": 45.8533,
+"t1": 46.0033,
+"beat": "architecture",
+"take": 9,
+"cls": null
+},
+{
+"w": "again",
+"t0": 46.0282,
+"t1": 46.3032,
+"beat": "architecture",
+"take": 9,
+"cls": null
+},
+{
+"w": "and",
+"t0": 46.3282,
+"t1": 46.4032,
+"beat": "architecture",
+"take": 9,
+"cls": null
+},
+{
+"w": "again.",
+"t0": 46.4282,
+"t1": 47.0532,
+"beat": "architecture",
+"take": 9,
+"cls": null
+},
+{
+"w": "NVIDIA",
+"t0": 47.5973,
+"t1": 48.0473,
+"beat": "architecture",
+"take": 10,
+"cls": null
+},
+{
+"w": "calls",
+"t0": 48.0973,
+"t1": 48.3223,
+"beat": "architecture",
+"take": 10,
+"cls": null
+},
+{
+"w": "it",
+"t0": 48.3473,
+"t1": 48.3973,
+"beat": "architecture",
+"take": 10,
+"cls": null
+},
+{
+"w": "a",
+"t0": 48.4223,
+"t1": 48.4723,
+"beat": "architecture",
+"take": 10,
+"cls": null
+},
+{
+"w": "streaming",
+"t0": 48.5473,
+"t1": 48.9473,
+"beat": "architecture",
+"take": 10,
+"cls": "k"
+},
+{
+"w": "multiprocessor.",
+"t0": 48.9973,
+"t1": 50.1723,
+"beat": "architecture",
+"take": 10,
+"cls": "k"
+},
+{
+"w": "AMD,",
+"t0": 50.3923,
+"t1": 51.0923,
+"beat": "architecture",
+"take": 10,
+"cls": null
+},
+{
+"w": "a",
+"t0": 51.2173,
+"t1": 51.2423,
+"beat": "architecture",
+"take": 10,
+"cls": null
+},
+{
+"w": "compute",
+"t0": 51.2923,
+"t1": 51.6423,
+"beat": "architecture",
+"take": 10,
+"cls": "k"
+},
+{
+"w": "unit.",
+"t0": 51.6923,
+"t1": 52.2423,
+"beat": "architecture",
+"take": 10,
+"cls": "k"
+},
+{
+"w": "A",
+"t0": 52.7778,
+"t1": 52.8278,
+"beat": "architecture",
+"take": 11,
+"cls": null
+},
+{
+"w": "flagship",
+"t0": 52.9028,
+"t1": 53.3528,
+"beat": "architecture",
+"take": 11,
+"cls": null
+},
+{
+"w": "card",
+"t0": 53.4028,
+"t1": 53.7528,
+"beat": "architecture",
+"take": 11,
+"cls": null
+},
+{
+"w": "has",
+"t0": 53.8028,
+"t1": 53.9278,
+"beat": "architecture",
+"take": 11,
+"cls": null
+},
+{
+"w": "a",
+"t0": 53.9528,
+"t1": 53.9778,
+"beat": "architecture",
+"take": 11,
+"cls": null
+},
+{
+"w": "hundred",
+"t0": 54.0278,
+"t1": 54.4028,
+"beat": "architecture",
+"take": 11,
+"cls": "n"
+},
+{
+"w": "and",
+"t0": 54.4528,
+"t1": 54.5278,
+"beat": "architecture",
+"take": 11,
+"cls": null
+},
+{
+"w": "seventy.",
+"t0": 54.6028,
+"t1": 55.3528,
+"beat": "architecture",
+"take": 11,
+"cls": "n"
+},
+{
+"w": "Each",
+"t0": 56.2388,
+"t1": 56.4138,
+"beat": "warps",
+"take": 12,
+"cls": null
+},
+{
+"w": "copy",
+"t0": 56.4637,
+"t1": 56.7638,
+"beat": "warps",
+"take": 12,
+"cls": null
+},
+{
+"w": "of",
+"t0": 56.7888,
+"t1": 56.8387,
+"beat": "warps",
+"take": 12,
+"cls": null
+},
+{
+"w": "that",
+"t0": 56.8888,
+"t1": 57.0388,
+"beat": "warps",
+"take": 12,
+"cls": null
+},
+{
+"w": "function",
+"t0": 57.0887,
+"t1": 57.5138,
+"beat": "warps",
+"take": 12,
+"cls": null
+},
+{
+"w": "is",
+"t0": 57.5637,
+"t1": 57.6388,
+"beat": "warps",
+"take": 12,
+"cls": null
+},
+{
+"w": "a",
+"t0": 57.6638,
+"t1": 57.7137,
+"beat": "warps",
+"take": 12,
+"cls": null
+},
+{
+"w": "thread.",
+"t0": 57.7888,
+"t1": 58.3888,
+"beat": "warps",
+"take": 12,
+"cls": "k"
+},
+{
+"w": "Threads",
+"t0": 58.86,
+"t1": 59.16,
+"beat": "warps",
+"take": 13,
+"cls": "k"
+},
+{
+"w": "are",
+"t0": 59.185,
+"t1": 59.235,
+"beat": "warps",
+"take": 13,
+"cls": null
+},
+{
+"w": "packed",
+"t0": 59.285,
+"t1": 59.535,
+"beat": "warps",
+"take": 13,
+"cls": null
+},
+{
+"w": "into",
+"t0": 59.56,
+"t1": 59.76,
+"beat": "warps",
+"take": 13,
+"cls": null
+},
+{
+"w": "blocks;",
+"t0": 59.81,
+"t1": 60.535,
+"beat": "warps",
+"take": 13,
+"cls": "k"
+},
+{
+"w": "each",
+"t0": 60.685,
+"t1": 60.86,
+"beat": "warps",
+"take": 13,
+"cls": null
+},
+{
+"w": "block",
+"t0": 60.91,
+"t1": 61.16,
+"beat": "warps",
+"take": 13,
+"cls": "k"
+},
+{
+"w": "lands",
+"t0": 61.21,
+"t1": 61.485,
+"beat": "warps",
+"take": 13,
+"cls": null
+},
+{
+"w": "on",
+"t0": 61.51,
+"t1": 61.61,
+"beat": "warps",
+"take": 13,
+"cls": null
+},
+{
+"w": "one",
+"t0": 61.66,
+"t1": 61.81,
+"beat": "warps",
+"take": 13,
+"cls": null
+},
+{
+"w": "unit,",
+"t0": 61.86,
+"t1": 62.335,
+"beat": "warps",
+"take": 13,
+"cls": "k"
+},
+{
+"w": "which",
+"t0": 62.435,
+"t1": 62.585,
+"beat": "warps",
+"take": 13,
+"cls": null
+},
+{
+"w": "slices",
+"t0": 62.66,
+"t1": 63.085,
+"beat": "warps",
+"take": 13,
+"cls": null
+},
+{
+"w": "it",
+"t0": 63.135,
+"t1": 63.21,
+"beat": "warps",
+"take": 13,
+"cls": null
+},
+{
+"w": "into",
+"t0": 63.235,
+"t1": 63.41,
+"beat": "warps",
+"take": 13,
+"cls": null
+},
+{
+"w": "squads",
+"t0": 63.46,
+"t1": 63.81,
+"beat": "warps",
+"take": 13,
+"cls": null
+},
+{
+"w": "of",
+"t0": 63.835,
+"t1": 63.91,
+"beat": "warps",
+"take": 13,
+"cls": null
+},
+{
+"w": "thirty-two,",
+"t0": 63.96,
+"t1": 64.585,
+"beat": "warps",
+"take": 13,
+"cls": "n"
+},
+{
+"w": "called",
+"t0": 64.71,
+"t1": 64.96,
+"beat": "warps",
+"take": 13,
+"cls": null
+},
+{
+"w": "warps.",
+"t0": 65.01,
+"t1": 65.635,
+"beat": "warps",
+"take": 13,
+"cls": "k"
+},
+{
+"w": "Here's",
+"t0": 66.3659,
+"t1": 66.6159,
+"beat": "warps",
+"take": 14,
+"cls": null
+},
+{
+"w": "the",
+"t0": 66.6409,
+"t1": 66.6909,
+"beat": "warps",
+"take": 14,
+"cls": null
+},
+{
+"w": "trick:",
+"t0": 66.7409,
+"t1": 67.1909,
+"beat": "warps",
+"take": 14,
+"cls": null
+},
+{
+"w": "a",
+"t0": 67.3159,
+"t1": 67.3659,
+"beat": "warps",
+"take": 14,
+"cls": null
+},
+{
+"w": "warp",
+"t0": 67.4409,
+"t1": 67.6659,
+"beat": "warps",
+"take": 14,
+"cls": "k"
+},
+{
+"w": "shares",
+"t0": 67.7159,
+"t1": 67.9409,
+"beat": "warps",
+"take": 14,
+"cls": null
+},
+{
+"w": "one",
+"t0": 68.0159,
+"t1": 68.1659,
+"beat": "warps",
+"take": 14,
+"cls": null
+},
+{
+"w": "instruction",
+"t0": 68.1909,
+"t1": 68.6909,
+"beat": "warps",
+"take": 14,
+"cls": "k"
+},
+{
+"w": "stream.",
+"t0": 68.7409,
+"t1": 69.3659,
+"beat": "warps",
+"take": 14,
+"cls": null
+},
+{
+"w": "Each",
+"t0": 69.8775,
+"t1": 70.0525,
+"beat": "warps",
+"take": 15,
+"cls": null
+},
+{
+"w": "instruction",
+"t0": 70.1025,
+"t1": 70.7025,
+"beat": "warps",
+"take": 15,
+"cls": "k"
+},
+{
+"w": "is",
+"t0": 70.7525,
+"t1": 70.8525,
+"beat": "warps",
+"take": 15,
+"cls": null
+},
+{
+"w": "fetched",
+"t0": 70.9025,
+"t1": 71.2275,
+"beat": "warps",
+"take": 15,
+"cls": null
+},
+{
+"w": "once…",
+"t0": 71.2775,
+"t1": 71.9775,
+"beat": "warps",
+"take": 15,
+"cls": null
+},
+{
+"w": "then",
+"t0": 72.1275,
+"t1": 72.2525,
+"beat": "warps",
+"take": 15,
+"cls": null
+},
+{
+"w": "all",
+"t0": 72.3275,
+"t1": 72.5275,
+"beat": "warps",
+"take": 15,
+"cls": null
+},
+{
+"w": "thirty-two",
+"t0": 72.6025,
+"t1": 73.0525,
+"beat": "warps",
+"take": 15,
+"cls": "n"
+},
+{
+"w": "threads",
+"t0": 73.1275,
+"t1": 73.4525,
+"beat": "warps",
+"take": 15,
+"cls": "k"
+},
+{
+"w": "execute",
+"t0": 73.5275,
+"t1": 73.9275,
+"beat": "warps",
+"take": 15,
+"cls": null
+},
+{
+"w": "it",
+"t0": 73.9525,
+"t1": 74.0025,
+"beat": "warps",
+"take": 15,
+"cls": null
+},
+{
+"w": "together,",
+"t0": 74.0525,
+"t1": 74.6275,
+"beat": "warps",
+"take": 15,
+"cls": null
+},
+{
+"w": "each",
+"t0": 74.8025,
+"t1": 75.0275,
+"beat": "warps",
+"take": 15,
+"cls": null
+},
+{
+"w": "on",
+"t0": 75.0525,
+"t1": 75.1275,
+"beat": "warps",
+"take": 15,
+"cls": null
+},
+{
+"w": "its",
+"t0": 75.1525,
+"t1": 75.2525,
+"beat": "warps",
+"take": 15,
+"cls": null
+},
+{
+"w": "own",
+"t0": 75.3025,
+"t1": 75.5025,
+"beat": "warps",
+"take": 15,
+"cls": null
+},
+{
+"w": "data.",
+"t0": 75.5525,
+"t1": 76.1275,
+"beat": "warps",
+"take": 15,
+"cls": "m"
+},
+{
+"w": "Like",
+"t0": 76.7351,
+"t1": 76.8601,
+"beat": "warps",
+"take": 16,
+"cls": null
+},
+{
+"w": "a",
+"t0": 76.8851,
+"t1": 76.9101,
+"beat": "warps",
+"take": 16,
+"cls": null
+},
+{
+"w": "rowing",
+"t0": 76.9601,
+"t1": 77.2601,
+"beat": "warps",
+"take": 16,
+"cls": null
+},
+{
+"w": "crew:",
+"t0": 77.3101,
+"t1": 77.7101,
+"beat": "warps",
+"take": 16,
+"cls": null
+},
+{
+"w": "one",
+"t0": 77.8851,
+"t1": 78.0601,
+"beat": "warps",
+"take": 16,
+"cls": null
+},
+{
+"w": "call,",
+"t0": 78.1101,
+"t1": 78.3601,
+"beat": "warps",
+"take": 16,
+"cls": null
+},
+{
+"w": "thirty-two",
+"t0": 78.4351,
+"t1": 78.8601,
+"beat": "warps",
+"take": 16,
+"cls": "n"
+},
+{
+"w": "oars.",
+"t0": 78.9101,
+"t1": 79.5101,
+"beat": "warps",
+"take": 16,
+"cls": null
+},
+{
+"w": "So",
+"t0": 80.4863,
+"t1": 80.5613,
+"beat": "inside",
+"take": 17,
+"cls": null
+},
+{
+"w": "those",
+"t0": 80.5863,
+"t1": 80.7613,
+"beat": "inside",
+"take": 17,
+"cls": null
+},
+{
+"w": "twenty",
+"t0": 80.8113,
+"t1": 81.0613,
+"beat": "inside",
+"take": 17,
+"cls": "n"
+},
+{
+"w": "thousand",
+"t0": 81.1113,
+"t1": 81.4363,
+"beat": "inside",
+"take": 17,
+"cls": "n"
+},
+{
+"w": "cores",
+"t0": 81.4863,
+"t1": 81.9863,
+"beat": "inside",
+"take": 17,
+"cls": "k"
+},
+{
+"w": "aren't",
+"t0": 82.0613,
+"t1": 82.2113,
+"beat": "inside",
+"take": 17,
+"cls": null
+},
+{
+"w": "tiny",
+"t0": 82.2613,
+"t1": 82.5613,
+"beat": "inside",
+"take": 17,
+"cls": null
+},
+{
+"w": "CPUs.",
+"t0": 82.6113,
+"t1": 83.5113,
+"beat": "inside",
+"take": 17,
+"cls": "k"
+},
+{
+"w": "They're",
+"t0": 83.9246,
+"t1": 84.0496,
+"beat": "inside",
+"take": 18,
+"cls": null
+},
+{
+"w": "lanes",
+"t0": 84.0996,
+"t1": 84.4246,
+"beat": "inside",
+"take": 18,
+"cls": "k"
+},
+{
+"w": "of",
+"t0": 84.4496,
+"t1": 84.4996,
+"beat": "inside",
+"take": 18,
+"cls": null
+},
+{
+"w": "arithmetic,",
+"t0": 84.5496,
+"t1": 85.3496,
+"beat": "inside",
+"take": 18,
+"cls": "k"
+},
+{
+"w": "marching",
+"t0": 85.4996,
+"t1": 85.8746,
+"beat": "inside",
+"take": 18,
+"cls": null
+},
+{
+"w": "in",
+"t0": 85.9246,
+"t1": 85.9746,
+"beat": "inside",
+"take": 18,
+"cls": null
+},
+{
+"w": "lockstep.",
+"t0": 86.0246,
+"t1": 86.7746,
+"beat": "inside",
+"take": 18,
+"cls": "k"
+},
+{
+"w": "Inside",
+"t0": 87.5416,
+"t1": 88.0166,
+"beat": "inside",
+"take": 19,
+"cls": null
+},
+{
+"w": "each",
+"t0": 88.0666,
+"t1": 88.2416,
+"beat": "inside",
+"take": 19,
+"cls": null
+},
+{
+"w": "unit,",
+"t0": 88.2916,
+"t1": 88.7666,
+"beat": "inside",
+"take": 19,
+"cls": "k"
+},
+{
+"w": "a",
+"t0": 88.8916,
+"t1": 88.9416,
+"beat": "inside",
+"take": 19,
+"cls": null
+},
+{
+"w": "scheduler",
+"t0": 89.0166,
+"t1": 89.4666,
+"beat": "inside",
+"take": 19,
+"cls": "k"
+},
+{
+"w": "juggles",
+"t0": 89.5416,
+"t1": 89.9166,
+"beat": "inside",
+"take": 19,
+"cls": null
+},
+{
+"w": "dozens",
+"t0": 89.9916,
+"t1": 90.3416,
+"beat": "inside",
+"take": 19,
+"cls": "n"
+},
+{
+"w": "of",
+"t0": 90.3666,
+"t1": 90.4416,
+"beat": "inside",
+"take": 19,
+"cls": null
+},
+{
+"w": "warps.",
+"t0": 90.4916,
+"t1": 91.1166,
+"beat": "inside",
+"take": 19,
+"cls": "k"
+},
+{
+"w": "Every",
+"t0": 91.6274,
+"t1": 91.8774,
+"beat": "inside",
+"take": 20,
+"cls": null
+},
+{
+"w": "thread",
+"t0": 91.9524,
+"t1": 92.2274,
+"beat": "inside",
+"take": 20,
+"cls": "k"
+},
+{
+"w": "keeps",
+"t0": 92.2774,
+"t1": 92.5024,
+"beat": "inside",
+"take": 20,
+"cls": null
+},
+{
+"w": "its",
+"t0": 92.5274,
+"t1": 92.6274,
+"beat": "inside",
+"take": 20,
+"cls": null
+},
+{
+"w": "registers",
+"t0": 92.6774,
+"t1": 93.1774,
+"beat": "inside",
+"take": 20,
+"cls": "m"
+},
+{
+"w": "right",
+"t0": 93.2524,
+"t1": 93.4524,
+"beat": "inside",
+"take": 20,
+"cls": null
+},
+{
+"w": "on",
+"t0": 93.4774,
+"t1": 93.5524,
+"beat": "inside",
+"take": 20,
+"cls": null
+},
+{
+"w": "the",
+"t0": 93.5774,
+"t1": 93.6274,
+"beat": "inside",
+"take": 20,
+"cls": null
+},
+{
+"w": "chip—",
+"t0": 93.7024,
+"t1": 94.2274,
+"beat": "inside",
+"take": 20,
+"cls": "k"
+},
+{
+"w": "so",
+"t0": 94.3774,
+"t1": 94.5024,
+"beat": "inside",
+"take": 20,
+"cls": null
+},
+{
+"w": "when",
+"t0": 94.5274,
+"t1": 94.6274,
+"beat": "inside",
+"take": 20,
+"cls": null
+},
+{
+"w": "one",
+"t0": 94.6774,
+"t1": 94.8524,
+"beat": "inside",
+"take": 20,
+"cls": null
+},
+{
+"w": "warp",
+"t0": 94.9024,
+"t1": 95.1274,
+"beat": "inside",
+"take": 20,
+"cls": "k"
+},
+{
+"w": "stalls",
+"t0": 95.1774,
+"t1": 95.5024,
+"beat": "inside",
+"take": 20,
+"cls": "w"
+},
+{
+"w": "on",
+"t0": 95.5274,
+"t1": 95.6274,
+"beat": "inside",
+"take": 20,
+"cls": null
+},
+{
+"w": "memory,",
+"t0": 95.6774,
+"t1": 96.2274,
+"beat": "inside",
+"take": 20,
+"cls": "m"
+},
+{
+"w": "another",
+"t0": 96.3774,
+"t1": 96.7274,
+"beat": "inside",
+"take": 20,
+"cls": null
+},
+{
+"w": "takes",
+"t0": 96.7774,
+"t1": 97.0024,
+"beat": "inside",
+"take": 20,
+"cls": null
+},
+{
+"w": "over",
+"t0": 97.0274,
+"t1": 97.2774,
+"beat": "inside",
+"take": 20,
+"cls": null
+},
+{
+"w": "instantly.",
+"t0": 97.3274,
+"t1": 98.3024,
+"beat": "inside",
+"take": 20,
+"cls": null
+},
+{
+"w": "Zero",
+"t0": 98.6024,
+"t1": 98.9274,
+"beat": "inside",
+"take": 20,
+"cls": "n"
+},
+{
+"w": "cost.",
+"t0": 99.0024,
+"t1": 99.6524,
+"beat": "inside",
+"take": 20,
+"cls": null
+},
+{
+"w": "And",
+"t0": 100.55,
+"t1": 100.65,
+"beat": "memory",
+"take": 21,
+"cls": null
+},
+{
+"w": "they",
+"t0": 100.675,
+"t1": 100.775,
+"beat": "memory",
+"take": 21,
+"cls": null
+},
+{
+"w": "stall",
+"t0": 100.825,
+"t1": 101.075,
+"beat": "memory",
+"take": 21,
+"cls": "w"
+},
+{
+"w": "on",
+"t0": 101.1,
+"t1": 101.2,
+"beat": "memory",
+"take": 21,
+"cls": null
+},
+{
+"w": "memory",
+"t0": 101.25,
+"t1": 101.675,
+"beat": "memory",
+"take": 21,
+"cls": "m"
+},
+{
+"w": "a",
+"t0": 101.75,
+"t1": 101.8,
+"beat": "memory",
+"take": 21,
+"cls": null
+},
+{
+"w": "lot.",
+"t0": 101.85,
+"t1": 102.425,
+"beat": "memory",
+"take": 21,
+"cls": null
+},
+{
+"w": "Registers",
+"t0": 103.0149,
+"t1": 103.5399,
+"beat": "memory",
+"take": 22,
+"cls": "m"
+},
+{
+"w": "are",
+"t0": 103.5899,
+"t1": 103.6899,
+"beat": "memory",
+"take": 22,
+"cls": null
+},
+{
+"w": "instant.",
+"t0": 103.7399,
+"t1": 104.4649,
+"beat": "memory",
+"take": 22,
+"cls": null
+},
+{
+"w": "A",
+"t0": 104.7149,
+"t1": 104.7649,
+"beat": "memory",
+"take": 22,
+"cls": null
+},
+{
+"w": "small",
+"t0": 104.8399,
+"t1": 105.1649,
+"beat": "memory",
+"take": 22,
+"cls": null
+},
+{
+"w": "shared",
+"t0": 105.2399,
+"t1": 105.4899,
+"beat": "memory",
+"take": 22,
+"cls": null
+},
+{
+"w": "scratchpad",
+"t0": 105.5399,
+"t1": 106.1149,
+"beat": "memory",
+"take": 22,
+"cls": "m"
+},
+{
+"w": "lets",
+"t0": 106.1649,
+"t1": 106.3649,
+"beat": "memory",
+"take": 22,
+"cls": null
+},
+{
+"w": "threads",
+"t0": 106.4399,
+"t1": 106.7649,
+"beat": "memory",
+"take": 22,
+"cls": "k"
+},
+{
+"w": "in",
+"t0": 106.7899,
+"t1": 106.8399,
+"beat": "memory",
+"take": 22,
+"cls": null
+},
+{
+"w": "a",
+"t0": 106.8649,
+"t1": 106.8899,
+"beat": "memory",
+"take": 22,
+"cls": null
+},
+{
+"w": "block",
+"t0": 106.9399,
+"t1": 107.1899,
+"beat": "memory",
+"take": 22,
+"cls": "k"
+},
+{
+"w": "trade",
+"t0": 107.2399,
+"t1": 107.4649,
+"beat": "memory",
+"take": 22,
+"cls": null
+},
+{
+"w": "results.",
+"t0": 107.4899,
+"t1": 108.2149,
+"beat": "memory",
+"take": 22,
+"cls": null
+},
+{
+"w": "Then",
+"t0": 108.4649,
+"t1": 108.6399,
+"beat": "memory",
+"take": 22,
+"cls": null
+},
+{
+"w": "caches.",
+"t0": 108.7149,
+"t1": 109.5149,
+"beat": "memory",
+"take": 22,
+"cls": "m"
+},
+{
+"w": "Then",
+"t0": 109.9684,
+"t1": 110.1434,
+"beat": "memory",
+"take": 23,
+"cls": null
+},
+{
+"w": "VRAM—",
+"t0": 110.2184,
+"t1": 110.9434,
+"beat": "memory",
+"take": 23,
+"cls": "m"
+},
+{
+"w": "feeding",
+"t0": 111.0934,
+"t1": 111.3434,
+"beat": "memory",
+"take": 23,
+"cls": null
+},
+{
+"w": "a",
+"t0": 111.3684,
+"t1": 111.3934,
+"beat": "memory",
+"take": 23,
+"cls": null
+},
+{
+"w": "flagship",
+"t0": 111.4684,
+"t1": 111.9434,
+"beat": "memory",
+"take": 23,
+"cls": null
+},
+{
+"w": "chip",
+"t0": 111.9934,
+"t1": 112.1934,
+"beat": "memory",
+"take": 23,
+"cls": "k"
+},
+{
+"w": "over",
+"t0": 112.2184,
+"t1": 112.3684,
+"beat": "memory",
+"take": 23,
+"cls": null
+},
+{
+"w": "a",
+"t0": 112.3934,
+"t1": 112.4434,
+"beat": "memory",
+"take": 23,
+"cls": null
+},
+{
+"w": "thousand",
+"t0": 112.5184,
+"t1": 112.8934,
+"beat": "memory",
+"take": 23,
+"cls": "n"
+},
+{
+"w": "gigabytes",
+"t0": 112.9434,
+"t1": 113.4184,
+"beat": "memory",
+"take": 23,
+"cls": "n"
+},
+{
+"w": "every",
+"t0": 113.4684,
+"t1": 113.7184,
+"beat": "memory",
+"take": 23,
+"cls": null
+},
+{
+"w": "second.",
+"t0": 113.7684,
+"t1": 114.4434,
+"beat": "memory",
+"take": 23,
+"cls": null
+},
+{
+"w": "And",
+"t0": 114.995,
+"t1": 115.12,
+"beat": "memory",
+"take": 24,
+"cls": null
+},
+{
+"w": "often,",
+"t0": 115.17,
+"t1": 115.67,
+"beat": "memory",
+"take": 24,
+"cls": null
+},
+{
+"w": "that's",
+"t0": 115.795,
+"t1": 115.995,
+"beat": "memory",
+"take": 24,
+"cls": null
+},
+{
+"w": "still",
+"t0": 116.02,
+"t1": 116.245,
+"beat": "memory",
+"take": 24,
+"cls": null
+},
+{
+"w": "the",
+"t0": 116.27,
+"t1": 116.32,
+"beat": "memory",
+"take": 24,
+"cls": null
+},
+{
+"w": "real",
+"t0": 116.37,
+"t1": 116.595,
+"beat": "memory",
+"take": 24,
+"cls": null
+},
+{
+"w": "speed",
+"t0": 116.645,
+"t1": 116.895,
+"beat": "memory",
+"take": 24,
+"cls": null
+},
+{
+"w": "limit.",
+"t0": 116.945,
+"t1": 117.52,
+"beat": "memory",
+"take": 24,
+"cls": "w"
+},
+{
+"w": "Now",
+"t0": 118.5169,
+"t1": 118.6669,
+"beat": "workloads",
+"take": 25,
+"cls": null
+},
+{
+"w": "it",
+"t0": 118.6919,
+"t1": 118.7419,
+"beat": "workloads",
+"take": 25,
+"cls": null
+},
+{
+"w": "clicks.",
+"t0": 118.7919,
+"t1": 119.4669,
+"beat": "workloads",
+"take": 25,
+"cls": null
+},
+{
+"w": "A",
+"t0": 119.9753,
+"t1": 120.0252,
+"beat": "workloads",
+"take": 26,
+"cls": null
+},
+{
+"w": "4K",
+"t0": 120.1003,
+"t1": 120.5252,
+"beat": "workloads",
+"take": 26,
+"cls": "n"
+},
+{
+"w": "frame",
+"t0": 120.6003,
+"t1": 120.9002,
+"beat": "workloads",
+"take": 26,
+"cls": null
+},
+{
+"w": "is",
+"t0": 120.9502,
+"t1": 121.0752,
+"beat": "workloads",
+"take": 26,
+"cls": null
+},
+{
+"w": "eight",
+"t0": 121.1502,
+"t1": 121.3503,
+"beat": "workloads",
+"take": 26,
+"cls": "n"
+},
+{
+"w": "million",
+"t0": 121.4002,
+"t1": 121.7002,
+"beat": "workloads",
+"take": 26,
+"cls": "n"
+},
+{
+"w": "pixels,",
+"t0": 121.7502,
+"t1": 122.5002,
+"beat": "workloads",
+"take": 26,
+"cls": "k"
+},
+{
+"w": "each",
+"t0": 122.6502,
+"t1": 122.9002,
+"beat": "workloads",
+"take": 26,
+"cls": null
+},
+{
+"w": "running",
+"t0": 122.9502,
+"t1": 123.1753,
+"beat": "workloads",
+"take": 26,
+"cls": null
+},
+{
+"w": "the",
+"t0": 123.2002,
+"t1": 123.2752,
+"beat": "workloads",
+"take": 26,
+"cls": null
+},
+{
+"w": "same",
+"t0": 123.3752,
+"t1": 123.6502,
+"beat": "workloads",
+"take": 26,
+"cls": null
+},
+{
+"w": "small",
+"t0": 123.7253,
+"t1": 124.0503,
+"beat": "workloads",
+"take": 26,
+"cls": null
+},
+{
+"w": "program",
+"t0": 124.1003,
+"t1": 124.5503,
+"beat": "workloads",
+"take": 26,
+"cls": null
+},
+{
+"w": "on",
+"t0": 124.6003,
+"t1": 124.6753,
+"beat": "workloads",
+"take": 26,
+"cls": null
+},
+{
+"w": "different",
+"t0": 124.7253,
+"t1": 124.9753,
+"beat": "workloads",
+"take": 26,
+"cls": null
+},
+{
+"w": "data.",
+"t0": 125.0252,
+"t1": 125.6003,
+"beat": "workloads",
+"take": 26,
+"cls": "m"
+},
+{
+"w": "Perfect.",
+"t0": 125.9002,
+"t1": 126.7002,
+"beat": "workloads",
+"take": 26,
+"cls": "n"
+},
+{
+"w": "A",
+"t0": 127.3562,
+"t1": 127.4062,
+"beat": "workloads",
+"take": 27,
+"cls": null
+},
+{
+"w": "neural",
+"t0": 127.4812,
+"t1": 127.7812,
+"beat": "workloads",
+"take": 27,
+"cls": null
+},
+{
+"w": "network",
+"t0": 127.8312,
+"t1": 128.2062,
+"beat": "workloads",
+"take": 27,
+"cls": null
+},
+{
+"w": "is",
+"t0": 128.2562,
+"t1": 128.3562,
+"beat": "workloads",
+"take": 27,
+"cls": null
+},
+{
+"w": "mostly",
+"t0": 128.4312,
+"t1": 128.8562,
+"beat": "workloads",
+"take": 27,
+"cls": null
+},
+{
+"w": "giant",
+"t0": 128.9312,
+"t1": 129.3062,
+"beat": "workloads",
+"take": 27,
+"cls": null
+},
+{
+"w": "matrix",
+"t0": 129.3562,
+"t1": 129.7312,
+"beat": "workloads",
+"take": 27,
+"cls": "k"
+},
+{
+"w": "multiplications:",
+"t0": 129.7562,
+"t1": 130.9312,
+"beat": "workloads",
+"take": 27,
+"cls": "k"
+},
+{
+"w": "billions",
+"t0": 131.1312,
+"t1": 131.6312,
+"beat": "workloads",
+"take": 27,
+"cls": "n"
+},
+{
+"w": "of",
+"t0": 131.6812,
+"t1": 131.7562,
+"beat": "workloads",
+"take": 27,
+"cls": null
+},
+{
+"w": "identical",
+"t0": 131.8312,
+"t1": 132.3562,
+"beat": "workloads",
+"take": 27,
+"cls": null
+},
+{
+"w": "multiply-adds.",
+"t0": 132.4062,
+"t1": 133.4812,
+"beat": "workloads",
+"take": 27,
+"cls": "k"
+},
+{
+"w": "Also",
+"t0": 133.7812,
+"t1": 134.1062,
+"beat": "workloads",
+"take": 27,
+"cls": null
+},
+{
+"w": "perfect.",
+"t0": 134.1562,
+"t1": 134.9312,
+"beat": "workloads",
+"take": 27,
+"cls": "n"
+},
+{
+"w": "But",
+"t0": 135.8594,
+"t1": 135.9594,
+"beat": "limits",
+"take": 28,
+"cls": null
+},
+{
+"w": "make",
+"t0": 136.0094,
+"t1": 136.1844,
+"beat": "limits",
+"take": 28,
+"cls": null
+},
+{
+"w": "threads",
+"t0": 136.2594,
+"t1": 136.5844,
+"beat": "limits",
+"take": 28,
+"cls": "k"
+},
+{
+"w": "disagree—",
+"t0": 136.6344,
+"t1": 137.3844,
+"beat": "limits",
+"take": 28,
+"cls": "w"
+},
+{
+"w": "half",
+"t0": 137.5594,
+"t1": 137.7594,
+"beat": "limits",
+"take": 28,
+"cls": null
+},
+{
+"w": "branch",
+"t0": 137.8094,
+"t1": 138.0594,
+"beat": "limits",
+"take": 28,
+"cls": null
+},
+{
+"w": "left,",
+"t0": 138.1094,
+"t1": 138.4094,
+"beat": "limits",
+"take": 28,
+"cls": null
+},
+{
+"w": "half",
+"t0": 138.4844,
+"t1": 138.6844,
+"beat": "limits",
+"take": 28,
+"cls": null
+},
+{
+"w": "right—",
+"t0": 138.7344,
+"t1": 139.3094,
+"beat": "limits",
+"take": 28,
+"cls": null
+},
+{
+"w": "and",
+"t0": 139.4344,
+"t1": 139.5094,
+"beat": "limits",
+"take": 28,
+"cls": null
+},
+{
+"w": "half",
+"t0": 139.5594,
+"t1": 139.7594,
+"beat": "limits",
+"take": 28,
+"cls": null
+},
+{
+"w": "the",
+"t0": 139.7844,
+"t1": 139.8344,
+"beat": "limits",
+"take": 28,
+"cls": null
+},
+{
+"w": "squad",
+"t0": 139.8844,
+"t1": 140.2094,
+"beat": "limits",
+"take": 28,
+"cls": null
+},
+{
+"w": "sits",
+"t0": 140.2594,
+"t1": 140.4594,
+"beat": "limits",
+"take": 28,
+"cls": null
+},
+{
+"w": "idle",
+"t0": 140.5344,
+"t1": 140.8344,
+"beat": "limits",
+"take": 28,
+"cls": "w"
+},
+{
+"w": "while",
+"t0": 140.8844,
+"t1": 140.9844,
+"beat": "limits",
+"take": 28,
+"cls": null
+},
+{
+"w": "the",
+"t0": 141.0094,
+"t1": 141.0594,
+"beat": "limits",
+"take": 28,
+"cls": null
+},
+{
+"w": "others",
+"t0": 141.1094,
+"t1": 141.4094,
+"beat": "limits",
+"take": 28,
+"cls": null
+},
+{
+"w": "work.",
+"t0": 141.4594,
+"t1": 142.0344,
+"beat": "limits",
+"take": 28,
+"cls": null
+},
+{
+"w": "Make",
+"t0": 142.6058,
+"t1": 142.7808,
+"beat": "limits",
+"take": 29,
+"cls": null
+},
+{
+"w": "them",
+"t0": 142.8058,
+"t1": 142.9558,
+"beat": "limits",
+"take": 29,
+"cls": null
+},
+{
+"w": "wait",
+"t0": 143.0308,
+"t1": 143.2308,
+"beat": "limits",
+"take": 29,
+"cls": "w"
+},
+{
+"w": "on",
+"t0": 143.2558,
+"t1": 143.3558,
+"beat": "limits",
+"take": 29,
+"cls": null
+},
+{
+"w": "each",
+"t0": 143.3808,
+"t1": 143.5308,
+"beat": "limits",
+"take": 29,
+"cls": null
+},
+{
+"w": "other,",
+"t0": 143.5558,
+"t1": 143.9808,
+"beat": "limits",
+"take": 29,
+"cls": null
+},
+{
+"w": "and",
+"t0": 144.1058,
+"t1": 144.1808,
+"beat": "limits",
+"take": 29,
+"cls": null
+},
+{
+"w": "the",
+"t0": 144.2058,
+"t1": 144.2558,
+"beat": "limits",
+"take": 29,
+"cls": null
+},
+{
+"w": "lanes",
+"t0": 144.3058,
+"t1": 144.6308,
+"beat": "limits",
+"take": 29,
+"cls": "k"
+},
+{
+"w": "go",
+"t0": 144.6808,
+"t1": 144.8058,
+"beat": "limits",
+"take": 29,
+"cls": null
+},
+{
+"w": "quiet.",
+"t0": 144.8558,
+"t1": 145.5058,
+"beat": "limits",
+"take": 29,
+"cls": "w"
+},
+{
+"w": "So",
+"t0": 146.5161,
+"t1": 146.5911,
+"beat": "payoff",
+"take": 30,
+"cls": null
+},
+{
+"w": "a",
+"t0": 146.6161,
+"t1": 146.6411,
+"beat": "payoff",
+"take": 30,
+"cls": null
+},
+{
+"w": "GPU",
+"t0": 146.7161,
+"t1": 147.3161,
+"beat": "payoff",
+"take": 30,
+"cls": "k"
+},
+{
+"w": "isn't",
+"t0": 147.3911,
+"t1": 147.5911,
+"beat": "payoff",
+"take": 30,
+"cls": null
+},
+{
+"w": "a",
+"t0": 147.6161,
+"t1": 147.6411,
+"beat": "payoff",
+"take": 30,
+"cls": null
+},
+{
+"w": "faster",
+"t0": 147.6911,
+"t1": 148.0411,
+"beat": "payoff",
+"take": 30,
+"cls": null
+},
+{
+"w": "CPU.",
+"t0": 148.0911,
+"t1": 148.9161,
+"beat": "payoff",
+"take": 30,
+"cls": "k"
+},
+{
+"w": "It's",
+"t0": 149.3997,
+"t1": 149.5497,
+"beat": "payoff",
+"take": 31,
+"cls": null
+},
+{
+"w": "a",
+"t0": 149.5747,
+"t1": 149.5997,
+"beat": "payoff",
+"take": 31,
+"cls": null
+},
+{
+"w": "machine",
+"t0": 149.6247,
+"t1": 150.0747,
+"beat": "payoff",
+"take": 31,
+"cls": null
+},
+{
+"w": "for",
+"t0": 150.1247,
+"t1": 150.1997,
+"beat": "payoff",
+"take": 31,
+"cls": null
+},
+{
+"w": "doing",
+"t0": 150.2497,
+"t1": 150.4997,
+"beat": "payoff",
+"take": 31,
+"cls": null
+},
+{
+"w": "one",
+"t0": 150.5497,
+"t1": 150.7247,
+"beat": "payoff",
+"take": 31,
+"cls": null
+},
+{
+"w": "thing",
+"t0": 150.7747,
+"t1": 150.9497,
+"beat": "payoff",
+"take": 31,
+"cls": null
+},
+{
+"w": "to",
+"t0": 150.9997,
+"t1": 151.0497,
+"beat": "payoff",
+"take": 31,
+"cls": null
+},
+{
+"w": "an",
+"t0": 151.0747,
+"t1": 151.1497,
+"beat": "payoff",
+"take": 31,
+"cls": null
+},
+{
+"w": "ocean",
+"t0": 151.2247,
+"t1": 151.4747,
+"beat": "payoff",
+"take": 31,
+"cls": null
+},
+{
+"w": "of",
+"t0": 151.4997,
+"t1": 151.5497,
+"beat": "payoff",
+"take": 31,
+"cls": null
+},
+{
+"w": "data,",
+"t0": 151.5997,
+"t1": 152.1497,
+"beat": "payoff",
+"take": 31,
+"cls": "m"
+},
+{
+"w": "all",
+"t0": 152.3497,
+"t1": 152.4747,
+"beat": "payoff",
+"take": 31,
+"cls": null
+},
+{
+"w": "at",
+"t0": 152.4997,
+"t1": 152.5497,
+"beat": "payoff",
+"take": 31,
+"cls": null
+},
+{
+"w": "once.",
+"t0": 152.5997,
+"t1": 153.2247,
+"beat": "payoff",
+"take": 31,
+"cls": null
+},
+{
+"w": "Give",
+"t0": 153.9181,
+"t1": 154.0431,
+"beat": "payoff",
+"take": 32,
+"cls": null
+},
+{
+"w": "it",
+"t0": 154.0681,
+"t1": 154.1181,
+"beat": "payoff",
+"take": 32,
+"cls": null
+},
+{
+"w": "that,",
+"t0": 154.1681,
+"t1": 154.4931,
+"beat": "payoff",
+"take": 32,
+"cls": null
+},
+{
+"w": "and",
+"t0": 154.5931,
+"t1": 154.6681,
+"beat": "payoff",
+"take": 32,
+"cls": null
+},
+{
+"w": "it's",
+"t0": 154.6931,
+"t1": 154.8181,
+"beat": "payoff",
+"take": 32,
+"cls": null
+},
+{
+"w": "unstoppable.",
+"t0": 154.8681,
+"t1": 155.8181,
+"beat": "payoff",
+"take": 32,
+"cls": "n"
+},
+{
+"w": "Give",
+"t0": 156.3361,
+"t1": 156.4611,
+"beat": "payoff",
+"take": 33,
+"cls": null
+},
+{
+"w": "it",
+"t0": 156.4861,
+"t1": 156.5361,
+"beat": "payoff",
+"take": 33,
+"cls": null
+},
+{
+"w": "anything",
+"t0": 156.5861,
+"t1": 156.8611,
+"beat": "payoff",
+"take": 33,
+"cls": null
+},
+{
+"w": "else…",
+"t0": 156.9111,
+"t1": 157.2611,
+"beat": "payoff",
+"take": 33,
+"cls": null
+},
+{
+"w": "and",
+"t0": 157.6111,
+"t1": 157.6861,
+"beat": "payoff",
+"take": 33,
+"cls": null
+},
+{
+"w": "your",
+"t0": 157.7111,
+"t1": 157.8111,
+"beat": "payoff",
+"take": 33,
+"cls": null
+},
+{
+"w": "CPU",
+"t0": 157.8861,
+"t1": 158.4111,
+"beat": "payoff",
+"take": 33,
+"cls": "k"
+},
+{
+"w": "still",
+"t0": 158.4611,
+"t1": 158.6861,
+"beat": "payoff",
+"take": 33,
+"cls": null
+},
+{
+"w": "wins.",
+"t0": 158.7361,
+"t1": 159.3611,
+"beat": "payoff",
+"take": 33,
+"cls": "n"
+}
+]

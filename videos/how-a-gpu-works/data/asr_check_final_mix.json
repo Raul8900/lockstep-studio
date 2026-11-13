@@ -1,0 +1,12 @@
+{
+ "wer_percent": 0.25,
+ "ref_words": 393,
+ "errors": 1,
+ "spacing_variants": [
+  "scratchpad -> scratch pad"
+ ],
+ "timing_matched_words": 356,
+ "timing_median_ms": -110.04397888183881,
+ "timing_mean_abs_ms": 75.42288776592568,
+ "timing_p95_abs_ms": 189.99352111816313
+}

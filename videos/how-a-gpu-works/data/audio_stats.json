@@ -1,0 +1,11 @@
+{
+ "duration_s": 162.051,
+ "voice_rms_while_speaking_db": -14.8,
+ "music_rms_while_speaking_db": -33.1,
+ "sfx_rms_while_speaking_db": -35.2,
+ "bed_rms_while_speaking_db": -31.0,
+ "music_rms_in_pauses_db": -28.6,
+ "premaster_peak_db": -1.5,
+ "sfx_cues": 235,
+ "speech_to_bed_ratio_db": 16.2
+}

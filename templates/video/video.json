@@ -1,0 +1,11 @@
+{
+  "title": "__TITLE__",
+  "tag": "__TAG__",
+  "output": "__OUTPUT__",
+  "max_seconds": 180,
+  "chapters": [
+    { "id": "hook",   "name": "THE QUESTION", "mood": "drone" },
+    { "id": "idea",   "name": "THE IDEA",     "mood": "light" },
+    { "id": "payoff", "name": "THE TAKEAWAY", "mood": "finale" }
+  ]
+}
