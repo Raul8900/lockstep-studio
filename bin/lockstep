@@ -38,6 +38,8 @@ lockstep <command> [<video>] [options]
   words <video> [beat]          print every spoken word with its start time (for choosing cues)
 
  pictures
+  preview <video> [--port 4173] [--host 0.0.0.0]
+                                play and scrub the video in a browser, with audio; reloads itself when files change
   meta <video>                  export data/timeline.json (scenes, captions, sound cues); also proves the scenes load
   still <video> [--safe] T...   render single frames, e.g. 3.2s 12s 450   -> out/stills/
   sheet <video> [--cols N] T... render frames and tile them into out/sheet.jpg for review
@@ -168,6 +170,7 @@ PY
   captions)     V=$(resolve "${1:-}"); shift; python3 "$E/make_captions.py" "$V" "$@" ;;
   words)        V=$(resolve "${1:-}"); shift; python3 "$E/words.py" "$V" "$@" ;;
   meta)         V=$(resolve "${1:-}"); node "$E/render.js" "$V" meta ;;
+  preview)      V=$(resolve "${1:-}"); shift; exec node "$E/render.js" "$V" preview "$@" ;;
   still)        V=$(resolve "${1:-}"); shift; node "$E/render.js" "$V" still "$@" ;;
   scan)         V=$(resolve "${1:-}"); node "$E/render.js" "$V" scan ;;
   sheet)

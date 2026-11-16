@@ -38,6 +38,14 @@ darker, slower style", "chapter 4 is too dense".
 The finished files land in `videos/<slug>/dist/` and `videos/<slug>/docs/`; the decisions are in
 `videos/<slug>/docs/creative_brief.md`.
 
+To watch it take shape, open the live preview: `bin/lockstep preview <slug>` serves the video at
+http://localhost:4173 — play it with the narration, scrub through scenes, words and sound cues,
+step frame by frame — and the page reloads itself, at the same moment, every time a scene, the
+look or a Lottie file is saved. Keys: Space play, ← → one frame, Shift+← → one second, [ ] previous
+and next scene, 1–4 speed, s safe zones, l loop the scene, m sound. `--host 0.0.0.0` opens it to
+your phone on the same network. In Claude Code on the web, the session reports the port so the
+app can show the page.
+
 ## Setup
 
 Needs Python 3.10+, Node 18+ with Playwright and Chromium, FFmpeg, and network access to PyPI and
@@ -112,6 +120,7 @@ bin/lockstep check-voice <video>      transcribe it back and compare with the sc
 bin/lockstep words <video> [beat]     list every spoken word with its time
 bin/lockstep captions <video>         check (or --draft) the caption chunking
 bin/lockstep still|sheet|scan <video> review frames while designing
+bin/lockstep preview <video>          play and scrub in a browser with sound; reloads on every save
 bin/lockstep build <video>            everything from scenes to validated MP4, docs and verdict
 bin/lockstep help                     the full list
 ```

@@ -22,6 +22,7 @@ recognise this as a different video?
 bin/lockstep meta <slug>                          # scenes load, cues resolve
 bin/lockstep sheet <slug> 30s 31s 32s 33.5s 35s   # tile of stills -> out/sheet.jpg
 bin/lockstep still <slug> --safe 33.5s            # full size with keep-out zones -> out/stills/
+bin/lockstep preview <slug>                       # for the person: plays in a browser with sound, follows every save
 ```
 
 Open the image and check, for every still:

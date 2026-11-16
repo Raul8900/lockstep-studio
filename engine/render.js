@@ -35,7 +35,7 @@ const ANIM = path.join(ENGINE, 'anim');
 const ASSETS = path.join(ENGINE, '..', 'assets');
 let STYLE_OVERRIDE = null;      // tile --style file.json: preview a style other than the video's own
 const W = 1080, H = 1920, FPS = 30, CHUNK = 150;
-const MIME = { '.woff2': 'font/woff2', '.ttf': 'font/ttf', '.otf': 'font/otf', '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.css': 'text/css', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml' };
+const MIME = { '.wav': 'audio/wav', '.mp3': 'audio/mpeg', '.m4a': 'audio/mp4', '.woff2': 'font/woff2', '.ttf': 'font/ttf', '.otf': 'font/otf', '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.css': 'text/css', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml' };
 
 const [projArg, mode, ...rest] = process.argv.slice(2);
 if (!projArg || !mode) {
@@ -66,10 +66,11 @@ function manifest() {
   return { scripts };
 }
 
-function startServer() {
-  return new Promise((resolve) => {
+function startServer(opts = {}) {
+  return new Promise((resolve, reject) => {
     const server = http.createServer((req, res) => {
       const url = new URL(req.url, 'http://localhost');
+      if (opts.extra && opts.extra(req, res, url, decodeURIComponent(url.pathname))) return;
       if (req.method === 'POST' && url.pathname === '/frame') {
         const i = parseInt(url.searchParams.get('i'), 10);
         const chunks = [];
@@ -92,14 +93,15 @@ function startServer() {
       const base = isProj ? PROJECT : isAsset ? ASSETS : ANIM;
       let file = path.normalize(path.join(base, isProj ? rel.slice(9) : isAsset ? rel.slice(8) : rel));
       if (rel === '/project/style.json' && STYLE_OVERRIDE) file = STYLE_OVERRIDE;
-      if (!file.startsWith(base) && file !== STYLE_OVERRIDE) { res.writeHead(403); res.end('forbidden'); return; }
+      if (file !== base && !file.startsWith(base + path.sep) && file !== STYLE_OVERRIDE) { res.writeHead(403); res.end('forbidden'); return; }
       fs.readFile(file, (err, data) => {
         if (err) { res.writeHead(404); res.end('not found'); return; }
         res.writeHead(200, { 'Content-Type': MIME[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
         res.end(data);
       });
     });
-    server.listen(0, '127.0.0.1', () => resolve(server));
+    server.on('error', reject);
+    server.listen(opts.port || 0, opts.host || '127.0.0.1', () => resolve(server));
   });
 }
 
@@ -206,6 +208,61 @@ async function lottiesheet(args) {
   }, { lottiesheet: o });
 }
 
+/* preview [--port 4173] [--host 0.0.0.0]: serve preview.html, and tell open pages to reload whenever a
+   file of the video or of the engine changes (generated output is ignored). On a person's own machine it
+   listens on that machine only unless --host 0.0.0.0 (to open it on a phone on the same network); in a
+   cloud session's container, which is isolated, on every interface so the app's preview can reach it. */
+async function preview(args) {
+  let port = 4173, host = process.env.CLAUDE_CODE_REMOTE === 'true' ? '0.0.0.0' : '127.0.0.1';
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--port') port = parseInt(args[++i], 10);
+    else if (args[i] === '--host') host = args[++i];
+  }
+  const clients = new Set();
+  let server;
+  try {
+    server = await startServer({ port, host, extra: (req, res, url, rel) => {
+      if (rel === '/events') {
+        res.writeHead(200, { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-store', Connection: 'keep-alive' });
+        res.write('retry: 1000\n\n');
+        clients.add(res);
+        req.on('close', () => clients.delete(res));
+        return true;
+      }
+      if (rel === '/') { res.writeHead(302, { Location: '/preview.html' }); res.end(); return true; }
+      return false;
+    } });
+  } catch (e) {
+    console.error(e.code === 'EADDRINUSE' ? `port ${port} is busy: is a preview already running? (or use --port N)` : String(e));
+    process.exit(1);
+  }
+  const IGNORE = /(^|\/)(out|dist|docs|candidates|node_modules|__pycache__|\.git)(\/|$)|(^|\/)data\/(timeline|validation|master_report|audio_stats|asr_check)[^/]*$|(^|\/)audio\/(?!mix_premaster\.wav$|narration_24k\.wav$)|~$|\.swp$/;
+  let timer = null;
+  const changed = new Set();
+  const fire = () => {
+    const list = [...changed]; changed.clear();
+    for (const c of clients) c.write(`data: ${JSON.stringify(list)}\n\n`);
+    console.log(`  ${new Date().toLocaleTimeString()}  reload (${clients.size} page${clients.size === 1 ? '' : 's'}): ${list.join(', ')}`);
+  };
+  const watch = (dir, label) => fs.watch(dir, { recursive: true }, (ev, f) => {
+    if (!f) return;
+    const rel = String(f).replace(/\\/g, '/');
+    if (IGNORE.test(rel)) return;
+    changed.add(label + rel);
+    clearTimeout(timer); timer = setTimeout(fire, 250);
+  });
+  watch(PROJECT, '');
+  watch(ANIM, 'engine/anim/');
+  setInterval(() => { for (const c of clients) c.write(': ping\n\n'); }, 20000);
+  console.log(`preview of ${path.basename(PROJECT)}: http://localhost:${port}/preview.html`);
+  if (host === '0.0.0.0' && process.env.CLAUDE_CODE_REMOTE !== 'true') {
+    const nets = Object.values(require('os').networkInterfaces()).flat().filter((n) => n && n.family === 'IPv4' && !n.internal);
+    for (const n of nets) console.log(`  on this network: http://${n.address}:${port}/preview.html`);
+  }
+  console.log('live reload is on: save any scene, style or script data and open pages follow. Ctrl-C to stop.');
+  await new Promise(() => {});
+}
+
 async function scan() {
   await withPage(false, async (page) => {
     const r = await page.evaluate(() => {
@@ -284,6 +341,7 @@ async function video(args) {
   if (mode === 'still') await still(rest);
   else if (mode === 'meta') await meta();
   else if (mode === 'tile') await tile(rest);
+  else if (mode === 'preview') await preview(rest);
   else if (mode === 'lottiesheet') await lottiesheet(rest);
   else if (mode === 'scan') await scan();
   else if (mode === 'bench') await bench(rest);

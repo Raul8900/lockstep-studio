@@ -166,6 +166,15 @@ bin/lockstep scan <slug>                              # draws the whole timeline
 Review a still every 1–2 seconds of each scene plus the moments just before and after each cue,
 at full size where there is small text.
 
+Let the person watch the video take shape: once the first scene draws, start
+`bin/lockstep preview <slug>` in the background (it keeps running) and tell them the address it
+prints (http://localhost:4173). The page plays the video with the narration (the full mix once
+`audio` has run), scrubs on a timeline of scenes, spoken words and sound cues, and reloads itself
+at the same moment whenever a scene, `style.json` or Lottie file is saved; a scene that throws
+shows its error there. In a cloud session, also report the port with the `report_preview_port`
+tool when you have it, so their app can show the page. The preview is for the person — you still
+judge frames with `sheet`, `still` and `scan`.
+
 ### 9. Build
 ```bash
 bin/lockstep build <slug>
