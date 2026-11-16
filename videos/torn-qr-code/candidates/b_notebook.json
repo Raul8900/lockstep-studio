@@ -1,0 +1,22 @@
+{
+  "name": "ballpoint-notebook",
+  "about": "A squared exercise book: white paper with a pale blue grid, ballpoint-blue ink, marker headlines, red-pen corrections and highlighter. Working something out by hand.",
+  "mode": "light",
+  "palette": {
+    "bg": ["#FBFAF4", "#F9F7F0", "#F3F0E6"],
+    "ink": "#1D2333",
+    "subject": "#1F4FCF",
+    "accent": "#C7177A",
+    "data": "#D9820B",
+    "alert": "#D12424",
+    "good": "#1F8749",
+    "panel": "#FFFFFF"
+  },
+  "fonts": { "display": "Permanent Marker", "body": "Patrick Hand", "mono": "Courier Prime" },
+  "backdrop": { "type": "grid", "cell": 48, "color": "subject", "strength": 0.75 },
+  "post": { "vignette": 0.12, "scrim": 0.7 },
+  "captions": { "highlight": "underline", "font": "Patrick Hand", "weight": 400, "size": 86, "strokeW": 12 },
+  "hud": { "type": "line" },
+  "shape": { "radius": 3, "stroke": 2.5, "strokeAlpha": 0.9, "panelAlpha": 0.96, "shadow": { "dx": 0, "dy": 8, "color": "rgba(29,35,51,0.10)" } },
+  "transition": { "duration": 0.7, "default": "slideLeft" }
+}

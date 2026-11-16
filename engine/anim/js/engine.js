@@ -45,11 +45,12 @@ function initCanvases() {
   OVERLAY = makeCanvas(W, H);
   { const g = OVERLAY.getContext('2d');
     const gr = g.createRadialGradient(W / 2, H * 0.46, H * 0.24, W / 2, H / 2, H * 0.66);
-    gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(0.6, 'rgba(0,0,0,0.22)'); gr.addColorStop(1, 'rgba(0,0,0,0.7)');
-    g.fillStyle = gr; g.fillRect(0, 0, W, H);
-    const sc = g.createLinearGradient(0, 1130, 0, 1610);
-    sc.addColorStop(0, 'rgba(3,5,9,0)'); sc.addColorStop(0.32, 'rgba(3,5,9,0.6)'); sc.addColorStop(0.72, 'rgba(3,5,9,0.6)'); sc.addColorStop(1, 'rgba(3,5,9,0)');
-    g.fillStyle = sc; g.fillRect(0, 1130, W, 480); }
+    const vg = STYLE.post.vignette, sa = STYLE.post.scrim, scol = STYLE.post.scrimColor, cy = STYLE.captions.y;
+    gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(0.6, `rgba(0,0,0,${+(0.22 * vg).toFixed(4)})`); gr.addColorStop(1, `rgba(0,0,0,${+(0.7 * vg).toFixed(4)})`);
+    if (vg > 0) { g.fillStyle = gr; g.fillRect(0, 0, W, H); }
+    const sc = g.createLinearGradient(0, cy - 220, 0, cy + 260);
+    sc.addColorStop(0, rgba(scol, 0)); sc.addColorStop(0.32, rgba(scol, sa)); sc.addColorStop(0.72, rgba(scol, sa)); sc.addColorStop(1, rgba(scol, 0));
+    if (sa > 0) { g.fillStyle = sc; g.fillRect(0, cy - 220, W, 480); } }
 
   NOISE = makeCanvas(256, 256);
   { const g = NOISE.getContext('2d'); const id = g.createImageData(256, 256); const r = rng(1234);
@@ -57,12 +58,29 @@ function initCanvases() {
     g.putImageData(id, 0, 0); }
 }
 
-/* ---------- background ---------- */
+/* ---------- background ----------
+   The backdrop is chosen by the style (style.json -> backdrop.type, see backdrops.js).
+   A video can also draw its own: define window.drawBackdrop(ctx, t) in its components.js. */
 function drawBackground(ctx, t) {
+  if (typeof window.drawBackdrop === 'function') { window.drawBackdrop(ctx, t); return; }
+  BACKDROPS[STYLE.backdrop.type](ctx, t, STYLE.backdrop);
+}
+/* fills the frame with the style's vertical gradient, drawn small and scaled up (it is smooth) */
+function backdropBase(ctx) {
+  const q = bgq, QW = W / 4, QH = H / 4;
+  const g = q.createLinearGradient(0, 0, 0, QH);
+  g.addColorStop(0, COL.bgTop); g.addColorStop(0.45, COL.bgMid); g.addColorStop(1, COL.bgBot);
+  q.globalCompositeOperation = 'source-over'; q.globalAlpha = 1;
+  q.fillStyle = g; q.fillRect(0, 0, QW, QH);
+  return q;
+}
+function backdropFlush(ctx) { ctx.imageSmoothingQuality = 'medium'; ctx.drawImage(BGQ, 0, 0, W, H); }
+
+function backdropCircuit(ctx, t) {
   /* gradient + slow colour fog are smooth, so they are drawn at quarter size */
   const q = bgq, QW = W / 4, QH = H / 4;
   const g = q.createLinearGradient(0, 0, 0, QH);
-  g.addColorStop(0, '#05080D'); g.addColorStop(0.45, '#090E17'); g.addColorStop(1, '#04060A');
+  g.addColorStop(0, COL.bgTop); g.addColorStop(0.45, COL.bgMid); g.addColorStop(1, COL.bgBot);
   q.globalCompositeOperation = 'source-over'; q.globalAlpha = 1;
   q.fillStyle = g; q.fillRect(0, 0, QW, QH);
   const fog = [
@@ -146,7 +164,7 @@ function drawPost(ctx, frame) {
   /* fixed low-amplitude dither (about 1.5 code values): hides 8-bit banding in the dark
      gradients. It is static on purpose - animated grain multiplied the bitrate by ~8. */
   ctx.save();
-  ctx.globalAlpha = 0.014;
+  ctx.globalAlpha = STYLE.post.dither;
   ctx.fillStyle = NOISE_PATTERN || (NOISE_PATTERN = ctx.createPattern(NOISE, 'repeat'));
   ctx.fillRect(0, 0, W, H);
   ctx.restore();
@@ -155,6 +173,12 @@ function drawPost(ctx, frame) {
 /* ---------- captions ---------- */
 const CAP = { size: 74, weight: 800, family: F.disp, lineH: 90, maxW: 800, cy: 1350, x: CX };
 const CAP_COL = { k: COL.cyan, n: COL.amber, m: COL.violet, w: COL.coral };
+function initCaptionStyle() {          // after applyStyle
+  const C = STYLE.captions;
+  Object.assign(CAP, { size: C.size, weight: C.weight, family: F[C.font] || C.font, lineH: C.lineH || Math.round(C.size * 1.22), maxW: C.maxW, cy: C.y });
+  Object.assign(CAP_COL, { k: COL.cyan, n: COL.amber, m: COL.violet, w: COL.coral });
+}
+const capColor = (v, fallback) => (v ? (COL[v] || v) : fallback);
 
 function buildCaptions(words, phrases) {
   const caps = []; let wi = 0;
@@ -166,7 +190,8 @@ function buildCaptions(words, phrases) {
     for (const p of parts) {
       const w = words[wi++];
       if (!w || cleanWord(w.w) !== cleanWord(p)) throw new Error(`caption/word mismatch at "${p}" vs "${w && w.w}" (phrase "${ph}")`);
-      const disp = w.w.replace(/[.,;:—…]+$/g, '');
+      let disp = w.w.replace(/[.,;:—…]+$/g, '');
+      if (STYLE.captions.case === 'upper') disp = disp.toUpperCase();
       ws.push({ disp, t0: w.t0, t1: w.t1, cls: w.cls, take: w.take, wdt: mctx.measureText(disp).width });
     }
     /* break into 1 or 2 balanced lines */
@@ -212,6 +237,7 @@ function drawCaptions(ctx, t) {
   ctx.translate(CAP.x, CAP.cy);
   ctx.scale(sc, sc);
   ctx.textBaseline = 'middle'; ctx.textAlign = 'left'; ctx.lineJoin = 'round';
+  if (STYLE.captions.highlight !== 'color') { drawCaptionMarker(ctx, t, c, alpha); ctx.restore(); return; }
   for (let li = 0; li < n; li++) {
     const ln = c.lines[li];
     const y = (li - (n - 1) / 2) * CAP.lineH;
@@ -221,25 +247,89 @@ function drawCaptions(ctx, t) {
       const hit = E.out3(prog(t, w.t0 - 0.03, w.t0 + 0.09));
       const rel = state === 2 ? 1 - prog(t, w.t1 + 0.05, w.t1 + 0.2) : 1;
       const k = state === 0 ? 0 : hit * rel;                              // emphasis 0..1
-      const colr = w.cls ? CAP_COL[w.cls] : COL.white;
-      const a = alpha * (state === 0 ? 0.44 : 1);
+      const C = STYLE.captions, base = capColor(C.fill, COL.white);
+      const colr = w.cls ? CAP_COL[w.cls] : base;
+      const a = alpha * (state === 0 ? C.future : 1);
       const s = 1 + 0.075 * k;
       ctx.save();
       ctx.translate(x + w.wdt / 2, y - 5 * k);
       ctx.scale(s, s);
       ctx.font = fontCSS(CAP.weight, CAP.size, CAP.family);
       ctx.globalAlpha = a;
-      ctx.strokeStyle = 'rgba(3,5,9,0.94)'; ctx.lineWidth = 15; ctx.strokeText(w.disp, -w.wdt / 2, 0);
-      if (state !== 0 && w.cls) {                                         // soft halo on key terms
+      if (C.strokeW > 0) { ctx.strokeStyle = C.stroke; ctx.lineWidth = C.strokeW; ctx.strokeText(w.disp, -w.wdt / 2, 0); }
+      if (C.glow && state !== 0 && w.cls) {                                 // soft halo on key terms
         ctx.shadowColor = rgba(colr, 0.75 * (0.35 + 0.65 * k)); ctx.shadowBlur = 26;
       }
-      ctx.fillStyle = state === 0 ? COL.white : colr;
+      ctx.fillStyle = state === 0 ? base : colr;
       ctx.fillText(w.disp, -w.wdt / 2, 0);
       ctx.restore();
       x += w.wdt + c.space;
     }
   }
   ctx.restore();
+}
+
+/* Box and underline highlights: one marker per phrase that slides from word to word, so two
+   words are never highlighted at once. Drawn in three passes: outlines, marker, fills. */
+function drawCaptionMarker(ctx, t, c, alpha) {
+  const C = STYLE.captions, box = C.highlight === 'box', base = capColor(C.fill, COL.white);
+  const n = c.lines.length, W2 = [];
+  for (let li = 0; li < n; li++) {
+    const ln = c.lines[li], y = (li - (n - 1) / 2) * CAP.lineH;
+    let x = -ln.w / 2;
+    for (const w of ln) { W2.push({ w, cx: x + w.wdt / 2, y }); x += w.wdt + c.space; }
+  }
+  const rect = (i) => {
+    const { w, cx, y } = W2[i];
+    return box ? [cx - w.wdt / 2 - 16, y - CAP.size * 0.6, w.wdt + 32, CAP.size * 1.16] : [cx - w.wdt / 2, y + CAP.size * 0.5, w.wdt, 9];
+  };
+  const mcol = (i) => (W2[i].w.cls ? CAP_COL[W2[i].w.cls] : COL.subject);
+  let ai = -1;
+  for (let i = 0; i < W2.length; i++) if (t >= W2[i].w.t0 - 0.03) ai = i;
+  const m = ai < 0 ? 0 : E.out3(prog(t, W2[ai].w.t0 - 0.03, W2[ai].w.t0 + 0.09));   // 0 = still on the previous word
+  ctx.font = fontCSS(CAP.weight, CAP.size, CAP.family);
+  /* the marker's rectangle (or none before the first word) */
+  let mr = null;
+  if (ai >= 0) {
+    const to = rect(ai), from = ai > 0 ? rect(ai - 1) : to;
+    const r = from.map((v, k) => lerp(v, to[k], m));
+    let grow = 1 + 0.06 * pulse(t, W2[ai].w.t0 + 0.04, 0.05, 0.3), ma = 1;
+    if (ai === 0) { grow *= lerp(0.6, 1, E.outBack(m)); ma = clamp(m * 2); }
+    const cx = r[0] + r[2] / 2, cy = r[1] + r[3] / 2, ww = r[2] * grow, hh = r[3] * (box ? grow : 1);
+    mr = { x: cx - ww / 2, y: cy - hh / 2, w: ww, h: hh, r: box ? C.boxRadius : 4.5, a: ma, col: ai > 0 ? mixHex(mcol(ai - 1), mcol(ai), m) : mcol(ai) };
+  }
+  /* a rounded-rectangle subpath added to the current path (rr() would start a new path) */
+  const sub = (q) => {
+    const r2 = Math.min(q.r, q.w / 2, q.h / 2);
+    ctx.moveTo(q.x + r2, q.y); ctx.arcTo(q.x + q.w, q.y, q.x + q.w, q.y + q.h, r2); ctx.arcTo(q.x + q.w, q.y + q.h, q.x, q.y + q.h, r2);
+    ctx.arcTo(q.x, q.y + q.h, q.x, q.y, r2); ctx.arcTo(q.x, q.y, q.x + q.w, q.y, r2); ctx.closePath();
+  };
+  const outside = box && mr && mr.a > 0.5;           // text inside the box is drawn separately, in the box's text colour
+  const clipOutside = () => { if (outside) { ctx.beginPath(); ctx.rect(-3000, -1500, 6000, 3000); sub(mr); ctx.clip('evenodd'); } };
+  const fill = (w) => (t >= w.t0 - 0.03 && w.cls ? CAP_COL[w.cls] : base);
+  const wordAlpha = (w) => alpha * (t < w.t0 - 0.03 ? C.future : 1);
+
+  /* pass 1: outlines, kept off the box */
+  if (C.strokeW > 0) {
+    ctx.save(); clipOutside();
+    ctx.strokeStyle = C.stroke; ctx.lineWidth = C.strokeW;
+    for (const { w, cx, y } of W2) { ctx.globalAlpha = wordAlpha(w); ctx.strokeText(w.disp, cx - w.wdt / 2, y); }
+    ctx.restore();
+  }
+  /* pass 2: the marker */
+  if (mr) { ctx.globalAlpha = alpha * mr.a; fillRR(ctx, mr.x, mr.y, mr.w, mr.h, mr.r, mr.col); }
+  /* pass 3: the words, outside the box */
+  ctx.save(); clipOutside();
+  for (const { w, cx, y } of W2) { ctx.globalAlpha = wordAlpha(w); ctx.fillStyle = fill(w); ctx.fillText(w.disp, cx - w.wdt / 2, y); }
+  ctx.restore();
+  /* pass 4: whatever part of the words the box covers, in the box's text colour */
+  if (outside) {
+    ctx.save(); ctx.beginPath(); sub(mr); ctx.clip();
+    ctx.fillStyle = capColor(C.boxText, COL.onAccent);
+    for (const { w, cx, y } of W2) { ctx.globalAlpha = alpha * mr.a; ctx.fillText(w.disp, cx - w.wdt / 2, y); }
+    ctx.restore();
+  }
+  ctx.globalAlpha = 1;
 }
 
 /* ---------- HUD: chapter progress ---------- */
@@ -250,6 +340,13 @@ function chapterName(id) {
   return (b ? b.title : id).toUpperCase();
 }
 function drawHUD(ctx, t) {
+  const HS = STYLE.hud;
+  if (HS.type === 'none') return;
+  if (HS.type === 'line') {            // one thin progress line, no labels
+    fillRR(ctx, SAFE.l, 292, SAFE.r - SAFE.l, 5, 2.5, HS.track);
+    fillRR(ctx, SAFE.l, 292, Math.max(5, (SAFE.r - SAFE.l) * clamp(t / DATA.dur)), 5, 2.5, COL.cyan);
+    return;
+  }
   const x0 = SAFE.l, x1 = SAFE.r, y = 292, gap = 8, n = SCENES.length;
   const total = DATA.dur, usable = x1 - x0 - gap * (n - 1);
   let x = x0, cur = 0;
@@ -257,8 +354,8 @@ function drawHUD(ctx, t) {
     const s = SCENES[i], wdt = usable * (s.t1 - s.t0) / total;
     const p = prog(t, s.t0, s.t1);
     if (t >= s.t0) cur = i;
-    fillRR(ctx, x, y, wdt, 5, 2.5, 'rgba(210,228,250,0.16)');
-    if (p > 0) fillRR(ctx, x, y, Math.max(5, wdt * p), 5, 2.5, p >= 1 ? 'rgba(220,235,255,0.6)' : COL.cyan);
+    fillRR(ctx, x, y, wdt, 5, 2.5, HS.track);
+    if (p > 0) fillRR(ctx, x, y, Math.max(5, wdt * p), 5, 2.5, p >= 1 ? HS.done : COL.cyan);
     x += wdt + gap;
   }
   const s = SCENES[cur];
@@ -270,8 +367,8 @@ function drawHUD(ctx, t) {
 }
 
 /* ---------- scenes + transitions ---------- */
-const TR = 0.84;     // transition length (s)
-function addScene(id, draw, trans = { type: 'fade' }) { SCENES.push({ id, draw, trans }); }
+let TR = 0.84;       // transition length (s); style.json -> transition.duration
+function addScene(id, draw, trans = { type: STYLE.transition.default }) { SCENES.push({ id, draw, trans }); }
 
 function finalizeScenes() {
   if (!SCENES.length) throw new Error('no scenes registered: every scenes/*.js must call addScene(beatId, draw, transition)');
@@ -335,6 +432,22 @@ function renderScenes(ctx, t) {
       blit(ctx, LAYER_A, { alpha: 1 - prog(p, 0.2, 0.8), dy: e * (tr.d || 620) });
       blit(ctx, LAYER_B, { alpha: prog(p, 0.2, 0.8), dy: -(1 - e) * (tr.d || 620) });
       break;
+    case 'cut':        // hard cut on the boundary
+      ctx.drawImage(p < 0.5 ? LAYER_A : LAYER_B, 0, 0);
+      break;
+    case 'slideLeft':  // B pushes A out to the left
+      blit(ctx, LAYER_A, { dx: -e * W }); blit(ctx, LAYER_B, { dx: (1 - e) * W });
+      break;
+    case 'slideRight':
+      blit(ctx, LAYER_A, { dx: e * W }); blit(ctx, LAYER_B, { dx: -(1 - e) * W });
+      break;
+    case 'flash': {    // cut hidden under a quick flash of the ink colour
+      ctx.drawImage(p < 0.5 ? LAYER_A : LAYER_B, 0, 0);
+      const f = 1 - Math.abs(p - 0.5) * 2;
+      ctx.save(); ctx.globalAlpha = 0.85 * f * f * f; ctx.fillStyle = tr.color ? (COL[tr.color] || tr.color) : COL.white; ctx.fillRect(0, 0, W, H); ctx.restore();
+      break;
+    }
+    case 'fade':
     default:
       blit(ctx, LAYER_A, { alpha: 1 - prog(p, 0.1, 0.7) });
       blit(ctx, LAYER_B, { alpha: prog(p, 0.3, 0.9) });
@@ -348,7 +461,7 @@ function renderFrame(i) {
   mctx.globalAlpha = 1; mctx.globalCompositeOperation = 'source-over';
   drawBackground(mctx, t);
   renderScenes(mctx, t);
-  applyBloom(mctx, MAIN, 1);
+  if (STYLE.post.bloom > 0) applyBloom(mctx, MAIN, STYLE.post.bloom);
   drawPost(mctx, i);
   drawHUD(mctx, t);
   drawCaptions(mctx, t);
@@ -366,19 +479,46 @@ function drawSafeGuides(ctx) {
   ctx.restore();
 }
 
+const TRANSITIONS = ['fade', 'cut', 'zoomIn', 'zoomOut', 'panDown', 'panUp', 'slideLeft', 'slideRight', 'flash'];
+let ICONS = {};
+
+/* fonts: families shipped in assets/fonts are registered from there; anything else must be installed on the system */
+async function loadFonts(opt) {
+  const idx = (await opt('assets/fonts/index.json')) || {};
+  const fams = [...new Set([F.disp, F.ui, F.mono, CAP.family])];
+  for (const fam of fams) {
+    const files = idx[fam];
+    if (files) {
+      /* a family with one weight claims the whole range, so asking it for 900 does not trigger a faked bold */
+      const wt = (f) => (files.length === 1 ? '100 900' : String(f.weight));
+      await Promise.all(files.map((f) => new FontFace(fam, `url(assets/fonts/${f.file})`, { weight: wt(f), style: f.style || 'normal' }).load().then((x) => document.fonts.add(x))));
+    }
+    await Promise.all([400, 500, 600, 700, 800, 900].map((w) => document.fonts.load(`${w} 30px "${fam}"`)));
+  }
+}
+
 async function boot() {
-  initCanvases();
   const get = (u) => fetch(u).then((r) => { if (!r.ok) throw new Error(u + ' ' + r.status); return r.json(); });
-  const [video, words, takes, phrases] = await Promise.all([get('project/video.json'), get('project/data/words.json'), get('project/data/takes.json'), get('project/caption_phrases.json')]);
-  VIDEO = video;
-  DATA.words = words; DATA.takes = takes.takes; DATA.beats = takes.beats; DATA.meta = takes.meta; DATA.dur = takes.meta.duration;
-  const faces = ['800 74px "Inter Display"', '900 74px "Inter Display"', '700 30px "Inter Display"', '600 30px "Inter"', '700 30px "Inter"', '500 30px "Inter"',
-    '700 30px "JetBrains Mono"', '500 30px "JetBrains Mono"', '800 30px "JetBrains Mono"', '600 30px "JetBrains Mono"'];
-  await Promise.all(faces.map((f) => document.fonts.load(f)));
-  CAPS = buildCaptions(words, phrases);
-  if (window.defineScenes) window.defineScenes();
+  const opt = (u) => fetch(u).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  VIDEO = await get('project/video.json');
+  applyStyle(await opt('project/style.json'));
+  if (!BACKDROPS[STYLE.backdrop.type] && typeof window.drawBackdrop !== 'function') throw new Error(`style.json: unknown backdrop type "${STYLE.backdrop.type}"; choose from: ${Object.keys(BACKDROPS).join(', ')} (or define window.drawBackdrop in components.js)`);
+  if (!TRANSITIONS.includes(STYLE.transition.default)) throw new Error(`style.json: unknown default transition "${STYLE.transition.default}"`);
+  TR = STYLE.transition.duration;
+  initCaptionStyle();
+  await loadFonts(opt);
+  initCanvases();
+  ICONS = (await opt('assets/icons/lucide.json')) || {};
+  if (window.TILE_MODE) {
+    setupTile();
+  } else {
+    const [words, takes, phrases] = await Promise.all([get('project/data/words.json'), get('project/data/takes.json'), get('project/caption_phrases.json')]);
+    DATA.words = words; DATA.takes = takes.takes; DATA.beats = takes.beats; DATA.meta = takes.meta; DATA.dur = takes.meta.duration;
+    CAPS = buildCaptions(words, phrases);
+    if (window.defineScenes) window.defineScenes();
+  }
   finalizeScenes();
-  for (const s of SCENES) if (s.init) s.init();
+  for (const s of SCENES) if (!TRANSITIONS.includes((s.trans || {}).type)) throw new Error(`scene ${s.id}: unknown transition type "${(s.trans || {}).type}"; choose from: ${TRANSITIONS.join(', ')}`);
   SFX.sort((a, b) => a.t - b.t);
   window.TOTAL_FRAMES = Math.round(DATA.dur * FPS);
   window.READY = true;

@@ -1,0 +1,32 @@
+[
+ "I just tore a chunk", "off this QR code.", "It still scans.",
+ "That's because", "most of it isn't", "your message at all.",
+
+ "So what's the rest?", "A backup copy?",
+ "Smudge one letter,", "and the two copies", "disagree.",
+ "Which one's right?", "Copies can't tell you.",
+ "Reed-Solomon codes,", "from 1960,", "do something smarter.",
+
+ "Say your message", "is just two numbers.",
+ "Two dots fix", "exactly one line.",
+ "Now add extra dots", "on that same line.",
+ "Tear any two away:", "the survivors", "still fix the line,", "and it puts", "the missing dots back.",
+
+ "But a scanner", "can't see holes.",
+ "To a scanner,", "a tear looks like", "a wrong number.",
+ "So which dot", "is lying?", "The one that's", "off the line.",
+ "Every liar costs", "two extra dots:", "one finds it,", "one fixes it.",
+
+ "A QR code", "does the same trick,", "with bytes.",
+ "This one has", "twenty-six bytes.", "Nine are your message.", "Seventeen are", "extra points.",
+ "At two per liar,", "it can fix any eight.", "About thirty percent.",
+ "That's why a logo", "can sit in the middle.", "It's damage,", "on purpose.",
+
+ "The catch:", "that's thirty percent", "of the bytes,", "not of the paper.",
+ "These three", "corner squares", "aren't protected at all.", "They're how the scanner", "finds the code.",
+ "Tear into one,", "and this code", "won't scan.",
+
+ "That first tear?", "It took six", "of the nine", "message bytes.",
+ "The extra points", "rebuilt every one.",
+ "A torn QR code", "isn't lucky.", "It was built", "expecting to be torn."
+]

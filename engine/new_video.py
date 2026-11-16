@@ -1,9 +1,13 @@
 """Scaffold a new video project from templates/video.
 
-  python3 engine/new_video.py <slug> ["Title"] [--into DIR]
+  python3 engine/new_video.py <slug> ["Title"] [--into DIR] [--example]
 
-Creates videos/<slug>/ (or DIR/<slug>/). The template is a complete, runnable 20-second
-video, so the pipeline can be exercised before any of it is rewritten.
+Creates videos/<slug>/ (or DIR/<slug>/) from templates/video: a complete, runnable 18-second
+video whose script, scenes and storyboard are examples to replace.
+
+The new video starts with a blank docs/creative_brief.md and no style.json: its creative
+direction has to be decided before `lockstep voice` and `lockstep build` will run.
+--example keeps the template's own filled brief and style (used by scripts/selftest.sh).
 """
 import re
 import shutil
@@ -14,6 +18,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import REPO  # noqa: E402
 
 args = sys.argv[1:]
+example = "--example" in args
+if example:
+    args.remove("--example")
 into = REPO / "videos"
 if "--into" in args:
     i = args.index("--into")
@@ -35,6 +42,9 @@ if len(tag) > 18:
     tag = tag[:18].rsplit(" ", 1)[0]
 
 shutil.copytree(REPO / "templates/video", dest)
+if not example:
+    shutil.copy(REPO / "templates/creative_brief.md", dest / "docs/creative_brief.md")
+    (dest / "style.json").unlink()
 for p in dest.rglob("*"):
     if p.is_file() and p.suffix in (".json", ".py", ".md", ".js"):
         s = p.read_text(encoding="utf-8")
@@ -45,14 +55,12 @@ for p in dest.rglob("*"):
 rel = dest.relative_to(REPO) if dest.is_relative_to(REPO) else dest
 print(f"""created {rel}/
 
-  video.json             title, chapter names, music mood per chapter
-  script.py              the narration (beats -> takes), caption highlight words
-  caption_phrases.json   how the burned-in captions are chunked
-  scenes/sNN_<beat>.js   one animated scene per beat
-  components.js          drawing code shared by several scenes of this video
-  storyboard.py          per-sequence notes for docs/visual_storyboard.md
-  docs/sources.md        research and citations      docs/report_notes.md   accuracy review, QA notes
+First decide how this topic should be told and how it should look; nothing is recorded until then.
+  1. research the topic             -> docs/sources.md
+  2. creative direction             -> docs/creative_brief.md (blank, every section to fill)
+                                       style.json (lockstep styles · tile · palettes · fonts · icons)
+  3. lockstep brief {slug}  -> confirms both are complete; voice and build refuse until it passes
 
-The template is runnable as it stands:
-  bin/lockstep voice {slug} && bin/lockstep build {slug}
+The script, scenes, storyboard and captions in the folder belong to the template's example video
+(about the timing rule this engine is built on): replace them once the brief is written.
 """)

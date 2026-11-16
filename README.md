@@ -9,14 +9,18 @@ services.
 - **Method:** the narration is recorded first. The voice model reports when each word is spoken,
   and every animation, sound effect and caption looks its time up by spoken word. Picture and
   voice stay in lockstep because there is only one clock.
+- **Directed, not templated:** every video gets its own story shape, pacing, visual world and
+  look, decided from the topic in a written creative brief that compares several directions. The
+  tools refuse to record narration or build until that brief and the video's `style.json` exist.
 - **Made to be driven by Claude Code:** the repository carries a skill that holds the whole
-  production process. You ask for a video; it researches, writes, records, animates, mixes,
-  renders and checks it.
+  production process. You ask for a video; it researches, directs, writes, records, animates,
+  mixes, renders and checks it.
+
+![The library of looks so far](styles/previews/_all.jpg)
 
 The reference production, [`videos/how-a-gpu-works/`](videos/how-a-gpu-works/), is a 162-second
-video built this way: 390 spoken words, 10 chapters, 34 storyboard sequences, 235 sound cues.
-
-![Frames from the reference video](videos/how-a-gpu-works/dist/contact_sheet.jpg)
+video: 390 spoken words, 10 chapters, 235 sound cues. It predates creative direction — one fixed
+look, one default arc — and its brief records what a directed version would change.
 
 ## Make a video
 
@@ -24,11 +28,15 @@ Open the repository in Claude Code (terminal, desktop, or claude.ai/code) and as
 
 > Make an explainer video about how mRNA vaccines work.
 
-The `explainer-video` skill takes it from there. Useful things to add to the request: target
-length (default 150–170 s), audience, anything that must or must not be covered, a preferred
-voice. To revise: "in the vaccine video, make the hook punchier" or "chapter 4 is too dense".
+The `explainer-video` skill takes it from there: research, then creative direction (angle, three
+competing directions, hooks, story shape, pacing, visual world, a look designed and previewed
+against an alternative), then script, voice, scenes, sound, render and QA. Useful things to add to
+the request: length, audience, tone, a look you have in mind ("chalkboard", "loud poster"),
+anything that must or must not be covered. To revise: "make the hook punchier", "try it in a
+darker, slower style", "chapter 4 is too dense".
 
-The finished files land in `videos/<slug>/dist/` and `videos/<slug>/docs/`.
+The finished files land in `videos/<slug>/dist/` and `videos/<slug>/docs/`; the decisions are in
+`videos/<slug>/docs/creative_brief.md`.
 
 ## Setup
 
@@ -63,6 +71,10 @@ if [ -d lockstep-studio ]; then (cd lockstep-studio && bash scripts/setup.sh --w
 ## How it works
 
 ```
+topic ─► research ─► creative brief + style.json ─► script.py ─► …
+```
+
+```
 script.py ──► voice ──► words.json (every word, to 25 ms) ──┬─► scenes/*.js ──► frames ──┐
                 │                                           ├─► captions                 ├─► MP4
                 │                                           └─► sound cues ─► score+mix ─┘
@@ -71,10 +83,12 @@ script.py ──► voice ──► words.json (every word, to 25 ms) ──┬�
 
 | Stage | How |
 |---|---|
+| Direction | A creative brief per video (audience, angle, three directions, hooks, story shape, pacing, visual world, look, sound, risks), gated by `lockstep brief`. Story formats and art direction guides in the skill. |
+| Look | `style.json` per video: palette roles, fonts, backdrop, caption treatment, progress bar, card shapes, transition grammar. Legibility checked by `lockstep style-check`, previewed by `lockstep tile`. |
 | Voice | Kokoro-82M text-to-speech, run locally. The ONNX graph is patched to output its phoneme durations, so word timings are exact rather than estimated. |
 | Animation | HTML Canvas 2D. Each scene is a JavaScript function of time; cues are `at('beat', 'word')`. |
 | Rendering | Headless Chromium draws every frame deterministically across four workers (≈ 40 fps). |
-| Music and sound | Synthesised in NumPy: pads, bass, arpeggio and drums arranged per chapter; 24 sound-effect types triggered by the scenes at the same cues as the picture. |
+| Music and sound | Synthesised in NumPy: pads, bass, arpeggio and drums arranged per chapter, with tempo, key and one of five instrument kits chosen per video; 24 sound-effect types triggered by the scenes at the same cues as the picture. |
 | Mix and master | Voice processing, ducking under speech, look-ahead limiter, −14 LUFS. |
 | Encode | FFmpeg libx264 (CRF 16, BT.709), AAC 256 kbps, streamable MP4. |
 | QA | Stream facts, full decode, black-frame and freeze detection, SSIM against the rendered frames, loudness, audio/picture sync, speech recognition on the final mix, caption geometry, contact sheet and phone-size previews. |
@@ -83,6 +97,12 @@ script.py ──► voice ──► words.json (every word, to 25 ms) ──┬�
 
 ```
 bin/lockstep new <slug> ["Title"]     scaffold videos/<slug>/ from the template
+bin/lockstep styles                   preview the library of looks
+bin/lockstep tile <video> [a.json…]   preview a look, or candidate looks side by side
+bin/lockstep palettes|fonts|icons     browse the open-licence asset library
+bin/lockstep style-check <video>      legibility of a look
+bin/lockstep brief <video>            is the creative direction complete? (voice and build need it)
+bin/lockstep save-style <video> name  add a video's look to the library
 bin/lockstep voice <video>            record the narration, extract word timings
 bin/lockstep check-voice <video>      transcribe it back and compare with the script
 bin/lockstep words <video> [beat]     list every spoken word with its time
@@ -97,15 +117,18 @@ bin/lockstep help                     the full list
 ```
 bin/lockstep                 command-line entry point
 engine/                      renderer, voice, score and mix, encode, QA — shared by all videos
-templates/video/             starter project copied by `lockstep new`
-videos/<slug>/               one folder per video (sources, data, docs, dist)
+templates/video/             starter project copied by `lockstep new` (light "studio-grid" look)
+templates/creative_brief.md  the blank brief every new video starts from
+styles/                      the library of looks, with previews
+assets/                      open-licence fonts (33 families), icons (2,359) and palettes (1,000+)
+videos/<slug>/               one folder per video (brief, style, sources, data, docs, dist)
 .claude/skills/explainer-video/   the production process Claude follows
 scripts/setup.sh  selftest.sh
 ```
 
-A video's own files are small and readable: `script.py` (narration), `scenes/*.js` (one per
-chapter), `video.json` (chapter names and music moods), `caption_phrases.json`, `storyboard.py`,
-`docs/sources.md`.
+A video's own files are small and readable: `docs/creative_brief.md` (the direction), `style.json`
+(the look), `script.py` (narration), `scenes/*.js` (one per chapter), `video.json` (chapters,
+music), `caption_phrases.json`, `storyboard.py`, `docs/sources.md`.
 
 ## What is and is not in git
 
@@ -126,14 +149,21 @@ give byte-identical frames.
 ## Limits
 
 - English narration only, with the voices that ship with the model.
-- One visual style (dark, glowing line art). It is tuned for phone screens and for the encoder;
-  restyling means editing `engine/anim/js/`.
+- Visuals are drawn by code: vector shapes, type, line icons, hand-drawn strokes, 2.5D, particles.
+  No photographs, footage, 3D models or talking characters; the creative brief has to direct within
+  that.
+- Taste is checked by the agent looking at its own frames, not by an audience. Watch each video and,
+  once published, feed back what performed — the briefs' retrospectives are where that goes.
 - The agent cannot listen to the mix or watch playback inside the apps. Audio is verified by
   measurement and speech recognition; watch each video once yourself before publishing.
 - Facts are only as good as the research step. Read `docs/sources.md` and the accuracy review in
   the production report.
 
 ## Third-party components
+
+Stored in `assets/` (see `assets/README.md`): 33 type families from Google Fonts via Fontsource
+(SIL Open Font License, two under Apache 2.0), Lucide icons (ISC), nice-color-palettes and Open
+Color (MIT); each with its licence file.
 
 Downloaded at setup, not stored here: Kokoro-82M voice model and `kokoro-onnx` (Apache-2.0 / MIT),
 `misaki` (Apache-2.0), sherpa-onnx with Whisper small.en and a Zipformer model (optional QA),

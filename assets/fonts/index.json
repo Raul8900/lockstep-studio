@@ -1,0 +1,556 @@
+{
+ "Space Grotesk": [
+  {
+   "weight": 400,
+   "file": "space-grotesk/space-grotesk-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "space-grotesk/space-grotesk-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "space-grotesk/space-grotesk-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "space-grotesk/space-grotesk-latin-700-normal.woff2"
+  }
+ ],
+ "Archivo": [
+  {
+   "weight": 400,
+   "file": "archivo/archivo-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "archivo/archivo-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "archivo/archivo-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "archivo/archivo-latin-700-normal.woff2"
+  },
+  {
+   "weight": 800,
+   "file": "archivo/archivo-latin-800-normal.woff2"
+  },
+  {
+   "weight": 900,
+   "file": "archivo/archivo-latin-900-normal.woff2"
+  }
+ ],
+ "Archivo Black": [
+  {
+   "weight": 400,
+   "file": "archivo-black/archivo-black-latin-400-normal.woff2"
+  }
+ ],
+ "Anton": [
+  {
+   "weight": 400,
+   "file": "anton/anton-latin-400-normal.woff2"
+  }
+ ],
+ "Bebas Neue": [
+  {
+   "weight": 400,
+   "file": "bebas-neue/bebas-neue-latin-400-normal.woff2"
+  }
+ ],
+ "Oswald": [
+  {
+   "weight": 400,
+   "file": "oswald/oswald-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "oswald/oswald-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "oswald/oswald-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "oswald/oswald-latin-700-normal.woff2"
+  }
+ ],
+ "Unbounded": [
+  {
+   "weight": 400,
+   "file": "unbounded/unbounded-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "unbounded/unbounded-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "unbounded/unbounded-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "unbounded/unbounded-latin-700-normal.woff2"
+  },
+  {
+   "weight": 800,
+   "file": "unbounded/unbounded-latin-800-normal.woff2"
+  },
+  {
+   "weight": 900,
+   "file": "unbounded/unbounded-latin-900-normal.woff2"
+  }
+ ],
+ "Syne": [
+  {
+   "weight": 400,
+   "file": "syne/syne-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "syne/syne-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "syne/syne-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "syne/syne-latin-700-normal.woff2"
+  },
+  {
+   "weight": 800,
+   "file": "syne/syne-latin-800-normal.woff2"
+  }
+ ],
+ "Poppins": [
+  {
+   "weight": 400,
+   "file": "poppins/poppins-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "poppins/poppins-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "poppins/poppins-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "poppins/poppins-latin-700-normal.woff2"
+  },
+  {
+   "weight": 800,
+   "file": "poppins/poppins-latin-800-normal.woff2"
+  },
+  {
+   "weight": 900,
+   "file": "poppins/poppins-latin-900-normal.woff2"
+  }
+ ],
+ "Rubik": [
+  {
+   "weight": 400,
+   "file": "rubik/rubik-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "rubik/rubik-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "rubik/rubik-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "rubik/rubik-latin-700-normal.woff2"
+  },
+  {
+   "weight": 800,
+   "file": "rubik/rubik-latin-800-normal.woff2"
+  },
+  {
+   "weight": 900,
+   "file": "rubik/rubik-latin-900-normal.woff2"
+  }
+ ],
+ "Fredoka": [
+  {
+   "weight": 400,
+   "file": "fredoka/fredoka-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "fredoka/fredoka-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "fredoka/fredoka-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "fredoka/fredoka-latin-700-normal.woff2"
+  }
+ ],
+ "Baloo 2": [
+  {
+   "weight": 400,
+   "file": "baloo-2/baloo-2-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "baloo-2/baloo-2-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "baloo-2/baloo-2-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "baloo-2/baloo-2-latin-700-normal.woff2"
+  },
+  {
+   "weight": 800,
+   "file": "baloo-2/baloo-2-latin-800-normal.woff2"
+  }
+ ],
+ "Bangers": [
+  {
+   "weight": 400,
+   "file": "bangers/bangers-latin-400-normal.woff2"
+  }
+ ],
+ "Fraunces": [
+  {
+   "weight": 400,
+   "file": "fraunces/fraunces-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "fraunces/fraunces-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "fraunces/fraunces-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "fraunces/fraunces-latin-700-normal.woff2"
+  },
+  {
+   "weight": 800,
+   "file": "fraunces/fraunces-latin-800-normal.woff2"
+  },
+  {
+   "weight": 900,
+   "file": "fraunces/fraunces-latin-900-normal.woff2"
+  }
+ ],
+ "Playfair Display": [
+  {
+   "weight": 400,
+   "file": "playfair-display/playfair-display-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "playfair-display/playfair-display-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "playfair-display/playfair-display-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "playfair-display/playfair-display-latin-700-normal.woff2"
+  },
+  {
+   "weight": 800,
+   "file": "playfair-display/playfair-display-latin-800-normal.woff2"
+  },
+  {
+   "weight": 900,
+   "file": "playfair-display/playfair-display-latin-900-normal.woff2"
+  }
+ ],
+ "DM Serif Display": [
+  {
+   "weight": 400,
+   "file": "dm-serif-display/dm-serif-display-latin-400-normal.woff2"
+  }
+ ],
+ "Abril Fatface": [
+  {
+   "weight": 400,
+   "file": "abril-fatface/abril-fatface-latin-400-normal.woff2"
+  }
+ ],
+ "Caveat": [
+  {
+   "weight": 400,
+   "file": "caveat/caveat-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "caveat/caveat-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "caveat/caveat-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "caveat/caveat-latin-700-normal.woff2"
+  }
+ ],
+ "Permanent Marker": [
+  {
+   "weight": 400,
+   "file": "permanent-marker/permanent-marker-latin-400-normal.woff2"
+  }
+ ],
+ "Patrick Hand": [
+  {
+   "weight": 400,
+   "file": "patrick-hand/patrick-hand-latin-400-normal.woff2"
+  }
+ ],
+ "Special Elite": [
+  {
+   "weight": 400,
+   "file": "special-elite/special-elite-latin-400-normal.woff2"
+  }
+ ],
+ "DM Sans": [
+  {
+   "weight": 400,
+   "file": "dm-sans/dm-sans-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "dm-sans/dm-sans-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "dm-sans/dm-sans-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "dm-sans/dm-sans-latin-700-normal.woff2"
+  },
+  {
+   "weight": 800,
+   "file": "dm-sans/dm-sans-latin-800-normal.woff2"
+  },
+  {
+   "weight": 900,
+   "file": "dm-sans/dm-sans-latin-900-normal.woff2"
+  }
+ ],
+ "Manrope": [
+  {
+   "weight": 400,
+   "file": "manrope/manrope-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "manrope/manrope-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "manrope/manrope-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "manrope/manrope-latin-700-normal.woff2"
+  },
+  {
+   "weight": 800,
+   "file": "manrope/manrope-latin-800-normal.woff2"
+  }
+ ],
+ "Nunito": [
+  {
+   "weight": 400,
+   "file": "nunito/nunito-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "nunito/nunito-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "nunito/nunito-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "nunito/nunito-latin-700-normal.woff2"
+  },
+  {
+   "weight": 800,
+   "file": "nunito/nunito-latin-800-normal.woff2"
+  },
+  {
+   "weight": 900,
+   "file": "nunito/nunito-latin-900-normal.woff2"
+  }
+ ],
+ "Work Sans": [
+  {
+   "weight": 400,
+   "file": "work-sans/work-sans-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "work-sans/work-sans-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "work-sans/work-sans-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "work-sans/work-sans-latin-700-normal.woff2"
+  },
+  {
+   "weight": 800,
+   "file": "work-sans/work-sans-latin-800-normal.woff2"
+  },
+  {
+   "weight": 900,
+   "file": "work-sans/work-sans-latin-900-normal.woff2"
+  }
+ ],
+ "IBM Plex Sans": [
+  {
+   "weight": 400,
+   "file": "ibm-plex-sans/ibm-plex-sans-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "ibm-plex-sans/ibm-plex-sans-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "ibm-plex-sans/ibm-plex-sans-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "ibm-plex-sans/ibm-plex-sans-latin-700-normal.woff2"
+  }
+ ],
+ "Lora": [
+  {
+   "weight": 400,
+   "file": "lora/lora-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "lora/lora-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "lora/lora-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "lora/lora-latin-700-normal.woff2"
+  }
+ ],
+ "Source Serif 4": [
+  {
+   "weight": 400,
+   "file": "source-serif-4/source-serif-4-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "source-serif-4/source-serif-4-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "source-serif-4/source-serif-4-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "source-serif-4/source-serif-4-latin-700-normal.woff2"
+  },
+  {
+   "weight": 800,
+   "file": "source-serif-4/source-serif-4-latin-800-normal.woff2"
+  },
+  {
+   "weight": 900,
+   "file": "source-serif-4/source-serif-4-latin-900-normal.woff2"
+  }
+ ],
+ "Space Mono": [
+  {
+   "weight": 400,
+   "file": "space-mono/space-mono-latin-400-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "space-mono/space-mono-latin-700-normal.woff2"
+  }
+ ],
+ "IBM Plex Mono": [
+  {
+   "weight": 400,
+   "file": "ibm-plex-mono/ibm-plex-mono-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "ibm-plex-mono/ibm-plex-mono-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "ibm-plex-mono/ibm-plex-mono-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "ibm-plex-mono/ibm-plex-mono-latin-700-normal.woff2"
+  }
+ ],
+ "DM Mono": [
+  {
+   "weight": 400,
+   "file": "dm-mono/dm-mono-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "dm-mono/dm-mono-latin-500-normal.woff2"
+  }
+ ],
+ "Courier Prime": [
+  {
+   "weight": 400,
+   "file": "courier-prime/courier-prime-latin-400-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "courier-prime/courier-prime-latin-700-normal.woff2"
+  }
+ ],
+ "Fira Code": [
+  {
+   "weight": 400,
+   "file": "fira-code/fira-code-latin-400-normal.woff2"
+  },
+  {
+   "weight": 500,
+   "file": "fira-code/fira-code-latin-500-normal.woff2"
+  },
+  {
+   "weight": 600,
+   "file": "fira-code/fira-code-latin-600-normal.woff2"
+  },
+  {
+   "weight": 700,
+   "file": "fira-code/fira-code-latin-700-normal.woff2"
+  }
+ ]
+}

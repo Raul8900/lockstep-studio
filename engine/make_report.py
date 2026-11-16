@@ -78,7 +78,11 @@ w(f"| Narration | {len(words)} words, recorded with Kokoro-82M (Apache-2.0 neura
 w("| Word timing | Read from the voice model’s own phoneme durations: every word boundary is exact to one 25 ms model frame. |")
 w(f"| Animation | {len(TL['scenes'])} chapters drawn on an HTML Canvas; every frame is a pure function of time and of the narration’s word timings. |")
 w(f"| Rendering | Headless Chromium, 1080 × 1920 native, {TL['total']} frames, each leaving the page as a JPEG (q 0.97). |")
-w("| Music | Original, synthesised: pads, bass, arpeggio, soft kick and hats at 100 BPM, arranged per chapter, ending on a held major chord. |")
+MUS = CFG.get("music", {})
+ST = TL.get("style") or {}
+w(f"| Look | `{ST.get('name', 'engine default')}` ({ST.get('mode', 'dark')} theme); the reasoning behind it and the story shape is in docs/creative_brief.md. |")
+w(f"| Music | Original, synthesised at {MUS.get('bpm', 100):g} BPM ({MUS.get('kit', 'synth')} kit" + (f", transposed {MUS['transpose']:+g} semitones" if MUS.get("transpose") else "")
+  + "), arranged per chapter from the moods in video.json, ending on a held major chord. |")
 w(f"| Sound design | {A['sfx_cues']} synthesised cues, emitted by the animation code at the same cue times as the visuals. |")
 w("| Mix | Voice lightly compressed and peak-controlled; bed ducked under speech; mastered to −14 LUFS with a look-ahead limiter. |")
 w("| Encode | FFmpeg libx264 (CRF, preset slow), BT.709 limited range, 2 s keyframe interval; AAC-LC 256 kbps. |")
@@ -109,8 +113,9 @@ if cc:
 w(f"- {caps.get('phrases')} burned-in phrases ({caps.get('two_line')} on two lines), shortest on screen {caps.get('min_on_screen_s')} s; `dist/subtitles.srt` carries the same text as reading-length cues.\n")
 
 w("## 5. Mobile viewing\n")
-w("- Layout zones (1080 × 1920): top 0–270 backdrop only; chapter bar y 286–340; diagrams y 372–1210; captions y 1260–1440; bottom 1470–1920 backdrop only.\n"
-  f"- Captions: 74 px ExtraBold with a 15 px outline, widest phrase {caps.get('max_width_px')} px.\n"
+CS = ST.get("captions", {})
+w(f"- Layout zones (1080 × 1920): top 0–270 backdrop only; chapter bar y 286–340; diagrams y 372–1210; captions y {caps.get('y_extent', ['?', '?'])[0]}–{caps.get('y_extent', ['?', '?'])[1]}; bottom 1470–1920 backdrop only.\n"
+  f"- Captions: {CS.get('family', 'Inter Display')} {CS.get('weight', 800)}, {CS.get('size', 74)} px, highlight mode `{CS.get('highlight', 'color')}`, widest phrase {caps.get('max_width_px')} px.\n"
   "- `dist/mobile_preview_reels_style.jpg` and `dist/mobile_preview_shorts_style.jpg` show frames at phone size under generic interface overlays. "
   "The overlays are approximations built from third-party measurements (neither platform publishes fixed pixel values), drawn conservatively.\n")
 

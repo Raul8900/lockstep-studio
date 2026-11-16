@@ -125,12 +125,30 @@ def reverb(x, ir, wet):
     return x + out * wet
 
 
+MUSIC = CFG.get("music", {})                 # video.json: {"bpm": 100, "transpose": 0, "kit": "synth"}
+TRANSPOSE = float(MUSIC.get("transpose", 0))  # semitones; moves the whole score (-5 .. +6 is a sensible range)
+
+
 def midi(m):
-    return 440.0 * 2 ** ((m - 69) / 12)
+    return 440.0 * 2 ** ((m + TRANSPOSE - 69) / 12)
 
 
 # -------------------------------------------------------------------- score
-BPM = 100.0
+BPM = float(MUSIC.get("bpm", 100.0))
+if not 70 <= BPM <= 150:
+    sys.exit(f"video.json music.bpm = {BPM:g}: choose 70-150")
+# Kits re-voice the same arrangement. Multipliers on each layer, the pad filter, and how much saw is in the arpeggio.
+KITS = {
+    "synth": dict(pad=1.0, bass=1.0, arp=1.0, kick=1.0, hat=1.0, cut=1.0, arp_saw=0.6),      # bright electronic (default)
+    "soft":  dict(pad=1.1, bass=0.8, arp=0.7, kick=0.55, hat=0.0, cut=0.55, arp_saw=0.0),     # warm, rounded, unhurried
+    "pluck": dict(pad=0.55, bass=0.9, arp=1.5, kick=0.8, hat=0.7, cut=0.9, arp_saw=0.25),     # light, playful, melodic
+    "deep":  dict(pad=1.2, bass=1.35, arp=0.45, kick=1.1, hat=0.0, cut=0.7, arp_saw=0.4),     # cinematic, heavy low end
+    "pulse": dict(pad=0.6, bass=1.2, arp=1.0, kick=1.4, hat=1.5, cut=1.15, arp_saw=0.8),      # driving, punchy, fast formats
+}
+KIT_NAME = MUSIC.get("kit", "synth")
+if KIT_NAME not in KITS:
+    sys.exit(f"video.json music.kit = {KIT_NAME!r}: choose from " + ", ".join(KITS))
+KIT = KITS[KIT_NAME]
 BEAT = 60.0 / BPM
 NOTE = {"C": 0, "C#": 1, "D": 2, "Eb": 3, "E": 4, "F": 5, "F#": 6, "G": 7, "Ab": 8, "A": 9, "Bb": 10, "B": 11}
 CH = {  # chord -> (root pitch class, intervals)
@@ -165,9 +183,21 @@ def scene_moods():
         mood = by_id.get(sc["id"])
         if not mood:
             mood = "drone" if i == 0 else "finale" if i == n - 1 else _DEFAULT_CYCLE[(i - 1) % len(_DEFAULT_CYCLE)]
-        if mood not in MOODS:
+        if isinstance(mood, dict):               # a custom arrangement: {"like": "light", "ch": ["Dm", "F"], "arp": 0.9, ...}
+            base = dict(MOODS[mood.get("like", "light")])
+            base.update({k: v for k, v in mood.items() if k != "like"})
+            bad = [c for c in base["ch"] if c not in CH]
+            if bad:
+                sys.exit(f"chapter {sc['id']!r}: unknown chord(s) {bad}; available: " + ", ".join(CH))
+            m = base
+        elif mood not in MOODS:
             sys.exit(f"unknown mood {mood!r} for chapter {sc['id']!r}; choose from: " + ", ".join(MOODS))
-        out.append(MOODS[mood])
+        else:
+            m = MOODS[mood]
+        m = dict(m)
+        for k in ("pad", "bass", "arp", "kick", "hat", "cut"):
+            m[k] = m[k] * KIT[k]
+        out.append(m)
     return out
 
 
@@ -232,7 +262,7 @@ def build_music():
                 for s in range(steps):
                     m = tones[order[(s + si) % 8] % len(tones)]
                     nn = int(0.5 * SR)
-                    y = (saw(midi(m), nn, rng.random()) * 0.6 + sine(midi(m), nn)) * env_ar(nn, 0.003, 0.11, 4)
+                    y = (saw(midi(m), nn, rng.random()) * KIT["arp_saw"] + sine(midi(m), nn)) * env_ar(nn, 0.003, 0.11, 4)
                     y = butter(y, 3400 + 900 * (s % 2), "low", 2)
                     vel = 0.75 if s % 2 == 0 else 0.5
                     place(arp_bus, pan(y, 0.55 * (1 if s % 2 else -1)), t0 + s * BEAT / 2, 0.075 * sc["arp"] * vel)

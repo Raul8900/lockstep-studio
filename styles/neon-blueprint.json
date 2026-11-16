@@ -1,0 +1,5 @@
+{
+  "name": "neon-blueprint",
+  "about": "The engine's built-in look: charcoal, glowing line art, bloom. Technical subjects seen from inside the machine.",
+  "backdrop": { "type": "circuit" }
+}

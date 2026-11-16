@@ -22,7 +22,7 @@ is a minimal working set; `videos/how-a-gpu-works/scenes/` shows every pattern a
   /* 3. the picture: a pure function of t */
   addScene('hook', function (ctx, t) {
     const show = tw(t, c.cores - 0.05, c.cores + 0.25, E.outBack);
-    riseText(ctx, '21,760', CX, 530, show, { size: 176, weight: 900, family: F.disp, color: COL.amber, align: 'center' });
+    riseText(ctx, '21,760', CX, 530, show, { size: 176, weight: 900, family: F.disp, color: COL.accent, align: 'center' });
   }, { type: 'fade' });                          // how this scene ARRIVES
 });
 ```
@@ -75,15 +75,42 @@ A wrong key stops the page with `cue not found: beat/word#n`.
 `W = 1080`, `H = 1920`, `FPS = 30`, `CX = 540`, `TAU`.
 `SAFE = { l: 70, r: 1010, t: 270, b: 1470 }`, `CONTENT = { x: 70, y: 372, w: 940, h: 838 }`.
 
-`COL`: `white text dim faint` (type), `cyan violet amber coral mint` (accents),
-`cyanDeep violetDeep amberDeep`, `panel panelHi line lineHi`, `bg0 bg1 bg2`.
-`F.disp` (Inter Display — headlines), `F.ui` (Inter — glosses), `F.mono` (JetBrains Mono — labels, numbers).
+### Colour roles — the style decides the colours
 
-`rgba(hex, alpha)` → CSS colour. `mixHex(hexA, hexB, k, alpha = 1)` → blend. Both take the
-6-digit hex strings in `COL`; every `color` argument below accepts any CSS colour string.
+Every colour comes from the video's `style.json`. Scenes name **roles**, never hex values or
+hue names, so the same scene code renders correctly in any look:
 
-The engine draws the backdrop, bloom, vignette, chapter bar and captions. A scene draws only its
-own content on a transparent layer: do not fill the whole frame.
+| Role | Use for | Legacy name (same value) |
+|---|---|---|
+| `COL.ink` | primary text; the thing being talked about now | `COL.white` |
+| `COL.subject` | the subject of the video and its core mechanism | `COL.cyan` |
+| `COL.accent` | numbers; the contrasting or competing element | `COL.amber` |
+| `COL.data` | the secondary family (data, memory, money, time…) | `COL.violet` |
+| `COL.alert` | limits, failure, negation, "wrong" | `COL.coral` |
+| `COL.good` | success, the correct outcome | `COL.mint` |
+| `COL.onAccent` | text drawn on a fill of `subject` / `accent` (pills, badges, the "1" on a dot) | — |
+| `COL.text`, `COL.dim`, `COL.faint` | secondary text, receding labels, barely-there marks | |
+| `COL.panel`, `COL.panelHi`, `COL.line`, `COL.lineHi` | card fills and strokes, derived from the palette | |
+| `COL.subjectDeep`, `COL.dataDeep`, `COL.accentDeep` | darker variants for fills under bright strokes | |
+
+The legacy names still work (the GPU video uses them) but read wrongly in a light or warm style —
+`COL.white` is dark ink on paper. Use role names in new code. Never hard-code a hex colour in a
+scene unless it is part of a drawn object's own colour (a red apple stays red in any style).
+
+`STYLE.mode` is `'dark'` or `'light'`; check it where a technique only works on one (see Light
+styles below). `STYLE.name`, `STYLE.shape.radius` etc. are also readable.
+
+### Fonts
+
+`F.disp` (headlines), `F.ui` (body and glosses), `F.mono` (labels, numbers, code) are the style's
+families. Weights: ask for what the family has (`lockstep fonts`). A family bundled with a single
+weight renders that weight whatever you ask for, so `weight: 900` on Anton is just Anton.
+
+`rgba(hex, alpha)` → CSS colour. `mixHex(hexA, hexB, k, alpha = 1)` → blend. Both take 6-digit
+hex strings, which every `COL` entry is; every `color` argument below accepts any CSS colour.
+
+The engine draws the backdrop, bloom (dark styles), vignette, caption scrim, progress bar and
+captions. A scene draws only its own content on a transparent layer: do not fill the whole frame.
 
 ## Drawing
 
@@ -91,7 +118,7 @@ All take `ctx` first. `alpha` arguments multiply the current alpha.
 
 | Shapes | |
 |---|---|
-| `panel(ctx, x, y, w, h, { r, fill, stroke, lw, accent, accentA })` | dark glass card; `accent` adds a coloured edge |
+| `panel(ctx, x, y, w, h, { r, fill, stroke, lw, accent, accentA })` | the style's card (radius, stroke, shadow come from `style.json` → `shape`); `accent` adds a coloured edge |
 | `fillRR(ctx, x, y, w, h, r, fill)` · `strokeRR(ctx, x, y, w, h, r, stroke, lw)` · `rr(ctx, x, y, w, h, r)` | rounded rectangles (`rr` only builds the path) |
 | `line(ctx, x0, y0, x1, y1, color, lw, alpha, dash)` | |
 | `polyline(ctx, pts, color, lw, p = 1, alpha, dash)` | draws the first fraction `p` of the path: lines that draw themselves |
@@ -99,7 +126,7 @@ All take `ctx` first. `alpha` arguments multiply the current alpha.
 | `polyAt(pts, d)` · `polyLen(pts)` | point at distance d along a path; its length |
 | `arrowHead(ctx, x, y, angle, size, color, alpha)` | |
 | `dot(ctx, x, y, r, color, alpha)` · `ring(ctx, x, y, r, color, lw, alpha)` | |
-| `glow(ctx, x, y, r, hex, alpha)` | soft additive light; cheap, use freely (hex colour only) |
+| `glow(ctx, x, y, r, hex, alpha)` | soft light on dark styles, a soft tint on light styles; cheap (hex colour only) |
 | `check(ctx, x, y, size, color, p, lw)` · `cross(ctx, x, y, size, color, p, lw)` | drawn with progress p |
 
 | Text | |
@@ -125,6 +152,23 @@ All take `ctx` first. `alpha` arguments multiply the current alpha.
 | `callout(ctx, x0, y0, x1, y1, p, color)` | leader line with a dot |
 | `streaks(ctx, t, { n, alpha, seed, color, x0, x1, y0, y1, minV, maxV, dir })` | speed lines |
 
+### Beyond diagrams (`kit.js`)
+
+| Helper | |
+|---|---|
+| `icon(ctx, name, cx, cy, size, color, { lw = 2, p = 1, alpha })` | one of 2,300 line icons (Lucide). `p` draws its strokes on. Find names with `lockstep icons <word>` |
+| `bigWord(ctx, str, cx, cy, p, { maxW, max, weight, family, color })` | one word or short phrase scaled to fill the width, popping in with `p`: kinetic type |
+| `fitSize(ctx, str, maxW, max, weight, family)` | the largest size at which `str` fits in `maxW` |
+| `roughLine(ctx, pts, color, lw, { seed, wobble, p, alpha })` | hand-drawn line through points; `p` draws it on |
+| `roughRect(ctx, x, y, w, h, color, lw, { seed, wobble, fill, overshoot })` · `roughCircle(ctx, cx, cy, r, color, lw, opts)` | hand-drawn box and circle (circling a word, boxing a number) |
+| `highlighter(ctx, x, y, w, h, color, p, alpha)` | a marker swipe behind text, drawn left to right with `p` |
+
+Hand-drawn shapes are deterministic for a given `seed`. For lines that "boil" like animation
+drawn by hand, change the seed a few times a second: `seed: 7 + Math.floor(t * 6)`.
+
+Icons are generic pictograms: good for a row of concepts, a status, a small label. The hero
+object of a video deserves to be drawn by hand in the video's `components.js`, in its own style.
+
 **2.5D** — `const P = new Proj({ cx, cy, scale, yaw, pitch })`: world x/y in a tilted plane, z up.
 `P.pt(x, y, z)` → `[screenX, screenY, scale]`; `P.quad(ctx, x0, y0, x1, y1, z)` builds a path;
 `P.slab(ctx, x0, y0, x1, y1, z0, z1, topFill, sideFill, edge)` draws an extruded box. Call
@@ -140,9 +184,46 @@ The third argument of `addScene` says how the scene **arrives** from the previou
 | `{ type: 'zoomIn', fx, fy }` | camera dives into point (fx, fy) of the outgoing scene; the new scene grows out of it | `z` (2.6) outgoing zoom, `zb` (0.62) incoming start scale, `bx`, `by` incoming focus |
 | `{ type: 'zoomOut', fx, fy }` | pulls back: the outgoing scene shrinks to (fx, fy) | `z` (0.45), `zb` (1.5), `bx`, `by` |
 | `{ type: 'panDown' }` / `{ type: 'panUp' }` | camera travels vertically | `d` distance in px (620) |
+| `{ type: 'slideLeft' }` / `{ type: 'slideRight' }` | the new scene pushes the old one sideways: the next card, the next step | |
+| `{ type: 'cut' }` | hard cut on the boundary: punch, contrast, comedy timing | |
+| `{ type: 'flash' }` | a hard cut hidden under a quick flash | `color` (role name or hex; default ink) |
+
+Without a third argument a scene uses the style's default (`style.json` → `transition.default`);
+the length of every transition is `transition.duration` (0.2–1.2 s). The transition grammar is a
+style decision: a calm editorial look fades and slides, a loud poster look cuts, a journey
+through scales zooms. Mix types deliberately — a different one marks a change of register.
 
 Use the zooms to connect scales (into a part → the part becomes the next scene; back out to the
 whole). Aim `fx, fy` at the object the viewer is looking at. The first scene's transition is unused.
+
+## Backdrop
+
+The backdrop comes from the style (`style.json` → `backdrop`: `circuit`, `solid`, `aurora`,
+`paper`, `grid`, `halftone`, `stage`, `sunburst`, `blobs`; see art-direction.md). When the
+visual world needs something none of these give — a starfield, a microscope slide, a city at
+night — define it in the video's `components.js`:
+
+```js
+window.drawBackdrop = function (ctx, t) {
+  backdropBase(ctx); backdropFlush(ctx);           // the palette's gradient, drawn small and scaled up
+  /* your own slow, full-frame drawing here; a pure function of t */
+};
+```
+
+It is drawn under every scene. Keep it slow and low in detail: fast full-frame change costs
+bitrate and competes with the content.
+
+## Light styles
+
+On a light background the engine switches its own behaviour: no bloom, `glow()` becomes a soft
+tint (multiply), speed lines draw normally, captions get a background-coloured outline. In
+scenes:
+
+- Do not rely on glow for emphasis: use size, a role-coloured fill, an outline, or `highlighter`.
+- Fill shapes with `COL.panel` and outline them with role colours; big saturated fills are loud on
+  white — keep them for one hero element at a time.
+- Text on a role-coloured fill uses `COL.onAccent`.
+- Dim things with `COL.dim` / `COL.faint`, not with low alpha on `COL.ink` over coloured shapes.
 
 ## Patterns
 
@@ -173,6 +254,23 @@ pulsing glow, a travelling highlight, a second pass of an animation. Small wobbl
 the build reports any stretch of 0.4 s where the frame barely changes ("static holds").
 
 **Stagger.** For n similar items, offset each by 30–60 ms: `tw(t, c.x + i * 0.04, c.x + i * 0.04 + 0.3, E.out3)`.
+
+**Motion personality.** Pick one easing family in the brief and use it everywhere, so the video
+moves like one hand made it: *springy* (`E.outBack`, `E.outElastic` for one or two hero moments;
+entrances 0.3–0.45 s), *smooth* (`E.io3`, `E.out3`; 0.4–0.7 s), or *snappy* (`E.out5`, `E.outExpo`;
+0.12–0.25 s, with hard cuts). Mixing all three in one video is what makes motion feel generic.
+
+**Kinetic-type punchline.** On the line the whole beat builds to, clear the frame and give the key
+word the screen: `bigWord(ctx, 'ZERO', CX, 800, tw(t, c.zero - 0.05, c.zero + 0.2, E.out3), { color: COL.accent })`.
+Once or twice per video; it is a pattern interrupt, not a layout.
+
+**Camera punch.** On an impact, push in and shake for a few frames:
+`withCam(ctx, { fx: CX, fy: 800, zoom: 1 + 0.05 * hit, dx: 7 * hit * Math.sin(t * 95) }, () => { … })`
+with `hit = pulse(t, c.x, 0.03, 0.35)`. Pair with an `impact` sound.
+
+**Speed ramp.** For a repeated action (cards dealt, items counted, copies stamped), shrink the
+interval as it goes — `t_k = t0 + 0.5 * (1 - Math.pow(0.82, k)) / 0.18` — so the viewer feels
+"faster and faster" without being told.
 
 **Out before the cut.** Do not animate a scene's content away at its end; the transition removes
 it. Keep it alive through the boundary.

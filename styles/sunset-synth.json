@@ -1,0 +1,16 @@
+{
+  "name": "sunset-synth",
+  "about": "Deep purple to orange colour fields, wide futuristic caps, glow. Music, internet culture, the future, big-energy tech takes.",
+  "palette": {
+    "bg": ["#2B0F45", "#3A1158", "#170828"],
+    "ink": "#FFF5EA",
+    "subject": "#FF8A3D", "accent": "#FFD23F", "data": "#FF4D9D", "alert": "#FF5A5A", "good": "#5CF2C2"
+  },
+  "fonts": { "display": "Unbounded", "body": "Manrope", "mono": "Space Mono" },
+  "backdrop": { "type": "aurora", "colors": ["subject", "data", "accent"], "strength": 1.3 },
+  "post": { "bloom": 0.7 },
+  "captions": { "case": "upper", "highlight": "box", "weight": 800, "size": 62, "boxRadius": 10 },
+  "hud": { "type": "segments" },
+  "shape": { "radius": 28, "stroke": 2, "strokeAlpha": 0.6 },
+  "transition": { "duration": 0.6, "default": "zoomIn" }
+}

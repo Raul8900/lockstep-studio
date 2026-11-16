@@ -5,10 +5,31 @@ recordings — from three inputs: the narration, the chapter moods in `video.jso
 cues your scenes emit with `sfx()`. `bin/lockstep audio <slug>` builds it (the build does this
 for you) and prints the voice-to-bed ratio.
 
+## Music settings
+
+The score is chosen in the brief like the look. `video.json`:
+
+```json
+"music": { "bpm": 112, "transpose": -2, "kit": "pluck" }
+```
+
+| Setting | Range | Effect |
+|---|---|---|
+| `bpm` | 70–150 (100) | tempo of the whole score; match the pacing (calm ≈ 84–96, brisk ≈ 100–116, rapid ≈ 120–140) |
+| `transpose` | semitones (0) | moves the key; −5…−2 darker and heavier, +2…+5 brighter |
+| `kit` | `synth` (default) | bright electronic pads, bass, arpeggio, kick and hats |
+| | `soft` | warm, rounded, no hats, gentle kick: wonder, nature, calm stories |
+| | `pluck` | light melodic plucks, thin pads: playful, everyday, food, kids |
+| | `deep` | cinematic, heavy low end, sparse top: space, mysteries, big scale |
+| | `pulse` | driving kick and hats: rapid formats, countdowns, sport, tech energy |
+
+Kits shift the balance between voice and music by about ±1.5 dB: check `speech_to_bed_ratio_db`
+after `lockstep audio` and adjust `"mix"` if it leaves 15–17 dB.
+
 ## Music: one mood per chapter
 
-The score runs at 100 BPM in the D-minor family and changes arrangement at each scene boundary.
-Choose a mood for each chapter in `video.json`:
+The score is in the D-minor family (moved by `transpose`) and changes arrangement at each scene
+boundary. Choose a mood for each chapter in `video.json`:
 
 ```json
 "chapters": [
@@ -33,6 +54,16 @@ Choose a mood for each chapter in `video.json`:
 Shape an arc: start quiet, add energy through the middle, drop for the problem or limit, finish
 full. Two neighbouring chapters should not share a mood. If `mood` is omitted the engine uses
 `drone` first, `finale` last and a default cycle between.
+
+A mood can also be written out, starting from a named one and changing its chord cycle or layer
+levels (0–1), to give a chapter its own colour:
+
+```json
+{ "id": "reveal", "name": "THE REVEAL", "mood": { "like": "bright", "ch": ["F", "C", "Gm", "Bb"], "arp": 0.9, "kick": 0.3 } }
+```
+
+Chords: `Dm`, `Dm9`, `Bb`, `F`, `C`, `Gm`, `A`, `Asus`, `D`. Layers: `pad`, `bass`, `arp`, `kick`,
+`hat`, `cut` (pad brightness in Hz), plus `half_time` and `kick_every`.
 
 ## Sound cues
 

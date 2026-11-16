@@ -1,6 +1,6 @@
 # Visual Storyboard — “How Does a Modern GPU Actually Work Internally?”
 
-34 sequences · 162.05 s · 1080 × 1920 · 30 fps. Timestamps are taken from the recorded narration; the animation code reads the same word timings, so picture and voice cannot drift apart.
+34 sequences · 162.05 s · 1080 × 1920 · 30 fps. The look, story shape and pacing were decided in docs/creative_brief.md. Timestamps are taken from the recorded narration; the animation code reads the same word timings, so picture and voice cannot drift apart.
 
 ## Conventions that apply to every sequence
 
@@ -16,17 +16,17 @@
 
 Below y 900, numbers and names stay left of x ≈ 910, where both platforms stack their action buttons; only repeated or decorative elements extend further right.
 
-**Backdrop.** Charcoal vertical gradient (#05080D → #090E17 → #04060A); three slow fog blobs (cyan, violet, deep cyan); a 60 px dot lattice drifting upward at 7 px/s; six faint vertical traces with pulses travelling top to bottom; a perspective floor grid below y 1500; vignette; a fixed, barely visible dither (about 1.5 code values) that prevents banding in the dark gradients.
+**Look.** `neon-blueprint` (dark theme) — The engine's built-in look: charcoal, glowing line art, bloom. Technical subjects seen from inside the machine.
+
+**Backdrop.** charcoal gradient, slow colour fog, a dot lattice drifting upward, a perspective floor grid and faint vertical traces with travelling pulses; background gradient #05080D → #090E17 → #04060A.
 
 **Colour language.** Cyan #27E1FF = GPU and computation · Amber #FFA91E = CPU, control and all numbers · Violet #A073FF = memory and data · Coral #FF5F70 = limits and negation · Mint #4DFFB5 = success · White = the thing being talked about now.
 
-**Type.** Inter Display 800–900 for headlines, Inter 500–700 for glosses, JetBrains Mono 600–800 for labels, code and counters. Smallest label 19–22 px; primary labels ≥ 24 px; headlines 54–250 px.
+**Type.** Inter Display for headlines, Inter for glosses and body, JetBrains Mono for labels and counters. Smallest label 19–22 px; primary labels ≥ 24 px.
 
-**Captions.** Inter Display ExtraBold 74 px, white with a 15 px near-black outline, 1–5 words per phrase (141 phrases, 5 of them two-line). Words not yet spoken sit at 44 % opacity; the spoken word scales to 107.5 %, lifts 5 px, and key terms take their semantic colour with a soft halo. Each phrase pops in over 0.14 s (ease-out-back). Position never changes.
+**Captions.** Inter Display 800, 74 px, centred on y 1350, 1–5 words per phrase (141 phrases, 5 of them two-line); the spoken word takes its role colour, scales up slightly and lifts. Words not yet spoken are dimmed. Position never changes.
 
-**Light.** A two-stage bloom (soft-thresholded quarter- and eighth-resolution blurs added back) gives every bright stroke a glow; captions and the chapter bar are drawn after it so they stay crisp.
-
-**Scene changes.** 0.84 s, ease-in-out-cubic, one of: zoom-in (dive into a point), zoom-out (pull back), pan-down / pan-up (camera travels), cross-fade. The incoming scene is already drawn and moving before the outgoing one has gone.
+**Scene changes.** 0.84 s, default `fade`; each scene can choose its own arrival (zoom into a point, pull back, pan, slide, cut, flash). The incoming scene is already drawn and moving before the outgoing one has gone.
 
 ---
 
