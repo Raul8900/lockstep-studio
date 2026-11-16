@@ -51,8 +51,9 @@ but robotic, too long and too slow. Its brief (written afterwards) says what it 
    phone would. Most defects (collisions, empty frames, unreadable labels, a look that does not
    fit) are only visible there.
 9. **Free and local only.** Voice, music and sound are generated on this machine; fonts, icons and
-   palettes come from the open-licence library in `assets/`. Do not call paid APIs, buy anything,
-   or pull in third-party footage, music, images or a creator's signature style.
+   palettes come from the open-licence library in `assets/`; Lottie animations come from LottieFiles'
+   free library (or your own), one file at a time, each credited in `lottie/credits.json`. Do not call
+   paid APIs, buy anything, or pull in third-party footage, music, images or a creator's signature style.
 
 ## Setup (once per machine or cloud session)
 
@@ -72,13 +73,13 @@ Work in this order. Each step has a reference file — read it when you reach th
 |---|---|---|---|
 | 0 | Scaffold | `videos/<slug>/` | `bin/lockstep new <slug> "Title"` |
 | 1 | Research | `docs/sources.md` | web search; primary sources first |
-| 2 | **Creative direction** | `docs/creative_brief.md`, `style.json` | `lockstep styles · tile · palettes · fonts · icons · brief` → reference/creative-direction.md, story-formats.md, art-direction.md |
+| 2 | **Creative direction** | `docs/creative_brief.md`, `style.json` | `lockstep styles · tile · palettes · fonts · icons · lottie-search · brief` → reference/creative-direction.md, story-formats.md, art-direction.md |
 | 3 | Script | `script.py` in the chosen shape and pacing | → reference/script.md |
 | 4 | Voice | narration + word timings | `lockstep voice`, `check-voice`, `words` |
 | 5 | Captions | `caption_phrases.json` | `lockstep captions <slug> --draft`, then edit |
 | 6 | Chapters and music | `video.json` (names, moods, `music`) | → reference/audio.md |
 | 7 | Storyboard | `storyboard.py` | plan every sequence before drawing |
-| 8 | Scenes | `scenes/sNN_<beat>.js`, `components.js` | `still`, `sheet`, `scan` → reference/scene-api.md, design.md |
+| 8 | Scenes | `scenes/sNN_<beat>.js`, `components.js`, `lottie/` | `still`, `sheet`, `scan`, `lottie-get`, `lottie-sheet` → reference/scene-api.md, lottie.md, design.md |
 | 9 | Build | MP4 + SRT + QA data + docs | `lockstep build <slug>` |
 | 10 | Review and fix | a video you would publish | → reference/qa.md |
 | 11 | Report, deliver, learn | report, retrospective, library | `lockstep report`, `save-style` |
@@ -153,7 +154,9 @@ of its own, the script has a sentence that should be cut.
 ### 8. Scenes
 One file per beat, drawn in the brief's visual world and the style's language (hand-drawn looks get
 rough lines, poster looks get kinetic type and hard shadows — see "Make the scenes match the look"
-in art-direction.md). Write a scene, then look at it immediately:
+in art-direction.md). Characters, gestures and effects with real motion can come from Lottie
+animations: find them with `lockstep lottie-search <slug> <words>`, take one with `lottie-get`, and
+pin its key frames to words (reference/lottie.md). Write a scene, then look at it immediately:
 ```bash
 bin/lockstep meta <slug>                              # loads every scene; reports cue or syntax errors
 bin/lockstep sheet <slug> 12s 13.5s 15s 17s 19s       # stills tiled into out/sheet.jpg — open it
@@ -222,6 +225,7 @@ videos/<slug>/
   scenes/sNN_<beat>.js   one scene per beat (the beat id is the scene id)
   components.js          drawing code shared by this video's scenes; optional custom backdrop
   storyboard.py          sequences for docs/visual_storyboard.md
+  lottie/                Lottie animations (JSON), credits.json with source and licence of each
   candidates/            optional: style candidates compared during creative direction
   docs/                  sources.md, report_notes.md (written by you); the rest is generated
   data/                  generated: words.json, takes.json, timeline.json, validation.json, ...
@@ -232,4 +236,4 @@ videos/<slug>/
 Shared by every video: `engine/` (change it only for something every video should get), `styles/`
 (the library of looks), `assets/` (open-licence fonts, icons and palettes; `scripts/fetch_assets.py`
 rebuilds or extends it). A look or drawing that belongs to one topic goes in that video's
-`style.json` and `components.js`.
+`style.json` and `components.js`; its Lottie animations go in its `lottie/` with `credits.json`.

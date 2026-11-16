@@ -207,3 +207,20 @@ function anatScene(id, draw) {
     withCam(ctx, { fx: 540, fy: 800, zoom: z }, function () { draw(ctx, t); });
   };
 }
+
+/* ---------- icons standing in for illustrations ----------
+   This video first drew its tablet, warning sign and brain with the Fluent Emoji line set, which was
+   later removed from the engine. They are now the bundled line icons of the same subjects, in the same
+   role colours, with the same pop-in, fade and rotation options as before. */
+function glyph(name, role) { return { name, role }; }
+function drawGlyph(ctx, g, x, y, size, o = {}) {
+  const { p = 1, alpha = 1, rot = 0 } = o;
+  if (p <= 0 || alpha <= 0.003) return;
+  const e = p >= 1 ? 1 : Math.max(0, E.outBack(clamp(p)));
+  ctx.save();
+  ctx.translate(x, y);
+  if (rot) ctx.rotate(rot);
+  ctx.scale(e, e);
+  icon(ctx, g.name, 0, 0, size, COL[g.role] || g.role, { lw: 2.3, alpha: alpha * (p < 1 ? clamp(p * 3) : 1) });
+  ctx.restore();
+}

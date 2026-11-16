@@ -4,7 +4,7 @@
   "size_mb": 59.4,
   "container": "QuickTime / MOV",
   "duration_s": 93.133,
-  "overall_bitrate_mbps": 5.1,
+  "overall_bitrate_mbps": 5.11,
   "faststart": true
  },
  "video": {
@@ -89,8 +89,8 @@
   ]
  ],
  "encode_fidelity": {
-  "ssim_all": 0.997311,
-  "psnr_avg_db": 53.316425
+  "ssim_all": 0.997308,
+  "psnr_avg_db": 53.308914
  },
  "loudness": {
   "integrated_lufs": -14.0,

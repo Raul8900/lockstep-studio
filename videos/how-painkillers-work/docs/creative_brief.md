@@ -140,6 +140,9 @@ to read on a phone, and because a medical explanation has to be trusted.
 - **Transitions.** slideLeft at 0.7 s by default. A fade to ink at the cost beat, so the change of tone is visible. zoomIn for the move from the ankle to the body.
 - **Shape.** Corner radius 10, outline 3 at 90 %, panels at 55 % opacity. No card shadows: a field guide has none.
 - **Illustrations.** Line set, tint ink. Every illustration is one drawn line, like the body map.
+  *(Note, 2026-11-16: the illustration set was removed from the engine after this video was made. The
+  tablet, the warning sign and the brain are now the bundled line icons `pill`, `triangle-alert` and
+  `brain` in the same colours and timing; the rest of this brief is unchanged.)*
 
 **Rejected: chalk-sketch** (candidates/b.json, rendered and checked). It passes legibility, but its palette, fonts and backdrop are identical to the library's `chalkboard` (style-check warns). Its dark green board makes the grey line art murky at phone size, and its hand-lettered tone makes the cost beat feel like a classroom aside. **Not chosen: the dark stage** (midnight-editorial), the mystery direction's look. It was not rendered because direction C was not chosen.
 

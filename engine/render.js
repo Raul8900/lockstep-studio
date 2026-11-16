@@ -45,7 +45,7 @@ if (!projArg || !mode) {
 const PROJECT = path.resolve(projArg);
 if (!fs.existsSync(path.join(PROJECT, 'video.json'))) { console.error(`no video.json in ${PROJECT}`); process.exit(1); }
 const DATA = path.join(PROJECT, 'data');
-const NEEDS_NARRATION = mode !== 'tile';
+const NEEDS_NARRATION = mode !== 'tile' && mode !== 'lottiesheet';
 if (NEEDS_NARRATION && !fs.existsSync(path.join(DATA, 'words.json'))) {
   console.error(`no narration recorded yet for ${path.basename(PROJECT)}: run  bin/lockstep voice ${path.basename(PROJECT)}  first`);
   process.exit(1);
@@ -103,12 +103,13 @@ function startServer() {
   });
 }
 
-async function openPage(browser, port, debugSafe, tile) {
+async function openPage(browser, port, debugSafe, special) {
   const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
   page.on('pageerror', (e) => console.error('[pageerror]', e.message));
   page.on('console', (m) => { if (m.type() === 'error' && !/404/.test(m.text())) console.error('[console]', m.text()); });
   if (debugSafe) await page.addInitScript(() => { window.DEBUG_SAFE = true; });
-  if (tile) await page.addInitScript(() => { window.TILE_MODE = true; });
+  if (special && special.tile) await page.addInitScript(() => { window.TILE_MODE = true; });
+  if (special && special.lottiesheet) await page.addInitScript((o) => { window.LOTTIESHEET = o; }, special.lottiesheet);
   await page.goto(`http://127.0.0.1:${port}/index.html`);
   await page.waitForFunction(() => window.READY || window.BOOT_ERROR, null, { timeout: 60000 });
   const err = await page.evaluate(() => window.BOOT_ERROR);
@@ -116,10 +117,10 @@ async function openPage(browser, port, debugSafe, tile) {
   return page;
 }
 
-async function withPage(debugSafe, fn, tile) {
+async function withPage(debugSafe, fn, special) {
   const server = await startServer(); const port = server.address().port;
   const browser = await chromium.launch();
-  try { return await fn(await openPage(browser, port, debugSafe, tile), browser, port); }
+  try { return await fn(await openPage(browser, port, debugSafe, special), browser, port); }
   finally { await browser.close(); server.close(); }
 }
 
@@ -156,6 +157,7 @@ async function meta() {
         palette: { bg: [COL.bgTop, COL.bgMid, COL.bgBot], ink: COL.white, subject: COL.subject, accent: COL.accent, data: COL.data, alert: COL.alert, good: COL.good },
         captions: { size: CAP.size, weight: CAP.weight, family: CAP.family, y: CAP.cy, lineH: CAP.lineH, maxW: CAP.maxW, highlight: STYLE.captions.highlight, case: STYLE.captions.case }, hud: STYLE.hud.type, transition: STYLE.transition },
       scenes: SCENES.map((s) => ({ id: s.id, name: chapterName(s.id), t0: s.t0, t1: s.t1, trans: s.trans })),
+      lottie: [...LOT_SPECS.values()].map((s) => ({ name: s.name, dir: s.dir, recolor: s.recolor })),
       sfx: SFX,
       caps: CAPS.map((c) => ({ text: c.text, show0: c.show0, show1: c.show1, t0: c.t0, t1: c.t1, lines: c.lines.length, width: Math.max(...c.lines.map((l) => l.w)) * c.scale })),
     }));
@@ -177,7 +179,31 @@ async function tile(args) {
     const b64 = await page.evaluate(() => { renderFrame(66); return document.getElementById('c').toDataURL('image/jpeg', 0.92).split(',')[1]; });
     fs.writeFileSync(out, Buffer.from(b64, 'base64'));
     console.log('style tile -> ' + out);
-  }, true);
+  }, { tile: true });
+}
+
+/* lottiesheet --names a,b [--dir lottie] [--labels "x|y"] [--frames 6] [--crop] [--style f.json] [--out f.jpg]:
+   each Lottie file as a filmstrip, recoloured and drawn as this video's look will draw it */
+async function lottiesheet(args) {
+  let out = path.join(OUT, 'lottie_sheet.jpg');
+  const o = { names: [], dir: null, frames: 6, labels: null };
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--names') o.names = args[++i].split(',').filter(Boolean);
+    else if (args[i] === '--dir') o.dir = args[++i];
+    else if (args[i] === '--labels') o.labels = args[++i].split('|');
+    else if (args[i] === '--frames') o.frames = parseInt(args[++i], 10);
+    else if (args[i] === '--crop') o.crop = true;
+    else if (args[i] === '--style') STYLE_OVERRIDE = path.resolve(args[++i]);
+    else if (args[i] === '--out') out = path.resolve(args[++i]);
+  }
+  if (!o.names.length) { console.error('lottiesheet: --names a,b,c'); process.exit(1); }
+  o.names = o.names.slice(0, 10);
+  fs.mkdirSync(path.dirname(out), { recursive: true });
+  await withPage(false, async (page) => {
+    const b64 = await page.evaluate(() => { renderFrame(30); return document.getElementById('c').toDataURL('image/jpeg', 0.9).split(',')[1]; });
+    fs.writeFileSync(out, Buffer.from(b64, 'base64'));
+    console.log(`${o.names.length} Lottie file(s) -> ${out}`);
+  }, { lottiesheet: o });
 }
 
 async function scan() {
@@ -193,7 +219,9 @@ async function scan() {
         }
       }
       const min = lum.reduce((a, x) => (x[1] < a[1] ? x : a), [0, 999]);
-      return { errors: errs, dark_frames: dark, darkest: { t: +(min[0] / FPS).toFixed(2), mean: +min[1].toFixed(1) }, sampled: lum.length };
+      /* Lottie animations drawn more than 12 % wider than their off-screen canvas: soft edges — give them a larger res */
+      const soft = [...LOT.values()].filter((L) => L.maxDrawn > L.canvas.width * 1.12).map((L) => ({ name: L.spec.name, res: L.spec.res, drawn_px: Math.round(L.maxDrawn) }));
+      return { errors: errs, dark_frames: dark, darkest: { t: +(min[0] / FPS).toFixed(2), mean: +min[1].toFixed(1) }, sampled: lum.length, soft_lottie: soft };
     });
     console.log(JSON.stringify(r, null, 1));
     if (r.errors.length || r.dark_frames.length) process.exitCode = 2;
@@ -256,6 +284,7 @@ async function video(args) {
   if (mode === 'still') await still(rest);
   else if (mode === 'meta') await meta();
   else if (mode === 'tile') await tile(rest);
+  else if (mode === 'lottiesheet') await lottiesheet(rest);
   else if (mode === 'scan') await scan();
   else if (mode === 'bench') await bench(rest);
   else if (mode === 'video') await video(rest);

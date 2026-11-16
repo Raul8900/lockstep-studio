@@ -174,6 +174,13 @@ def storyboard_md(seq, colour):
                  + (", upper case" if caps_st.get("case") == "upper" else "") + f", centred on y {caps_st.get('y')}, 1–5 words per phrase ("
                  + str(len(tl["caps"])) + " phrases, " + str(sum(1 for c in tl["caps"] if c["lines"] > 1)) + " of them two-line); "
                  + HIGHLIGHT_DESC.get(caps_st.get("highlight"), "") + ". Words not yet spoken are dimmed. Position never changes.\n")
+    lots = tl.get("lottie") or []
+    if lots:
+        cred_path = ROOT / "lottie/credits.json"
+        cred = json.load(open(cred_path, encoding="utf-8")) if cred_path.exists() else {}
+        names = sorted({x["name"] for x in lots})
+        o.append("**Lottie animations.** " + "; ".join(f"`{n}` (“{cred.get(n, {}).get('title', n)}” by {cred.get(n, {}).get('author', 'unknown')})" for n in names)
+                 + ", each started, paced or pinned to spoken words; recolouring: " + ", ".join(sorted({str(x['recolor']) for x in lots})) + ".\n")
     tr = st.get("transition") or {}
     if tr:
         o.append(f"**Scene changes.** {tr.get('duration')} s, default `{tr.get('default')}`; each scene can choose its own arrival "

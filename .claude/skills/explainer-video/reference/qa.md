@@ -33,6 +33,8 @@ Open the image and check, for every still:
 - Is anything essential under the caption, in the top or bottom band, or — below y ≈ 900 — right
   of x ≈ 910?
 - Does the picture show what the caption on that frame says?
+- Lottie animations: one author or one recolour scheme; readable on this background; key frames on
+  their words; nothing left frozen mid-move by accident.
 - Is it drawn in the video's world? Crisp vector diagrams in a hand-drawn look, or hairlines in a
   poster look, break the style; see "Make the scenes match the look" in art-direction.md.
 - Are colours used by role (`COL.subject`, `COL.accent`, …), never as hex values or as the
@@ -118,6 +120,12 @@ it is acceptable.
 | Text in an unexpected font | Family name misspelt in style.json | `lockstep style-check <slug>` names it; `lockstep fonts` lists what exists |
 | Words vanish against a light background | Legacy colour names (`COL.white` is dark ink on paper styles, `COL.bg0` light) or hard-coded hex | Use roles: `COL.ink`, `COL.onAccent` |
 | Muddy blotches on a light style | Large or strong `glow()` (it becomes a tint on light backgrounds) | Smaller radius, lower alpha, or emphasise with a fill or `highlighter` |
+| `no Lottie file lottie/x.json` at boot | Name misspelt or never taken | `lockstep lottie-info <slug>` lists the files; `lottie-get` takes one |
+| `useLottie(…) called after loading` | `useLottie()` inside the draw function | Declare every animation in the scene's setup code |
+| A Lottie is tiny in its box | The artist left empty canvas around the drawing | `useLottie(name, { crop: true })` |
+| A Lottie is blurry | Drawn larger than its off-screen canvas | `scan` lists `soft_lottie`; raise `res` |
+| A Lottie vanishes on the background | White artwork on a light look (or dark on dark) | `recolor` (lottie.md) or another file |
+| Build refuses: "Lottie files without a source and licence" | A file in `lottie/` has no entry in `credits.json` | `lottie-get` writes it; add your own files' entries by hand |
 | Voice sounds buried or the music vanishes | Voice-to-bed ratio outside 15–17 dB | `"mix"` in `video.json` (audio.md) |
 
 ## Honest reporting

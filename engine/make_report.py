@@ -84,6 +84,13 @@ w(f"| Look | `{ST.get('name', 'engine default')}` ({ST.get('mode', 'dark')} them
 w(f"| Music | Original, synthesised at {MUS.get('bpm', 100):g} BPM ({MUS.get('kit', 'synth')} kit" + (f", transposed {MUS['transpose']:+g} semitones" if MUS.get("transpose") else "")
   + "), arranged per chapter from the moods in video.json, ending on a held major chord. |")
 w(f"| Sound design | {A['sfx_cues']} synthesised cues, emitted by the animation code at the same cue times as the visuals. |")
+LOTS = TL.get("lottie") or []
+if LOTS:
+    cred_path = ROOT / "lottie/credits.json"
+    cred = json.load(open(cred_path, encoding="utf-8")) if cred_path.exists() else {}
+    names = sorted({x["name"] for x in LOTS})
+    parts = [f"{n} — “{cred.get(n, {}).get('title', n)}” by {cred.get(n, {}).get('author', 'unknown')} ({cred.get(n, {}).get('licence', 'licence not recorded')})" for n in names]
+    w(f"| Lottie animations | {len(names)} played on the narration's clock by lottie-web (MIT): " + "; ".join(parts) + ". Sources in lottie/credits.json. |")
 w("| Mix | Voice lightly compressed and peak-controlled; bed ducked under speech; mastered to −14 LUFS with a look-ahead limiter. |")
 w("| Encode | FFmpeg libx264 (CRF, preset slow), BT.709 limited range, 2 s keyframe interval; AAC-LC 256 kbps. |")
 w("")
@@ -126,6 +133,10 @@ else:
     w("FFmpeg’s freeze detector (0.15 % mean change, 0.4 s) reports no holds anywhere in the video.\n")
 if fid.get("ssim_all"):
     w(f"Encode fidelity against the rendered frames: SSIM {fid['ssim_all']:.4f}, PSNR {fid['psnr_avg_db']:.1f} dB.\n")
+
+if LOTS:
+    w("Suggested credit for the video description: “Animations: " + "; ".join(
+        f"{cred.get(n, {}).get('title', n)} by {cred.get(n, {}).get('author', 'unknown')}" for n in names) + " (LottieFiles)”.\n")
 
 notes = ROOT / "docs/report_notes.md"
 if notes.exists():

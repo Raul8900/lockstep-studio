@@ -24,6 +24,12 @@ lockstep <command> [<video>] [options]
   icons <word>                  search the 2,300 bundled icons
   save-style <video> [name]     add this video's look to the library, so later videos can build on it
 
+ lottie animations — designer-made vector motion, played on the narration's clock
+  lottie-search <video> <words> [--n 8]   search LottieFiles' free animations; filmstrips in this look -> out/lottie_search.jpg
+  lottie-get <video> <id> [name]          take one: lottie/<name>.json + its credit and licence
+  lottie-sheet <video> [names...]         this video's Lottie files as filmstrips, recoloured as the look draws them
+  lottie-info <video>                     duration, frame rate, markers, warnings and credits of each file
+
  narration
   voice <video> [voice] [speed] record the narration from script.py -> audio/narration_24k.wav, data/words.json
                                 ("voice <video> list" prints the available voices)
@@ -93,7 +99,8 @@ case "$cmd" in
       node "$E/render.js" "$E/tile" tile --style "$f" --out "$REPO/styles/previews/$n.jpg" >/dev/null
       printf '  %-20s %s\n' "$n" "$(json_field "$f" about)"
     done
-    python3 "$E/sheet.py" "$REPO/styles/previews/[!_]*.jpg" "$REPO/styles/previews/_all.jpg" 8 300 >/dev/null
+    n=$(ls "$REPO"/styles/*.json | wc -l); [ "$n" -le 12 ] || n=8
+    python3 "$E/sheet.py" "$REPO/styles/previews/[!_]*.jpg" "$REPO/styles/previews/_all.jpg" "$n" 300 >/dev/null
     echo "previews: styles/previews/<name>.jpg; all side by side: styles/previews/_all.jpg"
     echo "looks used by videos in this repo:"
     for d in "$REPO"/videos/*/; do
@@ -123,6 +130,16 @@ case "$cmd" in
     n=$(grep -ci -- "$q" "$REPO/assets/icons/names.txt" || true)
     echo "$n icons match '$q':"
     grep -i -- "$q" "$REPO/assets/icons/names.txt" | head -120 | paste -sd ' ' | fold -s -w 110 | sed 's/^/  /' ;;
+  lottie-search) V=$(resolve "${1:-}"); shift; python3 "$E/lottie_tool.py" search "$V" "$@" ;;
+  lottie-get)    V=$(resolve "${1:-}"); shift; python3 "$E/lottie_tool.py" get "$V" "$@" ;;
+  lottie-info)   V=$(resolve "${1:-}"); python3 "$E/lottie_tool.py" info "$V" ;;
+  lottie-sheet)
+    V=$(resolve "${1:-}"); shift
+    if [ $# -gt 0 ]; then NAMES=$(IFS=,; echo "$*"); else
+      NAMES=$(ls "$V"/lottie/*.json 2>/dev/null | xargs -n1 basename 2>/dev/null | sed 's/\.json$//' | grep -v '^credits$' | paste -sd, -)
+    fi
+    [ -n "$NAMES" ] || { echo "no Lottie files in $(basename "$V")/lottie/ — find some with: lockstep lottie-search $(basename "$V") <words>" >&2; exit 1; }
+    node "$E/render.js" "$V" lottiesheet --names "$NAMES" --out "$V/out/lottie_sheet.jpg" ;;
   save-style)
     V=$(resolve "${1:-}"); N="${2:-}"
     [ -f "$V/style.json" ] || { echo "no style.json in $V" >&2; exit 1; }
@@ -169,7 +186,7 @@ PY
   report)       V=$(resolve "${1:-}"); python3 "$E/make_report.py" "$V" ;;
   build)
     V=$(resolve "${1:-}"); shift
-    echo "== direction"; python3 "$E/check_brief.py" "$V"; style_gate "$V"
+    echo "== direction"; python3 "$E/check_brief.py" "$V"; style_gate "$V"; python3 "$E/lottie_tool.py" check "$V"
     [ -f "$V/data/words.json" ] || { echo "no narration yet: run 'lockstep voice $(basename "$V")' first" >&2; exit 1; }
     if [ "$V/script.py" -nt "$V/data/words.json" ]; then
       echo "script.py is newer than the recorded narration: run 'lockstep voice $(basename "$V")' first (or touch data/words.json if only notes changed)" >&2; exit 1

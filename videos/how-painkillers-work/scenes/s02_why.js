@@ -8,7 +8,7 @@
     pill: at('why', 'pill'),
     there: at('why', 'there', 1, 't1'),
   };
-  const pillH = art('pill', { treat: 'tint', colors: ['subject'] });
+  const pillH = glyph('pill', 'subject');
   const A = ANAT_AT.ankle;
   const P0 = [800, 586];
   const ROUTE = anatCurve(P0, [720, 760], [A.x, A.y], 60);
@@ -34,7 +34,7 @@
 
     polyline(ctx, ROUTE, COL.subject, 3.5, draw, 0.9, [10, 9]);
     const pp = polyAt(ROUTE, draw * ROUTE_LEN);
-    drawArt(ctx, pillH, pp[0], pp[1], 120, { p: pop });
+    drawGlyph(ctx, pillH, pp[0], pp[1], 120, { p: pop });
     check(ctx, A.x + 84, A.y - 70, 66, COL.good, ok, 9);
 
     tag(ctx, 'WHY IT SEEMS TRUE', 90, 400, { align: 'left', color: COL.accent, size: 26 });

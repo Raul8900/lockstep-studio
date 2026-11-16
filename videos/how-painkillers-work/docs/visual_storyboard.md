@@ -26,8 +26,6 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 **Captions.** Fraunces 800, 74 px, centred on y 1350, 1–5 words per phrase (66 phrases, 26 of them two-line); the spoken word takes its role colour and an underline draws in beneath it. Words not yet spoken are dimmed. Position never changes.
 
-**Illustrations.** 3 subjects from Microsoft Fluent Emoji (MIT licence), line set, tint: brain, pill, warning.
-
 **Scene changes.** 0.7 s, default `slideLeft`; each scene can choose its own arrival (zoom into a point, pull back, pan, slide, cut, flash). The incoming scene is already drawn and moving before the outgoing one has gone.
 
 ---

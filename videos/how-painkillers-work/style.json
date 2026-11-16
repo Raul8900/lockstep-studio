@@ -3,7 +3,11 @@
   "about": "Warm paper, ink-blue and vermilion, serif headlines, line-drawn anatomy: body chemistry told like an old field guide. Medicine, the body, how a drug moves through it.",
   "mode": "light",
   "palette": {
-    "bg": ["#F7F1E5", "#F3EBDB", "#EDE3CF"],
+    "bg": [
+      "#F7F1E5",
+      "#F3EBDB",
+      "#EDE3CF"
+    ],
     "ink": "#1F1B16",
     "subject": "#1F5FBF",
     "accent": "#D9480F",
@@ -38,10 +42,5 @@
   "transition": {
     "duration": 0.7,
     "default": "slideLeft"
-  },
-  "illustrations": {
-    "set": "line",
-    "treat": "tint",
-    "colors": ["ink"]
   }
 }

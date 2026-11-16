@@ -6,7 +6,7 @@
     hurts: at('hook', 'hurts'),
     doesnt: at('hook', "doesn't"),
   };
-  const pillH = art('pill', { treat: 'tint', colors: ['subject'] });
+  const pillH = glyph('pill', 'subject');
 
   sfx(c.knows - 0.25, 'whoosh', 0.5);
   sfx(c.hurts, 'lock', 0.8);
@@ -29,7 +29,7 @@
     anatGlow(ctx, A.x, A.y, 90, 0.12 * (1 - sh));
 
     if (gone > 0.01) {
-      drawArt(ctx, pillH, px, py, 120, { alpha: gone, rot: fly * 0.8 });
+      drawGlyph(ctx, pillH, px, py, 120, { alpha: gone, rot: fly * 0.8 });
     }
     if (lock > 0.01 && sh < 1) {
       withAlpha(ctx, lock * (1 - sh), function () {

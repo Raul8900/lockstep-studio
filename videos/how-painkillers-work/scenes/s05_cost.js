@@ -11,7 +11,7 @@
     kidneys: at('cost', 'kidneys'),
     cut: at('cost', 'cut'),
   };
-  const warnH = art('warning', { treat: 'tint', colors: ['alert'] });
+  const warnH = glyph('triangle-alert', 'alert');
 
   sfx(c.stomach, 'swell', 0.35, { dur: 0.8 });
   sfx(c.block2, 'deny', 0.5);
@@ -52,7 +52,7 @@
 
     const wp = prog(t, c.serious - 0.1, c.serious + 0.25);
     if (wp > 0) {
-      drawArt(ctx, warnH, 300, 690, 92, { p: wp });
+      drawGlyph(ctx, warnH, 300, 690, 92, { p: wp });
       callout(ctx, 352, 700, 470, 730, prog(t, c.serious, c.serious + 0.3), COL.alert);
     }
 

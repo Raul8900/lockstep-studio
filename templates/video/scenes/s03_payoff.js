@@ -25,15 +25,16 @@
   addScene('payoff', function (ctx, t) {
     const say = tw(t, c.say - 0.05, c.say + 0.3, E.out3), show = tw(t, c.show - 0.05, c.show + 0.3, E.out3);
     const snap = tw(t, c.lock - 0.02, c.lock + 0.3, E.outBack), k = clamp(snap);
+    const kOut = prog(t, c.lock - 0.16, c.lock), kIn = prog(t, c.lock, c.lock + 0.14);   // the old headline leaves before the new one arrives
     const gap = lerp(46, 10, snap), yA = MID - gap / 2 - PH, yB = MID + gap / 2;
     const colA = k > 0.5 ? COL.good : COL.data, colB = k > 0.5 ? COL.good : COL.subject;
 
     /* headline */
-    riseText(ctx, 'SAY IT.', CX - 200, 500, say, { size: 78, weight: 900, family: F.disp, color: COL.data, align: 'center', alpha: 1 - k });
-    riseText(ctx, 'SHOW IT.', CX + 200, 500, show, { size: 78, weight: 900, family: F.disp, color: COL.subject, align: 'center', alpha: 1 - k });
+    riseText(ctx, 'SAY IT.', CX - 200, 500, say, { size: 78, weight: 900, family: F.disp, color: COL.data, align: 'center', alpha: 1 - kOut });
+    riseText(ctx, 'SHOW IT.', CX + 200, 500, show, { size: 78, weight: 900, family: F.disp, color: COL.subject, align: 'center', alpha: 1 - kOut });
     if (k > 0) {
       ctx.save(); ctx.translate(CX, 500); ctx.scale(lerp(0.8, 1, snap), lerp(0.8, 1, snap));
-      text(ctx, 'IN LOCKSTEP', 0, 0, { size: 112, weight: 900, family: F.disp, color: COL.ink, align: 'center', ls: -1, alpha: k });
+      text(ctx, 'IN LOCKSTEP', 0, 0, { size: 112, weight: 900, family: F.disp, color: COL.ink, align: 'center', ls: -1, alpha: kIn });
       ctx.restore();
       tag(ctx, 'VOICE · PICTURE · SOUND — ONE CLOCK', CX, 556, { align: 'center', color: COL.good, alpha: prog(t, c.lock + 0.2, c.lock + 0.5) });
     }

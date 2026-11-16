@@ -144,6 +144,12 @@ videos), `line` (a thin progress line), `none` (narrative videos, 60 s and under
 **`transition`** — `duration` 0.2–1.2 s and the `default` type for scenes that do not name one:
 `fade`, `slideLeft`, `slideRight`, `zoomIn`, `zoomOut`, `panDown`, `panUp`, `cut`, `flash`.
 
+**`lottie`** — how Lottie animations are recoloured to sit in this look, unless a file asks
+otherwise: `{ "recolor": "nearest", "colors": ["ink", "subject", "accent", "panel"], "res": 600 }`.
+`recolor` is `none`, `nearest` (each colour to the closest listed one), `palette` (a dark-to-light
+ramp through 2–3 colours), `tint` (one colour, for line-art animations) or a `{ "#hex": colour }`
+map (lottie.md). Leave it out when the chosen files already fit.
+
 ## Type voices
 
 All bundled families are open-licence (OFL or Apache); `bin/lockstep fonts` lists their weights.
@@ -176,8 +182,10 @@ look with crisp vector diagrams, or a poster look with thin hairlines, reads as 
 | cards and process | panels in sequence, slides, icons as small pictograms, a progress line |
 | soft, friendly | round shapes, springy easing (`E.outBack`), big friendly icons, pastel fills |
 
-Icons (2,300 line icons, `bin/lockstep icons <word>`) suit small pictograms and labels. The hero
-object deserves its own drawing in the video's `components.js`.
+Icons (2,300 line icons, `bin/lockstep icons <word>`) suit small pictograms and labels. Lottie
+animations bring characters and effects with real motion — choose files whose drawing style fits the
+look (`lottie-search` previews them in it), keep to one author or one recolour scheme, and recolour
+anything that clashes. The hero object deserves its own drawing in the video's `components.js`.
 
 ## Quality bar for a look
 

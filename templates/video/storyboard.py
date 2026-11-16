@@ -20,10 +20,10 @@ COLOUR_LANGUAGE = ("Cyan #27E1FF = the thing that works · Amber #FFA91E = the o
 def sequences(at, S, dur):
     return [
      ("The feed stops", 0.0, S("idea"),
-      "A column of skeleton feed cards; one hero card; headline.",
+      "A column of skeleton feed cards; one hero card; headline; a finger flicking the feed up (Lottie: 'swipe up' by Carlos Fernández Gallego, LottieFiles).",
       "Cards 620 × 190 px, centred on x 540, visible between y 560 and 1200. Headline baseline y 510.",
       "Standard backdrop.",
-      "The feed scrolls upward fast and decelerates to a dead stop on “impossible”; the hero card lights up and a ring expands from it.",
+      "The finger is mid-flick on frame 0 and lifts off; the feed glides on, decelerates and stops dead on “impossible”; the hero card lights up and a ring expands from it.",
       "Scroll: ease-out-cubic ending 0.12 s after the cue. Hero card: ease-out-back 0.3 s. Ring: 0.8 s ease-out.",
       "Static.",
       "Everything grey until the stop; the hero card turns cyan.",

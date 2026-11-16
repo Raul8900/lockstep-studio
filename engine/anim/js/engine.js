@@ -160,7 +160,7 @@ function applyBloom(ctx, src, strength = 1) {
   ctx.restore();
 }
 function drawPost(ctx, frame) {
-  ctx.drawImage(OVERLAY, 0, 0);
+  if (!window.LOTTIESHEET) ctx.drawImage(OVERLAY, 0, 0);       // preview sheets skip the caption shading
   /* fixed low-amplitude dither (about 1.5 code values): hides 8-bit banding in the dark
      gradients. It is static on purpose - animated grain multiplied the bitrate by ~8. */
   ctx.save();
@@ -341,7 +341,7 @@ function chapterName(id) {
 }
 function drawHUD(ctx, t) {
   const HS = STYLE.hud;
-  if (HS.type === 'none') return;
+  if (HS.type === 'none' || window.LOTTIESHEET) return;
   if (HS.type === 'line') {            // one thin progress line, no labels
     fillRR(ctx, SAFE.l, 292, SAFE.r - SAFE.l, 5, 2.5, HS.track);
     fillRR(ctx, SAFE.l, 292, Math.max(5, (SAFE.r - SAFE.l) * clamp(t / DATA.dur)), 5, 2.5, COL.cyan);
@@ -511,12 +511,15 @@ async function boot() {
   ICONS = (await opt('assets/icons/lucide.json')) || {};
   if (window.TILE_MODE) {
     setupTile();
+  } else if (window.LOTTIESHEET) {
+    setupLottieSheet(window.LOTTIESHEET);
   } else {
     const [words, takes, phrases] = await Promise.all([get('project/data/words.json'), get('project/data/takes.json'), get('project/caption_phrases.json')]);
     DATA.words = words; DATA.takes = takes.takes; DATA.beats = takes.beats; DATA.meta = takes.meta; DATA.dur = takes.meta.duration;
     CAPS = buildCaptions(words, phrases);
     if (window.defineScenes) window.defineScenes();
   }
+  await loadLotties();                  // every file declared with useLottie(), loaded and recoloured once
   finalizeScenes();
   for (const s of SCENES) if (!TRANSITIONS.includes((s.trans || {}).type)) throw new Error(`scene ${s.id}: unknown transition type "${(s.trans || {}).type}"; choose from: ${TRANSITIONS.join(', ')}`);
   SFX.sort((a, b) => a.t - b.t);

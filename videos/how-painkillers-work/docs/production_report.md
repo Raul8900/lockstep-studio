@@ -31,7 +31,6 @@ All figures in the numbered sections were measured on the delivered file by `eng
 | Look | `anatomy-plate` (light theme); the reasoning behind it and the story shape is in docs/creative_brief.md. |
 | Music | Original, synthesised at 108 BPM (pluck kit, transposed -2 semitones), arranged per chapter from the moods in video.json, ending on a held major chord. |
 | Sound design | 43 synthesised cues, emitted by the animation code at the same cue times as the visuals. |
-| Illustrations | 3 from Microsoft Fluent Emoji (MIT licence; line set, tint): brain, pill, warning. Credit: “Illustrations: Microsoft Fluent Emoji (MIT)”. |
 | Mix | Voice lightly compressed and peak-controlled; bed ducked under speech; mastered to −14 LUFS with a look-ahead limiter. |
 | Encode | FFmpeg libx264 (CRF, preset slow), BT.709 limited range, 2 s keyframe interval; AAC-LC 256 kbps. |
 

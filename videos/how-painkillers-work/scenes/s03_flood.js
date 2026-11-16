@@ -17,7 +17,7 @@
     every: at('flood', 'every'),
     organ: at('flood', 'organ'),
   };
-  const pillH = art('pill', { treat: 'tint', colors: ['subject'] });
+  const pillH = glyph('pill', 'subject');
   const P0 = [800, 586];
   const N = 16;
   const RATE = 0.035;
@@ -44,7 +44,7 @@
     anatKidneys(ctx, 0.85, COL.data, 3.2);
 
     if (dis > 0.01) {
-      drawArt(ctx, pillH, P0[0], P0[1], 120 * (0.4 + 0.6 * dis), { alpha: dis });
+      drawGlyph(ctx, pillH, P0[0], P0[1], 120 * (0.4 + 0.6 * dis), { alpha: dis });
     }
 
     for (let k = 0; k < N; k++) {

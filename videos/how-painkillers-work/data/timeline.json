@@ -113,23 +113,7 @@
    }
   }
  ],
- "art": [
-  {
-   "name": "pill",
-   "set": "line",
-   "treat": "tint"
-  },
-  {
-   "name": "warning",
-   "set": "line",
-   "treat": "tint"
-  },
-  {
-   "name": "brain",
-   "set": "line",
-   "treat": "tint"
-  }
- ],
+ "lottie": [],
  "sfx": [
   {
    "t": 0.833,

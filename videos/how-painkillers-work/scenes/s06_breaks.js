@@ -13,8 +13,8 @@
     morphine: at('breaks', 'morphine'),
     nervous: at('breaks', 'nervous'),
   };
-  const pillH = art('pill', { treat: 'tint', colors: ['subject'] });
-  const brainH = art('brain', { treat: 'tint', colors: ['data'] });
+  const pillH = glyph('pill', 'subject');
+  const brainH = glyph('brain', 'data');
   const P_PARA = [170, 1040];
   const P_OPI = [840, 1040];
   const ROUTE_PARA = anatCurve(P_PARA, [260, 760], [520, 470], 60);
@@ -36,13 +36,13 @@
     ANAT_FACTORIES_ANKLE.forEach(function (f) { anatBlock(ctx, f[0], f[1], 46, 1, fa); });
     ANAT_FACTORIES_ORGANS.forEach(function (f) { anatBlock(ctx, f.x, f.y, 34, 1, fa); });
 
-    drawArt(ctx, brainH, 540, 440, 150, { p: prog(t, c.brain, c.brain + 0.5) });
+    drawGlyph(ctx, brainH, 540, 440, 150, { p: prog(t, c.brain, c.brain + 0.5) });
     polyline(ctx, [[540, 520], [540, 1000]], COL.subject, 4,
              prog(t, c.spinal, c.spinal + 0.5), 0.9, [10, 8]);
 
     const pp = prog(t, c.para, c.para + 0.4);
     if (pp > 0) {
-      drawArt(ctx, pillH, P_PARA[0], P_PARA[1], 110, { p: pp });
+      drawGlyph(ctx, pillH, P_PARA[0], P_PARA[1], 110, { p: pp });
       text(ctx, 'PARACETAMOL', P_PARA[0], 1100, {
         size: 24, weight: 700, family: F.mono, color: COL.subject, align: 'center', alpha: pp
       });
@@ -51,7 +51,7 @@
 
     const op = prog(t, c.opioids, c.opioids + 0.4);
     if (op > 0) {
-      drawArt(ctx, pillH, P_OPI[0], P_OPI[1], 110, { p: op });
+      drawGlyph(ctx, pillH, P_OPI[0], P_OPI[1], 110, { p: op });
       text(ctx, 'OPIOIDS', P_OPI[0], 1100, {
         size: 24, weight: 700, family: F.mono, color: COL.subject, align: 'center', alpha: op
       });

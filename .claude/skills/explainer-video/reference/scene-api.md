@@ -169,6 +169,36 @@ drawn by hand, change the seed a few times a second: `seed: 7 + Math.floor(t * 6
 Icons are generic pictograms: good for a row of concepts, a status, a small label. The hero
 object of a video deserves to be drawn by hand in the video's `components.js`, in its own style.
 
+### Lottie animations (`lottie.js`)
+
+Designer-made vector animations from the video's `lottie/` folder, played on the narration's clock.
+Full guide (finding, licence, timing, recolouring): lottie.md.
+
+```js
+const bee = useLottie('bee', { crop: true });                              // setup code: declare
+drawLottie(ctx, bee, t, x, y, 260, { at: c.bee, loop: true, flipX });      // draw function: note the t
+drawLottie(ctx, hive, t, 540, 980, 520, { at: c.lands, peak: 100 });      // frame 100 lands on "lands"
+```
+
+| Helper | |
+|---|---|
+| `useLottie(name, { recolor, colors, crop, res, dir })` | declare; defaults from `style.json` → `lottie` |
+| `drawLottie(ctx, h, t, x, y, size, { at, peak, speed, loop, segment, from, to, frame, before, after, p, alpha, rot, flipX, squash, dy, anchor })` | draw the frame for time `t` |
+| `lottieInfo(h)` · `lottieFrameAt(h, t, opts)` | timing facts; the frame shown at a moment (to freeze it) |
+
+### Character motion and bubbles
+
+Pure functions of time for anything that acts — a Lottie, an icon, a shape:
+
+| Helper | Returns | |
+|---|---|---|
+| `bob(t, { speed, amp, phase })` | y offset ≤ 0 | walking, flying bounce |
+| `sway(t, { speed, amp, phase })` | rotation | idle lean |
+| `breathe(t, { speed, amp })` | scale ≈ 1 | standing still but alive |
+| `wiggle(t, { from, until, amp, speed })` | rotation | excitement, alarm |
+| `hop(t, t0, { height, dur })` | `{ dy, squash }` | a jump on a word: crouch, stretch, land |
+| `bubble(ctx, x, y, w, h, tx, ty, { p, text, think })` | — | speech or thought bubble pointing at a speaker at (tx, ty) |
+
 **2.5D** — `const P = new Proj({ cx, cy, scale, yaw, pitch })`: world x/y in a tilted plane, z up.
 `P.pt(x, y, z)` → `[screenX, screenY, scale]`; `P.quad(ctx, x0, y0, x1, y1, z)` builds a path;
 `P.slab(ctx, x0, y0, x1, y1, z0, z1, topFill, sideFill, edge)` draws an extruded box. Call

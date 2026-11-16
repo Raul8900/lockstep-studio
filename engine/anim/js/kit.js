@@ -98,6 +98,77 @@ function bigWord(ctx, str, cx, cy, p, o = {}) {
   return size;
 }
 
+/* ---------- motion for characters and objects (pure functions of time) ----------
+   Use with anything drawn as a character: a Lottie, an icon, a shape from components.js. */
+/* walking / trotting bounce: a y offset (≤ 0); speed = steps per second */
+const bob = (t, o = {}) => -(o.amp == null ? 12 : o.amp) * Math.abs(Math.sin(Math.PI * (o.speed == null ? 2 : o.speed) * t + (o.phase || 0)));
+/* gentle side-to-side lean: rotation in radians */
+const sway = (t, o = {}) => (o.amp == null ? 0.06 : o.amp) * Math.sin(TAU * (o.speed == null ? 0.5 : o.speed) * t + (o.phase || 0));
+/* idle breathing: a scale multiplier around 1 */
+const breathe = (t, o = {}) => 1 + (o.amp == null ? 0.025 : o.amp) * Math.sin(TAU * (o.speed == null ? 0.4 : o.speed) * t + (o.phase || 0));
+/* excited shake between from and until: rotation in radians */
+function wiggle(t, o = {}) {
+  const { from = -Infinity, until = Infinity, amp = 0.12, speed = 9 } = o;
+  if (t < from || t > until) return 0;
+  const env = Math.min(1, (t - from) / 0.08, (until - t) / 0.12);
+  return amp * env * Math.sin(TAU * speed * t);
+}
+/* a jump starting at t0: crouch, stretch in the air, squash on landing. Returns { dy, squash }:
+   offset y by dy, and scale x by (1 + 0.25 * squash), y by (1 - 0.25 * squash) about the feet
+   (drawLottie takes both directly: { dy: j.dy, squash: j.squash, anchor: 'bottom' }) */
+function hop(t, t0, o = {}) {
+  const { height = 140, dur = 0.42 } = o;
+  if (t < t0 - 0.08) return { dy: 0, squash: 0 };
+  if (t < t0) return { dy: 0, squash: 0.6 * prog(t, t0 - 0.08, t0) };
+  if (t < t0 + dur) { const u = (t - t0) / dur; return { dy: -height * 4 * u * (1 - u), squash: -0.45 * Math.sin(Math.PI * u) * (1 - u) }; }
+  const l = t - t0 - dur;
+  return { dy: 0, squash: 0.55 * Math.exp(-l / 0.07) * Math.cos(l * 40) };
+}
+
+/* ---------- speech and thought bubbles ----------
+   body centred at (x, y), w × h; the tail points at (tx, ty). Optional text inside. */
+function bubble(ctx, x, y, w, h, tx, ty, o = {}) {
+  const { p = 1, alpha = 1, fill = COL.panel, stroke = COL.ink, lw = 4, r = Math.min(30, h / 2), think = false,
+    text: str = null, size = 40, weight = 700, family = F.ui, color = COL.ink } = o;
+  if (p <= 0 || alpha <= 0.003) return;
+  const e = Math.max(0, E.outBack(clamp(p)));
+  ctx.save();
+  ctx.globalAlpha *= clamp(alpha) * clamp(p * 3);
+  ctx.translate(tx, ty); ctx.scale(e, e); ctx.translate(-tx, -ty);       // grows out of the speaker
+  const x0 = x - w / 2, y0 = y - h / 2, R = think ? h / 2 : r;
+  const parts = [];
+  if (think) {
+    for (let i = 1; i <= 3; i++) {
+      const u = 0.25 + i * 0.2, cr = Math.max(5, h * (0.055 + 0.035 * (3 - i)));
+      parts.push((c) => { c.moveTo(lerp(tx, x, u) + cr, lerp(ty, y, u)); c.arc(lerp(tx, x, u), lerp(ty, y, u), cr, 0, TAU); });
+    }
+  } else {
+    /* tail: a triangle from the side facing the speaker */
+    const dx = tx - x, dy = ty - y, vert = Math.abs(dy) * w > Math.abs(dx) * h;
+    const bw = Math.min(w, h) * 0.32;
+    if (vert) {
+      const sy = dy > 0 ? y0 + h - 2 : y0 + 2, bx = clamp(lerp(x, tx, 0.35), x0 + R + bw / 2, x0 + w - R - bw / 2);
+      parts.push((c) => { c.moveTo(bx - bw / 2, sy); c.lineTo(tx, ty); c.lineTo(bx + bw / 2, sy); c.closePath(); });
+    } else {
+      const sx = dx > 0 ? x0 + w - 2 : x0 + 2, by = clamp(lerp(y, ty, 0.35), y0 + R + bw / 2, y0 + h - R - bw / 2);
+      parts.push((c) => { c.moveTo(sx, by - bw / 2); c.lineTo(tx, ty); c.lineTo(sx, by + bw / 2); c.closePath(); });
+    }
+  }
+  parts.push((c) => { rr(c, x0, y0, w, h, R); });
+  /* strokes first at double width, fills on top: only the outline of the union remains */
+  ctx.lineJoin = 'round'; ctx.strokeStyle = stroke; ctx.lineWidth = lw * 2; ctx.fillStyle = fill;
+  for (const f of parts) { ctx.beginPath(); f(ctx); ctx.stroke(); }
+  for (const f of parts) { ctx.beginPath(); f(ctx); ctx.fill(); }
+  ctx.restore();
+  if (str) {
+    ctx.save(); ctx.globalAlpha *= clamp(alpha) * clamp(p * 2 - 0.4);
+    ctx.translate(tx, ty); ctx.scale(e, e); ctx.translate(-tx, -ty);
+    const sz = Math.min(size, fitSize(ctx, str, w - 44, size, weight, family));
+    text(ctx, str, x, y + sz * 0.35, { size: sz, weight, family, color, align: 'center' });
+    ctx.restore();
+  }
+}
+
 /* ---------- style tile ----------
    `lockstep tile <video>` renders this: palette roles, type, panel, icons, a caption
    and the backdrop, as they will look in the video.                                   */

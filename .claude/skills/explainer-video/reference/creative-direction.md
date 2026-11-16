@@ -64,8 +64,12 @@ Judge each direction on:
 - **Fit** — does the look and tone belong to this topic and this audience?
 - **Freshness** — how far is it from the default treatment you found in step "Inputs"?
 - **Feasibility** — can this engine make it well? It draws vector shapes, type, line icons, hand-drawn
-  lines, 2.5D slabs and particles; it has no photographs, footage, 3D models or lip-synced
-  characters. A direction that needs those will be made badly.
+  lines, 2.5D slabs and particles, and plays Lottie animations — characters, gestures, objects and
+  effects animated by designers — pinned to the narration (lottie.md). It has no photographs,
+  footage, 3D models or lip-synced characters. A direction that needs those will be made badly.
+- **Animations** — if a direction leans on animated characters or props, run
+  `bin/lockstep lottie-search <video> <words>` now and look at the filmstrips: is there a consistent
+  set (one author or style) that fits this look? If not, the direction must draw them.
 
 Pick one, or combine — and say exactly what came from where.
 
