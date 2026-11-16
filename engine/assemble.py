@@ -60,11 +60,18 @@ def master_audio():
     src = ROOT / "audio/mix_premaster.wav"
     x, sr = sf.read(src, dtype="float64")
     out = ROOT / "audio/final_mix.wav"
+    if not np.any(x):
+        sf.write(out, x, sr, subtype="PCM_24")
+        return out, {"premaster_lufs": None, "final_lufs": None, "final_true_peak_db": None,
+                     "max_limiter_reduction_db": 0, "silent": True}
     gain_db, report = 0.0, {}
+    ceiling = float(load_config(ROOT).get('mix', {}).get('master_ceiling_db', CEILING_DB))
+    if not np.isfinite(ceiling) or not -12 <= ceiling <= -1:
+        raise ValueError('mix.master_ceiling_db must be between -12 and -1; allow headroom for AAC overshoot and measure the exported file')
     i0, lra0, tp0 = measure(src)
     for attempt in range(4):
         gain_db += TARGET_LUFS - (i0 if attempt == 0 else i_now)
-        y, max_gr = limiter(x * 10 ** (gain_db / 20), CEILING_DB, sr)
+        y, max_gr = limiter(x * 10 ** (gain_db / 20), ceiling, sr)
         sf.write(out, y, sr, subtype="PCM_24")
         i_now, lra, tp = measure(out)
         if abs(i_now - TARGET_LUFS) <= 0.15:
@@ -93,6 +100,10 @@ def main():
     need(ROOT / "audio/mix_premaster.wav", "run: lockstep audio <video>")
     tl = json.load(open(need(ROOT / "data/timeline.json", "run: lockstep meta <video>")))
     total = tl["total"]
+    opted_in = bool(cfg.get('choices') or cfg.get('audio') or cfg.get('music', {}).get('source') or cfg.get('clock'))
+    # Bound new productions explicitly. FFmpeg's shortest buffering can otherwise
+    # discard ~70 ms of AAC from a finite image sequence; preserve legacy encoding.
+    end_args = ["-t", f"{total / 30:.6f}"] if opted_in else ["-shortest", "-fflags", "+shortest", "-max_interleave_delta", "100M"]
     frames = sorted((ROOT / "out/frames").glob("f*.jpg"))
     if not args.audio_only and not args.remux and len(frames) != total:
         sys.exit(f"expected {total} frames, found {len(frames)} — render first")
@@ -105,7 +116,7 @@ def main():
         tmp = args.out + ".remux.mp4"
         subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", args.out, "-i", str(audio),
                         "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-af", "apad", "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
-                        "-movflags", "+faststart", "-shortest", "-fflags", "+shortest", "-max_interleave_delta", "100M",
+                        "-movflags", "+faststart", *end_args,
                         "-map_metadata", "0", tmp], check=True)
         Path(tmp).replace(args.out)
         json.dump(arep, open(ROOT / "data/master_report.json", "w"), indent=1)
@@ -123,9 +134,9 @@ def main():
            "-maxrate", "16M", "-bufsize", "32M",
            "-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709", "-color_range", "tv",
            "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
-           "-movflags", "+faststart", "-shortest", "-fflags", "+shortest", "-max_interleave_delta", "100M",
+           "-movflags", "+faststart", *end_args,
            "-metadata", "title=" + cfg.get("title", ROOT.name),
-           "-metadata", "comment=Programmatically rendered (HTML Canvas + FFmpeg). Voice: Kokoro TTS. Music and sound design: original synthesis.",
+           "-metadata", ("comment=Deterministic local Lockstep production. See saved choices and provenance in production_report.md." if opted_in else "comment=Programmatically rendered (HTML Canvas + FFmpeg). Voice: Kokoro TTS. Music and sound design: original synthesis."),
            args.out]
     subprocess.run(cmd, check=True)
     json.dump(arep, open(ROOT / "data/master_report.json", "w"), indent=1)

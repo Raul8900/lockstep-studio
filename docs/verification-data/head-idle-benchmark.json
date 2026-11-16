@@ -1,0 +1,153 @@
+{
+  "runs": [
+    {
+      "mode": "meta",
+      "run": 0,
+      "kind": "cold-process",
+      "command": [
+        "node",
+        "/workspace/work/lockstep-studio/engine/render.js",
+        "/workspace/work/legacy-fixture",
+        "meta"
+      ],
+      "elapsed_s": 1.6489,
+      "peak_tree_rss_mib": 664.17,
+      "stdout": "timeline.json: 530 frames, 3 scenes, 35 sfx cues, 13 caption phrases\n",
+      "stderr": ""
+    },
+    {
+      "mode": "meta",
+      "run": 1,
+      "kind": "warm",
+      "command": [
+        "node",
+        "/workspace/work/lockstep-studio/engine/render.js",
+        "/workspace/work/legacy-fixture",
+        "meta"
+      ],
+      "elapsed_s": 1.6281,
+      "peak_tree_rss_mib": 671.45,
+      "stdout": "timeline.json: 530 frames, 3 scenes, 35 sfx cues, 13 caption phrases\n",
+      "stderr": ""
+    },
+    {
+      "mode": "meta",
+      "run": 2,
+      "kind": "warm",
+      "command": [
+        "node",
+        "/workspace/work/lockstep-studio/engine/render.js",
+        "/workspace/work/legacy-fixture",
+        "meta"
+      ],
+      "elapsed_s": 1.6025,
+      "peak_tree_rss_mib": 667.21,
+      "stdout": "timeline.json: 530 frames, 3 scenes, 35 sfx cues, 13 caption phrases\n",
+      "stderr": ""
+    },
+    {
+      "mode": "meta",
+      "run": 3,
+      "kind": "warm",
+      "command": [
+        "node",
+        "/workspace/work/lockstep-studio/engine/render.js",
+        "/workspace/work/legacy-fixture",
+        "meta"
+      ],
+      "elapsed_s": 1.6429,
+      "peak_tree_rss_mib": 673.7,
+      "stdout": "timeline.json: 530 frames, 3 scenes, 35 sfx cues, 13 caption phrases\n",
+      "stderr": ""
+    },
+    {
+      "mode": "video",
+      "run": 0,
+      "kind": "cold-process",
+      "command": [
+        "node",
+        "/workspace/work/lockstep-studio/engine/render.js",
+        "/workspace/work/legacy-fixture",
+        "video",
+        "--from",
+        "0",
+        "--to",
+        "5",
+        "--workers",
+        "1"
+      ],
+      "elapsed_s": 11.5006,
+      "peak_tree_rss_mib": 894.04,
+      "stdout": "rendering chunks 0..0 of 4 (530 frames total) with 1 workers\n  150/150 frames  15.3 fps  eta 0s\nrendered 150 frames in 9.8s -> /workspace/work/legacy-fixture/out/frames\n",
+      "stderr": ""
+    },
+    {
+      "mode": "video",
+      "run": 1,
+      "kind": "warm",
+      "command": [
+        "node",
+        "/workspace/work/lockstep-studio/engine/render.js",
+        "/workspace/work/legacy-fixture",
+        "video",
+        "--from",
+        "0",
+        "--to",
+        "5",
+        "--workers",
+        "1"
+      ],
+      "elapsed_s": 12.0679,
+      "peak_tree_rss_mib": 895.38,
+      "stdout": "rendering chunks 0..0 of 4 (530 frames total) with 1 workers\n  150/150 frames  14.2 fps  eta 0s\nrendered 150 frames in 10.5s -> /workspace/work/legacy-fixture/out/frames\n",
+      "stderr": ""
+    },
+    {
+      "mode": "video",
+      "run": 2,
+      "kind": "warm",
+      "command": [
+        "node",
+        "/workspace/work/lockstep-studio/engine/render.js",
+        "/workspace/work/legacy-fixture",
+        "video",
+        "--from",
+        "0",
+        "--to",
+        "5",
+        "--workers",
+        "1"
+      ],
+      "elapsed_s": 11.5547,
+      "peak_tree_rss_mib": 898.53,
+      "stdout": "rendering chunks 0..0 of 4 (530 frames total) with 1 workers\n  150/150 frames  14.8 fps  eta 0s\nrendered 150 frames in 10.1s -> /workspace/work/legacy-fixture/out/frames\n",
+      "stderr": ""
+    },
+    {
+      "mode": "video",
+      "run": 3,
+      "kind": "warm",
+      "command": [
+        "node",
+        "/workspace/work/lockstep-studio/engine/render.js",
+        "/workspace/work/legacy-fixture",
+        "video",
+        "--from",
+        "0",
+        "--to",
+        "5",
+        "--workers",
+        "1"
+      ],
+      "elapsed_s": 11.7288,
+      "peak_tree_rss_mib": 897.81,
+      "stdout": "rendering chunks 0..0 of 4 (530 frames total) with 1 workers\n  150/150 frames  15.1 fps  eta 0s\nrendered 150 frames in 10.0s -> /workspace/work/legacy-fixture/out/frames\n",
+      "stderr": ""
+    }
+  ],
+  "warm_medians": {
+    "meta": 1.6281,
+    "video": 11.7288
+  },
+  "memory_method": "sum of parent and descendant RSS sampled every 50 ms; shared pages may be counted in multiple processes"
+}

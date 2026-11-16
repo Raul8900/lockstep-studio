@@ -17,6 +17,10 @@ from common import load_config, need, project_dir  # noqa: E402
 
 ROOT = project_dir()
 CFG = load_config(ROOT)
+if CFG.get("choices") or CFG.get('audio') or CFG.get('music', {}).get('source') or CFG.get("clock", {}).get("mode") == "music":
+    from production_report import write_report
+    write_report(ROOT, CFG)
+    sys.exit(0)
 D = ROOT / "data"
 V = json.load(open(need(D / "validation.json", "run: lockstep validate <video>")))
 M = json.load(open(D / "master_report.json"))

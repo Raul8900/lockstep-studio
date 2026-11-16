@@ -1,0 +1,123 @@
+{
+  "schema": 1,
+  "selected": [
+    {
+      "id": "native.growth",
+      "version": 1,
+      "slot": "shots",
+      "backend": "native",
+      "inputs": {
+        "duration": 5.0,
+        "cue": {
+          "marker": "accent0"
+        }
+      },
+      "source": "Original Lockstep recipes and assets",
+      "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+      "id": "native.cell",
+      "version": 1,
+      "slot": "shots",
+      "backend": "native",
+      "inputs": {
+        "duration": 5.0,
+        "cue": {
+          "marker": "accent1"
+        }
+      },
+      "source": "Original Lockstep recipes and assets",
+      "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+      "id": "three.rig",
+      "version": 1,
+      "slot": "shots",
+      "backend": "three",
+      "inputs": {
+        "model": "assets/production/hinge-rig.glb",
+        "duration": 5.0,
+        "cue": {
+          "marker": "accent2"
+        }
+      },
+      "source": "Three.js 0.180.0; original CC0 verification asset",
+      "license": "MIT runtime; CC0-1.0 original model"
+    },
+    {
+      "id": "voice.none",
+      "version": 1,
+      "slot": "narration",
+      "backend": "audio",
+      "inputs": {},
+      "source": "Original Lockstep recipes and assets",
+      "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+      "id": "score.synth",
+      "version": 1,
+      "slot": "score",
+      "backend": "audio",
+      "inputs": {},
+      "source": "Original Lockstep recipes and assets",
+      "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+      "id": "effects.mixed",
+      "version": 1,
+      "slot": "effects",
+      "backend": "audio",
+      "inputs": {},
+      "source": "Original Lockstep recipes and assets",
+      "license": "CC0-1.0 (new example assets); repository code terms"
+    }
+  ],
+  "assets": {
+    "assets/production/hinge-rig.glb": "f95a6325c2536d9fb41a9049bd493a202acd7644718d844e667d081d1a1d8545"
+  },
+  "backends": [
+    "audio",
+    "native",
+    "three"
+  ],
+  "clock": {
+    "mode": "music",
+    "duration": 15,
+    "bpm": 120,
+    "markers": {
+      "accent0": {
+        "frame": 0
+      },
+      "accent1": {
+        "frame": 150
+      },
+      "accent2": {
+        "frame": 300
+      }
+    }
+  },
+  "timing_provenance": "explicit duration/beat clock",
+  "audio": {
+    "music": {
+      "bpm": 120,
+      "kit": "soft"
+    },
+    "mix": {},
+    "direction": {
+      "effects": "mixed",
+      "music_envelopes": [
+        {
+          "from": {
+            "beat": 10
+          },
+          "to": {
+            "beat": 12
+          },
+          "gain_db": -8,
+          "fade": 0.12
+        }
+      ]
+    }
+  },
+  "render_model_calls": 0
+}

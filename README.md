@@ -1,5 +1,9 @@
 # lockstep-studio
 
+Saved visual/audio choices, optional local Three.js and maps, sample cues, narration auditions,
+reviewed external voice timings, and music-only clocks: see [production choices](docs/production-choices.md).
+Start with `bin/lockstep catalog search "show what is inside"`.
+
 Turn a topic into a finished vertical explainer video — voiceover, animation, original music,
 sound design and word-synced captions — rendered entirely by code, on one machine, with no paid
 services.

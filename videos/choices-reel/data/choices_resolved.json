@@ -1,0 +1,207 @@
+{
+  "schema": 1,
+  "selected": [
+    {
+      "id": "native.signal",
+      "version": 1,
+      "slot": "shots",
+      "backend": "native",
+      "inputs": {
+        "points": [
+          [
+            180,
+            800
+          ],
+          [
+            540,
+            800
+          ],
+          [
+            540,
+            620
+          ],
+          [
+            900,
+            620
+          ]
+        ],
+        "duration": 2.5,
+        "label": "FOLLOW THE SIGNAL",
+        "cue": {
+          "marker": "accent0"
+        }
+      },
+      "source": "Original Lockstep recipes and assets",
+      "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+      "id": "native.evidence",
+      "version": 1,
+      "slot": "shots",
+      "backend": "native",
+      "inputs": {
+        "text": "THE EVIDENCE",
+        "detail": "One detail changes the explanation.",
+        "duration": 2.5,
+        "cue": {
+          "marker": "accent1"
+        }
+      },
+      "source": "Original Lockstep recipes and assets",
+      "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+      "id": "native.number",
+      "version": 1,
+      "slot": "shots",
+      "backend": "native",
+      "inputs": {
+        "value": 42,
+        "unit": "UNITS",
+        "duration": 2.5,
+        "cue": {
+          "marker": "accent2"
+        }
+      },
+      "source": "Original Lockstep recipes and assets",
+      "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+      "id": "native.scale",
+      "version": 1,
+      "slot": "shots",
+      "backend": "native",
+      "inputs": {
+        "values": [
+          1,
+          3
+        ],
+        "labels": [
+          "ONE",
+          "THREE"
+        ],
+        "unit": "relative units",
+        "duration": 2.5,
+        "cue": {
+          "marker": "accent3"
+        }
+      },
+      "source": "Original Lockstep recipes and assets",
+      "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+      "id": "native.parallax",
+      "version": 1,
+      "slot": "shots",
+      "backend": "native",
+      "inputs": {
+        "speed": 0.18,
+        "growth": true,
+        "duration": 2.5,
+        "cue": {
+          "marker": "accent4"
+        }
+      },
+      "source": "Original Lockstep recipes and assets",
+      "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+      "id": "native.zoom",
+      "version": 1,
+      "slot": "shots",
+      "backend": "native",
+      "inputs": {
+        "label": "A WORLD INSIDE",
+        "duration": 2.5,
+        "cue": {
+          "marker": "accent5"
+        }
+      },
+      "source": "Original Lockstep recipes and assets",
+      "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+      "id": "voice.none",
+      "version": 1,
+      "slot": "narration",
+      "backend": "audio",
+      "inputs": {},
+      "source": "Original Lockstep recipes and assets",
+      "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+      "id": "score.synth",
+      "version": 1,
+      "slot": "score",
+      "backend": "audio",
+      "inputs": {},
+      "source": "Original Lockstep recipes and assets",
+      "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+      "id": "effects.mixed",
+      "version": 1,
+      "slot": "effects",
+      "backend": "audio",
+      "inputs": {},
+      "source": "Original Lockstep recipes and assets",
+      "license": "CC0-1.0 (new example assets); repository code terms"
+    }
+  ],
+  "assets": {
+    "assets/production/paper.wav": "8259049a6d8231d6249543a60e983c1758e405f0605ec72f9a70b70cba47bfad"
+  },
+  "backends": [
+    "audio",
+    "native"
+  ],
+  "clock": {
+    "mode": "music",
+    "duration": 15,
+    "bpm": 120,
+    "markers": {
+      "accent0": {
+        "frame": 0
+      },
+      "accent1": {
+        "frame": 75
+      },
+      "accent2": {
+        "frame": 150
+      },
+      "accent3": {
+        "frame": 225
+      },
+      "accent4": {
+        "frame": 300
+      },
+      "accent5": {
+        "frame": 375
+      }
+    }
+  },
+  "timing_provenance": "explicit duration/beat clock",
+  "audio": {
+    "music": {
+      "bpm": 120,
+      "kit": "pulse"
+    },
+    "mix": {},
+    "direction": {
+      "effects": "mixed",
+      "music_envelopes": [
+        {
+          "from": {
+            "beat": 10
+          },
+          "to": {
+            "beat": 12
+          },
+          "gain_db": -8,
+          "fade": 0.12
+        }
+      ]
+    }
+  },
+  "render_model_calls": 0
+}

@@ -24,6 +24,7 @@ from scipy.ndimage import minimum_filter1d
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from common import load_config, need, project_dir  # noqa: E402
+from production import music_only
 
 ROOT = project_dir()
 CFG = load_config(ROOT)
@@ -134,7 +135,7 @@ def midi(m):
 
 
 # -------------------------------------------------------------------- score
-BPM = float(MUSIC.get("bpm", 100.0))
+BPM = float(MUSIC.get("bpm", CFG.get("clock", {}).get("bpm", 100.0)))
 if not 70 <= BPM <= 150:
     sys.exit(f"video.json music.bpm = {BPM:g}: choose 70-150")
 # Kits re-voice the same arrangement. Multipliers on each layer, the pad filter, and how much saw is in the arpeggio.
@@ -215,7 +216,7 @@ def build_music():
     pad_bus = np.zeros_like(L)
     arp_bus = np.zeros_like(L)
     dry = np.zeros_like(L)
-    final_beat = int(round((TAKES["meta"]["speech_end"] + 0.25) / BEAT))       # last chord lands just after the final word
+    final_beat = int(round(((DUR - 1.0) if music_only(CFG) else TAKES["meta"]["speech_end"] + 0.25) / BEAT))
     for si, sc in enumerate(SCENES):
         b0, b1 = scene_b[si], scene_b[si + 1]
         segs, b, k = [], b0, 0
@@ -456,8 +457,24 @@ def sfx_event(e):
 def build_sfx():
     dry = np.zeros((N + SR * 4, 2))
     wet = np.zeros_like(dry)
-    for e in TL["sfx"]:
-        x, gain, send = sfx_event(e)
+    effects = CFG.get("audio", {}).get("effects", "synth")
+    if effects not in ("synth", "local", "mixed", "none"):
+        raise ValueError("audio.effects must be synth, local, mixed or none")
+    cues = list(TL["sfx"])
+    if CFG.get("audio", {}).get("cues"):
+        from directed import cue_time
+        words = json.load(open(ROOT / "data/words.json"))
+        cues += [dict(c, t=cue_time(c.get("at", c.get("t", 0)), CFG, TL, words), type="sample") for c in CFG["audio"]["cues"]]
+    for e in cues:
+        if effects == "none" or (e["type"] != "sample" and effects == "local"):
+            continue
+        if e["type"] == "sample":
+            if effects == "synth":
+                raise ValueError("sample cue selected but audio.effects=synth; choose effects.mixed or effects.local")
+            from directed import sample
+            x, gain, send = sample(ROOT, e, SR), 1, e.get("reverb", 0)
+        else:
+            x, gain, send = sfx_event(e)
         place(dry, x, e["t"], gain)
         place(wet, x, e["t"], gain * send)
     ir = make_ir(1.6, 4.2, 6500, seed=9)
@@ -467,6 +484,8 @@ def build_sfx():
 
 # -------------------------------------------------------------------- voice
 def build_voice():
+    if music_only(CFG):
+        return np.zeros((N, 2)), np.zeros(N)
     v, sr = sf.read(ROOT / "audio/narration_24k.wav", dtype="float64")
     v = signal.resample_poly(v, SR, sr)
     v = np.pad(v, (0, max(0, N - len(v))))[:N]
@@ -513,45 +532,74 @@ def duck_curve(envl, depth_db, thr=0.012, attack=0.06, release=0.4):
 
 
 def main():
+    (ROOT / "audio").mkdir(exist_ok=True)
     print("voice ...")
     voice, envl = build_voice()
     print("music ...")
-    music = build_music()
+    source = MUSIC.get("source", "synth")
+    if source not in ("synth", "local", "none"):
+        raise ValueError("music.source must be synth, local or none")
+    music = build_music() if source == "synth" else np.zeros((N, 2))
     print("sfx ...")
     sfx = build_sfx()
+    ambience = np.zeros((N, 2))
+    direction = CFG.get("audio", {})
+    if direction or source == "local":
+        from directed import envelope, stems
+        words = json.load(open(ROOT / "data/words.json"))
+        local_music, ambience = stems(ROOT, CFG, TL, words, SR)
+        if source == "local" and not any(s.get("role") == "music" for s in direction.get("stems", [])):
+            raise ValueError("score.local needs audio.stems with role=music and a local WAV file")
+        if source != "none": music += local_music
+        music *= envelope(N, SR, direction.get("music_envelopes", []), CFG, TL, words)[:, None]
+        sfx *= envelope(N, SR, direction.get("sfx_envelopes", []), CFG, TL, words)[:, None]
+        ambience *= envelope(N, SR, direction.get("ambience_envelopes", []), CFG, TL, words)[:, None]
 
     # fades: music eases in under the first word and rings out with the end card
     fade = np.ones(N)
-    fi = int(0.35 * SR)
+    fi = min(N, int(0.35 * SR))
     fade[:fi] = np.linspace(0.25, 1, fi)
-    fo = int(1.6 * SR)
+    fo = min(N, int(1.6 * SR))
     fade[-fo:] *= np.linspace(1, 0, fo) ** 1.5
     music *= fade[:, None]
-    sfx[-int(0.5 * SR):] *= np.linspace(1, 0, int(0.5 * SR))[:, None]
+    sfade = min(N, int(0.5 * SR))
+    sfx[-sfade:] *= np.linspace(1, 0, sfade)[:, None]
 
     mixcfg = CFG.get("mix", {})                    # optional overrides in video.json
     music_lvl, sfx_lvl = db(mixcfg.get("music_db", -4.0)), db(mixcfg.get("sfx_db", -0.5))
     music_d = music * music_lvl * duck_curve(envl, mixcfg.get("duck_music_db", -8.5))[:, None]
     sfx_d = sfx * sfx_lvl * duck_curve(envl, mixcfg.get("duck_sfx_db", -3.5))[:, None]
+    ambience_d = ambience * db(mixcfg.get("ambience_db", 0)) * duck_curve(envl, mixcfg.get("duck_ambience_db", -6))[:, None]
     mix = voice + music_d + sfx_d
+    if direction: mix += ambience_d
     peak = np.abs(mix).max()
     mix = np.tanh(mix / max(1.0, peak) * 1.15) / np.tanh(1.15) * min(1.0, peak) if peak > 0.98 else mix
     mix = mix / max(1e-9, np.abs(mix).max()) * db(-1.5)
 
     for name, x in (("voice", voice), ("music", music_d), ("sfx", sfx_d), ("mix_premaster", mix)):
         sf.write(ROOT / f"audio/{name}.wav", x, SR, subtype="PCM_24")
+    if direction: sf.write(ROOT / "audio/ambience.wav", ambience_d, SR, subtype="PCM_24")
 
     def rms_db(x, mask=None):
         y = x if mask is None else x[mask]
         return 20 * np.log10(np.sqrt((y ** 2).mean()) + 1e-12)
 
     speaking = envl > 0.012
+    if music_only(CFG):
+        stats = dict(duration_s=round(N / SR, 3), speech_metrics="inapplicable: no narration",
+                     speech_to_bed_ratio_db=None, voice_rms_while_speaking_db=None,
+                     music_rms_while_speaking_db=None, music_rms_in_pauses_db=round(rms_db(music_d), 1),
+                     premaster_peak_db=round(20 * np.log10(max(1e-12, np.abs(mix).max())), 2),
+                     sfx_cues=len(TL["sfx"]) + len(direction.get("cues", [])), clock=CFG["clock"])
+        json.dump(stats, open(ROOT / "data/audio_stats.json", "w"), indent=1)
+        print(json.dumps(stats, indent=1))
+        return
     stats = {
         "duration_s": round(N / SR, 3),
         "voice_rms_while_speaking_db": round(rms_db(voice, speaking), 1),
         "music_rms_while_speaking_db": round(rms_db(music_d, speaking), 1),
         "sfx_rms_while_speaking_db": round(rms_db(sfx_d, speaking), 1),
-        "bed_rms_while_speaking_db": round(rms_db(music_d + sfx_d, speaking), 1),
+        "bed_rms_while_speaking_db": round(rms_db(music_d + sfx_d + ambience_d, speaking), 1),
         "music_rms_in_pauses_db": round(rms_db(music_d, ~speaking), 1),
         "premaster_peak_db": round(20 * np.log10(np.abs(mix).max()), 2),
         "sfx_cues": len(TL["sfx"]),

@@ -1,0 +1,16 @@
+{
+  "name": "studio-grid",
+  "about": "A light editor's desk: warm off-white graph paper, electric-blue ink, orange accents, geometric grotesque type, cards with soft shadows. Process, craft and 'how a thing is made' topics.",
+  "palette": {
+    "bg": ["#F5F3EE", "#F2F0EA", "#ECE9E1"],
+    "ink": "#16171B",
+    "subject": "#2554F4", "accent": "#D9480F", "data": "#7C3AED", "alert": "#D62839", "good": "#0B8A5E",
+    "panel": "#FFFFFF"
+  },
+  "fonts": { "display": "Space Grotesk", "body": "DM Sans", "mono": "Space Mono" },
+  "backdrop": { "type": "grid", "cell": 54, "color": "subject", "strength": 0.8 },
+  "captions": { "highlight": "box", "weight": 700, "size": 78, "strokeW": 12, "boxRadius": 12 },
+  "hud": { "type": "line" },
+  "shape": { "radius": 18, "stroke": 2.5, "strokeAlpha": 0.8, "panelAlpha": 0.94, "shadow": { "dx": 0, "dy": 10, "color": "rgba(22,23,27,0.10)" } },
+  "transition": { "duration": 0.6, "default": "slideLeft" }
+}

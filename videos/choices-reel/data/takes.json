@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "duration": 15.0,
+    "speech_end": null,
+    "word_count": 0,
+    "voice": null,
+    "speed": null,
+    "timing_provenance": "explicit duration/beat clock",
+    "clock": {
+      "mode": "music",
+      "duration": 15,
+      "bpm": 120,
+      "markers": {
+        "accent0": {
+          "frame": 0
+        },
+        "accent1": {
+          "frame": 75
+        },
+        "accent2": {
+          "frame": 150
+        },
+        "accent3": {
+          "frame": 225
+        },
+        "accent4": {
+          "frame": 300
+        },
+        "accent5": {
+          "frame": 375
+        }
+      }
+    }
+  },
+  "beats": [
+    {
+      "id": "shot0",
+      "title": "NATIVE.SIGNAL",
+      "t0": 0.0,
+      "t1": 2.5
+    },
+    {
+      "id": "shot1",
+      "title": "NATIVE.EVIDENCE",
+      "t0": 2.5,
+      "t1": 5.0
+    },
+    {
+      "id": "shot2",
+      "title": "NATIVE.NUMBER",
+      "t0": 5.0,
+      "t1": 7.5
+    },
+    {
+      "id": "shot3",
+      "title": "NATIVE.SCALE",
+      "t0": 7.5,
+      "t1": 10.0
+    },
+    {
+      "id": "shot4",
+      "title": "NATIVE.PARALLAX",
+      "t0": 10.0,
+      "t1": 12.5
+    },
+    {
+      "id": "shot5",
+      "title": "NATIVE.ZOOM",
+      "t0": 12.5,
+      "t1": 15.0
+    }
+  ],
+  "takes": []
+}

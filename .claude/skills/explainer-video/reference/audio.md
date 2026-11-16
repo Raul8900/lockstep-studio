@@ -105,7 +105,7 @@ An unknown type stops the audio build with its name and time.
 
 ### Using them well
 
-- Every visible event gets a sound; no sound without a visible cause.
+- Choose sound per event; intentional silence is valid, and ordinary visual motion need not make a sound.
 - A big moment is layered: `riser` into it, `impact` on it, `chime` or `lock` just after.
 - A repeating visual gets a repeating cue (`for (…) sfx(c.x + k * period, 'thump', 0.7 - k * 0.05)`),
   slightly quieter each time.

@@ -1,0 +1,9 @@
+{
+ "premaster_lufs": -16.8,
+ "premaster_true_peak_db": -1.5,
+ "applied_gain_db": 2.8,
+ "max_limiter_reduction_db": -2.82,
+ "final_lufs": -14.1,
+ "final_lra_lu": 2.0,
+ "final_true_peak_db": -1.5
+}

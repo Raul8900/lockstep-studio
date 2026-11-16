@@ -1,0 +1,14 @@
+[
+  {
+    "frame": 360,
+    "sha256": "a0ff6f9ad2662c84647d9ab090c84642dd70cde91d51f9dd410f465c9c889109",
+    "seek_identical": true,
+    "saved_frame_identical": true
+  },
+  {
+    "frame": 306,
+    "sha256": "8a4c2e5f45603061cb21387ef9248514a692de9a11541d1bc158c88ea895211f",
+    "seek_identical": true,
+    "saved_frame_identical": true
+  }
+]

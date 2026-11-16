@@ -1,0 +1,51 @@
+{
+ "file": {
+  "path": "dist/choices-reel.mp4",
+  "size_mb": 5.1,
+  "container": "QuickTime / MOV",
+  "duration_s": 15.0,
+  "overall_bitrate_mbps": 2.74,
+  "faststart": true
+ },
+ "video": {
+  "codec": "h264",
+  "profile": "High",
+  "level": 4.2,
+  "width": 1080,
+  "height": 1920,
+  "aspect": "9:16",
+  "pix_fmt": "yuv420p",
+  "fps": 30.0,
+  "frames": 450,
+  "bitrate_mbps": 2.46,
+  "color": "bt709/None/None tv"
+ },
+ "audio": {
+  "codec": "aac",
+  "profile": "LC",
+  "sample_rate": 48000,
+  "channels": 2,
+  "bitrate_kbps": 274,
+  "duration_s": 15.0
+ },
+ "decode_errors": 0,
+ "black_segments": [],
+ "freeze_segments": [],
+ "encode_fidelity": {
+  "ssim_all": 0.990172,
+  "psnr_avg_db": 48.745896
+ },
+ "loudness": {
+  "integrated_lufs": -14.1,
+  "range_lu": 2.0,
+  "true_peak_dbtp": -1.5
+ },
+ "sync": {
+  "music_lag_ms_in_mp4": 0,
+  "method": "10 ms envelope correlation against mastered music; no speech metrics"
+ },
+ "stream_duration_error_s": 0.0,
+ "final_mix_asr": {
+  "skipped": "inapplicable: no narration"
+ }
+}

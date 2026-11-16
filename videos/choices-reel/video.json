@@ -1,0 +1,190 @@
+{
+  "title": "choices-reel",
+  "tag": "CAPABILITY LAB",
+  "output": "choices-reel",
+  "max_seconds": 20,
+  "clock": {
+    "mode": "music",
+    "duration": 15,
+    "bpm": 120,
+    "markers": {
+      "accent0": {
+        "frame": 0
+      },
+      "accent1": {
+        "frame": 75
+      },
+      "accent2": {
+        "frame": 150
+      },
+      "accent3": {
+        "frame": 225
+      },
+      "accent4": {
+        "frame": 300
+      },
+      "accent5": {
+        "frame": 375
+      }
+    }
+  },
+  "chapters": [
+    {
+      "id": "shot0",
+      "name": "NATIVE.SIGNAL",
+      "mood": "light",
+      "start": 0.0
+    },
+    {
+      "id": "shot1",
+      "name": "NATIVE.EVIDENCE",
+      "mood": "groove",
+      "start": 2.5
+    },
+    {
+      "id": "shot2",
+      "name": "NATIVE.NUMBER",
+      "mood": "light",
+      "start": 5.0
+    },
+    {
+      "id": "shot3",
+      "name": "NATIVE.SCALE",
+      "mood": "groove",
+      "start": 7.5
+    },
+    {
+      "id": "shot4",
+      "name": "NATIVE.PARALLAX",
+      "mood": "light",
+      "start": 10.0
+    },
+    {
+      "id": "shot5",
+      "name": "NATIVE.ZOOM",
+      "mood": "groove",
+      "start": 12.5
+    }
+  ],
+  "music": {
+    "bpm": 120,
+    "kit": "pulse"
+  },
+  "choices": {
+    "shots": {
+      "shot0": {
+        "item": "native.signal",
+        "inputs": {
+          "points": [
+            [
+              180,
+              800
+            ],
+            [
+              540,
+              800
+            ],
+            [
+              540,
+              620
+            ],
+            [
+              900,
+              620
+            ]
+          ],
+          "duration": 2.5,
+          "label": "FOLLOW THE SIGNAL",
+          "cue": {
+            "marker": "accent0"
+          }
+        }
+      },
+      "shot1": {
+        "item": "native.evidence",
+        "inputs": {
+          "text": "THE EVIDENCE",
+          "detail": "One detail changes the explanation.",
+          "duration": 2.5,
+          "cue": {
+            "marker": "accent1"
+          }
+        }
+      },
+      "shot2": {
+        "item": "native.number",
+        "inputs": {
+          "value": 42,
+          "unit": "UNITS",
+          "duration": 2.5,
+          "cue": {
+            "marker": "accent2"
+          }
+        }
+      },
+      "shot3": {
+        "item": "native.scale",
+        "inputs": {
+          "values": [
+            1,
+            3
+          ],
+          "labels": [
+            "ONE",
+            "THREE"
+          ],
+          "unit": "relative units",
+          "duration": 2.5,
+          "cue": {
+            "marker": "accent3"
+          }
+        }
+      },
+      "shot4": {
+        "item": "native.parallax",
+        "inputs": {
+          "speed": 0.18,
+          "growth": true,
+          "duration": 2.5,
+          "cue": {
+            "marker": "accent4"
+          }
+        }
+      },
+      "shot5": {
+        "item": "native.zoom",
+        "inputs": {
+          "label": "A WORLD INSIDE",
+          "duration": 2.5,
+          "cue": {
+            "marker": "accent5"
+          }
+        }
+      }
+    },
+    "narration": {
+      "item": "voice.none"
+    },
+    "score": {
+      "item": "score.synth"
+    },
+    "effects": {
+      "item": "effects.mixed"
+    }
+  },
+  "audio": {
+    "effects": "mixed",
+    "music_envelopes": [
+      {
+        "from": {
+          "beat": 10
+        },
+        "to": {
+          "beat": 12
+        },
+        "gain_db": -8,
+        "fade": 0.12
+      }
+    ]
+  }
+}

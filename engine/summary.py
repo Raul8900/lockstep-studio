@@ -35,10 +35,17 @@ row("streamable (index first)", bool(f.get("faststart")), "faststart" if f.get("
 row(f"length <= {MAX_S:.0f} s", f["duration_s"] <= MAX_S, f"{f['duration_s']:.2f} s")
 row("decodes cleanly", V["decode_errors"] == 0, f"{V['decode_errors']} errors")
 row("no black frames", not V["black_segments"], f"{len(V['black_segments'])} segments " + str(V["black_segments"][:4] if V["black_segments"] else ""))
-lag = V["sync"]["narration_lag_ms_in_mp4"]
-row("audio/picture sync", abs(lag) <= 20, f"{lag:+d} ms")
-row("loudness -14 LUFS +/- 1", abs(lo["integrated_lufs"] + 14) <= 1.0, f"{lo['integrated_lufs']} LUFS")
-row("true peak <= -1 dBTP", lo["true_peak_dbtp"] <= -1.0, f"{lo['true_peak_dbtp']} dBTP")
+lag = V["sync"].get("narration_lag_ms_in_mp4", V["sync"].get("music_lag_ms_in_mp4", 0))
+row("audio/picture sync", None if lag is None else abs(lag) <= 20, 'inapplicable: silent track' if lag is None else f"{lag:+d} ms")
+if "stream_duration_error_s" in V:
+    tolerance = .05 if CFG.get('choices') or CFG.get('clock') or CFG.get('audio') else .1
+    row("stream durations agree", V["stream_duration_error_s"] <= tolerance, f"{V['stream_duration_error_s']:.3f} s difference")
+if lo.get('meaningful') is False:
+    intentional = CFG.get('clock', {}).get('mode') == 'music' and CFG.get('music', {}).get('source') == 'none' and CFG.get('audio', {}).get('effects') == 'none' and not CFG.get('audio', {}).get('stems')
+    row('intentional silent soundtrack', intentional, 'loudness/peak inapplicable' if intentional else 'unexpected silent output')
+else:
+    row("loudness -14 LUFS +/- 1", abs(lo["integrated_lufs"] + 14) <= 1.0, f"{lo['integrated_lufs']} LUFS")
+    row("true peak <= -1 dBTP", lo["true_peak_dbtp"] <= -1.0, f"{lo['true_peak_dbtp']} dBTP")
 caps = V.get("captions")
 if caps:
     row("captions inside safe width", caps["x_extent"][0] >= 60 and caps["x_extent"][1] <= 1020, f"x {caps['x_extent']}, widest {caps['max_width_px']} px")
@@ -53,7 +60,10 @@ if "wer_percent" in asr:
     verdict = True if asr["wer_percent"] < 3.0 else None if asr["errors"] <= 2 else False
     row("voice intelligible in the mix", verdict, f"{asr['wer_percent']} % word error ({asr['errors']} of {asr['words']})" + (f"  {asr['diffs']}" if asr.get("diffs") else ""))
 else:
-    row("voice intelligible in the mix", None, "not measured: " + str(asr.get("skipped") or asr.get("error") or "unavailable")[:90])
+    if CFG.get("clock", {}).get("mode") == "music":
+        row("no invented speech/captions", not TL["caps"], "music clock; speech metrics inapplicable")
+    else:
+        row("voice intelligible in the mix", None, "not measured: " + str(asr.get("skipped") or asr.get("error") or "unavailable")[:90])
 fz = V.get("freeze_segments", [])
 row("continuous motion", None if fz else True, "no holds" if not fz else f"{len(fz)} static holds: " + ", ".join(f"{s:.1f}-{e:.1f}s" for s, e in fz[:8]))
 

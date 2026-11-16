@@ -1,0 +1,153 @@
+{
+  "runs": [
+    {
+      "mode": "meta",
+      "run": 0,
+      "kind": "cold-process",
+      "command": [
+        "node",
+        "/workspace/work/base-code/engine/render.js",
+        "/workspace/work/legacy-fixture",
+        "meta"
+      ],
+      "elapsed_s": 2.8109,
+      "peak_tree_rss_mib": 670.21,
+      "stdout": "timeline.json: 530 frames, 3 scenes, 35 sfx cues, 13 caption phrases\n",
+      "stderr": ""
+    },
+    {
+      "mode": "meta",
+      "run": 1,
+      "kind": "warm",
+      "command": [
+        "node",
+        "/workspace/work/base-code/engine/render.js",
+        "/workspace/work/legacy-fixture",
+        "meta"
+      ],
+      "elapsed_s": 1.3635,
+      "peak_tree_rss_mib": 673.56,
+      "stdout": "timeline.json: 530 frames, 3 scenes, 35 sfx cues, 13 caption phrases\n",
+      "stderr": ""
+    },
+    {
+      "mode": "meta",
+      "run": 2,
+      "kind": "warm",
+      "command": [
+        "node",
+        "/workspace/work/base-code/engine/render.js",
+        "/workspace/work/legacy-fixture",
+        "meta"
+      ],
+      "elapsed_s": 1.5519,
+      "peak_tree_rss_mib": 678.77,
+      "stdout": "timeline.json: 530 frames, 3 scenes, 35 sfx cues, 13 caption phrases\n",
+      "stderr": ""
+    },
+    {
+      "mode": "meta",
+      "run": 3,
+      "kind": "warm",
+      "command": [
+        "node",
+        "/workspace/work/base-code/engine/render.js",
+        "/workspace/work/legacy-fixture",
+        "meta"
+      ],
+      "elapsed_s": 1.4832,
+      "peak_tree_rss_mib": 676.93,
+      "stdout": "timeline.json: 530 frames, 3 scenes, 35 sfx cues, 13 caption phrases\n",
+      "stderr": ""
+    },
+    {
+      "mode": "video",
+      "run": 0,
+      "kind": "cold-process",
+      "command": [
+        "node",
+        "/workspace/work/base-code/engine/render.js",
+        "/workspace/work/legacy-fixture",
+        "video",
+        "--from",
+        "0",
+        "--to",
+        "5",
+        "--workers",
+        "1"
+      ],
+      "elapsed_s": 11.5674,
+      "peak_tree_rss_mib": 897.54,
+      "stdout": "rendering chunks 0..0 of 4 (530 frames total) with 1 workers\n  150/150 frames  14.7 fps  eta 0s\nrendered 150 frames in 10.2s -> /workspace/work/legacy-fixture/out/frames\n",
+      "stderr": ""
+    },
+    {
+      "mode": "video",
+      "run": 1,
+      "kind": "warm",
+      "command": [
+        "node",
+        "/workspace/work/base-code/engine/render.js",
+        "/workspace/work/legacy-fixture",
+        "video",
+        "--from",
+        "0",
+        "--to",
+        "5",
+        "--workers",
+        "1"
+      ],
+      "elapsed_s": 11.6495,
+      "peak_tree_rss_mib": 899.51,
+      "stdout": "rendering chunks 0..0 of 4 (530 frames total) with 1 workers\n  150/150 frames  14.8 fps  eta 0s\nrendered 150 frames in 10.1s -> /workspace/work/legacy-fixture/out/frames\n",
+      "stderr": ""
+    },
+    {
+      "mode": "video",
+      "run": 2,
+      "kind": "warm",
+      "command": [
+        "node",
+        "/workspace/work/base-code/engine/render.js",
+        "/workspace/work/legacy-fixture",
+        "video",
+        "--from",
+        "0",
+        "--to",
+        "5",
+        "--workers",
+        "1"
+      ],
+      "elapsed_s": 10.5875,
+      "peak_tree_rss_mib": 895.87,
+      "stdout": "rendering chunks 0..0 of 4 (530 frames total) with 1 workers\n  150/150 frames  16.5 fps  eta 0s\nrendered 150 frames in 9.1s -> /workspace/work/legacy-fixture/out/frames\n",
+      "stderr": ""
+    },
+    {
+      "mode": "video",
+      "run": 3,
+      "kind": "warm",
+      "command": [
+        "node",
+        "/workspace/work/base-code/engine/render.js",
+        "/workspace/work/legacy-fixture",
+        "video",
+        "--from",
+        "0",
+        "--to",
+        "5",
+        "--workers",
+        "1"
+      ],
+      "elapsed_s": 11.6019,
+      "peak_tree_rss_mib": 898.16,
+      "stdout": "rendering chunks 0..0 of 4 (530 frames total) with 1 workers\n  150/150 frames  14.8 fps  eta 0s\nrendered 150 frames in 10.1s -> /workspace/work/legacy-fixture/out/frames\n",
+      "stderr": ""
+    }
+  ],
+  "warm_medians": {
+    "meta": 1.4832,
+    "video": 11.6019
+  },
+  "memory_method": "sum of parent and descendant RSS sampled every 50 ms; shared pages may be counted in multiple processes"
+}

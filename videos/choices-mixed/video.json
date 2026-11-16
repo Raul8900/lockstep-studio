@@ -1,0 +1,102 @@
+{
+  "title": "choices-mixed",
+  "tag": "CAPABILITY LAB",
+  "output": "choices-mixed",
+  "max_seconds": 20,
+  "clock": {
+    "mode": "music",
+    "duration": 15,
+    "bpm": 120,
+    "markers": {
+      "accent0": {
+        "frame": 0
+      },
+      "accent1": {
+        "frame": 150
+      },
+      "accent2": {
+        "frame": 300
+      }
+    }
+  },
+  "chapters": [
+    {
+      "id": "shot0",
+      "name": "NATIVE.GROWTH",
+      "mood": "light",
+      "start": 0.0
+    },
+    {
+      "id": "shot1",
+      "name": "NATIVE.CELL",
+      "mood": "groove",
+      "start": 5.0
+    },
+    {
+      "id": "shot2",
+      "name": "THREE.RIG",
+      "mood": "light",
+      "start": 10.0
+    }
+  ],
+  "music": {
+    "bpm": 120,
+    "kit": "soft"
+  },
+  "choices": {
+    "shots": {
+      "shot0": {
+        "item": "native.growth",
+        "inputs": {
+          "duration": 5.0,
+          "cue": {
+            "marker": "accent0"
+          }
+        }
+      },
+      "shot1": {
+        "item": "native.cell",
+        "inputs": {
+          "duration": 5.0,
+          "cue": {
+            "marker": "accent1"
+          }
+        }
+      },
+      "shot2": {
+        "item": "three.rig",
+        "inputs": {
+          "model": "assets/production/hinge-rig.glb",
+          "duration": 5.0,
+          "cue": {
+            "marker": "accent2"
+          }
+        }
+      }
+    },
+    "narration": {
+      "item": "voice.none"
+    },
+    "score": {
+      "item": "score.synth"
+    },
+    "effects": {
+      "item": "effects.mixed"
+    }
+  },
+  "audio": {
+    "effects": "mixed",
+    "music_envelopes": [
+      {
+        "from": {
+          "beat": 10
+        },
+        "to": {
+          "beat": 12
+        },
+        "gain_db": -8,
+        "fade": 0.12
+      }
+    ]
+  }
+}

@@ -18,7 +18,7 @@ from common import load_config, load_module, load_script, need, project_dir  # n
 
 ROOT = project_dir()
 CFG = load_config(ROOT)
-SCRIPT = load_script(ROOT)
+SCRIPT = load_script(ROOT) if (ROOT / 'script.py').exists() else None
 OUT = ROOT / "docs"
 OUT.mkdir(exist_ok=True)
 words = json.load(open(need(ROOT / "data/words.json", "run: lockstep voice <video>")))
@@ -28,6 +28,15 @@ tl = json.load(open(need(ROOT / "data/timeline.json", "run: lockstep meta <video
 scenes = {s["id"]: s for s in tl["scenes"]}
 TITLE = CFG.get("title", ROOT.name)
 CHAPTER = {c["id"]: c.get("name", c["id"]) for c in CFG.get("chapters", [])}
+if CFG.get("clock", {}).get("mode") == "music":
+    (OUT / "narration_script.md").write_text(f"# {TITLE}\n\nMusic-only production: no narration or captions.\n\nClock: {json.dumps(CFG['clock'])}\n")
+    lines = [f"# Visual storyboard — {TITLE}", "", "Explicit duration/beat clock; all times are seconds.", "", "| Scene | Start | End | Choice |", "|---|---:|---:|---|"]
+    for scene in tl["scenes"]:
+        choice = CFG.get("choices", {}).get("shots", {}).get(scene["id"], {})
+        lines.append(f"| {scene['id']} | {scene['t0']} | {scene['t1']} | {choice.get('item', 'authored scene')} |")
+    (OUT / "visual_storyboard.md").write_text("\n".join(lines) + "\n")
+    print("music-only clock and storyboard written; speech metrics inapplicable")
+    sys.exit(0)
 
 
 def clean(w):
@@ -70,6 +79,8 @@ def narration_md():
     out.append("Legend: **bold** = stressed / on-screen highlighted term · `‖ 0.3 s` = pause after the line · "
                "an em dash or ellipsis inside a line is a short breath, not a full stop.\n")
     out.append("---\n")
+    if isinstance(meta.get("timing_provenance"), dict) and meta['timing_provenance'].get('provider') == 'reviewed-external':
+        out = [f"# Narration Script — {TITLE}\n", f"Supplied recording; reviewed timing provenance: {json.dumps(meta['timing_provenance'])}\n", f"Duration: {meta['duration']} s; {len(words)} words.\n"]
     for bi, b in enumerate(beats):
         bt = [t for t in takes if t["beat"] == b["id"]]
         out.append(f"## {bi + 1}. {CHAPTER.get(b['id'], b['title'])}  ·  {tc(b['t0'])} – {tc(b['t1'])}  ({b['t1'] - b['t0']:.1f} s of speech)\n")
