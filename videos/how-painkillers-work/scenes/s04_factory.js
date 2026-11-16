@@ -24,7 +24,7 @@
   sfx(c.blocks, 'impact', 0.6);
   sfx(c.removes, 'whoosh', 0.5);
 
-  addScene('factory', function (ctx, t) {
+  addScene('factory', anatScene('factory', function (ctx, t) {
     const A = ANAT_AT.ankle;
     const z0 = lerp(1.9, 1.35, tw(t, 24.0, 26.5));
     const z1 = lerp(z0, 1.0, tw(t, 33.2, 34.4));
@@ -83,5 +83,5 @@
       tag(ctx, 'BLOCKED', 90, 440, { align: 'left', color: COL.subject, size: 26 });
     });
     tag(ctx, 'THE FACTORY', 90, 400, { align: 'left', color: COL.accent, size: 26 });
-  }, { type: 'zoomIn', fx: ANAT_AT.ankle.x, fy: ANAT_AT.ankle.y });
+  }), { type: 'zoomIn', fx: ANAT_AT.ankle.x, fy: ANAT_AT.ankle.y });
 });

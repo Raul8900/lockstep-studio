@@ -27,7 +27,7 @@
   sfx(c.scientists, 'blip', 0.4);
   sfx(c.nervous, 'swell', 0.5, { dur: 1.0 });
 
-  addScene('breaks', function (ctx, t) {
+  addScene('breaks', anatScene('breaks', function (ctx, t) {
     const fa = lerp(1, 0.25, prog(t, c.not, c.not + 0.5));
 
     anatBody(ctx, 1, 0.9);
@@ -71,5 +71,5 @@
     }
 
     tag(ctx, 'WHERE THE MYTH BREAKS', 90, 400, { align: 'left', color: COL.alert, size: 26 });
-  }, { type: 'slideLeft' });
+  }), { type: 'slideLeft' });
 });

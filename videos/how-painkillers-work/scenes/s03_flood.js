@@ -32,7 +32,7 @@
   sfx(c.every, 'thump', 0.5);
   sfx(c.organ, 'thump', 0.6);
 
-  addScene('flood', function (ctx, t) {
+  addScene('flood', anatScene('flood', function (ctx, t) {
     const A = ANAT_AT.ankle;
     const dis = 1 - prog(t, c.dissolves - 0.05, c.dissolves + 0.3);
     const band = 0.16 * tw(t, c.so, c.so + 0.4);
@@ -87,5 +87,5 @@
     }
 
     tag(ctx, 'THE FLOOD', 90, 400, { align: 'left', color: COL.accent, size: 26 });
-  }, { type: 'zoomOut', fx: ANAT_AT.ankle.x, fy: ANAT_AT.ankle.y });
+  }), { type: 'zoomOut', fx: ANAT_AT.ankle.x, fy: ANAT_AT.ankle.y });
 });

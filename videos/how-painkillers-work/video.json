@@ -4,6 +4,7 @@
   "output": "how_painkillers_work_vertical",
   "max_seconds": 180,
   "music": { "bpm": 108, "transpose": -2, "kit": "pluck" },
+  "mix": { "music_db": 0.0, "sfx_db": -0.5, "duck_music_db": -7.5, "duck_sfx_db": -3.5 },
   "chapters": [
     { "id": "hook",    "name": "THE MYTH",               "mood": "drone" },
     { "id": "why",     "name": "WHY IT SEEMS TRUE",      "mood": "light" },

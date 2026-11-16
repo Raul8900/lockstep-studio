@@ -196,3 +196,14 @@ function anatCurve(a, c, b, n) {
   }
   return pts;
 }
+
+// Idle motion for every scene: a slow push-in across its beat plus a gentle breathing of
+// the whole picture about the body's centre, so no pause is a still frame.
+function anatScene(id, draw) {
+  return function (ctx, t) {
+    const b = beatOf(id);
+    const k = prog(t, b.t0 - 0.5, b.t1 + 0.5);
+    const z = (1 + 0.035 * k) * (1 + 0.012 * Math.sin(TAU * t / 2.8));
+    withCam(ctx, { fx: 540, fy: 800, zoom: z }, function () { draw(ctx, t); });
+  };
+}
