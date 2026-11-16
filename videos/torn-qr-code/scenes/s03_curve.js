@@ -99,7 +99,7 @@
     const zoom = lerp(1, 1.04, tw(t, S0, beatOf('curve').t1 + 0.5, E.io2));
     const hit = pulse(t, rip + 0.02, 0.03, 0.3);
     tagPill(ctx, 'ATTEMPT 2', CX, 452, COL.subject, 1);
-    withCam(ctx, { fx: CX, fy: 820, zoom: zoom + 0.02 * hit, dx: 6 * hit * Math.sin(t * 90) }, () => {
+    withCam(ctx, { fx: CX, fy: 820, zoom: zoom + 0.02 * hit, dx: 6 * hit * Math.sin(t * 90), dy: 5 * Math.sin(t * 0.8), rot: 0.004 * Math.sin(t * 1.1) }, () => {
       const torn = t >= rip;
       const shadow = STYLE.shape.shadow;
       if (!torn) {

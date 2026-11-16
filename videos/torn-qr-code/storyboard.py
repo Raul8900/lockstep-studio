@@ -263,7 +263,7 @@ def sequences(at, S, dur):
       "The limit that the 30 % hides."),
      ("The tear that kills it", at("fineprint", "tear") - 0.2, S("payoff"),
       "A small rip takes the top-left corner square's outer corner; brackets search and turn red; readout fails.",
-      "Rip polygon from the verified model (1.3 % of the code).",
+      "Rip polygon from the verified model (3.1 % of the code; 0/80 decodes in the robustness test).",
       BG,
       "Rip on “tear”; brackets jitter; on “won't scan” they go red and the pill reads NO CODE FOUND.",
       "Rip instant; jitter 0.6 s; fail E.outBack.",

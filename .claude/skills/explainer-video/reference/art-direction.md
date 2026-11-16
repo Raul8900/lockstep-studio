@@ -47,6 +47,7 @@ must argue why that exact look fits.
 | `candy-pop` | light | pastel, rounded Fredoka, soft blobs, boxed captions | food, pets, the body, feel-good curiosities |
 | `sunset-synth` | dark | purple-to-orange fields, wide Unbounded caps, glow | music, internet culture, the future |
 | `studio-grid` | light | graph paper, electric blue, Space Grotesk, cards with shadows | process, craft, how things are made |
+| `riso-sticker` | light | cream stock, black + spot inks, Archivo Black, misregistered blue offset shadows, halftone | printed objects, codes and labels, everyday tech (“Why a Torn QR Code Still Scans”) |
 
 After a successful video, add its look with `bin/lockstep save-style <video> <name>`.
 

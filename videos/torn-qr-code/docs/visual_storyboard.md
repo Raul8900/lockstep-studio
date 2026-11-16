@@ -299,7 +299,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 | | |
 |---|---|
 | **Objects on screen** | A printed ledger: “1 LIAR =” / “2 EXTRA DOTS”, with FIND IT and FIX IT chips. |
-| **Position and size (1080 × 1920)** | Ledger at x 540, y 878–1064, in the empty lower-right of the card. |
+| **Position and size (1080 × 1920)** | Ledger at x 498, y 878–1064, in the empty lower-right of the card (left of the platform buttons). |
 | **Background** | Cream riso stock with a faint blue halftone field drifting slowly (style backdrop). |
 | **Movement** | The ledger slides up on “costs”; “FIND” (search icon) pops on “finds”, “FIX” (wrench icon) on “fixes”. |
 | **Timing and easing** | E.outBack 0.3 s each. |

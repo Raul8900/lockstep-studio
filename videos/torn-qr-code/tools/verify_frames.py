@@ -29,7 +29,8 @@ CHECKS = [
     ('hook: torn, "It still scans"', 'hook/scans/1/t1', 0.3, 'STILL HERE', True),
     ('hook: torn, end of beat', 'hook/all/1/t1', 0.2, 'STILL HERE', True),
     ('bytes: logo plate, "middle"', 'bytes/middle/1/t1', 0.25, 'STILL HERE', False),
-    ('fine print: corner square torn, "won\'t scan"', "fineprint/scan/1/t1", 0.2, None, False),
+    ('fine print: corner square torn, "won\'t"', "fineprint/won't", 0.4, None, False),
+    ('fine print: corner square torn, "scan" (before the slide out)', "fineprint/scan", 0.3, None, False),
     ('payoff: rebuilt, "every one"', 'payoff/one/1/t1', 0.35, 'STILL HERE', True),
     ('end card', 'payoff/torn/2/t1', 2.0, 'STILL HERE', True),
 ]
@@ -72,6 +73,22 @@ def sample_grid(img, pos):
     return out
 
 
+# windows: every sampled frame inside must meet the expectation (start cue, offset, end cue or scene id, offset)
+WINDOWS = [
+    ('hook: torn, every frame until the slide', 'hook/tore', 0.95, 'scene:copies', -0.35, 'STILL HERE'),
+    ('fine print: corner square torn, every frame until the slide', 'fineprint/tear', 0.15, 'scene:payoff', -0.35, None),
+    ('end card: every frame', 'payoff/a', -0.2, 'end', -0.1, 'STILL HERE'),
+]
+
+
+def scene_t0(sid):
+    tl = json.load(open(os.path.join(VIDEO, 'data', 'timeline.json')))
+    for sc in tl['scenes']:
+        if sc['id'] == sid:
+            return sc['t0']
+    raise KeyError(sid)
+
+
 def main():
     mp4 = sys.argv[1] if len(sys.argv) > 1 else None
     if mp4 is None:
@@ -80,6 +97,7 @@ def main():
         if not mp4s:
             sys.exit('no MP4 in dist/: pass one as the first argument')
         mp4 = os.path.join(dist, mp4s[0])
+    dur = float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', mp4], capture_output=True, text=True).stdout)
     results, ok_all = [], True
     with tempfile.TemporaryDirectory() as tmp:
         for label, spec, off, expect, grid in CHECKS:
@@ -94,6 +112,23 @@ def main():
                 changed = [k for k, mods in enumerate(CW) if any(m[r][c] != CLEAN[r][c] for r, c in mods)]
                 row['changed_codewords'] = changed
                 row['changed_message_bytes'] = [k for k in changed if k < MODEL['data']]
+            ok_all &= ok
+            results.append(row)
+            print(('PASS ' if ok else 'FAIL ') + json.dumps(row))
+        for label, spec, off, end, eoff, expect in WINDOWS:
+            t0 = cue(spec) + off
+            t1 = (dur if end == 'end' else scene_t0(end.split(':')[1]) if end.startswith('scene:') else cue(end)) + eoff
+            n_ok, n, bad = 0, 0, []
+            t = t0
+            while t <= t1:
+                texts = [b.text for b in zxingcpp.read_barcodes(frame_at(mp4, t, tmp))]
+                good = (texts == [expect]) if expect else (texts == [])
+                n += 1; n_ok += good
+                if not good:
+                    bad.append(round(t, 2))
+                t += 1 / 6
+            ok = n_ok == n
+            row = {'window': label, 't0': round(t0, 2), 't1': round(t1, 2), 'frames': n, 'as_expected': n_ok, 'expected': expect, 'exceptions': bad, 'ok': ok}
             ok_all &= ok
             results.append(row)
             print(('PASS ' if ok else 'FAIL ') + json.dumps(row))

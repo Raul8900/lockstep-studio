@@ -97,7 +97,7 @@ STICKER = 2.0   # sticker margin around the code, in modules
 tear_edge = ragged((10.2, N + STICKER), (N + STICKER, 10.2), seed=5, amp=0.55, n=18)
 TEAR = tear_edge + [(N + STICKER, N + STICKER)]
 # the fine print: a small rip through the top-left corner square only
-FINDER_EDGE = ragged((5.2, -STICKER), (-STICKER, 5.2), seed=7, amp=0.35, n=10)
+FINDER_EDGE = ragged((7.0, -STICKER), (-STICKER, 7.0), seed=7, amp=0.35, n=12)
 FINDER_TEAR = [(-STICKER, -STICKER)] + FINDER_EDGE
 # the logo: a blank 7 x 7 square in the middle
 LOGO = [(7, 7), (14, 7), (14, 14), (7, 14)]
@@ -164,6 +164,34 @@ for k in (7, 8, 9, 10):
     limit[k] = f'{sum(worst)}/{len(worst)} decode'
 print('codewords fully flipped ->', limit)
 
+# robustness: each damage shape under random scale, rotation, sub-pixel offset and JPEG quality
+import io
+def render_var(poly, m, rot, off, q, bg=(240, 234, 220)):
+    size = int((N + 2 * STICKER) * m) + 200
+    img = Image.new('RGB', (size, size), bg)
+    d = ImageDraw.Draw(img)
+    P = lambda x, y: (100 + off[0] + (x + STICKER) * m, 100 + off[1] + (y + STICKER) * m)
+    d.rectangle([P(-STICKER, -STICKER), P(N + STICKER, N + STICKER)], fill=(255, 253, 248))
+    for r in range(N):
+        for c in range(N):
+            if mat[r, c]:
+                a, b = P(c, r), P(c + 1, r + 1)
+                d.rectangle([a, (b[0] - 1, b[1] - 1)], fill=(27, 26, 31))
+    if poly:
+        d.polygon([P(x, y) for x, y in poly], fill=bg)
+    img = img.rotate(rot, resample=Image.BICUBIC, fillcolor=bg)
+    buf = io.BytesIO(); img.save(buf, 'JPEG', quality=q); buf.seek(0)
+    return Image.open(buf)
+robust = {}
+for name, poly in (('tear', TEAR), ('logo', LOGO), ('finder_tear', FINDER_TEAR)):
+    rnd, ok = random.Random(1), 0
+    for i in range(80):
+        img = render_var(poly, rnd.uniform(14, 30), rnd.uniform(-2.5, 2.5), (rnd.random(), rnd.random()), rnd.choice([70, 85, 95]))
+        ok += decode(img) == [MSG]
+    robust[name] = f'{ok}/80 decode'
+print('robustness ->', robust)
+assert robust['tear'] == '80/80 decode' and robust['logo'] == '80/80 decode' and robust['finder_tear'] == '0/80 decode', robust
+
 # ---- boundaries of each codeword (for drawing them as bricks) ----
 owner = -np.ones((N, N), int)
 for k, mods in enumerate(cw):
@@ -189,7 +217,7 @@ model = {
     'edges': edges,
     'tear': TEAR, 'tearEdge': tear_edge, 'finderTear': FINDER_TEAR, 'finderEdge': FINDER_EDGE, 'logo': LOGO,
     'damage': {k: {kk: vv for kk, vv in v.items() if kk != 'decoded'} for k, v in results.items() if k != 'clean'},
-    'checks': {k: v['decoded'] for k, v in results.items()} | {'limit': limit},
+    'checks': {k: v['decoded'] for k, v in results.items()} | {'limit': limit, 'robustness': robust},
 }
 json.dump(model, open(os.path.join(HERE, 'qr_model.json'), 'w'), indent=1)
 

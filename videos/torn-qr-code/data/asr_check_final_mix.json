@@ -6,7 +6,7 @@
   "every one -> everyone"
  ],
  "timing_matched_words": 224,
- "timing_median_ms": -110.0376215934773,
- "timing_mean_abs_ms": 83.19112406298522,
- "timing_p95_abs_ms": 190.01237840652152
+ "timing_median_ms": -115.00627443790279,
+ "timing_mean_abs_ms": 82.07516339006162,
+ "timing_p95_abs_ms": 185.04372556209603
 }

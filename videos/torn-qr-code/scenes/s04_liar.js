@@ -47,7 +47,7 @@
   addScene('liar', function (ctx, t) {
     const zoom = lerp(1, 1.035, tw(t, S0, c.costs, E.io2)) + 0.03 * win(t, c.which, c.costs, 0.6, 0.6);
     tagPill(ctx, 'NEW PROBLEM', CX, 452, COL.alert, 1);
-    withCam(ctx, { fx: 420, fy: 820, zoom }, () => {
+    withCam(ctx, { fx: 420, fy: 820, zoom, dy: 5 * Math.sin(t * 0.8), rot: 0.004 * Math.sin(t * 1.1) }, () => {
       panel(ctx, GC.x, GC.y, GC.w, GC.h);
       ctx.save(); rr(ctx, GC.x, GC.y, GC.w, GC.h, STYLE.shape.radius); ctx.clip();
       graphGrid(ctx);

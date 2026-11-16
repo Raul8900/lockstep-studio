@@ -129,6 +129,6 @@ ACCURACY_NOTES = [
     "*“twenty-six bytes … Nine … Seventeen … fix any eight … About thirty percent”* — version 1-H tables; 8 decode, 9 fail (measured); 8/26 = 30.8 %; level H nominal 30 % (sources 2, 4, 8).",
     "*“a logo … damage, on purpose”* — a blank 7 × 7-module centre still decodes (sources 4).",
     "*“thirty percent of the bytes, not of the paper”* — codewords cover 47 % of a version-1 symbol (sources 4).",
-    "*“corner squares aren't protected … this code won't scan”* — function patterns carry no codewords; a 1.3 % tear through one: no decode (sources 2, 4).",
+    "*“corner squares aren't protected … this code won't scan”* — function patterns carry no codewords; a 3.1 % tear through one: no decode in 0/80 random renders or any MP4 frame (sources 2, 4).",
     "*“It took six of the nine message bytes”* — the hook's tear changes codewords 0, 1, 2, 4, 5, 6 (message) and 11 (sources 4).",
 ]

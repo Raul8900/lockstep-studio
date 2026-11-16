@@ -24,7 +24,7 @@ a level-H code is about two-thirds check bytes, in every version ★; this code 
 and 17 check, and fixes any 8 ✎; extra points on a curve beat copies — copies can't tell which one is
 right ★✎; two dots fix a line, extra dots on it let you lose some ✎; a scanner can't see holes, so damage
 looks like a lie; each liar costs two extra points ★; a logo in the middle is deliberate damage ★✎; a
-1.3 % tear through a corner square kills the code while a 9 % tear elsewhere doesn't ★✎; the hero tear
+3 % tear through a corner square kills the code while a 9 % tear elsewhere doesn't ★✎; the hero tear
 destroys 6 of the 9 message bytes and the code still reads ★✎; 30 % means bytes, not area; Reed and
 Solomon, 1960; QR codes, Denso Wave 1994, car parts; the same maths in CDs and deep-space links.
 
@@ -34,7 +34,7 @@ Five candidate angles:
 2. Two-thirds of a damage-proof QR code isn't your message at all.
 3. That logo in the middle of a QR code is damage, on purpose.
 4. Each wrong byte costs two check bytes — the real price of “30 %”.
-5. The “30 %” has fine print: a 1 % tear in the wrong corner kills the code.
+5. The “30 %” has fine print: a 3 % tear in the wrong corner kills the code.
 
 Kept (1): it is the only one that explains *why*, it is true to the mechanism (it is literally Reed and
 Solomon's 1960 construction), it can be drawn with a ruler, and it overturns the “duplicates”
@@ -204,3 +204,41 @@ words sit 50–80 ms early at gain ≤ 0.6.
 4. **It looks like every other QR explainer** (logo in the middle, bar chart of four levels). The logo
    is only an interrupt, the four levels appear once as small print, and the look is a print-shop world
    no other video in this repo uses.
+
+## Retrospective
+
+Written after delivery.
+
+**What worked.**
+- *A real hero object.* Drawing an actual QR code from its module matrix, and decode-testing every
+  state of it (torn, logo, corner square), turned every on-screen claim into something checkable on the
+  video's own frames. It also produced the best fact in the video, which no amount of desk research
+  would have found: the hook's tear destroys six of the nine message bytes. Future videos about an
+  object should look for the equivalent — a real artefact the engine can draw and the claims can be
+  tested against.
+- *Build it from nothing* gave the mechanism a reason to exist: copies fail on screen, the line survives
+  a tear on screen, the liar is exposed on screen. The beat map held from brief to script; nothing
+  drifted back to the default arc.
+- The riso-sticker look (cream stock, black ink, spot blue/orange, misregistered blue shadow) was
+  chosen against a notebook look by eye, and it carried the print-shop world without custom backdrops.
+- The voice check paid for itself: “tear” as “tier” and “one to find” as “want to find” would both have
+  shipped.
+
+**What did not.**
+- The first tear shape was chosen for looks and did not decode; tear shapes must be searched with the
+  decoder in the loop, not drawn first.
+- A negative claim needs a robustness test, not one render: the first corner-square tear failed to
+  decode on the stills I checked, but decoded on other frames of the MP4 (25 of 60 random renders). It
+  was enlarged until it failed in 0 of 80; `tools/qr_model.py` now asserts that for every damage shape.
+- An eased value tested with `> 0` (`E.outBack(0)` is a tiny positive float) put the liar dot in the
+  wrong place for ten seconds of the timeline; test times, not eased values, when a branch matters.
+- The default mix left the quiet `pluck` kit 21.7 dB under the voice; quiet kits need `"mix"` from the
+  start (here: music +4.5 dB, ducking −7 dB → 16.4 dB).
+- Thin moving lines on a still card do not count as motion: the freeze check wants large areas to
+  change. A whole card floating slightly (like the stickers) fixed every remaining hold at once.
+- The leap from “STILL HERE” to “two numbers” is asserted, not shown.
+
+**Next time.**
+- Bridge the toy and the real thing in one picture (the nine message bytes becoming points).
+- Give the title card more than type: a stamp or a printing pass.
+- Test scans with phone camera apps as well as zxing-cpp.

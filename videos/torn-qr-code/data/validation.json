@@ -1,10 +1,10 @@
 {
  "file": {
   "path": "dist/torn_qr_code_vertical.mp4",
-  "size_mb": 58.5,
+  "size_mb": 61.1,
   "container": "QuickTime / MOV",
   "duration_s": 92.667,
-  "overall_bitrate_mbps": 5.05,
+  "overall_bitrate_mbps": 5.27,
   "faststart": true
  },
  "video": {
@@ -17,7 +17,7 @@
   "pix_fmt": "yuv420p",
   "fps": 30.0,
   "frames": 2780,
-  "bitrate_mbps": 4.78,
+  "bitrate_mbps": 5.0,
   "color": "bt709/bt709/bt709 tv"
  },
  "audio": {
@@ -25,57 +25,20 @@
   "profile": "LC",
   "sample_rate": 48000,
   "channels": 2,
-  "bitrate_kbps": 260,
+  "bitrate_kbps": 262,
   "duration_s": 92.608
  },
  "decode_errors": 0,
  "black_segments": [],
- "freeze_segments": [
-  [
-   10.0,
-   10.4333
-  ],
-  [
-   22.8333,
-   23.5333
-  ],
-  [
-   28.8667,
-   29.2667
-  ],
-  [
-   30.4667,
-   30.8667
-  ],
-  [
-   32.3667,
-   32.8
-  ],
-  [
-   34.3,
-   34.7667
-  ],
-  [
-   36.7667,
-   37.1667
-  ],
-  [
-   46.0,
-   46.4333
-  ],
-  [
-   48.0,
-   48.7
-  ]
- ],
+ "freeze_segments": [],
  "encode_fidelity": {
-  "ssim_all": 0.996213,
-  "psnr_avg_db": 51.513572
+  "ssim_all": 0.996028,
+  "psnr_avg_db": 51.207283
  },
  "loudness": {
   "integrated_lufs": -14.0,
-  "range_lu": 2.5,
-  "true_peak_dbtp": -2.9
+  "range_lu": 2.3,
+  "true_peak_dbtp": -2.3
  },
  "sync": {
   "narration_lag_ms_in_mp4": 0,
@@ -93,9 +56,9 @@
  },
  "caption_timing_crosscheck": {
   "matched_words": 224,
-  "median_offset_ms": -110,
-  "mean_abs_dev_ms": 83,
-  "p95_abs_dev_ms": 190,
+  "median_offset_ms": -115,
+  "mean_abs_dev_ms": 82,
+  "p95_abs_dev_ms": 185,
   "note": "independent transducer ASR vs. TTS-derived word starts; the median is the recogniser's own emission delay"
  },
  "captions": {

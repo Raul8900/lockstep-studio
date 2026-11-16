@@ -4,14 +4,14 @@ All figures in the numbered sections were measured on the delivered file by `eng
 
 ## 1. Deliverable
 
-`torn_qr_code_vertical.mp4` — 58.5 MB, 92.67 s (1:32.7).
+`torn_qr_code_vertical.mp4` — 61.1 MB, 92.67 s (1:32.7).
 
 | Requirement | Measured | Result |
 |---|---|---|
 | 1080 × 1920, 9:16 portrait | 1080 × 1920, 9:16 | PASS |
 | 30 fps or higher | 30 fps constant, 2780 frames | PASS |
-| H.264 video | H264 High @ L4.2, yuv420p, bt709/bt709/bt709 tv, 4.78 Mbps | PASS |
-| AAC audio | AAC-LC, 48 kHz, 2 ch, 260 kbps | PASS |
+| H.264 video | H264 High @ L4.2, yuv420p, bt709/bt709/bt709 tv, 5.0 Mbps | PASS |
+| AAC audio | AAC-LC, 48 kHz, 2 ch, 262 kbps | PASS |
 | MP4 container | MP4 (ISO BMFF), index at the front for streaming: yes | PASS |
 | 120 s maximum | 92.67 s | PASS |
 | Plays without error | full decode, 0 errors | PASS |
@@ -30,7 +30,7 @@ All figures in the numbered sections were measured on the delivered file by `eng
 | Rendering | Headless Chromium, 1080 × 1920 native, 2780 frames, each leaving the page as a JPEG (q 0.97). |
 | Look | `riso-sticker` (light theme); the reasoning behind it and the story shape is in docs/creative_brief.md. |
 | Music | Original, synthesised at 108 BPM (pluck kit, transposed +2 semitones), arranged per chapter from the moods in video.json, ending on a held major chord. |
-| Sound design | 127 synthesised cues, emitted by the animation code at the same cue times as the visuals. |
+| Sound design | 129 synthesised cues, emitted by the animation code at the same cue times as the visuals. |
 | Mix | Voice lightly compressed and peak-controlled; bed ducked under speech; mastered to −14 LUFS with a look-ahead limiter. |
 | Encode | FFmpeg libx264 (CRF, preset slow), BT.709 limited range, 2 s keyframe interval; AAC-LC 256 kbps. |
 
@@ -41,10 +41,10 @@ Versions: ffmpeg version 6.1.1-3ubuntu5 · Node v22.23.4 · Python 3.13.18
 | Measure | Value |
 |---|---|
 | Integrated loudness | -14.0 LUFS (target −14) |
-| True peak | -2.9 dBTP |
-| Loudness range | 2.5 LU |
-| Voice above music + effects while speaking | 21.7 dB |
-| Music level in pauses vs. under speech | +4.8 dB (ducking) |
+| True peak | -2.3 dBTP |
+| Loudness range | 2.3 LU |
+| Voice above music + effects while speaking | 16.4 dB |
+| Music level in pauses vs. under speech | +3.8 dB (ducking) |
 | Limiter gain reduction at mastering | 0.0 dB |
 | Speaking pace | 191 wpm while speaking; 161 wpm including pauses |
 
@@ -53,7 +53,7 @@ The narration was transcribed back by an independent recogniser (Whisper small.e
 ## 4. Caption synchronisation
 
 - Caption timing comes from the voice model’s own phoneme durations, not from word counts.
-- Cross-check against a second, unrelated model (Zipformer transducer): 224 of 240 words matched; after removing that recogniser’s constant 110 ms emission delay, the mean deviation is 83 ms and 95 % of words are within 190 ms.
+- Cross-check against a second, unrelated model (Zipformer transducer): 224 of 240 words matched; after removing that recogniser’s constant 115 ms emission delay, the mean deviation is 82 ms and 95 % of words are within 185 ms.
 - 77 burned-in phrases (6 on two lines), shortest on screen 0.4 s; `dist/subtitles.srt` carries the same text as reading-length cues.
 
 ## 5. Mobile viewing
@@ -64,9 +64,9 @@ The narration was transcribed back by an independent recogniser (Whisper small.e
 
 ## 6. Motion and encode fidelity
 
-FFmpeg’s freeze detector (0.15 % mean change, 0.4 s) reports 9 short holds: 10.0–10.4 s, 22.8–23.5 s, 28.9–29.3 s, 30.5–30.9 s, 32.4–32.8 s, 34.3–34.8 s, 36.8–37.2 s, 46.0–46.4 s, 48.0–48.7 s.
+FFmpeg’s freeze detector (0.15 % mean change, 0.4 s) reports no holds anywhere in the video.
 
-Encode fidelity against the rendered frames: SSIM 0.9962, PSNR 51.5 dB.
+Encode fidelity against the rendered frames: SSIM 0.9960, PSNR 51.2 dB.
 
 ## Technical accuracy review
 
