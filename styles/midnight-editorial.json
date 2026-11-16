@@ -43,5 +43,15 @@
   "transition": {
     "duration": 1.0,
     "default": "fade"
+  },
+  "illustrations": {
+    "set": "color",
+    "shadow": {
+      "dx": 0,
+      "dy": 0.05,
+      "blur": 0.06,
+      "alpha": 0.55,
+      "color": "#000000"
+    }
   }
 }

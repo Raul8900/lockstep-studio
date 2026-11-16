@@ -24,6 +24,11 @@
   const PITCH = CARD.h + CARD.gap, HERO = 9;        // card 9 is the one that ends up centred
   const TOP = 560, BOT = 1200, MID = 880;           // window of the feed inside the diagram zone
 
+  /* the viewer's thumb, from the illustration set: flicks the feed on every tick, then freezes with it.
+     art() is called here in the setup; drawArt() in the draw function. */
+  const thumb = art('backhand-index-pointing-up', { tone: 'medium' });
+  const flick = (stop - 0.3) / 5, flicks = [0, 1, 2, 3, 4].map((k) => 0.2 + k * flick);
+
   sfx(0.05, 'whoosh', 0.7);
   for (let k = 0; k < 5; k++) sfx(0.2 + k * (stop - 0.3) / 5, 'tick', 0.6, { pitch: 1 - k * 0.06 });
   sfx(stop - 0.02, 'lock', 0.9);
@@ -63,6 +68,17 @@
       });
     }
     ctx.restore();
+
+    /* thumb: up on each flick, lifted (slightly smaller) on the way back, then a startled hop at the stop */
+    let ty = 1170, lift = 1;
+    const last = flicks.filter((x) => x <= t).pop();
+    if (t < stop && last != null) {
+      const u = (t - last) / flick;
+      ty = u < 0.55 ? lerp(1170, 990, E.out3(u / 0.55)) : lerp(990, 1170, E.io2((u - 0.55) / 0.45));
+      lift = u < 0.55 ? 1 : 0.94;
+    } else if (t >= stop) ty = 1000;
+    const j = hop(t, stop + 0.04, { height: 46, dur: 0.32 });
+    drawArt(ctx, thumb, 800, ty + j.dy, 150 * lift, { anchor: 'bottom', squash: j.squash, rot: -0.16 + sway(t, { amp: 0.03 }) });
 
     /* shock ring when the feed stops */
     const rp = prog(t, stop, stop + 0.8);

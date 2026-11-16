@@ -1,20 +1,26 @@
 #!/usr/bin/env python3
 """Rebuild assets/ from their open-licence sources (the results are committed; run this only to add or update).
 
-  python3 scripts/fetch_assets.py [fonts] [icons] [palettes]        (no argument = all three)
+  python3 scripts/fetch_assets.py [fonts] [icons] [palettes] [illustrations]     (no argument = all)
 
   fonts     Open Font License families from the Fontsource npm packages (Latin subset, WOFF2)
             -> assets/fonts/<id>/*.woff2 + LICENSE, assets/fonts/index.json
   icons     Lucide (ISC licence) -> assets/icons/lucide.json (name -> SVG path data), names.txt
   palettes  nice-color-palettes (MIT; 1000 five-colour palettes) and Open Color (MIT; 13 hues x 10 shades)
             -> assets/palettes/
+  illustrations  Microsoft Fluent Emoji (MIT) in three styles, via the Iconify packages, plus English
+            keywords from emojibase-data (MIT; derived from Unicode CLDR)
+            -> assets/illustrations/fluent-{color,flat,line}.json.gz, index.json
 
 Needs npm and network access to the npm registry. To add a font: add its Fontsource id to FONTS and run
 `python3 scripts/fetch_assets.py fonts`. Only add families whose licence allows redistribution (OFL, Apache).
 """
+import gzip
+import io
 import json
 import re
 import shutil
+import urllib.request
 import subprocess
 import sys
 import tarfile
@@ -204,8 +210,118 @@ def palettes():
     print("  palettes: nice-1000, open-color")
 
 
+# ---------------------------------------------------------------- illustrations
+ART_SETS = {  # our name -> (npm package, what it looks like)
+    "color": ("@iconify-json/fluent-emoji", "soft gradients, a gentle 3D feel"),
+    "flat": ("@iconify-json/fluent-emoji-flat", "flat fills, no gradients"),
+    "line": ("@iconify-json/fluent-emoji-high-contrast", "single-colour line art, tinted to any colour"),
+}
+TONES = ["light", "medium-light", "medium", "medium-dark", "dark"]
+# Fluent names whose CLDR label differs by more than punctuation
+ART_ALIAS = {
+    "hugging-face": "smiling face with open hands", "pouting-face": "enraged face", "knocked-out-face": "face with crossed-out eyes",
+    "piata": "pinata", "blackbird": "black bird", "phoenix-bird": "phoenix", "red-triangle": "red triangle pointed up",
+    "keycap-asterisk": "keycap: *", "keycap-hashtag": "keycap: #", "person-deaf": "deaf person", "man-deaf": "deaf man",
+    "woman-deaf": "deaf woman", "person-wrestling": "people wrestling", "person-with-bunny-ears": "people with bunny ears",
+    "man-blonde-hair": "man: blond hair", "woman-blonde-hair": "woman: blond hair", "person-blonde-hair": "person: blond hair",
+    "person-merpeople": "merperson", "man-merpeople": "merman", "woman-merpeople": "mermaid",
+}
+
+
+def _slug(text):
+    text = text.lower().replace("’", "").replace("'", "").replace("ñ", "n").replace("é", "e").replace("ç", "c").replace("ô", "o")
+    return re.sub(r"[^a-z0-9]+", "-", text).strip("-")
+
+
+def _gz_json(obj, path):
+    raw = json.dumps(obj, separators=(",", ":"), sort_keys=True).encode()
+    with open(path, "wb") as f, gzip.GzipFile(filename="", mode="wb", fileobj=f, mtime=0, compresslevel=9) as g:
+        g.write(raw)
+    return len(raw), path.stat().st_size
+
+
+def illustrations():
+    out = ASSETS / "illustrations"
+    out.mkdir(parents=True, exist_ok=True)
+    names_by_set, versions = {}, {}
+    with tempfile.TemporaryDirectory() as tmp:
+        for key, (pkg_name, _) in ART_SETS.items():
+            pkg = npm_pack(pkg_name, tmp)
+            ic = json.load(open(pkg / "icons.json"))
+            versions[key] = json.load(open(pkg / "package.json"))["version"]
+            icons = {}
+            for name, v in ic["icons"].items():
+                if v.get("hidden"):
+                    continue
+                extra = {k: v[k] for k in ("width", "height", "left", "top") if k in v}
+                icons[name] = dict(body=v["body"], **extra) if extra else v["body"]
+            aliases = {a: {k: v[k] for k in ("parent", "hFlip") if k in v} for a, v in ic.get("aliases", {}).items() if v.get("parent") in icons}
+            bundle = {"source": f"{pkg_name}@{versions[key]}", "width": ic.get("width", 16), "height": ic.get("height", 16),
+                      "icons": icons, "aliases": aliases}
+            raw, packed = _gz_json(bundle, out / f"fluent-{key}.json.gz")
+            names_by_set[key] = set(icons) | set(aliases)
+            print(f"  {key}: {len(icons)} illustrations + {len(aliases)} aliases ({raw / 1e6:.1f} MB -> {packed / 1e6:.1f} MB gzip)")
+        eb = npm_pack("emojibase-data", tmp)
+        data = json.load(open(eb / "en/data.json"))
+        groups = json.load(open(eb / "meta/groups.json"))
+        shutil.copy(eb / "LICENSE", out / "LICENSE-emojibase")
+        eb_version = json.load(open(eb / "package.json"))["version"]
+    by_label = {_slug(e["label"]): e for e in data}
+    all_names = set().union(*names_by_set.values())
+
+    def split_tone(n):
+        for t in sorted(TONES, key=len, reverse=True):
+            if n.endswith("-" + t) and n[: -len(t) - 1] in all_names:
+                return n[: -len(t) - 1], t
+        return n, None
+
+    index = {}
+    for n in sorted(all_names):
+        b, tone = split_tone(n)
+        e = index.setdefault(b, {"sets": [], "tones": []})
+        for key in ART_SETS:
+            if n in names_by_set[key] and key not in e["sets"] and tone is None:
+                e["sets"].append(key)
+        if tone and tone not in e["tones"]:
+            e["tones"].append(tone)
+    matched = 0
+    for b, e in index.items():
+        src = by_label.get(_slug(ART_ALIAS.get(b, b))) or by_label.get(_slug(b.replace("person-", "", 1)))
+        if src:
+            matched += 1
+            e["label"] = src["label"]
+            e["group"] = groups["groups"].get(str(src.get("group")), "")
+            e["subgroup"] = groups["subgroups"].get(str(src.get("subgroup")), "")
+            e["tags"] = sorted({t.lower() for t in src.get("tags", [])} - set(b.split("-")))
+        else:
+            e["label"], e["group"], e["subgroup"], e["tags"] = b.replace("-", " "), "", "", []
+        e["tones"] = [t for t in TONES if t in e["tones"]]
+    lines = [json.dumps(k) + ": " + json.dumps(index[k], ensure_ascii=False, separators=(", ", ": ")) for k in sorted(index)]
+    (out / "index.json").write_text("{\n" + ",\n".join(lines) + "\n}\n", encoding="utf-8")
+    print(f"  index: {len(index)} subjects, {matched} with keywords from emojibase-data {eb_version}")
+    for name, url in (("LICENSE-fluent-emoji", "https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/LICENSE"),
+                      ("LICENSE-unicode-cldr", "https://raw.githubusercontent.com/unicode-org/cldr/main/LICENSE")):
+        with urllib.request.urlopen(url, timeout=30) as r:
+            (out / name).write_bytes(r.read())
+    sizes = {k: (out / f"fluent-{k}.json.gz").stat().st_size / 1e6 for k in ART_SETS}
+    (out / "README.md").write_text(
+        "# Illustrations\n\n"
+        "Microsoft Fluent Emoji (MIT licence, `LICENSE-fluent-emoji`) in three styles — "
+        f"{len(index)} subjects: people (with five skin tones), faces, animals, plants, food, objects, places, symbols.\n\n"
+        "| Set | Looks like | File |\n|---|---|---|\n"
+        + "".join(f"| `{k}` | {ART_SETS[k][1]} | `fluent-{k}.json.gz` ({sizes[k]:.1f} MB, from `{ART_SETS[k][0]}` {versions[k]}) |\n" for k in ART_SETS)
+        + "\n`index.json` lists every subject with its English label, group, keywords and the skin tones available. "
+        "The keywords come from emojibase-data (MIT, `LICENSE-emojibase`), which derives them from Unicode CLDR "
+        "(Unicode License, `LICENSE-unicode-cldr`).\n\n"
+        "Search: `bin/lockstep art honey`. Preview in a video's look: `bin/lockstep art-sheet <video> honeybee flower`.\n"
+        "In a scene: `const bee = art('honeybee')` in the setup, `drawArt(ctx, bee, x, y, size)` in the draw function\n"
+        "(see `.claude/skills/explainer-video/reference/illustration.md`).\n\n"
+        "The bundles are gzip-compressed Iconify JSON (`{icons: {name: svg body}, aliases, width, height}`); the render server\n"
+        "unpacks them on demand. `python3 scripts/fetch_assets.py illustrations` rebuilds this folder.\n")
+
+
 if __name__ == "__main__":
-    todo = sys.argv[1:] or ["fonts", "icons", "palettes"]
+    todo = sys.argv[1:] or ["fonts", "icons", "palettes", "illustrations"]
     for name in todo:
         print(name)
-        {"fonts": fonts, "icons": icons, "palettes": palettes}[name]()
+        {"fonts": fonts, "icons": icons, "palettes": palettes, "illustrations": illustrations}[name]()

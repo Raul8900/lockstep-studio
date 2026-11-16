@@ -78,9 +78,10 @@ on stressed words. The narration track needs about two seconds of steady motion 
 An editor's desk: graph paper, cards, a timeline — the tools people use to make videos, which is
 what the video is about. The hero object is the feed card: it is what the viewer scrolls, what the
 camera dives into, and the shape of every panel afterwards. Diagrams are flat and literal (a real
-narration track built from the voice's own word timings); type carries the rule; the only
-"character" is the playhead. No phone frame, logos or real app interfaces — a skeleton feed is
-enough to read as "a feed".
+narration track built from the voice's own word timings); type carries the rule. Two
+illustrations act: the viewer's thumb flicking the feed (it freezes with it, then startles), and a
+speaking head and a clapperboard that hop together when voice and picture lock. No phone frame,
+logos or real app interfaces — a skeleton feed is enough to read as "a feed".
 
 ## Style
 
@@ -89,7 +90,8 @@ shows the opposite end of the system. Warm off-white graph paper (the desk), ele
 subject (ink of a working document), orange for the one idea in focus, violet for the voice, red for
 wrong timing, green for "locked". Space Grotesk for headlines (precise, slightly quirky), DM Sans for
 body, Space Mono for labels (timecode feel). Grid backdrop drifting slowly; white cards with soft
-shadows; box-highlighted captions; a thin progress line instead of chapter labels (three chapters
+shadows; illustrations from the flat set with the same soft shadow, so they sit on the desk like the
+cards; box-highlighted captions; a thin progress line instead of chapter labels (three chapters
 do not need names); slide transitions by default. Rejected: chalkboard (reads as a lesson, wrong
 for makers) and poster-pop (too loud for a calm rule).
 

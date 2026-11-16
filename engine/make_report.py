@@ -84,6 +84,11 @@ w(f"| Look | `{ST.get('name', 'engine default')}` ({ST.get('mode', 'dark')} them
 w(f"| Music | Original, synthesised at {MUS.get('bpm', 100):g} BPM ({MUS.get('kit', 'synth')} kit" + (f", transposed {MUS['transpose']:+g} semitones" if MUS.get("transpose") else "")
   + "), arranged per chapter from the moods in video.json, ending on a held major chord. |")
 w(f"| Sound design | {A['sfx_cues']} synthesised cues, emitted by the animation code at the same cue times as the visuals. |")
+ART = TL.get("art") or []
+if ART:
+    kinds = sorted({f"{x['set']} set" + ("" if x["treat"] == "none" else f", {x['treat']}") for x in ART})
+    w(f"| Illustrations | {len(ART)} from Microsoft Fluent Emoji (MIT licence; {'; '.join(kinds)}): "
+      + ", ".join(sorted({x['name'] for x in ART})) + ". Credit: “Illustrations: Microsoft Fluent Emoji (MIT)”. |")
 w("| Mix | Voice lightly compressed and peak-controlled; bed ducked under speech; mastered to −14 LUFS with a look-ahead limiter. |")
 w("| Encode | FFmpeg libx264 (CRF, preset slow), BT.709 limited range, 2 s keyframe interval; AAC-LC 256 kbps. |")
 w("")

@@ -169,6 +169,23 @@ drawn by hand, change the seed a few times a second: `seed: 7 + Math.floor(t * 6
 Icons are generic pictograms: good for a row of concepts, a status, a small label. The hero
 object of a video deserves to be drawn by hand in the video's `components.js`, in its own style.
 
+### Illustrations (`art.js`)
+
+People, animals, food, objects and places from the illustration set, drawn in the style's
+treatment. Full guide, motion helpers and bubbles: illustration.md.
+
+```js
+const cook = art('cook', { tone: 'medium-dark' });        // setup code: declare (fetched and rasterised before frame 0)
+drawArt(ctx, cook, 540, 1150, 260, { anchor: 'bottom', p, rot, flipX, squash, alpha });   // draw function
+```
+
+| Helper | |
+|---|---|
+| `art(name, { set, tone, treat, colors, sticker, stickerColor, shadow, res })` | declare; defaults from `style.json` → `illustrations` |
+| `drawArt(ctx, h, x, y, size, { anchor, p, alpha, rot, flipX, squash })` | draw; `size` is the illustration's width |
+| `bob`, `sway`, `breathe`, `wiggle`, `hop(t, t0)` | character motion, pure functions of `t` |
+| `bubble(ctx, x, y, w, h, tx, ty, { p, text, think })` | speech or thought bubble pointing at a speaker |
+
 **2.5D** — `const P = new Proj({ cx, cy, scale, yaw, pitch })`: world x/y in a tilted plane, z up.
 `P.pt(x, y, z)` → `[screenX, screenY, scale]`; `P.quad(ctx, x0, y0, x1, y1, z)` builds a path;
 `P.slab(ctx, x0, y0, x1, y1, z0, z1, topFill, sideFill, edge)` draws an extruded box. Call

@@ -15,6 +15,8 @@
 
   /* Sounds that land on a short word are kept quiet and placed just before it:
      a loud hit on the first consonant makes the word itself hard to hear. */
+  const voiceArt = art('speaking-head'), pictureArt = art('clapper-board');   // illustrations for the two panels
+
   sfx(c.say - 0.07, 'call', 0.55);
   sfx(c.show - 0.07, 'pop', 0.5);
   sfx(c.lock - 0.3, 'riser', 0.7, { dur: 0.3 });
@@ -25,15 +27,16 @@
   addScene('payoff', function (ctx, t) {
     const say = tw(t, c.say - 0.05, c.say + 0.3, E.out3), show = tw(t, c.show - 0.05, c.show + 0.3, E.out3);
     const snap = tw(t, c.lock - 0.02, c.lock + 0.3, E.outBack), k = clamp(snap);
+    const kOut = prog(t, c.lock - 0.16, c.lock), kIn = prog(t, c.lock, c.lock + 0.14);   // the old headline leaves before the new one arrives
     const gap = lerp(46, 10, snap), yA = MID - gap / 2 - PH, yB = MID + gap / 2;
     const colA = k > 0.5 ? COL.good : COL.data, colB = k > 0.5 ? COL.good : COL.subject;
 
     /* headline */
-    riseText(ctx, 'SAY IT.', CX - 200, 500, say, { size: 78, weight: 900, family: F.disp, color: COL.data, align: 'center', alpha: 1 - k });
-    riseText(ctx, 'SHOW IT.', CX + 200, 500, show, { size: 78, weight: 900, family: F.disp, color: COL.subject, align: 'center', alpha: 1 - k });
+    riseText(ctx, 'SAY IT.', CX - 200, 500, say, { size: 78, weight: 900, family: F.disp, color: COL.data, align: 'center', alpha: 1 - kOut });
+    riseText(ctx, 'SHOW IT.', CX + 200, 500, show, { size: 78, weight: 900, family: F.disp, color: COL.subject, align: 'center', alpha: 1 - kOut });
     if (k > 0) {
       ctx.save(); ctx.translate(CX, 500); ctx.scale(lerp(0.8, 1, snap), lerp(0.8, 1, snap));
-      text(ctx, 'IN LOCKSTEP', 0, 0, { size: 112, weight: 900, family: F.disp, color: COL.ink, align: 'center', ls: -1, alpha: k });
+      text(ctx, 'IN LOCKSTEP', 0, 0, { size: 112, weight: 900, family: F.disp, color: COL.ink, align: 'center', ls: -1, alpha: kIn });
       ctx.restore();
       tag(ctx, 'VOICE · PICTURE · SOUND — ONE CLOCK', CX, 556, { align: 'center', color: COL.good, alpha: prog(t, c.lock + 0.2, c.lock + 0.5) });
     }
@@ -42,6 +45,8 @@
     glow(ctx, CX, MID, 620, COL.good, 0.12 * k);
     panel(ctx, PX, yA, PW, PH, { accent: colA, accentA: 0.25 + 0.6 * say });
     tag(ctx, 'VOICE', PX + 30, yA + 48, { color: mixHex(COL.dim, COL.ink, say) });
+    const jv = hop(t, c.lock - 0.02, { height: 30, dur: 0.28 });
+    drawArt(ctx, voiceArt, PX + 98, yA + PH - 22 + jv.dy, 100, { anchor: 'bottom', squash: jv.squash, p: prog(t, c.say - 0.12, c.say + 0.3), rot: sway(t, { amp: 0.04 }) });
     const n = 44, step = (PW - IN - 40) / n;
     for (let i = 0; i < n; i++) {
       const amp = (0.12 + 0.88 * say) * (0.2 + 0.8 * Math.abs(Math.sin(t * 7 + i * 0.9) * Math.sin(t * 2.3 + i * 0.37)));
@@ -52,6 +57,8 @@
     /* picture */
     panel(ctx, PX, yB, PW, PH, { accent: colB, accentA: 0.25 + 0.6 * show });
     tag(ctx, 'PICTURE', PX + 30, yB + 48, { color: mixHex(COL.dim, COL.ink, show) });
+    const jp = hop(t, c.lock + 0.06, { height: 30, dur: 0.28 });
+    drawArt(ctx, pictureArt, PX + 98, yB + PH - 22 + jp.dy, 100, { anchor: 'bottom', squash: jp.squash, p: prog(t, c.show - 0.12, c.show + 0.3), rot: sway(t, { amp: 0.04, phase: 1.7 }) });
     const pts = [];
     for (let i = 0; i <= 24; i++) pts.push([PX + IN + i * (PW - IN - 40) / 24, yB + PH / 2 - 62 * Math.sin(i * 0.55 + t * 1.5) * (0.4 + 0.6 * hash(i))]);
     polyline(ctx, pts, rgba(COL.lineHi, 0.5), 3);

@@ -23,7 +23,7 @@ else:
     STYLE_PATH = ROOT / "style.json"
 BACKDROPS = re.findall(r"^  (?:/\*.*?\*/\s*)?(\w+)\s*(?:\(|:)", (REPO / "engine/anim/js/backdrops.js").read_text().split("const BACKDROPS = {")[1], re.M)
 TRANSITIONS = ["fade", "cut", "zoomIn", "zoomOut", "panDown", "panUp", "slideLeft", "slideRight", "flash"]
-KEYS = {"name", "about", "first_used_in", "mode", "palette", "fonts", "backdrop", "post", "captions", "hud", "shape", "transition"}
+KEYS = {"name", "about", "first_used_in", "mode", "palette", "fonts", "backdrop", "post", "captions", "hud", "shape", "transition", "illustrations"}
 DEFAULT = {"bg": ["#05080D", "#090E17", "#04060A"], "ink": "#F3F8FF", "subject": "#27E1FF", "accent": "#FFA91E", "data": "#A073FF",
            "alert": "#FF5F70", "good": "#4DFFB5"}
 rows, failed = [], 0
@@ -158,6 +158,53 @@ if not 0.2 <= tr.get("duration", 0.84) <= 1.2:
     row("FAIL", "transition.duration", f"{tr['duration']} s: keep between 0.2 and 1.2")
 if S.get("hud", {}).get("type", "segments") not in ("segments", "line", "none"):
     row("FAIL", "hud.type", "choose segments, line or none")
+
+# ---- illustrations
+IL = S.get("illustrations")
+if IL is not None:
+    def role_hex(v):
+        """a role name or COL key from this palette, or a hex value -> hex (None if neither)"""
+        if isinstance(v, str) and re.fullmatch(r"#[0-9A-Fa-f]{6}", v):
+            return v
+        pal = dict(P)
+        bgl = P["bg"] if isinstance(P["bg"], list) else [P["bg"]]
+        pal.update({"bgTop": bgl[0], "bgMid": bgl[min(1, len(bgl) - 1)], "bgBot": bgl[-1], "bg0": bgl[-1], "white": P["ink"],
+                    "panel": given.get("panel"), "cyan": P["subject"], "amber": P["accent"], "violet": P["data"], "coral": P["alert"], "mint": P["good"]})
+        return pal.get(v)
+    bad = []
+    if IL.get("set", "color") not in ("color", "flat", "line"):
+        bad.append(f"set {IL.get('set')!r} (color, flat or line)")
+    treat = IL.get("treat", "none")
+    if treat not in ("none", "tint", "duotone"):
+        bad.append(f"treat {treat!r} (none, tint or duotone)")
+    cols = IL.get("colors") or []
+    if treat == "duotone" and not 2 <= len(cols) <= 3:
+        bad.append("duotone needs 2 or 3 colors: [dark, light] or [dark, mid, light]")
+    unres = [c for c in cols if not role_hex(c)]
+    if treat == "duotone" and unres:
+        bad.append(f"duotone colours must be palette roles or hex: {unres}")
+    if not 0 <= IL.get("sticker", 0) <= 0.12:
+        bad.append("sticker is a fraction of the illustration's size: 0 to 0.12 (0.03–0.06 looks right)")
+    sh = IL.get("shadow")
+    if sh is not None and (not isinstance(sh, dict) or any(abs(sh.get(k, 0)) > 0.2 for k in ("dx", "dy", "blur")) or not 0 <= sh.get("alpha", 0.25) <= 1):
+        bad.append("shadow: {dx, dy, blur} are fractions of the size (|value| <= 0.2), alpha 0–1")
+    if not 200 <= IL.get("res", 600) <= 1600:
+        bad.append("res 200–1600")
+    if bad:
+        row("FAIL", "illustrations", "; ".join(bad))
+    else:
+        desc = f"{IL.get('set', 'color')} set" + ("" if treat == "none" else f", {treat} {cols}") + (f", sticker {IL['sticker']}" if IL.get("sticker") else "") + (", shadow" if sh else "")
+        bgl = P["bg"] if isinstance(P["bg"], list) else [P["bg"]]
+        mid_bg = bgl[min(1, len(bgl) - 1)]
+        if treat in ("duotone", "tint") and not IL.get("sticker") and not sh:
+            ends = [role_hex(cols[0]), role_hex(cols[-1])] if treat == "duotone" else [role_hex(cols[0]) if cols else P["ink"]]
+            merge = [c for c in ends if c and contrast(c, mid_bg) < 1.4]
+            if merge:
+                row("warn", "illustrations", desc + f" — {merge} is close to the background: parts of every illustration will vanish into it; add a sticker border or shadow, or pick another colour")
+            else:
+                row("PASS", "illustrations", desc)
+        else:
+            row("PASS", "illustrations", desc)
 
 # ---- is this just an example, unchanged?
 core = lambda d: json.dumps({k: d.get(k) for k in ("palette", "fonts", "backdrop")}, sort_keys=True)

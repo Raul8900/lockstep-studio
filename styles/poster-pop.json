@@ -55,5 +55,17 @@
   "transition": {
     "duration": 0.5,
     "default": "cut"
+  },
+  "illustrations": {
+    "set": "flat",
+    "sticker": 0.05,
+    "stickerColor": "panel",
+    "shadow": {
+      "dx": 0.045,
+      "dy": 0.045,
+      "blur": 0,
+      "alpha": 1,
+      "color": "ink"
+    }
   }
 }

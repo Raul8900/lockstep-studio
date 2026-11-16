@@ -54,5 +54,17 @@
   "transition": {
     "duration": 0.7,
     "default": "slideLeft"
+  },
+  "illustrations": {
+    "set": "color",
+    "sticker": 0.045,
+    "stickerColor": "#FFFFFF",
+    "shadow": {
+      "dx": 0,
+      "dy": 0.05,
+      "blur": 0.05,
+      "alpha": 0.2,
+      "color": "ink"
+    }
   }
 }

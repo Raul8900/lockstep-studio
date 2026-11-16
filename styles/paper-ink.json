@@ -2,14 +2,51 @@
   "name": "paper-ink",
   "about": "Warm paper, ink colours, serif headlines, hand-drawn marks. History, biology, how-everyday-things-work, anything that suits a notebook.",
   "palette": {
-    "bg": ["#F7F1E5", "#F3EBDB", "#EDE3CF"],
+    "bg": [
+      "#F7F1E5",
+      "#F3EBDB",
+      "#EDE3CF"
+    ],
     "ink": "#1F1B16",
-    "subject": "#1F5FBF", "accent": "#D9480F", "data": "#6B4EA0", "alert": "#C92A2A", "good": "#2B8A3E"
+    "subject": "#1F5FBF",
+    "accent": "#D9480F",
+    "data": "#6B4EA0",
+    "alert": "#C92A2A",
+    "good": "#2B8A3E"
   },
-  "fonts": { "display": "Fraunces", "body": "Lora", "mono": "Courier Prime" },
-  "backdrop": { "type": "paper", "lines": 0, "wash": "accent" },
-  "captions": { "highlight": "underline", "weight": 800, "strokeW": 12 },
-  "hud": { "type": "line" },
-  "shape": { "radius": 10, "stroke": 3, "strokeAlpha": 0.9, "panelAlpha": 0.55 },
-  "transition": { "duration": 0.7, "default": "slideLeft" }
+  "fonts": {
+    "display": "Fraunces",
+    "body": "Lora",
+    "mono": "Courier Prime"
+  },
+  "backdrop": {
+    "type": "paper",
+    "lines": 0,
+    "wash": "accent"
+  },
+  "captions": {
+    "highlight": "underline",
+    "weight": 800,
+    "strokeW": 12
+  },
+  "hud": {
+    "type": "line"
+  },
+  "shape": {
+    "radius": 10,
+    "stroke": 3,
+    "strokeAlpha": 0.9,
+    "panelAlpha": 0.55
+  },
+  "transition": {
+    "duration": 0.7,
+    "default": "slideLeft"
+  },
+  "illustrations": {
+    "set": "line",
+    "treat": "tint",
+    "colors": [
+      "ink"
+    ]
+  }
 }

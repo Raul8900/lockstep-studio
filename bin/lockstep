@@ -23,6 +23,8 @@ lockstep <command> [<video>] [options]
   fonts                         the bundled font families and their character
   icons <word>                  search the 2,300 bundled icons
   save-style <video> [name]     add this video's look to the library, so later videos can build on it
+  art <words> [--set S]         search 1,595 illustrations (people, animals, food, objects…) by meaning
+  art-sheet <video> [--set S] <names or words>...   preview illustrations as this video draws them -> out/art_sheet.jpg
 
  narration
   voice <video> [voice] [speed] record the narration from script.py -> audio/narration_24k.wav, data/words.json
@@ -93,7 +95,8 @@ case "$cmd" in
       node "$E/render.js" "$E/tile" tile --style "$f" --out "$REPO/styles/previews/$n.jpg" >/dev/null
       printf '  %-20s %s\n' "$n" "$(json_field "$f" about)"
     done
-    python3 "$E/sheet.py" "$REPO/styles/previews/[!_]*.jpg" "$REPO/styles/previews/_all.jpg" 8 300 >/dev/null
+    n=$(ls "$REPO"/styles/*.json | wc -l); [ "$n" -le 12 ] || n=8
+    python3 "$E/sheet.py" "$REPO/styles/previews/[!_]*.jpg" "$REPO/styles/previews/_all.jpg" "$n" 300 >/dev/null
     echo "previews: styles/previews/<name>.jpg; all side by side: styles/previews/_all.jpg"
     echo "looks used by videos in this repo:"
     for d in "$REPO"/videos/*/; do
@@ -123,6 +126,13 @@ case "$cmd" in
     n=$(grep -ci -- "$q" "$REPO/assets/icons/names.txt" || true)
     echo "$n icons match '$q':"
     grep -i -- "$q" "$REPO/assets/icons/names.txt" | head -120 | paste -sd ' ' | fold -s -w 110 | sed 's/^/  /' ;;
+  art)          [ $# -gt 0 ] || { echo "give a word, e.g.: lockstep art honey" >&2; exit 1; }; python3 "$E/art_search.py" "$@" ;;
+  art-sheet)
+    V=$(resolve "${1:-}"); shift
+    SET=(); if [ "${1:-}" = "--set" ]; then SET=(--set "$2"); shift 2; fi
+    [ $# -gt 0 ] || { echo "give illustration names or words, e.g.: lockstep art-sheet <video> honeybee flower" >&2; exit 1; }
+    NAMES=$(python3 "$E/art_search.py" --resolve --video "$V" "${SET[@]}" "$@") || { echo "nothing to show" >&2; exit 1; }
+    node "$E/render.js" "$V" artsheet --names "$NAMES" "${SET[@]}" --out "$V/out/art_sheet.jpg" ;;
   save-style)
     V=$(resolve "${1:-}"); N="${2:-}"
     [ -f "$V/style.json" ] || { echo "no style.json in $V" >&2; exit 1; }

@@ -22,10 +22,15 @@ must pass; `voice` and `build` enforce it). Never reuse a look by default.
 - `templates/video/` — what `bin/lockstep new` copies: a small runnable video (its brief and style
   are replaced by `templates/creative_brief.md` and nothing, so each video decides its own).
 - `styles/` — the library of looks (`style.json` files with previews); `assets/` — open-licence
-  fonts, icons and palettes the renderer loads directly.
+  fonts, icons, palettes and illustrations (Fluent Emoji) the renderer loads directly.
 - `videos/<slug>/` — one folder per video. `videos/how-a-gpu-works/` is the reference production.
 - `scripts/setup.sh` — installs Python packages, the voice model, fonts; `scripts/selftest.sh`
   builds the template end to end.
+
+## Branches
+
+`develop` is the default branch. Start new work on a feature branch from `origin/develop` and merge it
+back through a pull request into `develop`. `main` is the legacy branch: do not commit or push to it.
 
 ## Conventions
 

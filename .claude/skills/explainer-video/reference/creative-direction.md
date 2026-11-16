@@ -46,7 +46,7 @@ A direction is a combination of four choices. Make the three differ in at least 
 | Axis | Options (examples, not limits) |
 |---|---|
 | Story shape | any format in story-formats.md, a combination, or your own |
-| Visual world | literal mechanism diagram · analogy world · a character's point of view · kinetic typography · lab notebook / hand-drawn · data and maps · museum or archive · toy model / simulation · comic panels · poster |
+| Visual world | literal mechanism diagram · analogy world · a recurring illustrated character · a small world built from illustrated props · a character's point of view · kinetic typography · lab notebook / hand-drawn · data and maps · museum or archive · toy model / simulation · comic panels · poster |
 | Tone | wonder · urgency · deadpan humour · warmth · drama · playful · forensic |
 | Look | derived from the topic (art-direction.md); the library in `styles/` is a starting point |
 
@@ -64,8 +64,12 @@ Judge each direction on:
 - **Fit** — does the look and tone belong to this topic and this audience?
 - **Freshness** — how far is it from the default treatment you found in step "Inputs"?
 - **Feasibility** — can this engine make it well? It draws vector shapes, type, line icons, hand-drawn
-  lines, 2.5D slabs and particles; it has no photographs, footage, 3D models or lip-synced
-  characters. A direction that needs those will be made badly.
+  lines, 2.5D slabs, particles, and 1,595 illustrated subjects — people in hundreds of roles with
+  five skin tones, animals, food, objects, places — that can hop, squash, sway, react and talk in
+  bubbles (illustration.md). It has no photographs, footage, 3D models or lip-synced characters. A
+  direction that needs those will be made badly.
+- **Illustrations** — check the subjects the direction needs exist: `bin/lockstep art <word>`. If
+  the central object is missing (there is no beehive, no transistor), the direction must draw it.
 
 Pick one, or combine — and say exactly what came from where.
 

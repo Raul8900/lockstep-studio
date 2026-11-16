@@ -45,7 +45,7 @@ must argue why that exact look fits.
 | `midnight-editorial` | dark | aubergine stage, one warm light, Playfair, slow fades | space, psychology, true stories, anything told quietly |
 | `chalkboard` | dark | green board, chalk colours, Caveat handwriting | maths, physics intuitions, "let me draw it for you" |
 | `candy-pop` | light | pastel, rounded Fredoka, soft blobs, boxed captions | food, pets, the body, feel-good curiosities |
-| `sunset-synth` | dark | purple-to-orange fields, wide Unbounded caps, glow | music, internet culture, the future |
+| `sunset-synth` | dark | purple-to-orange fields, wide Unbounded caps, glow, tritone stickers | music, internet culture, the future |
 | `studio-grid` | light | graph paper, electric blue, Space Grotesk, cards with shadows | process, craft, how things are made |
 | `riso-sticker` | light | cream stock, black + spot inks, Archivo Black, misregistered blue offset shadows, halftone | printed objects, codes and labels, everyday tech (“Why a Torn QR Code Still Scans”) |
 
@@ -72,7 +72,8 @@ the palette is derived from the few colours you give.
   "captions": { "highlight": "underline", "weight": 800, "size": 74 },
   "hud": { "type": "line" },
   "shape": { "radius": 10, "stroke": 3, "strokeAlpha": 0.9, "panelAlpha": 0.6 },
-  "transition": { "duration": 0.7, "default": "slideLeft" }
+  "transition": { "duration": 0.7, "default": "slideLeft" },
+  "illustrations": { "set": "line", "treat": "tint", "colors": ["subject"] }
 }
 ```
 
@@ -144,6 +145,21 @@ videos), `line` (a thin progress line), `none` (narrative videos, 60 s and under
 **`transition`** — `duration` 0.2–1.2 s and the `default` type for scenes that do not name one:
 `fade`, `slideLeft`, `slideRight`, `zoomIn`, `zoomOut`, `panDown`, `panUp`, `cut`, `flash`.
 
+**`illustrations`** — how the illustration set is drawn in this look (illustration.md):
+
+| Key | Default | |
+|---|---|---|
+| `set` | `color` | `color` (soft gradients), `flat` (flat fills), `line` (single colour, no skin tones) |
+| `treat` | `none` | `tint` (one colour: line art in a role colour, or silhouettes) · `duotone` (map light and dark to 2–3 palette colours: print looks) |
+| `colors` | — | role names or hex: `["subject"]` for tint; `["ink", "subject", "panel"]` for a tritone |
+| `sticker`, `stickerColor` | 0, white | die-cut border as a fraction of the size (0.03–0.06) |
+| `shadow` | none | `{ "dx": 0.04, "dy": 0.04, "blur": 0, "alpha": 1, "color": "ink" }` hard; `blur` 0.04–0.06 with `alpha` 0.15–0.5 soft |
+| `res` | 600 | raster size; individual illustrations can ask for more |
+
+Match the shape language: hard offset shadows if the cards have them, soft lift if the cards float,
+line art where the look is drawn by hand. A duotone or tint whose colour equals the background makes
+parts of every illustration vanish — `style-check` warns; add a border or shadow.
+
 ## Type voices
 
 All bundled families are open-licence (OFL or Apache); `bin/lockstep fonts` lists their weights.
@@ -176,8 +192,10 @@ look with crisp vector diagrams, or a poster look with thin hairlines, reads as 
 | cards and process | panels in sequence, slides, icons as small pictograms, a progress line |
 | soft, friendly | round shapes, springy easing (`E.outBack`), big friendly icons, pastel fills |
 
-Icons (2,300 line icons, `bin/lockstep icons <word>`) suit small pictograms and labels. The hero
-object deserves its own drawing in the video's `components.js`.
+Icons (2,300 line icons, `bin/lockstep icons <word>`) suit small pictograms and labels;
+illustrations (1,595 subjects, `bin/lockstep art <word>`) are the actors and props, drawn in the
+look's own treatment. The hero object, when the illustration set does not have it or has only a
+symbol of it, deserves its own drawing in the video's `components.js`.
 
 ## Quality bar for a look
 

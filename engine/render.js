@@ -19,6 +19,7 @@
             changed scene can be re-rendered on its own with --from/--to
    ===================================================================== */
 const http = require('http');
+const zlib = require('zlib');
 const fs = require('fs');
 const path = require('path');
 
@@ -45,7 +46,7 @@ if (!projArg || !mode) {
 const PROJECT = path.resolve(projArg);
 if (!fs.existsSync(path.join(PROJECT, 'video.json'))) { console.error(`no video.json in ${PROJECT}`); process.exit(1); }
 const DATA = path.join(PROJECT, 'data');
-const NEEDS_NARRATION = mode !== 'tile';
+const NEEDS_NARRATION = mode !== 'tile' && mode !== 'artsheet';
 if (NEEDS_NARRATION && !fs.existsSync(path.join(DATA, 'words.json'))) {
   console.error(`no narration recorded yet for ${path.basename(PROJECT)}: run  bin/lockstep voice ${path.basename(PROJECT)}  first`);
   process.exit(1);
@@ -56,6 +57,26 @@ if (NEEDS_NARRATION && !fs.existsSync(path.join(PROJECT, 'caption_phrases.json')
 }
 const OUT = path.join(PROJECT, 'out');
 const FRAMES = path.join(OUT, 'frames');
+
+/* illustrations: the bundles in assets/illustrations are unpacked once per process and served
+   as single SVGs at /assets/illustrations/<set>/<name>.svg */
+const ART_BUNDLES = {};
+function artSVG(set, name) {
+  if (!(set in ART_BUNDLES)) {
+    const f = path.join(ASSETS, 'illustrations', `fluent-${set}.json.gz`);
+    ART_BUNDLES[set] = fs.existsSync(f) ? JSON.parse(zlib.gunzipSync(fs.readFileSync(f)).toString('utf8')) : null;
+  }
+  const B = ART_BUNDLES[set];
+  if (!B) return null;
+  let n = name, flip = false;
+  if (!B.icons[n] && B.aliases[n]) { flip = !!B.aliases[n].hFlip; n = B.aliases[n].parent; }
+  const ic = B.icons[n];
+  if (!ic) return null;
+  const body = typeof ic === 'string' ? ic : ic.body;
+  const w = ic.width || B.width, h = ic.height || B.height, l = ic.left || 0, t = ic.top || 0;
+  const inner = flip ? `<g transform="translate(${2 * l + w} 0) scale(-1 1)">${body}</g>` : body;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${l} ${t} ${w} ${h}">${inner}</svg>`;
+}
 
 function manifest() {
   const scripts = [];
@@ -88,6 +109,13 @@ function startServer() {
         res.end(JSON.stringify(manifest()));
         return;
       }
+      const am = /^\/assets\/illustrations\/(color|flat|line)\/([a-z0-9-]+)\.svg$/.exec(rel);
+      if (am) {
+        const svg = artSVG(am[1], am[2]);
+        res.writeHead(svg ? 200 : 404, { 'Content-Type': svg ? 'image/svg+xml' : 'text/plain', 'Cache-Control': 'no-store' });
+        res.end(svg || 'no such illustration');
+        return;
+      }
       const isProj = rel.startsWith('/project/'), isAsset = rel.startsWith('/assets/');
       const base = isProj ? PROJECT : isAsset ? ASSETS : ANIM;
       let file = path.normalize(path.join(base, isProj ? rel.slice(9) : isAsset ? rel.slice(8) : rel));
@@ -103,12 +131,13 @@ function startServer() {
   });
 }
 
-async function openPage(browser, port, debugSafe, tile) {
+async function openPage(browser, port, debugSafe, special) {
   const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
   page.on('pageerror', (e) => console.error('[pageerror]', e.message));
   page.on('console', (m) => { if (m.type() === 'error' && !/404/.test(m.text())) console.error('[console]', m.text()); });
   if (debugSafe) await page.addInitScript(() => { window.DEBUG_SAFE = true; });
-  if (tile) await page.addInitScript(() => { window.TILE_MODE = true; });
+  if (special && special.tile) await page.addInitScript(() => { window.TILE_MODE = true; });
+  if (special && special.artsheet) await page.addInitScript((o) => { window.ARTSHEET_NAMES = o.names; window.ARTSHEET_SET = o.set; }, special.artsheet);
   await page.goto(`http://127.0.0.1:${port}/index.html`);
   await page.waitForFunction(() => window.READY || window.BOOT_ERROR, null, { timeout: 60000 });
   const err = await page.evaluate(() => window.BOOT_ERROR);
@@ -116,10 +145,10 @@ async function openPage(browser, port, debugSafe, tile) {
   return page;
 }
 
-async function withPage(debugSafe, fn, tile) {
+async function withPage(debugSafe, fn, special) {
   const server = await startServer(); const port = server.address().port;
   const browser = await chromium.launch();
-  try { return await fn(await openPage(browser, port, debugSafe, tile), browser, port); }
+  try { return await fn(await openPage(browser, port, debugSafe, special), browser, port); }
   finally { await browser.close(); server.close(); }
 }
 
@@ -156,6 +185,7 @@ async function meta() {
         palette: { bg: [COL.bgTop, COL.bgMid, COL.bgBot], ink: COL.white, subject: COL.subject, accent: COL.accent, data: COL.data, alert: COL.alert, good: COL.good },
         captions: { size: CAP.size, weight: CAP.weight, family: CAP.family, y: CAP.cy, lineH: CAP.lineH, maxW: CAP.maxW, highlight: STYLE.captions.highlight, case: STYLE.captions.case }, hud: STYLE.hud.type, transition: STYLE.transition },
       scenes: SCENES.map((s) => ({ id: s.id, name: chapterName(s.id), t0: s.t0, t1: s.t1, trans: s.trans })),
+      art: [...ART_SPECS.values()].map((s) => ({ name: s.tone ? `${s.name}-${s.tone}` : s.name, set: s.set, treat: s.treat })),
       sfx: SFX,
       caps: CAPS.map((c) => ({ text: c.text, show0: c.show0, show1: c.show1, t0: c.t0, t1: c.t1, lines: c.lines.length, width: Math.max(...c.lines.map((l) => l.w)) * c.scale })),
     }));
@@ -177,7 +207,25 @@ async function tile(args) {
     const b64 = await page.evaluate(() => { renderFrame(66); return document.getElementById('c').toDataURL('image/jpeg', 0.92).split(',')[1]; });
     fs.writeFileSync(out, Buffer.from(b64, 'base64'));
     console.log('style tile -> ' + out);
-  }, true);
+  }, { tile: true });
+}
+
+/* artsheet --names a,b,c [--style file.json] [--out file.jpg]: illustrations as this video will draw them */
+async function artsheet(args) {
+  let out = path.join(OUT, 'art_sheet.jpg'), names = [], set = null;
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--names') names = args[++i].split(',').filter(Boolean);
+    else if (args[i] === '--set') set = args[++i];
+    else if (args[i] === '--style') STYLE_OVERRIDE = path.resolve(args[++i]);
+    else if (args[i] === '--out') out = path.resolve(args[++i]);
+  }
+  if (!names.length) { console.error('artsheet: --names a,b,c'); process.exit(1); }
+  fs.mkdirSync(path.dirname(out), { recursive: true });
+  await withPage(false, async (page) => {
+    const b64 = await page.evaluate(() => { renderFrame(30); return document.getElementById('c').toDataURL('image/jpeg', 0.92).split(',')[1]; });
+    fs.writeFileSync(out, Buffer.from(b64, 'base64'));
+    console.log(`${names.length} illustrations -> ${out}`);
+  }, { artsheet: { names: names.slice(0, 24), set } });
 }
 
 async function scan() {
@@ -193,7 +241,9 @@ async function scan() {
         }
       }
       const min = lum.reduce((a, x) => (x[1] < a[1] ? x : a), [0, 999]);
-      return { errors: errs, dark_frames: dark, darkest: { t: +(min[0] / FPS).toFixed(2), mean: +min[1].toFixed(1) }, sampled: lum.length };
+      /* illustrations drawn more than 12 % larger than they were rasterised: soft edges — give them a larger res */
+      const soft = [...ART_IMG.values()].filter((a) => a.maxDrawn > a.res * 1.12).map((a) => ({ name: a.spec.name, res: a.res, drawn_px: Math.round(a.maxDrawn) }));
+      return { errors: errs, dark_frames: dark, darkest: { t: +(min[0] / FPS).toFixed(2), mean: +min[1].toFixed(1) }, sampled: lum.length, soft_illustrations: soft };
     });
     console.log(JSON.stringify(r, null, 1));
     if (r.errors.length || r.dark_frames.length) process.exitCode = 2;
@@ -256,6 +306,7 @@ async function video(args) {
   if (mode === 'still') await still(rest);
   else if (mode === 'meta') await meta();
   else if (mode === 'tile') await tile(rest);
+  else if (mode === 'artsheet') await artsheet(rest);
   else if (mode === 'scan') await scan();
   else if (mode === 'bench') await bench(rest);
   else if (mode === 'video') await video(rest);

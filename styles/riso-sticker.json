@@ -57,5 +57,21 @@
     "duration": 0.55,
     "default": "slideLeft"
   },
+  "illustrations": {
+    "set": "flat",
+    "treat": "duotone",
+    "colors": [
+      "ink",
+      "subject",
+      "panel"
+    ],
+    "shadow": {
+      "dx": 0.035,
+      "dy": 0.035,
+      "blur": 0,
+      "alpha": 0.9,
+      "color": "accent"
+    }
+  },
   "first_used_in": "torn-qr-code"
 }

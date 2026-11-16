@@ -108,28 +108,54 @@ function setupTile() {
   DATA.beats = [{ id: 'tile', title: 'Style tile', t0: 0.6, t1: 2.7 }];
   DATA.meta = { duration: 4 }; DATA.dur = 4;
   CAPS = buildCaptions(DATA.words, ['Captions look', 'like this,', 'word by word']);
-  addScene('tile', drawTile);
+  const people = STYLE.illustrations.set === 'line' ? {} : { tone: 'medium-dark' };
+  const arts = [art('honeybee'), art('woman-scientist', people), art('rocket')];
+  addScene('tile', (ctx, t) => drawTile(ctx, t, arts));
 }
-function drawTile(ctx, t) {
+function drawTile(ctx, t, arts) {
   const roles = ['subject', 'accent', 'data', 'alert', 'good'];
-  tag(ctx, 'STYLE · ' + STYLE.name.toUpperCase() + (STYLE.mode === 'light' ? ' · LIGHT' : ''), CX, 420, { align: 'center' });
+  tag(ctx, 'STYLE · ' + STYLE.name.toUpperCase() + (STYLE.mode === 'light' ? ' · LIGHT' : ''), CX, 400, { align: 'center' });
   const title = VIDEO.title && !/__/.test(VIDEO.title) && VIDEO.title !== 'Style preview' ? VIDEO.title : 'Headline';
-  bigWord(ctx, title, CX, 505, 1, { maxW: 880, max: 150 });
-  text(ctx, 'Body text explains one thing in a short line.', CX, 640, { size: 38, weight: 500, color: COL.text, align: 'center' });
+  bigWord(ctx, title, CX, 478, 1, { maxW: 880, max: 140 });
+  text(ctx, 'Body text explains one thing in a short line.', CX, 598, { size: 36, weight: 500, color: COL.text, align: 'center' });
   for (let i = 0; i < roles.length; i++) {
     const x = CX + (i - 2) * 178, c = COL[roles[i]];
-    glow(ctx, x, 760, 120, c, 0.3); dot(ctx, x, 760, 54, c);
-    tag(ctx, roles[i].toUpperCase(), x, 850, { align: 'center', size: 21 });
+    glow(ctx, x, 690, 110, c, 0.3); dot(ctx, x, 690, 46, c);
+    tag(ctx, roles[i].toUpperCase(), x, 770, { align: 'center', size: 21 });
   }
-  panel(ctx, 110, 900, 860, 290, { accent: COL.subject, accentA: 0.8 });
-  pill(ctx, 'LABEL', 220, 962, { bg: COL.subject });
-  pill(ctx, '21,760', 400, 962, { bg: COL.accent });
-  text(ctx, 'Panel title', 150, 1050, { size: 54, weight: 800, family: F.disp });
-  text(ctx, 'secondary text · dim', 150, 1100, { size: 30, weight: 500, color: COL.dim });
-  tag(ctx, 'MONO TAG 0123', 150, 1150);
-  const pts = []; for (let i = 0; i <= 20; i++) pts.push([560 + i * 18, 1070 - 46 * Math.sin(i * 0.6 + t * 2) * (0.5 + 0.5 * hash(i))]);
+  panel(ctx, 110, 815, 860, 225, { accent: COL.subject, accentA: 0.8 });
+  pill(ctx, 'LABEL', 220, 868, { bg: COL.subject });
+  pill(ctx, '21,760', 400, 868, { bg: COL.accent });
+  text(ctx, 'Panel title', 150, 950, { size: 52, weight: 800, family: F.disp });
+  text(ctx, 'secondary text · dim', 150, 995, { size: 29, weight: 500, color: COL.dim });
+  const pts = []; for (let i = 0; i <= 18; i++) pts.push([580 + i * 18, 925 - 40 * Math.sin(i * 0.6 + t * 2) * (0.5 + 0.5 * hash(i))]);
   polyline(ctx, pts, COL.subject, 5);
-  roughCircle(ctx, 880, 965, 34, COL.alert, 5, { seed: 3 });
+  roughCircle(ctx, 900, 868, 30, COL.alert, 5, { seed: 3 });
   const names = ['lightbulb', 'heart', 'zap', 'globe'].filter((n) => ICONS[n]);
-  names.forEach((n, i) => icon(ctx, n, 590 + i * 92, 1150, 60, [COL.accent, COL.alert, COL.good, COL.data][i]));
+  names.forEach((n, i) => icon(ctx, n, 640 + i * 84, 1000, 50, [COL.accent, COL.alert, COL.good, COL.data][i]));
+  arts.forEach((h, i) => drawArt(ctx, h, CX + (i - 1) * 230, 1150, 150));
+}
+
+/* ---------- art sheet ----------
+   `lockstep art-sheet <video> <names>`: the illustrations as this video's style will draw them. */
+function setupArtSheet(names) {
+  DATA.words = []; DATA.takes = [];
+  DATA.beats = [{ id: 'sheet', title: 'Illustrations', t0: 0.5, t1: 1 }];
+  DATA.meta = { duration: 2 }; DATA.dur = 2;
+  CAPS = [];
+  const set = window.ARTSHEET_SET || undefined;
+  const hs = names.map((n) => art(n, set ? { set } : {}));
+  addScene('sheet', (ctx) => drawArtSheet(ctx, names, hs));
+}
+function drawArtSheet(ctx, names, hs) {
+  const n = hs.length, cols = n <= 4 ? 2 : n <= 9 ? 3 : 4, rows = Math.ceil(n / cols);
+  const cw = 940 / cols, ch = Math.min(cw * 1.2, 1560 / rows), size = Math.min(cw, ch) * 0.62;
+  const spec = ART_SPECS.get(hs[0]);
+  tag(ctx, `${spec.set.toUpperCase()} SET · ${spec.treat === 'none' ? 'AS DRAWN' : spec.treat.toUpperCase()}${spec.sticker ? ' · STICKER' : ''}${spec.shadow ? ' · SHADOW' : ''} · STYLE ${STYLE.name.toUpperCase()}`,
+    CX, 150, { align: 'center' });
+  for (let i = 0; i < n; i++) {
+    const x = 70 + cw * ((i % cols) + 0.5), y = 210 + ch * Math.floor(i / cols) + ch * 0.45;
+    drawArt(ctx, hs[i], x, y, size);
+    text(ctx, names[i], x, y + size * 0.5 + 44, { size: 22, weight: 600, family: F.mono, color: COL.text, align: 'center', maxW: cw - 14 });
+  }
 }

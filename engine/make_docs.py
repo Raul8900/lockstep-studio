@@ -174,6 +174,11 @@ def storyboard_md(seq, colour):
                  + (", upper case" if caps_st.get("case") == "upper" else "") + f", centred on y {caps_st.get('y')}, 1–5 words per phrase ("
                  + str(len(tl["caps"])) + " phrases, " + str(sum(1 for c in tl["caps"] if c["lines"] > 1)) + " of them two-line); "
                  + HIGHLIGHT_DESC.get(caps_st.get("highlight"), "") + ". Words not yet spoken are dimmed. Position never changes.\n")
+    art_used = tl.get("art") or []
+    if art_used:
+        kinds = sorted({f"{x['set']} set" + ("" if x["treat"] == "none" else f", {x['treat']}") for x in art_used})
+        o.append(f"**Illustrations.** {len(art_used)} subjects from Microsoft Fluent Emoji (MIT licence), {'; '.join(kinds)}: "
+                 + ", ".join(sorted({x['name'] for x in art_used})) + ".\n")
     tr = st.get("transition") or {}
     if tr:
         o.append(f"**Scene changes.** {tr.get('duration')} s, default `{tr.get('default')}`; each scene can choose its own arrival "

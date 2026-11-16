@@ -84,7 +84,8 @@ script.py ──► voice ──► words.json (every word, to 25 ms) ──┬�
 | Stage | How |
 |---|---|
 | Direction | A creative brief per video (audience, angle, three directions, hooks, story shape, pacing, visual world, look, sound, risks), gated by `lockstep brief`. Story formats and art direction guides in the skill. |
-| Look | `style.json` per video: palette roles, fonts, backdrop, caption treatment, progress bar, card shapes, transition grammar. Legibility checked by `lockstep style-check`, previewed by `lockstep tile`. |
+| Look | `style.json` per video: palette roles, fonts, backdrop, caption treatment, progress bar, card shapes, transition grammar, illustration treatment. Legibility checked by `lockstep style-check`, previewed by `lockstep tile`. |
+| Illustrations | 1,595 Fluent Emoji subjects in colour, flat or line sets, treated to match the look (tint, duotone, die-cut border, shadow) and animated as characters (hops, squash, sway, speech bubbles). |
 | Voice | Kokoro-82M text-to-speech, run locally. The ONNX graph is patched to output its phoneme durations, so word timings are exact rather than estimated. |
 | Animation | HTML Canvas 2D. Each scene is a JavaScript function of time; cues are `at('beat', 'word')`. |
 | Rendering | Headless Chromium draws every frame deterministically across four workers (≈ 40 fps). |
@@ -100,6 +101,8 @@ bin/lockstep new <slug> ["Title"]     scaffold videos/<slug>/ from the template
 bin/lockstep styles                   preview the library of looks
 bin/lockstep tile <video> [a.json…]   preview a look, or candidate looks side by side
 bin/lockstep palettes|fonts|icons     browse the open-licence asset library
+bin/lockstep art <words>              find illustrations (people, animals, objects…) by meaning
+bin/lockstep art-sheet <video> <…>    preview illustrations as a video's look will draw them
 bin/lockstep style-check <video>      legibility of a look
 bin/lockstep brief <video>            is the creative direction complete? (voice and build need it)
 bin/lockstep save-style <video> name  add a video's look to the library
@@ -120,7 +123,7 @@ engine/                      renderer, voice, score and mix, encode, QA — shar
 templates/video/             starter project copied by `lockstep new` (light "studio-grid" look)
 templates/creative_brief.md  the blank brief every new video starts from
 styles/                      the library of looks, with previews
-assets/                      open-licence fonts (33 families), icons (2,359) and palettes (1,000+)
+assets/                      open-licence fonts (33 families), icons (2,359), palettes (1,000+) and illustrations (1,595 subjects × 3 styles)
 videos/<slug>/               one folder per video (brief, style, sources, data, docs, dist)
 .claude/skills/explainer-video/   the production process Claude follows
 scripts/setup.sh  selftest.sh
@@ -149,9 +152,9 @@ give byte-identical frames.
 ## Limits
 
 - English narration only, with the voices that ship with the model.
-- Visuals are drawn by code: vector shapes, type, line icons, hand-drawn strokes, 2.5D, particles.
-  No photographs, footage, 3D models or talking characters; the creative brief has to direct within
-  that.
+- Visuals are drawn by code: vector shapes, type, line icons, illustrated characters and props,
+  hand-drawn strokes, 2.5D, particles. No photographs, footage, 3D models or lip-synced characters;
+  the creative brief has to direct within that.
 - Taste is checked by the agent looking at its own frames, not by an audience. Watch each video and,
   once published, feed back what performed — the briefs' retrospectives are where that goes.
 - The agent cannot listen to the mix or watch playback inside the apps. Audio is verified by
@@ -163,7 +166,8 @@ give byte-identical frames.
 
 Stored in `assets/` (see `assets/README.md`): 33 type families from Google Fonts via Fontsource
 (SIL Open Font License, two under Apache 2.0), Lucide icons (ISC), nice-color-palettes and Open
-Color (MIT); each with its licence file.
+Color (MIT), Microsoft Fluent Emoji illustrations (MIT) with keywords from emojibase-data (MIT) and
+Unicode CLDR (Unicode License); each with its licence file.
 
 Downloaded at setup, not stored here: Kokoro-82M voice model and `kokoro-onnx` (Apache-2.0 / MIT),
 `misaki` (Apache-2.0), sherpa-onnx with Whisper small.en and a Zipformer model (optional QA),

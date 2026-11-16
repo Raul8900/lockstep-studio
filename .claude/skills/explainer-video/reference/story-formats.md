@@ -80,7 +80,8 @@ raindrop).
 **Shape.** Stakes and clock → obstacles experienced from inside → the moment the mechanism saves or
 transforms you → the reveal of where you ended up.
 **Visuals.** The camera is the character; a status HUD of the character's own (speed, energy,
-time left) instead of chapter names.
+time left) instead of chapter names. Other characters and obstacles can come from the illustration
+set, reacting as you pass.
 **Risks.** Fake stakes feel gimmicky; the stakes must be the real physics or biology.
 
 ## Build it from nothing
@@ -138,8 +139,9 @@ GPU ↔ a kitchen brigade).
 your graphics card").
 **Shape.** Set up the world → map 3–4 roles → run the process inside the world → show where the
 analogy breaks and what the real thing does instead → return to reality.
-**Visuals.** An illustrated world with recurring characters and props; real-world names appear as
-labels and captions.
+**Visuals.** An illustrated world with recurring characters and props (the illustration set has
+cooks, couriers, workers, tools, vehicles and buildings); real-world names appear as labels and
+captions.
 **Risks.** The analogy becomes the topic. Pay back the real mechanism, and show where the analogy
 fails — that is what keeps it honest.
 

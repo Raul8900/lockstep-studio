@@ -124,5 +124,5 @@ rest; on light styles, use the style's card shadow and overlap instead.
 - Fade a scene in from nothing at its start, or leave it frozen in a pause.
 - Use a colour outside its role, hard-code a hex value in a scene, or use more than three accent
   colours in one sequence.
-- Draw real logos, brand marks, people, or copied artwork. Name products in text; draw original
-  schematic shapes.
+- Draw real logos, brand marks, identifiable real people, or copied artwork. Name products in text;
+  draw original schematic shapes; use the bundled illustration set for generic people and things.
