@@ -161,3 +161,11 @@ to read on a phone, and because a medical explanation has to be trusted.
 2. **The cost beat becomes a scare or medical advice.** Prevention: the costs are the label's own words, there are no incidence figures, and the only instruction is "Read the label" and "ask a pharmacist", which the label supports.
 3. **The diagram becomes a textbook page.** Prevention: every beat has a visual transformation (the shatter, the flood, the factories lighting, the shield thinning, the fork, the empty crosshair), and no beat is a list.
 4. **The dated 2005 label is taken as current.** Prevention: the only figure on screen is the peak window (one to two hours), which agrees with the label's pharmacokinetics. The report flags the label's date and recommends checking the current label before any re-publication.
+
+## Retrospective
+
+**What worked.** Deciding the direction before recording: the myth-to-truth shape gave the video its three-second undercut and its callback. The tile comparison picked the look with the eyes. The cue-driven scenes kept every picture on its word, and the voice check caught one misheard word before it reached the picture. Drawing the costs as changes to one body (the shield thins and cracks, the flow slows) worked better than any list would have.
+
+**What did not.** Research took longer than the drawing, because several primary sources were behind paywalls or bot checks; next time, go straight to abstracts on Europe PMC and PMC. The 2005 label is the only ibuprofen label read. The factory dive crops the head, and the "busiest" marks are a schematic illustration rather than data. The first draft had 66 still stretches, and the motion fix came late; 14 short holds remain. The end-card subline is small on a phone. The mix was 21.7 dB before anyone checked it.
+
+**Change next time.** Plan the idle-motion budget per scene at storyboard time, not after the first build. Check the speech-to-music ratio before the first render, and set the mix level then. Qualify every on-screen claim with the narration's own qualifier (the kidney label was a near miss). Check paper access early and fall back to abstracts at once.
