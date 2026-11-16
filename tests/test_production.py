@@ -49,6 +49,11 @@ class ProductionTests(unittest.TestCase):
         cfg = json.loads((self.root / "video.json").read_text())
         self.assertEqual(cfg["choices"]["shots"]["a"]["inputs"]["values"], [2, 4])
         self.assertEqual(cfg["audio"]["effects"], "none")
+        select(self.root, 'ambience', 'sound.ambience')
+        select(self.root, 'score', 'score.local', inputs={'file': 'assets/score.wav'})
+        select(self.root, 'score', 'score.synth')
+        cfg = json.loads((self.root / 'video.json').read_text())
+        self.assertEqual([s['role'] for s in cfg['audio']['stems']], ['ambience'])
 
     def test_assets_cannot_escape_project(self):
         with self.assertRaises(ValueError): local_asset(self.root, "../outside.wav")

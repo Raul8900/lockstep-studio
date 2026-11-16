@@ -1,26 +1,26 @@
 test_assets_cannot_escape_project (test_production.ProductionTests.test_assets_cannot_escape_project) ... ok
 test_duplicate_stem_rejected (test_production.ProductionTests.test_duplicate_stem_rejected) ... ok
 test_envelope_rest_is_smooth_and_word_anchored (test_production.ProductionTests.test_envelope_rest_is_smooth_and_word_anchored) ... ok
-test_external_voice_cannot_reuse_old_recording_timings (test_production.ProductionTests.test_external_voice_cannot_reuse_old_recording_timings) ... /workspace/work/lockstep-studio/engine/common.py:30: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp3ftfcakp/video.json' mode='r' encoding='utf-8'>
+test_external_voice_cannot_reuse_old_recording_timings (test_production.ProductionTests.test_external_voice_cannot_reuse_old_recording_timings) ... /workspace/work/lockstep-studio/engine/common.py:30: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpiwx4i4lc/video.json' mode='r' encoding='utf-8'>
   return json.load(open(project / "video.json", encoding="utf-8"))
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
 ok
-test_missing_selected_backend_has_setup_remedy (test_production.ProductionTests.test_missing_selected_backend_has_setup_remedy) ... /workspace/work/lockstep-studio/engine/common.py:30: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpw5t47s_y/video.json' mode='r' encoding='utf-8'>
+test_missing_selected_backend_has_setup_remedy (test_production.ProductionTests.test_missing_selected_backend_has_setup_remedy) ... /workspace/work/lockstep-studio/engine/common.py:30: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpg60e34rv/video.json' mode='r' encoding='utf-8'>
   return json.load(open(project / "video.json", encoding="utf-8"))
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
 ok
-test_music_clock_has_no_fictional_speech (test_production.ProductionTests.test_music_clock_has_no_fictional_speech) ... /workspace/work/lockstep-studio/engine/common.py:30: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp4jr79cz9/video.json' mode='r' encoding='utf-8'>
+test_music_clock_has_no_fictional_speech (test_production.ProductionTests.test_music_clock_has_no_fictional_speech) ... /workspace/work/lockstep-studio/engine/common.py:30: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpcn09hg50/video.json' mode='r' encoding='utf-8'>
   return json.load(open(project / "video.json", encoding="utf-8"))
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
 ok
 test_sample_seeking_trim_variation_and_fades (test_production.ProductionTests.test_sample_seeking_trim_variation_and_fades) ... ok
-test_search_and_independent_selection (test_production.ProductionTests.test_search_and_independent_selection) ... /workspace/work/lockstep-studio/engine/common.py:30: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp3ttdgdru/video.json' mode='r' encoding='utf-8'>
+test_search_and_independent_selection (test_production.ProductionTests.test_search_and_independent_selection) ... /workspace/work/lockstep-studio/engine/common.py:30: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp5cj5cma8/video.json' mode='r' encoding='utf-8'>
   return json.load(open(project / "video.json", encoding="utf-8"))
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
 ok
 
 ----------------------------------------------------------------------
-Ran 8 tests in 0.021s
+Ran 8 tests in 0.155s
 
 OK
 Imported supplied audio and its reviewed timings; regenerate captions and rebuild picture.
@@ -40,5 +40,24 @@ Imported supplied audio and its reviewed timings; regenerate captions and rebuil
 }
 {
   "item": "effects.none",
+  "inputs": {}
+}
+{
+  "item": "sound.ambience",
+  "inputs": {
+    "file": "assets/production/ambience.wav",
+    "gain_db": -12,
+    "fade_in": 0.01,
+    "fade_out": 0.05
+  }
+}
+{
+  "item": "score.local",
+  "inputs": {
+    "file": "assets/score.wav"
+  }
+}
+{
+  "item": "score.synth",
   "inputs": {}
 }

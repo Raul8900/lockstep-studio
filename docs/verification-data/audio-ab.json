@@ -1,0 +1,95 @@
+{
+  "commands": [
+    [
+      "/workspace/work/lockstep-studio/bin/lockstep",
+      "meta",
+      "/workspace/work/audio-ab-verified/directed-project"
+    ],
+    [
+      "/workspace/work/lockstep-studio/bin/lockstep",
+      "audio",
+      "/workspace/work/audio-ab-verified/directed-project"
+    ],
+    [
+      "/workspace/work/lockstep-studio/bin/lockstep",
+      "assemble",
+      "/workspace/work/audio-ab-verified/directed-project",
+      "--remux"
+    ],
+    [
+      "/workspace/work/lockstep-studio/bin/lockstep",
+      "validate",
+      "/workspace/work/audio-ab-verified/directed-project"
+    ],
+    [
+      "/workspace/work/lockstep-studio/bin/lockstep",
+      "report",
+      "/workspace/work/audio-ab-verified/directed-project"
+    ]
+  ],
+  "elapsed_s": {
+    "meta": 2.085,
+    "audio": 3.509,
+    "assemble": 2.941,
+    "validate": 84.38,
+    "report": 0.081
+  },
+  "cached_audio_change_s": 8.535,
+  "listened_by_human": false,
+  "editorial_change": "Music dips 10 dB around exact word names; stamp moves 280 ms after word and becomes a quiet local contact; chime moves 380 ms after word and is reduced.",
+  "legacy": {
+    "picture_stream_hash": "SHA256=090500b89dc1851613293243ec95e06ec78f9c490e9182656065510bad6d33af",
+    "duration": 17.667,
+    "loudness": {
+      "integrated_lufs": -14.0,
+      "range_lu": 4.1,
+      "true_peak_dbtp": -3.0
+    },
+    "narration_sha256": "f94df06065e0d6fcc5ad9fdce0fe89540daa363978c19016f8758fed4a2c5107",
+    "focus_word": {
+      "w": "word",
+      "t0": 7.7918,
+      "t1": 8.0168,
+      "beat": "idea",
+      "take": 2,
+      "cls": "k"
+    },
+    "asr": {
+      "wer_percent": 0.0,
+      "errors": 0,
+      "words": 34,
+      "diffs": []
+    },
+    "music_rms_during_focus_dbfs": -33.943,
+    "sfx_rms_during_focus_dbfs": -31.446,
+    "file_sha256": "07d668cbe8cfd783c76c75aa7ddf244037a0d3ae7d2c574d0e6b808e93c3ecce"
+  },
+  "directed": {
+    "picture_stream_hash": "SHA256=090500b89dc1851613293243ec95e06ec78f9c490e9182656065510bad6d33af",
+    "duration": 17.667,
+    "loudness": {
+      "integrated_lufs": -14.1,
+      "range_lu": 4.1,
+      "true_peak_dbtp": -4.7
+    },
+    "narration_sha256": "f94df06065e0d6fcc5ad9fdce0fe89540daa363978c19016f8758fed4a2c5107",
+    "focus_word": {
+      "w": "word",
+      "t0": 7.7918,
+      "t1": 8.0168,
+      "beat": "idea",
+      "take": 2,
+      "cls": "k"
+    },
+    "asr": {
+      "wer_percent": 0.0,
+      "errors": 0,
+      "words": 34,
+      "diffs": []
+    },
+    "music_rms_during_focus_dbfs": -43.943,
+    "sfx_rms_during_focus_dbfs": -57.648,
+    "file_sha256": "33ccaa7109f153a9a871a0ea5541ce601a80adb55343cc2a8bafaeb4f5e69e17"
+  },
+  "level_match_difference_lu": 0.1
+}

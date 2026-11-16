@@ -64,6 +64,35 @@ can instead set `LOCKSTEP_CHROMIUM=/usr/bin/chromium`. Local setup uses a Python
 XDG font/cache directories under work/. Full build commands and optional setup are in
 [production-choices.md](production-choices.md).
 
+## Audio comparison and intentional silence
+
+Reproduction uses the unchanged built starter from `scripts/selftest.sh --keep`:
+
+```bash
+python3 scripts/audio_ab.py /workspace/work/legacy-fixture --out /workspace/work/audio-ab-verified
+```
+
+The script saves both downloadable clips, exact commands and measured stages, validates the
+remux and decodes/checksums each delivery copy. The 17.667-second clips have identical compressed
+picture streams and narration WAVs. Legacy/directed loudness is −14.0/−14.1 LUFS (0.1 LU apart),
+true peak −3.0/−4.7 dBTP and both final mixes have 0% ASR WER. The directed mix dips music by 10 dB
+around “exact word names”, moves the stamp 280 ms later as a quiet local contact sample and moves
+and reduces the chime. During “word”, music RMS changes from −33.943 to −43.943 dBFS and effects
+from −31.446 to −57.648 dBFS. These are measurements; no human listening judgement is claimed.
+
+The audio-only cached change takes **8.535 seconds**: metadata 2.085 s, mixing 3.509 s, mastering
+and remux 2.941 s. No voice synthesis or picture rendering is repeated. Validation is separate
+(84.380 s, including final ASR, fidelity comparison and review images). Raw evidence is in
+[audio-ab.json](verification-data/audio-ab.json). The directed mix selects a −5 dB mastering
+ceiling because this particular AAC encode overshot a less conservative waveform ceiling;
+the exported file, not only the pre-encode WAV, is measured. Legacy mastering is unchanged.
+
+A fully silent 15-second variation of the music-clock reel also passes full decode, duration,
+geometry and picture checks. Its measured digital silence correctly makes loudness, peak,
+speech recognition and audio correlation inapplicable. See [silent-validation.json](verification-data/silent-validation.json).
+The selection regression check ensures replacing a local score removes that music stem while
+retaining independently selected ambience.
+
 ## Delivery status
 
 Implementation and capability checks are complete. The aeroplane-window production will be authored

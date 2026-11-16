@@ -48,9 +48,11 @@ def select(root, slot, item_id, shot=None, inputs=None):
         choices[slot] = choice
         if slot == "score":
             cfg.setdefault("music", {})["source"] = item_id.split(".")[1]
+            # Replacing the score must not leave the previous local score playing
+            # under the newly selected synth. Ambience remains independent.
+            stems = cfg.setdefault('audio', {}).setdefault('stems', [])
+            stems[:] = [s for s in stems if s.get('role') != 'music']
             if item_id == 'score.local' and choice['inputs'].get('file'):
-                stems = cfg.setdefault('audio', {}).setdefault('stems', [])
-                stems[:] = [s for s in stems if s.get('role') != 'music']
                 stems.append({'role': 'music', **choice['inputs']})
         if slot == "effects":
             cfg.setdefault("audio", {})["effects"] = item_id.split(".")[1]
@@ -60,6 +62,10 @@ def select(root, slot, item_id, shot=None, inputs=None):
 
 def preview(item, destination):
     from production import dump
+    if item['id'] == 'score.local':
+        raise ValueError('score.local previews your own WAV: choose <video> score score.local --inputs \'{"file":"assets/music.wav"}\', then run meta and audio; listen to audio/music.wav')
+    if item['id'] == 'voice.supplied':
+        raise ValueError('a supplied voice preview needs your WAV and reviewed timing JSON; use import-voice and listen to the supplied file')
     target = Path(destination).resolve()
     target.mkdir(parents=True, exist_ok=True)
     if item["backend"] == "wav":
@@ -77,8 +83,6 @@ def preview(item, destination):
     if item["id"] == "voice.kokoro":
         subprocess.run([str(REPO / "bin/lockstep"), "audition", str(root), "0"], check=True)
         return
-    if item["id"] == "voice.supplied":
-        raise ValueError("a supplied voice preview needs your WAV and reviewed timing JSON; use import-voice and audition the supplied file")
     for file in (root / "scenes").glob("*.js"):
         file.unlink()
     cfg = load_config(root)

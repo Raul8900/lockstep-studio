@@ -104,7 +104,7 @@ creates a sound.
 entry with `role:"music"`; ambience uses `role:"ambience"`. Each stem supports `file`, `at`,
 `gain_db`, `trim_start`, `trim_end`, `duration`, `loop`, `fade_in`, `fade_out`. Duplicate file/start
 entries are rejected. Loops overlap by 20 ms and authored boundaries fade. Existing score kits,
-moods, BPM, transposition and ducking are retained. Music, ambience and narration are independent.
+moods, BPM, transposition and ducking are retained. Music, ambience and narration are independent. Selecting a replacement score through `choose` removes the previous music stem while preserving ambience. `score.local` requires your own WAV; its preview command explains the import/listening steps rather than playing a substitute synth.
 `audio.music_envelopes`, `audio.ambience_envelopes` and `audio.sfx_envelopes` accept intervals:
 
 ```json
@@ -113,7 +113,9 @@ moods, BPM, transposition and ducking are retained. Music, ambience and narratio
 
 Or select an entire `chapter`, or a `rest:true`. Smooth ramps avoid gain discontinuities.
 After sound-only changes run `meta`, `audio`, `assemble --remux`, `validate`, `report`.
-Do not reuse picture or captions after changing the recording's timing.
+Do not reuse picture or captions after changing the recording's timing. `mix.master_ceiling_db` optionally sets a −12 to −1 dB waveform ceiling when the measured AAC export needs extra peak headroom; the default stays −1.5 dB. Always validate the exported file.
+
+Run `python3 scripts/audio_ab.py <built-selftest-folder> --out <new-folder>` for the reproducible 17.67-second legacy/directed comparison, its listening copies, checksums and stage timings.
 
 ## Music-only clocks
 

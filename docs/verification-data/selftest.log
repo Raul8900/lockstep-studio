@@ -1,0 +1,62 @@
+== voice
+{"voice": "af_heart", "speed": 1.0, "sample_rate": 24000, "duration": 17.67, "speech_end": 14.3797, "word_count": 34}
+== direction
+creative brief and style.json are complete
+  style: studio-grid
+  warn  same as an example       palette, fonts and backdrop are identical to styles/studio-grid.json: fine only if the brief argues this topic calls for exactly that look
+== captions
+caption_phrases.json: 13 phrases cover all 34 words; longest: "Every picture lands" (19 chars)
+== meta
+timeline.json: 530 frames, 3 scenes, 35 sfx cues, 13 caption phrases
+== scan
+{
+ "errors": [],
+ "dark_frames": [],
+ "darkest": {
+  "t": 5.6,
+  "mean": 225.6
+ },
+ "sampled": 89
+}
+== audio
+ "premaster_peak_db": -1.5,
+ "sfx_cues": 35,
+ "speech_to_bed_ratio_db": 15.8
+}
+== render
+rendered 530 frames in 23.1s -> /tmp/lockstep-selftest.Dd6cij/selftest/out/frames
+== assemble
+audio master: {"premaster_lufs": -11.9, "premaster_true_peak_db": -1.5, "applied_gain_db": -2.1, "max_limiter_reduction_db": -0.0, "final_lufs": -14.0, "final_lra_lu": 4.1, "final_true_peak_db": -3.6}
+wrote /tmp/lockstep-selftest.Dd6cij/selftest/dist/selftest_vertical.mp4
+== srt
+7 cues -> /tmp/lockstep-selftest.Dd6cij/selftest/dist/subtitles.srt
+== validate
+data/validation.json written
+== docs
+docs/narration_script.md: 34 words in 4 takes
+docs/visual_storyboard.md: 4 sequences; continuity gaps: none
+== report
+docs/production_report.md written, 798 words
+
+  selftest_vertical.mp4   17.67 s   6.5 MB   2.68 Mbps
+  PASS  1080 x 1920, 9:16              1080 x 1920
+  PASS  30 fps, all frames present     30 fps, 530 of 530 frames
+  PASS  H.264 + AAC in MP4             h264 High / aac 48000 Hz
+  PASS  streamable (index first)       faststart
+  PASS  length <= 180 s                17.67 s
+  PASS  decodes cleanly                0 errors
+  PASS  no black frames                0 segments 
+  PASS  audio/picture sync             +0 ms
+  PASS  stream durations agree         0.067 s difference
+  PASS  loudness -14 LUFS +/- 1        -14.0 LUFS
+  PASS  true peak <= -1 dBTP           -3.0 dBTP
+  PASS  captions inside safe width     x [167, 913], widest 746 px
+  PASS  captions readable              shortest on screen 0.37 s, longest 5 words
+  PASS  encode fidelity                SSIM 0.9896
+  PASS  voice intelligible in the mix  0.0 % word error (0 of 34)
+  PASS  continuous motion              no holds
+
+  all hard requirements pass.
+  next: look at selftest/dist/contact_sheet.jpg and the mobile previews before calling it done.
+kept: /tmp/lockstep-selftest.Dd6cij/selftest  (video in /tmp/lockstep-selftest.Dd6cij/selftest/dist/)
+selftest passed.
