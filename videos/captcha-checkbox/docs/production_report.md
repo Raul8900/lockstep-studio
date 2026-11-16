@@ -11,7 +11,7 @@ All figures in the numbered sections were measured on the delivered file by `eng
 | 1080 × 1920, 9:16 portrait | 1080 × 1920, 9:16 | PASS |
 | 30 fps or higher | 30 fps constant, 4965 frames | PASS |
 | H.264 video | H264 High @ L4.2, yuv420p, bt709/bt709/bt709 tv, 5.67 Mbps | PASS |
-| AAC audio | AAC-LC, 48 kHz, 2 ch, 265 kbps | PASS |
+| AAC audio | AAC-LC, 48 kHz, 2 ch, 266 kbps | PASS |
 | MP4 container | MP4 (ISO BMFF), index at the front for streaming: yes | PASS |
 | 180 s maximum | 165.50 s | PASS |
 | Plays without error | full decode, 0 errors | PASS |
@@ -39,10 +39,10 @@ Versions: ffmpeg version 6.1.1-3ubuntu5 · Node v22.23.4 · Python 3.13.18
 
 | Measure | Value |
 |---|---|
-| Integrated loudness | -14.0 LUFS (target −14) |
+| Integrated loudness | -14.1 LUFS (target −14) |
 | True peak | -2.9 dBTP |
 | Loudness range | 2.7 LU |
-| Voice above music + effects while speaking | 18.2 dB |
+| Voice above music + effects while speaking | 16.9 dB |
 | Music level in pauses vs. under speech | +5.2 dB (ducking) |
 | Limiter gain reduction at mastering | 0.0 dB |
 | Speaking pace | 168 wpm while speaking; 146 wpm including pauses |
@@ -52,7 +52,7 @@ The narration was transcribed back by an independent recogniser (Whisper small.e
 ## 4. Caption synchronisation
 
 - Caption timing comes from the voice model’s own phoneme durations, not from word counts.
-- Cross-check against a second, unrelated model (Zipformer transducer): 357 of 393 words matched; after removing that recogniser’s constant 120 ms emission delay, the mean deviation is 81 ms and 95 % of words are within 191 ms.
+- Cross-check against a second, unrelated model (Zipformer transducer): 356 of 393 words matched; after removing that recogniser’s constant 120 ms emission delay, the mean deviation is 81 ms and 95 % of words are within 195 ms.
 - 136 burned-in phrases (10 on two lines), shortest on screen 0.47 s; `dist/subtitles.srt` carries the same text as reading-length cues.
 
 ## 5. Mobile viewing
@@ -84,20 +84,22 @@ wording, not the page's.
 | "A 2021 survey describes the checkbox recording cursor movement, where you click, and how long the pointer hovers" | Survey's description (secondhand). On screen: "SURVEY'S DESCRIPTION, NOT GOOGLE". |
 | "Google's own FAQ calls a cookie essential" | FAQ excerpt (paraphrase): the `_GRECAPTCHA` cookie is essential and supports the risk analysis. |
 | "Version three has no checkbox" / "one means very likely a good interaction, zero means very likely a bot" | v3 documentation excerpt; the quoted phrasing was confirmed in the excerpt. |
-| "Google suggests starting at point five" | v3 documentation excerpt (starting cutoff 0.5). Labelled "sites tune their own". |
+| "Google suggests starting at 0.5" | v3 documentation excerpt (starting cutoff 0.5). Labelled "sites tune their own". |
 | "A real hand never moves at one steady speed … a smooth, bell-shaped curve of speed" / "In 1985, Flash and Hogan modeled" | Citation confirmed in several later reference lists; the 1985 paper itself was not read. The bell profile is attributed to this work by a later J Neurosci paper. Presented as a model of human reaching, not as a claim about reCAPTCHA. |
 | "One published detector checks cursor paths against a model like that" | Abstract excerpt of BeCAPTCHA-Mouse. On screen: "TRAINED ON PUZZLE DRAGS". The name is shown on screen, not spoken. |
 | "In a 2024 study of reCAPTCHA version two, any cursor movement cut the number of puzzles needed to pass" | Excerpts of the paper's tables and text. On screen: "ILLUSTRATIVE, NOT TO SCALE" for the two-column picture. |
 | "Straight paths and curved ones were not significantly different" (p = 0.57) | Same paper, from the excerpt (t = 0.58, p = 0.57). Not checked in the full PDF. |
 | "A 2024 study reports that cookies and browsing history carry substantial weight" | The authors' own report, from the excerpt. On screen: "REPORTED BY RESEARCHERS". |
 | "Browsing history is what researchers report. Google hasn't confirmed it." | No Google statement confirming browsing history was found in the excerpts checked. On screen: "GOOGLE: NOT CONFIRMED". |
-| "In 2019, researchers trained an AI agent … a score of point nine about ninety-seven percent of the time" | Abstract excerpt (97.4% on a 100 × 100 grid, 96.7% on 1000 × 1000). On screen: "SIMULATOR, NOT THE LIVE SITE". |
-| "A 2023 study ran for thirteen months with more than thirty-six hundred people" | Abstract excerpt (13-month live study, more than 3,600 participants, one large public university). |
+| "In 2019, researchers trained an AI agent … a score of 0.9, about 97% of the time" | Abstract excerpt (97.4% on a 100 × 100 grid, 96.7% on 1000 × 1000). On screen: "SIMULATOR, NOT THE LIVE SITE". |
+| "A 2023 study ran for thirteen months with more than 3,600 people" | Abstract excerpt (13-month live study, more than 3,600 participants, one large public university). |
 | "Its authors judged the checkbox costly, with close to no security gain, and say it should be retired" | The authors' own judgement, from the abstract excerpt. On screen: "THE AUTHORS' VIEW". |
 
-Numbers on screen, all traced in `docs/sources.md`: 2013, 2014, 2019, 2021, 2023, 2024, 1985 (dates);
-0.0 to 1.0 and 0.5 (the v3 scale and suggested cutoff); about 97% and 97.4% / 96.7% (simulator);
-3,600+ and 13 months (study); p = 0.57 (2024 paper). "13 MONTHS" and "3,600+" are the study's figures.
+Numbers on screen and in the narration, all traced in `docs/sources.md`: 2013, 2014, 2019, 2021,
+2023, 2024, 1985 (dates); 0.0 to 1.0 and 0.5 (the v3 scale and suggested cutoff); 0.9 and 97% (the
+simulator); 3,600+ and thirteen months (the study); p = 0.57 (the 2024 paper). The narration writes
+these numbers as the speech recogniser transcribes them, so the spoken words and the checked
+figures are the same.
 
 Simplifications, stated on screen where they matter: the checkbox is reCAPTCHA v2's widget and v3 is
 shown as a score with no checkbox; Google's list of signals and their weights is described as not
@@ -106,55 +108,61 @@ test found that the movement mattered and the path's shape did not.
 
 ## Defects found during QA and fixed
 
-Found by reading the contact sheets and full-size stills, and by `scan` and `meta`.
+Found by the build's checks, by the contact sheets, full-size stills, the filmstrip and the
+phone-size previews, and by a faithful re-test of each held window.
 
 | Found | Cause | Fix |
 |---|---|---|
-| The signal ring crossed the headline "AROUND THE CHALLENGE" (old-test scene) | Ring radius and headline position were set independently | Card moved to the centre line; ring radius reduced; headline placed above the ring |
-| The crossed-out checkbox stayed on screen for the rest of the score scene, over the scale | The cross was drawn at constant progress, not faded | The cross fades out with the box, before the scale appears |
-| "NO CHECKBOX" stayed on screen beside "ABOUT 97%" | The label had no end | Fades out before the score scale |
-| "VERSION 3" overlapped "2019" (simulator section) | Two headlines at the same position | The version headline fades before the simulator section |
-| "START 0.5" overlapped "EACH SITE SETS ITS OWN" | Both at the same height | Labels separated; the cutoff labels now have their own window |
-| The cutoff labels came back during the "point nine" section | They were gated by the scale's visibility | Gated to their own window, from the checkbox to "but" |
-| A nearly empty frame at the score section's handoff (about 121 s) | The simulator faded in after the scale had gone | The two fades now overlap |
-| "THE TEST" label was clipped at the left edge (takeaway scene) | Label centred on a point too far left | Left-aligned to the right of the path |
-| "HOW YOU GOT THERE" ran almost edge to edge | 88 px headline | Reduced to 72 px |
-| The recogniser heard "reCAPTCHA" as "Ray Capcha" | Default reading of the brand name | IPA override on the narration (check-voice now matches it) |
-| The recogniser heard "BeCAPTCHA-Mouse" as "B-CAP Shemouse" | Unfamiliar compound name | The narration says "one published detector"; the name appears on screen as a labelled caveat |
-| "a researchers' finding" (ungrammatical) | Script wording | "what researchers report" |
-| "rise and fall in speed" heard as "fallen speed" | Phrasing | "a smooth, bell-shaped curve of speed" |
-| "want it retired" heard as "wanted retired" | "it" dropped by the voice | "say it should be retired" |
-| A continuity gap of 0.2 s at the score section's start in the storyboard | Boundary written from a different cue | Corrected; the docs step reports no continuity gaps |
-| A source attributed to a "2016 study" and a robot-arm anecdote presented as fooling reCAPTCHA | Careless summary in the research notes | Corrected in `docs/sources.md`; a duplicate uncertain bullet removed |
+| Voice intelligible in the mix: 5.81% word error (24 of 413) — a FAIL | The recogniser writes "2013", "0.5", "97%" and "3,600" where the script said "twenty thirteen", "point five", "ninety-seven percent" and "thirty-six hundred"; the comparison normalises the two forms differently. The spoken words were correct. | The narration now uses the forms the recogniser transcribes; cue keys, captions and the caption highlight follow. The clean check now shows 0 word errors in 425 words, and the mix check shows 0.0%. The threshold was not changed. |
+| 59 static holds of 0.4–0.9 s in the first full build (a flagged check) | Pauses between sentences where only small elements moved. The validator measures the average change across the whole frame, so small moving items do not register. | A slow breathing light in every scene, a light travelling along the trail (hook and payoff), history rows that scroll inside the browser windows, a drifting band in the watch list, breathing light at the 1985 peak, on the waiting checkbox, on the scale, behind the dot field and the simulator, and a breathing light across the end card. Each held window was reproduced with the build's encode settings before and after the fix. The final build reports no holds. |
+| The history rows ran past the bottom of the small browser window (watch scene) | Row positions were fixed and the window was too short | Rows scroll inside the window; the window is taller; its label moved down |
+| The incoming scene was blank for 0.3–0.7 s at three cuts (watch, cursor, score) | Headlines, the list and the axes faded in after the scene started | Drawn from the scene's first frame; the filmstrip confirms no empty frames at those cuts |
+| A hard-edged amber band in the limits scene read as a block | A rectangle used as a sweep | Replaced by a soft glow |
+| The speech-to-music ratio was 18.2 dB, outside the 15–17 dB target | Music bus level | Music bus raised 1.5 dB in `video.json` (`mix.music_db` −2.5); the ratio is now 16.9 dB and loudness stays at −14.1 LUFS |
+| Score scene: a crossed checkbox and "NO CHECKBOX" stayed on screen; "VERSION 3" overlapped "2019"; "START 0.5" overlapped "EACH SITE SETS ITS OWN"; cutoff labels came back during the "0.9" section | Labels with no end time or the same screen position | Each label fades out or has its own time window; the simulator and scale handoff overlaps |
+| "THE TEST" clipped at the left edge; the end headline ran nearly edge to edge | Label placed too far left; headline too large | Label moved beside the path; headline reduced to 72 px |
+| The recogniser heard "reCAPTCHA" as "Ray Capcha" and "BeCAPTCHA-Mouse" as "B-CAP Shemouse" | Default reading of unfamiliar names | IPA override for reCAPTCHA; the detector's name is not spoken, and it is shown on screen as a labelled caveat |
+| A build refused to start after the script was edited following recording | The build checks the recording against the script | Re-recorded (the text was unchanged, so the audio was identical) |
+| A continuity gap of 0.2 s in the storyboard | A boundary written from a different cue | Corrected; the docs step reports no continuity gaps |
+| A source attributed to a "2016 study", a robot-arm anecdote presented as fooling reCAPTCHA, and a duplicate uncertain bullet | Careless summary in the research notes | Corrected in `docs/sources.md` |
 
 ## Creative self-assessment
 
-What works: the hook's picture (the trail already lit before the tap, labelled "STARTED HERE") makes
-the claim visible in the first second; the bell-shaped speed curve and the steady line are a clear
-picture of one idea; the verdict branches (PASS and PUZZLE) show the outcome without numbers; the
-simulator's "NOT THE LIVE SITE" caveat and the coral "NOT CONFIRMED" stamp keep the claims honest on screen.
+What works: the hook shows the claim in the first second (a trail already lit before the tap,
+labelled "STARTED HERE"); the bell-shaped speed curve and the steady line show one idea clearly; the
+verdict branches (PASS and PUZZLE) show the outcome without numbers; the simulator's "NOT THE LIVE
+SITE" caveat and the coral "NOT CONFIRMED" stamp keep the claims honest on screen; the captions and
+their highlight colours follow the narration.
 
 What is weakest: the browser chapter is abstract (a meter and a person icon stand for "weight" and
-"seems human"); the takeaway's lower third is nearly empty (only the trail remains); the two-column
-puzzle comparison is an illustration and reads as data at a glance; the "wobble" chapter is text-led;
-the simulator grid is faint on a phone; the dot field for 3,600 people is dim until it fills.
+"seems human"); the takeaway's lower third is nearly empty (only the trail remains); the light now
+breathes constantly, so it may read as slightly "glowy" on a phone and a second pass should calm
+its amplitude; the two-column puzzle comparison is an illustration and reads as data at a glance;
+the "wobble" chapter is text-led; the simulator grid is faint on a phone; the dot field for 3,600
+people is dim until it fills.
 
 A second pass would: read the full texts of the Google pages and the three papers and correct any
-wording that differs; give "a score built from many signals" its own picture, since it is the claim
-the viewer most needs; fill the takeaway's lower third; check the simulator grid's contrast at phone size.
+wording that differs; calm the ambient light; give "a score built from many signals" its own
+picture, since it is the claim the viewer most needs; fill the takeaway's lower third; check the
+simulator grid's contrast at phone size; and listen to the mix, which has been checked by
+measurement only.
 
 ## What was not verified
 
 - Full texts of Google's pages and of the papers. Every claim was checked against search excerpts. A
   page fetch was refused by the session's permission check, so the wording of the 2013 and 2014
   posts, the v3 documentation and the FAQ is paraphrased and needs checking.
-- The voice, music, sound design and mix were not heard. They were checked by measurement only
-  (loudness, speech-to-bed ratio, sync) and by a speech recogniser transcribing the narration back.
+- The voice, music, sound design and the final mix were not heard. The mix was checked by
+  measurement only: loudness (−14.1 LUFS), true peak (−2.9 dBTP), the voice-to-music ratio (16.9 dB),
+  sync (+0 ms) and a speech recogniser transcribing the mix (0.0% word error).
 - Playback inside the phone apps: the safe-zone shading and the mobile previews are approximations,
-  because neither platform publishes exact pixels.
+  because neither platform publishes exact pixels. The phone speaker's reproduction of the mix is
+  unknown.
 - Whether the 2019 simulator result or the 2024 study holds for today's reCAPTCHA. The video
   presents both as what the studies found, and labels the simulator as a simulator.
 - Micro-wobble as a measured feature. No source establishes it, and the video says Google does not say.
+- The MP4 is about 123 MB, above GitHub's 100 MB file limit, so it is kept out of git (it is
+  git-ignored) and handed over directly. Rebuilding it needs `bin/lockstep build captcha-checkbox`.
 
 ## Rebuild
 

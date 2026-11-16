@@ -3,6 +3,7 @@
   "tag": "CAPTCHA CHECKBOX",
   "output": "captcha_checkbox_vertical",
   "max_seconds": 180,
+  "mix": { "music_db": -2.5, "sfx_db": -0.5, "duck_music_db": -8.5, "duck_sfx_db": -3.5 },
   "chapters": [
     { "id": "hook",    "name": "THE QUESTION",    "mood": "drone" },
     { "id": "old",     "name": "THE OLD TEST",    "mood": "light" },

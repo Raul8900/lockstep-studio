@@ -481,7 +481,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 | **Objects on screen** | History rows light up inside the window; a violet weight meter fills beside it; a person icon; the caveat REPORTED BY RESEARCHERS. |
 | **Position and size (1080 × 1920)** | Meter 76 × 180 px at (772, 820). Label SUBSTANTIAL WEIGHT at y 1062. Person 96 px at (540, 1140). Caveat at y 1206. |
 | **Background** | Standard backdrop. |
-| **Movement** | Rows light from “browsing”; the meter fills from “carry” to “weight”; the person fades in on “seems”; the caveat on “study”. |
+| **Movement** | Rows light from “browser”, as the window appears; the meter fills from “carry” to “weight”; the person fades in on “seems”; the caveat on “study”. |
 | **Timing and easing** | Meter: ease-out 1.0 s. Rows: ease-out 0.6 s. |
 | **Camera** | Static. |
 | **Colour and emphasis** | Violet: data; coral caveat: the claim is reported. |
@@ -581,7 +581,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 | **Objects on screen** | A tilted grid plane in 2.5D; a white agent dot travels a zigzag path across it to a cyan target square; labels 2019 and AGENT; SIMULATOR. |
 | **Position and size (1080 × 1920)** | Plane centred at (540, 900), Proj scale 1.5, yaw −0.55, pitch 1.0. Target square 44 px. Labels at y 470 and 520. |
 | **Background** | Standard backdrop. |
-| **Movement** | The plane fades in during the scale's fade-out; the agent moves from “trained” to “built”; the target lights on “built”. |
+| **Movement** | The plane fades in during the scale's fade-out; the agent moves from “but” to “built”; the target lights on “built”. |
 | **Timing and easing** | Agent: ease-in-out 3.9 s. Plane fade: 0.5 s. |
 | **Camera** | Slow camera-free view; the agent's path keeps the frame moving. |
 | **Colour and emphasis** | White agent; cyan target; violet grid (the simulator). |

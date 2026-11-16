@@ -3,8 +3,8 @@
  "ref_words": 425,
  "errors": 0,
  "spacing_variants": [],
- "timing_matched_words": 357,
- "timing_median_ms": -120.01257629394857,
- "timing_mean_abs_ms": 81.0239022191499,
- "timing_p95_abs_ms": 190.9975801086467
+ "timing_matched_words": 356,
+ "timing_median_ms": -120.01251668929491,
+ "timing_mean_abs_ms": 80.87228440394556,
+ "timing_p95_abs_ms": 194.99069533347767
 }

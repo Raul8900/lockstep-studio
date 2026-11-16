@@ -25,18 +25,18 @@
   "profile": "LC",
   "sample_rate": 48000,
   "channels": 2,
-  "bitrate_kbps": 265,
+  "bitrate_kbps": 266,
   "duration_s": 165.44
  },
  "decode_errors": 0,
  "black_segments": [],
  "freeze_segments": [],
  "encode_fidelity": {
-  "ssim_all": 0.994028,
-  "psnr_avg_db": 51.444176
+  "ssim_all": 0.994031,
+  "psnr_avg_db": 51.444869
  },
  "loudness": {
-  "integrated_lufs": -14.0,
+  "integrated_lufs": -14.1,
   "range_lu": 2.7,
   "true_peak_dbtp": -2.9
  },
@@ -51,10 +51,10 @@
   "diffs": []
  },
  "caption_timing_crosscheck": {
-  "matched_words": 357,
+  "matched_words": 356,
   "median_offset_ms": -120,
   "mean_abs_dev_ms": 81,
-  "p95_abs_dev_ms": 191,
+  "p95_abs_dev_ms": 195,
   "note": "independent transducer ASR vs. TTS-derived word starts; the median is the recogniser's own emission delay"
  },
  "captions": {
