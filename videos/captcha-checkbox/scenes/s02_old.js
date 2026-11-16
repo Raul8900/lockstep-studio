@@ -75,6 +75,7 @@
     if (inBox > 0) {
       const size = 240 * lerp(0.82, 1, clamp(inBox));
       const hot = prog(t, c.click - 0.05, c.click + 0.3);
+      glow(ctx, 540, 760, 320, COL.cyan, (0.12 + 0.10 * Math.sin(t * 1.6)) * inBox);   // the waiting box breathes
       drawBox(ctx, 540, 760, size, { p: tw(t, c.click - 0.05, c.click + 0.35, E.out3), hot, alpha: clamp(inBox * 1.5) });
       const cr = prog(t, c.click, c.click + 0.55);
       if (cr > 0 && cr < 1) ring(ctx, 540, 760, 60 + 140 * E.out3(cr), COL.cyan, 6 * (1 - cr) + 1, (1 - cr) * 0.9);

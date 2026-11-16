@@ -1,10 +1,10 @@
 {
  "file": {
   "path": "dist/captcha_checkbox_vertical.mp4",
-  "size_mb": 117.4,
+  "size_mb": 118.6,
   "container": "QuickTime / MOV",
   "duration_s": 165.5,
-  "overall_bitrate_mbps": 5.68,
+  "overall_bitrate_mbps": 5.73,
   "faststart": true
  },
  "video": {
@@ -17,7 +17,7 @@
   "pix_fmt": "yuv420p",
   "fps": 30.0,
   "frames": 4965,
-  "bitrate_mbps": 5.4,
+  "bitrate_mbps": 5.46,
   "color": "bt709/bt709/bt709 tv"
  },
  "audio": {
@@ -32,53 +32,29 @@
  "black_segments": [],
  "freeze_segments": [
   [
-   3.4,
-   3.83333
+   21.0333,
+   21.6333
   ],
   [
-   38.7333,
-   39.2667
+   68.8333,
+   69.2333
   ],
   [
-   49.4,
-   49.8333
+   122.9,
+   123.333
   ],
   [
-   50.3,
-   50.7333
-  ],
-  [
-   88.7,
-   89.1
-  ],
-  [
-   90.8333,
-   91.3667
-  ],
-  [
-   92.2,
-   92.7333
-  ],
-  [
-   99.2,
-   99.8
+   124.0,
+   124.467
   ],
   [
    136.0,
    136.4
-  ],
-  [
-   162.333,
-   162.733
-  ],
-  [
-   164.733,
-   165.133
   ]
  ],
  "encode_fidelity": {
-  "ssim_all": 0.994426,
-  "psnr_avg_db": 51.748537
+  "ssim_all": 0.994338,
+  "psnr_avg_db": 51.661681
  },
  "loudness": {
   "integrated_lufs": -14.0,

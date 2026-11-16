@@ -118,6 +118,7 @@
       tag(ctx, 'MINIMUM-JERK MODEL', 540, 1150, { align: 'center', color: COL.dim, alpha: prog(t, c.smooth - 0.1, c.smooth + 0.3) });
       const bp = pulse(t, c.bell, 0.1, 0.6);
       glow(ctx, PEAK[0], PEAK[1], 150 + 60 * bp, COL.cyan, (0.25 + 0.4 * bp) * prog(t, c.modeled, c.bell));
+      glow(ctx, PEAK[0], PEAK[1], 230, COL.cyan, 0.10 + 0.08 * Math.sin(t * 1.5));   // the peak keeps breathing
     });
 
     /* D: a detector checks a cursor path against a model */

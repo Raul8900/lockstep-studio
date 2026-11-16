@@ -91,13 +91,15 @@
 
     /* D: the agent learns to move and click in a simulator */
     withAlpha(ctx, simGate, () => {
+      const pc = P.pt(0, 0, 0);
+      glow(ctx, pc[0], pc[1], 260, COL.violet, 0.10 + 0.08 * Math.sin(t * 1.4));   // the simulator's light breathes
       for (let i = -200; i <= 200; i += 50) {
         const a = P.pt(i, -200, 0), b = P.pt(i, 200, 0);
         line(ctx, a[0], a[1], b[0], b[1], rgba(COL.violet, 0.35), 2);
         const e = P.pt(-200, i, 0), f = P.pt(200, i, 0);
         line(ctx, e[0], e[1], f[0], f[1], rgba(COL.violet, 0.35), 2);
       }
-      const pa = tw(t, c.trained, c.built, E.io3);
+      const pa = tw(t, c.but, c.built, E.io3);
       polyline(ctx, APS, COL.white, 3, pa, 0.5);
       const ag = polyAt(APS, pa * APS_L);
       glow(ctx, ag[0], ag[1], 60, '#FFFFFF', 0.5);

@@ -215,9 +215,9 @@ function dotField(ctx, x0, y0, w, h, cols, rows, lit, color = COL.amber) {
 /* a slow, large drift of soft light across the diagram zone. It keeps the frame moving through the
    pauses between sentences, so no stretch reads as frozen. A pure function of t. */
 function ambient(ctx, t) {
-  const breathe1 = 0.12 + 0.09 * Math.sin(t * 0.8);
-  const breathe2 = 0.10 + 0.08 * Math.sin(t * 0.6 + 1.3);
-  glow(ctx, 540 + 300 * Math.sin(t * 0.61), 880 + 110 * Math.cos(t * 0.43), 340, COL.cyan, breathe1);
+  const breathe1 = 0.14 + 0.12 * Math.sin(t * 1.6);
+  const breathe2 = 0.12 + 0.10 * Math.sin(t * 1.3 + 1.3);
+  glow(ctx, 540 + 300 * Math.sin(t * 0.61), 880 + 110 * Math.cos(t * 0.43), 320, COL.cyan, breathe1);
   glow(ctx, 540 - 280 * Math.sin(t * 0.52), 700 + 90 * Math.sin(t * 0.37), 300, COL.violet, breathe2);
 }
 
