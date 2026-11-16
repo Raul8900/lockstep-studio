@@ -4,13 +4,13 @@ All figures in the numbered sections were measured on the delivered file by `eng
 
 ## 1. Deliverable
 
-`captcha_checkbox_vertical.mp4` — 120.5 MB, 165.50 s (2:45.5).
+`captcha_checkbox_vertical.mp4` — 121.7 MB, 165.50 s (2:45.5).
 
 | Requirement | Measured | Result |
 |---|---|---|
 | 1080 × 1920, 9:16 portrait | 1080 × 1920, 9:16 | PASS |
 | 30 fps or higher | 30 fps constant, 4965 frames | PASS |
-| H.264 video | H264 High @ L4.2, yuv420p, bt709/bt709/bt709 tv, 5.55 Mbps | PASS |
+| H.264 video | H264 High @ L4.2, yuv420p, bt709/bt709/bt709 tv, 5.61 Mbps | PASS |
 | AAC audio | AAC-LC, 48 kHz, 2 ch, 265 kbps | PASS |
 | MP4 container | MP4 (ISO BMFF), index at the front for streaming: yes | PASS |
 | 180 s maximum | 165.50 s | PASS |
@@ -63,9 +63,9 @@ The narration was transcribed back by an independent recogniser (Whisper small.e
 
 ## 6. Motion and encode fidelity
 
-FFmpeg’s freeze detector (0.15 % mean change, 0.4 s) reports 3 short holds: 81.3–81.7 s, 136.0–136.4 s, 156.0–156.4 s.
+FFmpeg’s freeze detector (0.15 % mean change, 0.4 s) reports 1 short holds: 110.6–111.0 s.
 
-Encode fidelity against the rendered frames: SSIM 0.9942, PSNR 51.6 dB.
+Encode fidelity against the rendered frames: SSIM 0.9941, PSNR 51.5 dB.
 
 ## Technical accuracy review
 

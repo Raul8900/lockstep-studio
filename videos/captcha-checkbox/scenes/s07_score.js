@@ -69,6 +69,8 @@
     /* the needle: sweeps 0 to 1 while the score is named, then rests; in E it settles at 0.9 */
     const v = t < c.reached ? tw(t, c.score, c.one, E.io3) : 1 - 0.1 * tw(t, c.point2, c.nine, E.io3);
     withAlpha(ctx, showScale, () => {
+      const tri = Math.abs(((t / 2.0) % 1) * 2 - 1);                           // a triangle wave: the light never stops changing
+      glow(ctx, 540, SCALE.y, 540, COL.cyan, 0.06 + 0.16 * tri);               // the scale's light breathes
       scaleBar(ctx, 1, 1);
       needle(ctx, v, COL.white, 1);
       text(ctx, '0.0', SCALE.x0, SCALE.y - 74, { size: 30, weight: 800, family: F.mono, color: COL.amber, align: 'center', base: 'middle' });

@@ -54,7 +54,7 @@
       glow(ctx, 540, 810, 620, COL.amber, 0.10 + 0.30 * tri);   // the field's light breathes behind the dots
       dotField(ctx, 150, 600, 780, 420, 60, 60, prog(t, c.more - 0.2, c.people + 0.1), COL.amber);
       const sweep = 150 + ((t * 140) % 680);                              // a soft amber sweep crosses the field
-      fillRR(ctx, sweep, 600, 100, 420, 0, rgba(COL.amber, 0.16));
+      glow(ctx, sweep + 50, 810, 200, COL.amber, 0.12);                   // a soft light crosses the field
       riseText(ctx, '3,600+', 540, 1140, prog(t, c.thirtySix, c.thirtySix + 0.3), { size: 150, weight: 900, family: F.disp, color: COL.amber, align: 'center', ls: -2 });
     });
 
