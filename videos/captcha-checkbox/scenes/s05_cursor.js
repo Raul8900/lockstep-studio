@@ -76,14 +76,14 @@
     ambient(ctx, t);
     /* the speed axes, shared by sections A to C */
     const axes = 1 - tw(t, c.detector - 0.9, c.detector - 0.5);
-    speedAxes(ctx, GX, GB, GW, GH, prog(t, c.real - 0.5, c.real + 0.1), axes);
-    tag(ctx, 'SPEED', GX + 14, GB - GH - 52, { color: COL.dim, size: 24, alpha: axes * prog(t, c.real - 0.2, c.real + 0.2) });
-    tag(ctx, 'TIME', GX + GW, GB + 46, { align: 'right', color: COL.dim, size: 24, alpha: axes * prog(t, c.real - 0.2, c.real + 0.2) });
+    speedAxes(ctx, GX, GB, GW, GH, prog(t, c.real - 1.0, c.real - 0.6), axes);
+    tag(ctx, 'SPEED', GX + 14, GB - GH - 52, { color: COL.dim, size: 24, alpha: axes * prog(t, c.real - 1.0, c.real - 0.6) });
+    tag(ctx, 'TIME', GX + GW, GB + 46, { align: 'right', color: COL.dim, size: 24, alpha: axes * prog(t, c.real - 1.0, c.real - 0.6) });
 
     /* A: one steady speed */
     const gA = 1 - tw(t, c.it - 0.5, c.it - 0.2);
     withAlpha(ctx, gA, () => {
-      riseText(ctx, 'HOW A HAND MOVES', 540, 470, prog(t, c.real - 0.3, c.real + 0.2), { size: 58, weight: 900, family: F.disp, color: COL.white, align: 'center' });
+      riseText(ctx, 'HOW A HAND MOVES', 540, 470, prog(t, c.real - 1.0, c.real - 0.5), { size: 58, weight: 900, family: F.disp, color: COL.white, align: 'center' });
       polyline(ctx, STEADY, COL.coral, 8, prog(t, c.real + 0.1, c.steady - 0.2));
       cross(ctx, 550, GB - GH * 0.7, 46, COL.coral, prog(t, c.never, c.never + 0.4), 12);
       riseText(ctx, 'ONE STEADY SPEED', GX + GW * 0.7, GB - GH * 0.7 - 44, prog(t, c.steady, c.steady + 0.3), { size: 30, weight: 800, family: F.mono, color: COL.coral, align: 'center', ls: 2 });

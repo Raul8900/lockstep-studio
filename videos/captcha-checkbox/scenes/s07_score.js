@@ -56,7 +56,7 @@
     ambient(ctx, t);
     /* A: the checkbox is gone; the version is three */
     const boxGate = 1 - tw(t, c.checkbox - 0.3, c.checkbox + 0.3);
-    riseText(ctx, 'VERSION 3', 540, 470, prog(t, c.version, c.version + 0.3), { size: 72, weight: 900, family: F.disp, color: COL.amber, align: 'center', alpha: 1 - tw(t, c.but - 0.5, c.but - 0.1) });
+    riseText(ctx, 'VERSION 3', 540, 470, prog(t, c.version - 0.5, c.version - 0.1), { size: 72, weight: 900, family: F.disp, color: COL.amber, align: 'center', alpha: 1 - tw(t, c.but - 0.5, c.but - 0.1) });
     withAlpha(ctx, boxGate, () => drawBox(ctx, 540, 700, 230, { hot: 0 }));
     withAlpha(ctx, 1 - tw(t, c.checkbox + 0.4, c.checkbox + 0.9), () => cross(ctx, 540, 700, 110, COL.coral, prog(t, c.checkbox, c.checkbox + 0.35), 12));
     riseText(ctx, 'NO CHECKBOX', 540, 1010, prog(t, c.checkbox + 0.1, c.checkbox + 0.4), { size: 36, weight: 900, family: F.mono, color: COL.coral, align: 'center', ls: 3, alpha: 1 - tw(t, c.score - 0.7, c.score - 0.3) });

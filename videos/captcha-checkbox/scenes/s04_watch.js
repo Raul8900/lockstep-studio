@@ -38,16 +38,16 @@
   addScene('watch', function (ctx, t) {
     ambient(ctx, t);
     /* A: the list, locked */
-    const gA = tw(t, c.what - 0.2, c.what + 0.3) * (1 - tw(t, c.twentyone - 0.6, c.twentyone - 0.1));
+    const gA = tw(t, c.what - 0.9, c.what - 0.5) * (1 - tw(t, c.twentyone - 0.6, c.twentyone - 0.1));
     withAlpha(ctx, gA, () => {
-      riseText(ctx, 'WHAT IT WATCHES', 540, 470, prog(t, c.what, c.what + 0.3), { size: 62, weight: 900, family: F.disp, color: COL.white, align: 'center' });
+      riseText(ctx, 'WHAT IT WATCHES', 540, 470, prog(t, c.what - 0.9, c.what - 0.5), { size: 62, weight: 900, family: F.disp, color: COL.white, align: 'center' });
       panel(ctx, 150, 540, 780, 470, { r: 24 });
       const band = (t * 120) % 430;                                     // a soft band drifts down the list
       fillRR(ctx, 152, 542 + band, 776, 36, 0, rgba(COL.cyan, 0.10));
       const lockP = tw(t, c.publish - 0.05, c.publish + 0.35);
       for (let i = 0; i < 5; i++) {
         const y = 610 + i * 88;
-        const a = tw(t, c.what + 0.1 + i * 0.12, c.what + 0.4 + i * 0.12);
+        const a = tw(t, c.what - 0.6 + i * 0.1, c.what - 0.3 + i * 0.1);
         withAlpha(ctx, a, () => {
           fillRR(ctx, 200, y - 22, 44, 44, 12, rgba(COL.lineHi, 0.5));
           fillRR(ctx, 270, y - 14, 420 + 180 * hash(i), 28, 14, mixHex(COL.dim, COL.coral, 0.8 * lockP, 0.5));
