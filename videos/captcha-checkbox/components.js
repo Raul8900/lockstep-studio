@@ -160,7 +160,7 @@ function puzzleIcon(ctx, cx, cy, s, p, color = COL.coral) {
    Flat window: a tab bar with three dots, an address bar, and a column of history rows.
    hist = 0..1: how many rows are lit. */
 function browserWin(ctx, x, y, w, h, p = 1, o = {}) {
-  const { hist = 1, color = COL.violet, rowAlpha = 1 } = o;
+  const { hist = 1, color = COL.violet, rowAlpha = 1, scroll = 0 } = o;
   if (p <= 0) return;
   withAlpha(ctx, clamp(p), () => {
     panel(ctx, x, y, w, h, { r: 22, accent: color, accentA: 0.75 });
@@ -169,8 +169,12 @@ function browserWin(ctx, x, y, w, h, p = 1, o = {}) {
     dot(ctx, x + 62, y + 31, 9, rgba(COL.amber, 0.9));
     dot(ctx, x + 88, y + 31, 9, rgba(COL.mint, 0.9));
     fillRR(ctx, x + 26, y + 78, w - 52, 42, 14, rgba(COL.lineHi, 0.55));
-    for (let i = 0; i < 6; i++) {
-      const ry = y + 150 + i * 62;
+    /* history rows scroll slowly up inside the list area and wrap, so they never leave the window */
+    const span = h - 180;
+    for (let i = 0; i < 9; i++) {
+      const off = ((i * 62 - scroll) % span + span) % span;
+      if (off > span - 34) continue;
+      const ry = y + 150 + off;
       const a = clamp(hist * 6 - i) * rowAlpha;
       if (a <= 0) continue;
       withAlpha(ctx, a, () => {
@@ -211,8 +215,10 @@ function dotField(ctx, x0, y0, w, h, cols, rows, lit, color = COL.amber) {
 /* a slow, large drift of soft light across the diagram zone. It keeps the frame moving through the
    pauses between sentences, so no stretch reads as frozen. A pure function of t. */
 function ambient(ctx, t) {
-  glow(ctx, 540 + 300 * Math.sin(t * 0.61), 880 + 110 * Math.cos(t * 0.43), 330, COL.cyan, 0.14);
-  glow(ctx, 540 - 280 * Math.sin(t * 0.52), 700 + 90 * Math.sin(t * 0.37), 280, COL.violet, 0.12);
+  const breathe1 = 0.12 + 0.09 * Math.sin(t * 0.8);
+  const breathe2 = 0.10 + 0.08 * Math.sin(t * 0.6 + 1.3);
+  glow(ctx, 540 + 300 * Math.sin(t * 0.61), 880 + 110 * Math.cos(t * 0.43), 340, COL.cyan, breathe1);
+  glow(ctx, 540 - 280 * Math.sin(t * 0.52), 700 + 90 * Math.sin(t * 0.37), 300, COL.violet, breathe2);
 }
 
 /* a simple person: a head and a rounded body, centred on (cx, cy) */

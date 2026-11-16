@@ -42,6 +42,8 @@
     withAlpha(ctx, gA, () => {
       riseText(ctx, 'WHAT IT WATCHES', 540, 470, prog(t, c.what, c.what + 0.3), { size: 62, weight: 900, family: F.disp, color: COL.white, align: 'center' });
       panel(ctx, 150, 540, 780, 470, { r: 24 });
+      const band = (t * 120) % 430;                                     // a soft band drifts down the list
+      fillRR(ctx, 152, 542 + band, 776, 36, 0, rgba(COL.cyan, 0.10));
       const lockP = tw(t, c.publish - 0.05, c.publish + 0.35);
       for (let i = 0; i < 5; i++) {
         const y = 610 + i * 88;
@@ -77,8 +79,9 @@
     /* C: browser details and cookies; the cookie is essential */
     const gC = tw(t, c.browser - 0.2, c.browser + 0.2);
     withAlpha(ctx, gC, () => {
-      browserWin(ctx, 130, 560, 330, 230, 1, { hist: prog(t, c.browser, c.browser + 0.6) });
-      dataTag(ctx, 'BROWSER DETAILS', 295, 860, prog(t, c.browser, c.browser + 0.3));
+      glow(ctx, 720, 680, 230, COL.violet, 0.16 + 0.12 * Math.sin(t * 1.6));   // the cookie breathes
+      browserWin(ctx, 130, 560, 330, 300, 1, { hist: prog(t, c.browser, c.browser + 0.6), scroll: t * 18 });
+      dataTag(ctx, 'BROWSER DETAILS', 295, 900, prog(t, c.browser, c.browser + 0.3));
       cookieIcon(ctx, 720, 680, 105, tw(t, c.cookies - 0.1, c.cookies + 0.4, E.outBack));
       dataTag(ctx, 'COOKIES', 720, 860, prog(t, c.cookies, c.cookies + 0.3));
       tag(ctx, '_GRECAPTCHA', 720, 948, { align: 'center', color: COL.violet, size: 30, weight: 800, alpha: prog(t, c.cookie, c.cookie + 0.3) });

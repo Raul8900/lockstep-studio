@@ -38,6 +38,8 @@
     polyline(ctx, PATH, COL.lineHi, 3, frac);
     polyline(ctx, PATH, COL.cyan, 6, frac, lit);
     polySeg(ctx, PATH, COL.cyan, 4, sheen * 0.9, sheen * 0.9 + 0.08, 0.5 * (1 - lit));
+    const gp = polyAt(PATH, ((t * 0.35) % 1) * L);                      // a soft light travels along the trail
+    glow(ctx, gp[0], gp[1], 90, COL.cyan, 0.3);
     if (pulse2 > 0 && pulse2 < 1) polySeg(ctx, PATH, COL.white, 8, Math.max(0, pulse2 - 0.1), pulse2, 0.95);
 
     /* where the test started */

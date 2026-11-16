@@ -1,6 +1,6 @@
 # Visual Storyboard — “The 'I'm not a robot' box”
 
-35 sequences · 163.72 s · 1080 × 1920 · 30 fps. Timestamps are taken from the recorded narration; the animation code reads the same word timings, so picture and voice cannot drift apart.
+35 sequences · 165.49 s · 1080 × 1920 · 30 fps. Timestamps are taken from the recorded narration; the animation code reads the same word timings, so picture and voice cannot drift apart.
 
 ## Conventions that apply to every sequence
 
@@ -22,7 +22,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 **Type.** Inter Display 800–900 for headlines, Inter 500–700 for glosses, JetBrains Mono 600–800 for labels, code and counters. Smallest label 19–22 px; primary labels ≥ 24 px; headlines 54–250 px.
 
-**Captions.** Inter Display ExtraBold 74 px, white with a 15 px near-black outline, 1–5 words per phrase (140 phrases, 12 of them two-line). Words not yet spoken sit at 44 % opacity; the spoken word scales to 107.5 %, lifts 5 px, and key terms take their semantic colour with a soft halo. Each phrase pops in over 0.14 s (ease-out-back). Position never changes.
+**Captions.** Inter Display ExtraBold 74 px, white with a 15 px near-black outline, 1–5 words per phrase (136 phrases, 10 of them two-line). Words not yet spoken sit at 44 % opacity; the spoken word scales to 107.5 %, lifts 5 px, and key terms take their semantic colour with a soft halo. Each phrase pops in over 0.14 s (ease-out-back). Position never changes.
 
 **Light.** A two-stage bloom (soft-thresholded quarter- and eighth-resolution blurs added back) gives every bright stroke a glow; captions and the chapter bar are drawn after it so they stay crisp.
 
@@ -93,8 +93,8 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 ## 04 · Shrink to the challenge
 
 **Time:** 0:10.74 → 0:14.16  (3.42 s)  
-**Narration:** “In twenty thirteen, Google said its risk analysis covers”  
-**Caption phrases:** In twenty thirteen, | Google said its risk | analysis covers
+**Narration:** “In 2013, Google said its risk analysis covers”  
+**Caption phrases:** In 2013, | Google said its risk | analysis covers
 
 | | |
 |---|---|
@@ -112,7 +112,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 05 · Signals around the challenge
 
-**Time:** 0:14.16 → 0:18.89  (4.73 s)  
+**Time:** 0:14.16 → 0:18.59  (4.43 s)  
 **Narration:** “everything you do around a challenge, not only the answer you type.”  
 **Caption phrases:** everything you do | around a challenge, | not only the answer | you type.
 
@@ -132,9 +132,9 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 06 · The checkbox arrives
 
-**Time:** 0:18.89 → 0:21.74  (2.85 s)  
-**Narration:** “In twenty fourteen, the checkbox arrived, and”  
-**Caption phrases:** In twenty fourteen, | the checkbox arrived, | and many people passed
+**Time:** 0:18.59 → 0:21.74  (3.15 s)  
+**Narration:** “In 2014, the checkbox arrived, and”  
+**Caption phrases:** In 2014, | the checkbox arrived, | and many people passed
 
 | | |
 |---|---|
@@ -232,9 +232,9 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 11 · A list nobody publishes
 
-**Time:** 0:35.47 → 0:39.84  (4.38 s)  
-**Narration:** “So what does it watch? Google doesn't publish the full list. A”  
-**Caption phrases:** So what does it watch? | Google doesn't publish | the full list. | A twenty twenty-one
+**Time:** 0:35.47 → 0:39.49  (4.02 s)  
+**Narration:** “So what does it watch? Google doesn't publish the full list.”  
+**Caption phrases:** So what does it watch? | Google doesn't publish | the full list.
 
 | | |
 |---|---|
@@ -252,9 +252,9 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 12 · The survey's signals
 
-**Time:** 0:39.84 → 0:48.26  (8.41 s)  
-**Narration:** “twenty twenty-one survey describes the checkbox recording cursor movement, where you click, and how long the pointer hovers. It also records”  
-**Caption phrases:** survey describes the | checkbox recording | cursor movement, | where you click, | and how long the | pointer hovers. | It also records
+**Time:** 0:39.49 → 0:48.38  (8.89 s)  
+**Narration:** “A 2021 survey describes the checkbox recording cursor movement, where you click, and how long the pointer hovers. It also records”  
+**Caption phrases:** A 2021 survey | describes the | checkbox recording | cursor movement, | where you click, | and how long the | pointer hovers. | It also records
 
 | | |
 |---|---|
@@ -272,7 +272,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 13 · Browser details
 
-**Time:** 0:48.26 → 0:49.76  (1.50 s)  
+**Time:** 0:48.38 → 0:49.88  (1.50 s)  
 **Narration:** “browser details and”  
 **Caption phrases:** browser details and
 
@@ -292,7 +292,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 14 · A cookie that is essential
 
-**Time:** 0:49.76 → 0:55.18  (5.42 s)  
+**Time:** 0:49.88 → 0:55.30  (5.42 s)  
 **Narration:** “cookies. Google's own FAQ calls a cookie essential to that analysis.”  
 **Caption phrases:** cookies. | Google's own FAQ calls | a cookie essential to | that analysis.
 
@@ -312,7 +312,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 15 · One steady speed, crossed out
 
-**Time:** 0:55.18 → 0:58.48  (3.30 s)  
+**Time:** 0:55.30 → 0:58.60  (3.30 s)  
 **Narration:** “A real hand never moves at one steady speed.”  
 **Caption phrases:** A real hand | never moves at one | steady speed.
 
@@ -332,9 +332,9 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 16 · Speeds up, peaks, eases in
 
-**Time:** 0:58.48 → 1:04.21  (5.73 s)  
-**Narration:** “It speeds up, peaks, and eases into the target. In nineteen eighty-five, Flash”  
-**Caption phrases:** It speeds up, | peaks, and eases | into the target. | In nineteen eighty-five, | Flash and Hogan
+**Time:** 0:58.60 → 1:04.29  (5.68 s)  
+**Narration:** “It speeds up, peaks, and eases into the target. In 1985, Flash and”  
+**Caption phrases:** It speeds up, | peaks, and eases | into the target. | In 1985, | Flash and Hogan
 
 | | |
 |---|---|
@@ -352,8 +352,8 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 17 · 1985, Flash and Hogan
 
-**Time:** 1:04.21 → 1:10.11  (5.90 s)  
-**Narration:** “and Hogan modeled arm movement this way: a smooth, bell-shaped curve of speed. One published”  
+**Time:** 1:04.29 → 1:10.26  (5.97 s)  
+**Narration:** “Hogan modeled arm movement this way: a smooth, bell-shaped curve of speed. One published”  
 **Caption phrases:** modeled arm movement | this way: a smooth, | bell-shaped curve | of speed. | One published detector
 
 | | |
@@ -372,7 +372,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 18 · A detector checks the path
 
-**Time:** 1:10.11 → 1:14.25  (4.15 s)  
+**Time:** 1:10.26 → 1:14.08  (3.82 s)  
 **Narration:** “detector checks cursor paths against a model like that.”  
 **Caption phrases:** checks cursor paths | against a model | like that.
 
@@ -392,9 +392,9 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 19 · Movement cut the puzzles
 
-**Time:** 1:14.25 → 1:21.51  (7.26 s)  
-**Narration:** “In a twenty twenty-four study of reCAPTCHA version two, any cursor movement cut the number of puzzles needed to pass.”  
-**Caption phrases:** In a twenty twenty-four | study of reCAPTCHA | version two, | any cursor movement | cut the number of | puzzles needed | to pass.
+**Time:** 1:14.08 → 1:21.86  (7.79 s)  
+**Narration:** “In a 2024 study of reCAPTCHA version two, any cursor movement cut the number of puzzles needed to pass.”  
+**Caption phrases:** In a 2024 study | of reCAPTCHA | version two, | any cursor movement | cut the number of | puzzles needed | to pass.
 
 | | |
 |---|---|
@@ -412,7 +412,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 20 · Straight versus curved
 
-**Time:** 1:21.51 → 1:25.84  (4.32 s)  
+**Time:** 1:21.86 → 1:26.19  (4.32 s)  
 **Narration:** “Straight paths and curved ones were not significantly different.”  
 **Caption phrases:** Straight paths and | curved ones were | not significantly | different.
 
@@ -432,7 +432,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 21 · So is it the wobble?
 
-**Time:** 1:25.84 → 1:29.15  (3.31 s)  
+**Time:** 1:26.19 → 1:29.50  (3.31 s)  
 **Narration:** “So is it the wobble? Google doesn't say.”  
 **Caption phrases:** So is it the | wobble? | Google doesn't say.
 
@@ -452,9 +452,9 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 22 · The browser window
 
-**Time:** 1:29.15 → 1:32.20  (3.05 s)  
-**Narration:** “Then there's the browser. A twenty twenty-four”  
-**Caption phrases:** Then there's the | browser. | A twenty twenty-four
+**Time:** 1:29.50 → 1:32.62  (3.12 s)  
+**Narration:** “Then there's the browser. A 2024”  
+**Caption phrases:** Then there's the | browser. | A 2024 study reports
 
 | | |
 |---|---|
@@ -472,9 +472,9 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 23 · Cookies and history carry weight
 
-**Time:** 1:32.20 → 1:40.97  (8.77 s)  
+**Time:** 1:32.62 → 1:41.39  (8.77 s)  
 **Narration:** “study reports that cookies and browsing history carry substantial weight in whether a visitor seems human. Browsing history”  
-**Caption phrases:** study reports that | cookies and browsing | history carry | substantial weight | in whether a visitor | seems human. | Browsing history is
+**Caption phrases:** that cookies and browsing | history carry | substantial weight | in whether a visitor | seems human. | Browsing history is
 
 | | |
 |---|---|
@@ -492,7 +492,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 24 · Research, not confirmed
 
-**Time:** 1:40.97 → 1:44.84  (3.88 s)  
+**Time:** 1:41.39 → 1:45.27  (3.88 s)  
 **Narration:** “is what researchers report. Google hasn't confirmed it.”  
 **Caption phrases:** what researchers | report. | Google hasn't | confirmed it.
 
@@ -512,7 +512,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 25 · Version three has no checkbox
 
-**Time:** 1:44.84 → 1:48.67  (3.82 s)  
+**Time:** 1:45.27 → 1:49.09  (3.82 s)  
 **Narration:** “Version three has no checkbox at all. It returns”  
 **Caption phrases:** Version three has | no checkbox at all. | It returns a score
 
@@ -532,7 +532,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 26 · A score from zero to one
 
-**Time:** 1:48.67 → 1:56.03  (7.37 s)  
+**Time:** 1:49.09 → 1:56.43  (7.34 s)  
 **Narration:** “a score from zero to one. One means very likely a good interaction. Zero means very likely a bot. Each”  
 **Caption phrases:** from zero to one. | One means very | likely a good | interaction. | Zero means very | likely a bot. | Each site sets its
 
@@ -552,9 +552,9 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 27 · Each site sets its cutoff
 
-**Time:** 1:56.03 → 2:00.77  (4.74 s)  
-**Narration:** “site sets its own cutoff, and Google suggests starting at point five.”  
-**Caption phrases:** own cutoff, | and Google suggests | starting at | point five.
+**Time:** 1:56.43 → 2:01.54  (5.11 s)  
+**Narration:** “site sets its own cutoff, and Google suggests starting at 0.5.”  
+**Caption phrases:** own cutoff, | and Google suggests | starting at | 0.5.
 
 | | |
 |---|---|
@@ -572,9 +572,9 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 28 · A simulator, not the site
 
-**Time:** 2:00.77 → 2:08.75  (7.97 s)  
-**Narration:** “But a score can be pushed. In twenty nineteen, researchers trained an AI agent to move and click in a simulator they built.”  
-**Caption phrases:** But a score can | be pushed. | In twenty nineteen, | researchers trained an | AI agent to move | and click in a | simulator they built.
+**Time:** 2:01.54 → 2:09.54  (8.00 s)  
+**Narration:** “But a score can be pushed. In 2019, researchers trained an AI agent to move and click in a simulator they built.”  
+**Caption phrases:** But a score can | be pushed. | In 2019, | researchers trained an | AI agent to move | and click in a | simulator they built.
 
 | | |
 |---|---|
@@ -592,9 +592,9 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 29 · About ninety-seven percent
 
-**Time:** 2:08.75 → 2:15.37  (6.63 s)  
-**Narration:** “It reached a score of point nine about ninety-seven percent of the time. The simulator isn't the live site.”  
-**Caption phrases:** It reached a score | of point nine | about ninety-seven | percent of the time. | The simulator isn't | the live site.
+**Time:** 2:09.54 → 2:16.74  (7.20 s)  
+**Narration:** “It reached a score of 0.9, about 97% of the time. The simulator isn't the live site.”  
+**Caption phrases:** It reached a score | of 0.9, about | 97% of the time. | The simulator isn't | the live site.
 
 | | |
 |---|---|
@@ -612,9 +612,9 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 30 · Thirteen months, three thousand six hundred
 
-**Time:** 2:15.37 → 2:21.72  (6.35 s)  
-**Narration:** “A twenty twenty-three study ran for thirteen months with more than thirty-six hundred people.”  
-**Caption phrases:** A twenty twenty-three | study ran for | thirteen months | with more than | thirty-six hundred | people.
+**Time:** 2:16.74 → 2:23.48  (6.75 s)  
+**Narration:** “A 2023 study ran for thirteen months with more than 3,600 people.”  
+**Caption phrases:** A 2023 study ran for | thirteen months | with more than | 3,600 people.
 
 | | |
 |---|---|
@@ -632,7 +632,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 31 · The authors' view
 
-**Time:** 2:21.72 → 2:28.60  (6.88 s)  
+**Time:** 2:23.48 → 2:30.36  (6.88 s)  
 **Narration:** “Its authors judged the checkbox costly, with close to no security gain, and say it should be retired.”  
 **Caption phrases:** Its authors judged | the checkbox costly, | with close to no | security gain, | and say it should | be retired.
 
@@ -652,7 +652,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 32 · Nobody outside Google knows the weights
 
-**Time:** 2:28.60 → 2:35.10  (6.50 s)  
+**Time:** 2:30.36 → 2:36.87  (6.50 s)  
 **Narration:** “Nobody outside Google knows how the signals are weighted. So every study tests from the outside.”  
 **Caption phrases:** Nobody outside Google | knows how the signals | are weighted. | So every study | tests from the | outside.
 
@@ -672,7 +672,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 33 · The last step
 
-**Time:** 2:35.10 → 2:36.98  (1.88 s)  
+**Time:** 2:36.87 → 2:38.74  (1.88 s)  
 **Narration:** “So the tap is the last step,”  
 **Caption phrases:** So the tap is | the last step,
 
@@ -692,7 +692,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 34 · The whole path is the test
 
-**Time:** 2:36.98 → 2:39.36  (2.38 s)  
+**Time:** 2:38.74 → 2:41.12  (2.38 s)  
 **Narration:** “not the test. It cares how”  
 **Caption phrases:** not the test. | It cares how you
 
@@ -712,7 +712,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 35 · How you got there
 
-**Time:** 2:39.36 → 2:43.72  (4.37 s)  
+**Time:** 2:41.12 → 2:45.49  (4.37 s)  
 **Narration:** “you got there.”  
 **Caption phrases:** got there.
 

@@ -51,6 +51,8 @@
         fillRR(ctx, 150 + i * 60, 520, 52, 22, 6, rgba(COL.amber, 0.2 + 0.7 * a));
       }
       dotField(ctx, 150, 600, 780, 420, 60, 60, prog(t, c.more - 0.2, c.people + 0.1), COL.amber);
+      const sweep = 150 + ((t * 140) % 780);                              // a soft amber sweep crosses the field
+      fillRR(ctx, sweep, 600, 60, 420, 0, rgba(COL.amber, 0.10));
       riseText(ctx, '3,600+', 540, 1140, prog(t, c.thirtySix, c.thirtySix + 0.3), { size: 150, weight: 900, family: F.disp, color: COL.amber, align: 'center', ls: -2 });
     });
 

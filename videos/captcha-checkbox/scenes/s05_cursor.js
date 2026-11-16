@@ -170,7 +170,7 @@
     const gG = tw(t, c.so - 0.2, c.so + 0.4);
     withAlpha(ctx, gG, () => {
       polyline(ctx, handPath(150, 800, 930, 800, { bend: 0.2, wob: 30, n: 220 }), COL.cyan, 4, prog(t, c.so, c.so + 0.8), 0.45);
-      glow(ctx, 540, 660, 260, COL.cyan, 0.3);
+      glow(ctx, 540, 660, 260, COL.cyan, 0.22 + 0.12 * Math.sin(t * 1.3));
       text(ctx, '?', 540, 690, { size: 320, weight: 900, family: F.disp, color: COL.cyan, align: 'center', base: 'middle' });
       riseText(ctx, 'WOBBLE', 540, 1080, prog(t, c.wobble - 0.1, c.wobble + 0.3), { size: 84, weight: 900, family: F.disp, color: COL.white, align: 'center' });
       pill(ctx, "GOOGLE DOESN'T SAY", 540, 1180, { bg: rgba(COL.coral, 0.22), color: COL.white, size: 30, stroke: rgba(COL.coral, 0.9), alpha: prog(t, c.doesnt, c.doesnt + 0.35) });

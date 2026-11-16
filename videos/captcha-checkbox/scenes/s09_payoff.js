@@ -39,6 +39,9 @@
     polyline(ctx, PATH, COL.lineHi, 3, frac);
     polyline(ctx, PATH, COL.cyan, 6, frac, lit);
     polySeg(ctx, PATH, COL.cyan, 4, sheen * 0.9, sheen * 0.9 + 0.08, 0.5 * (1 - lit));
+    const gp = polyAt(PATH, ((t * 0.35) % 1) * L);                      // a soft light keeps travelling along the trail
+    glow(ctx, gp[0], gp[1], 90, COL.cyan, 0.3);
+    glow(ctx, 540, 880, 760, COL.cyan, 0.10 + 0.08 * Math.sin(t * 1.2) + 0.04 * Math.sin(t * 2.7 + 0.5));  // the end card breathes as a whole
     const mid = polyAt(PATH, 0.5 * L);
     riseText(ctx, 'THE TEST', mid[0] + 40, mid[1] - 30, prog(t, c.test, c.test + 0.3), { size: 40, weight: 900, family: F.mono, color: COL.white, align: 'left', ls: 3 });
 

@@ -37,11 +37,12 @@
 
   addScene('browser', function (ctx, t) {
     ambient(ctx, t);
+    glow(ctx, 390, 780, 420, COL.violet, 0.14 + 0.10 * Math.sin(t * 1.4));  // the browser's light breathes
     /* the window slides in from above */
     const slide = (1 - tw(t, c.then, c.then + 0.6, E.out3)) * 120;
     const wy = WIN.y - slide;
     const rowsDim = 1 - 0.65 * prog(t, c.researchers - 0.5, c.researchers + 0.2);
-    browserWin(ctx, WIN.x, wy, WIN.w, WIN.h, 1, { hist: prog(t, c.browsing - 0.1, c.browsing + 0.6), rowAlpha: rowsDim });
+    browserWin(ctx, WIN.x, wy, WIN.w, WIN.h, 1, { hist: prog(t, c.browser, c.browser + 0.8), rowAlpha: rowsDim, scroll: t * 18 });
     riseText(ctx, 'THE BROWSER', 540, 470, prog(t, c.browser, c.browser + 0.3), { size: 60, weight: 900, family: F.disp, color: COL.violet, align: 'center' });
 
     /* cookies, and the weight they carry */

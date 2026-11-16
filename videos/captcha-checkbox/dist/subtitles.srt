@@ -15,8 +15,8 @@ reading wobbly letters.
 
 4
 00:00:10,685 --> 00:00:15,025
-In twenty thirteen, Google said its
-risk analysis covers everything you do
+In 2013, Google said its risk
+analysis covers everything you do
 
 5
 00:00:15,035 --> 00:00:18,510
@@ -24,207 +24,197 @@ around a challenge, not
 only the answer you type.
 
 6
-00:00:18,916 --> 00:00:22,732
-In twenty fourteen, the checkbox
-arrived, and many people passed
+00:00:18,916 --> 00:00:24,066
+In 2014, the checkbox arrived, and
+many people passed with one click.
 
 7
-00:00:22,742 --> 00:00:24,066
-with one click.
-
-8
 00:00:24,623 --> 00:00:26,488
 The click feels like the test.
 
-9
+8
 00:00:26,498 --> 00:00:28,748
 It's really a request for a verdict.
 
-10
+9
 00:00:29,046 --> 00:00:31,086
 The evidence was gathered around it.
 
-11
+10
 00:00:31,096 --> 00:00:33,061
 If it looks human, you pass.
 
-12
+11
 00:00:33,071 --> 00:00:35,296
 If it can't tell, you get a puzzle.
 
-13
+12
 00:00:35,918 --> 00:00:37,233
 So what does it watch?
 
-14
+13
 00:00:37,243 --> 00:00:39,468
 Google doesn't publish the full list.
 
+14
+00:00:39,742 --> 00:00:44,257
+A 2021 survey describes the checkbox
+recording cursor movement,
+
 15
-00:00:39,744 --> 00:00:43,034
-A twenty twenty-one survey
-describes the checkbox recording
+00:00:44,267 --> 00:00:47,492
+where you click, and how
+long the pointer hovers.
 
 16
-00:00:43,044 --> 00:00:47,369
-cursor movement, where you click,
-and how long the pointer hovers.
-
-17
-00:00:47,609 --> 00:00:50,874
+00:00:47,732 --> 00:00:50,997
 It also records browser
 details and cookies.
 
-18
-00:00:50,884 --> 00:00:55,059
+17
+00:00:51,007 --> 00:00:55,182
 Google's own FAQ calls a cookie
 essential to that analysis.
 
-19
-00:00:55,630 --> 00:00:58,780
+18
+00:00:55,753 --> 00:00:58,903
 A real hand never moves
 at one steady speed.
 
-20
-00:00:58,930 --> 00:01:02,080
+19
+00:00:59,054 --> 00:01:02,204
 It speeds up, peaks,
 and eases into the target.
 
-21
-00:01:02,387 --> 00:01:05,652
-In nineteen eighty-five, Flash
-and Hogan modeled arm movement
+20
+00:01:02,510 --> 00:01:07,525
+In 1985, Flash and Hogan modeled
+arm movement this way: a smooth,
 
-22
-00:01:05,662 --> 00:01:09,287
-this way: a smooth,
+21
+00:01:07,535 --> 00:01:09,435
 bell-shaped curve of speed.
 
-23
-00:01:09,683 --> 00:01:14,183
+22
+00:01:09,832 --> 00:01:14,332
 One published detector checks cursor
 paths against a model like that.
 
+23
+00:01:14,729 --> 00:01:19,594
+In a 2024 study of reCAPTCHA
+version two, any cursor movement
+
 24
-00:01:14,579 --> 00:01:18,019
-In a twenty twenty-four study
-of reCAPTCHA version two,
+00:01:19,604 --> 00:01:22,104
+cut the number of puzzles needed to pass.
 
 25
-00:01:18,029 --> 00:01:21,754
-any cursor movement cut the number
-of puzzles needed to pass.
-
-26
-00:01:22,065 --> 00:01:25,965
+00:01:22,414 --> 00:01:26,314
 Straight paths and curved ones
 were not significantly different.
 
-27
-00:01:26,288 --> 00:01:27,503
+26
+00:01:26,637 --> 00:01:27,852
 So is it the wobble?
 
-28
-00:01:27,513 --> 00:01:29,013
+27
+00:01:27,862 --> 00:01:29,362
 Google doesn't say.
 
-29
-00:01:29,601 --> 00:01:31,276
+28
+00:01:29,950 --> 00:01:31,625
 Then there's the browser.
 
-30
-00:01:31,500 --> 00:01:36,066
-A twenty twenty-four study reports
-that cookies and browsing history carry
+29
+00:01:31,848 --> 00:01:36,488
+A 2024 study reports that cookies
+and browsing history carry
 
-31
-00:01:36,076 --> 00:01:39,600
+30
+00:01:36,498 --> 00:01:40,023
 substantial weight in whether
 a visitor seems human.
 
-32
-00:01:39,943 --> 00:01:42,783
+31
+00:01:40,365 --> 00:01:43,205
 Browsing history is
 what researchers report.
 
-33
-00:01:42,793 --> 00:01:44,693
+32
+00:01:43,215 --> 00:01:45,115
 Google hasn't confirmed it.
 
-34
-00:01:45,294 --> 00:01:47,944
+33
+00:01:45,716 --> 00:01:48,366
 Version three has no checkbox at all.
 
-35
-00:01:48,142 --> 00:01:50,606
+34
+00:01:48,564 --> 00:01:51,029
 It returns a score from zero to one.
 
-36
-00:01:50,616 --> 00:01:53,206
+35
+00:01:51,039 --> 00:01:53,629
 One means very likely a good interaction.
 
-37
-00:01:53,216 --> 00:01:55,542
+36
+00:01:53,639 --> 00:01:55,964
 Zero means very likely a bot.
 
-38
-00:01:55,908 --> 00:02:00,583
-Each site sets its own cutoff, and
-Google suggests starting at point five.
+37
+00:01:56,327 --> 00:02:01,352
+Each site sets its own cutoff,
+and Google suggests starting at 0.5.
 
-39
-00:02:00,921 --> 00:02:02,661
+38
+00:02:01,691 --> 00:02:03,431
 But a score can be pushed.
 
-40
-00:02:02,671 --> 00:02:06,936
-In twenty nineteen, researchers trained
-an AI agent to move and click in a
+39
+00:02:03,441 --> 00:02:07,706
+In 2019, researchers trained an
+AI agent to move and click in a
 
-41
-00:02:06,946 --> 00:02:08,496
+40
+00:02:07,716 --> 00:02:09,266
 simulator they built.
 
-42
-00:02:08,746 --> 00:02:12,861
-It reached a score of point nine about
-ninety-seven percent of the time.
+41
+00:02:09,512 --> 00:02:14,227
+It reached a score of 0.9,
+about 97% of the time.
 
-43
-00:02:12,871 --> 00:02:15,246
+42
+00:02:14,237 --> 00:02:16,612
 The simulator isn't the live site.
 
+43
+00:02:17,188 --> 00:02:23,338
+A 2023 study ran for thirteen
+months with more than 3,600 people.
+
 44
-00:02:15,823 --> 00:02:19,688
-A twenty twenty-three study ran
-for thirteen months with more than
-
-45
-00:02:19,698 --> 00:02:21,573
-thirty-six hundred people.
-
-46
-00:02:21,820 --> 00:02:26,510
+00:02:23,585 --> 00:02:28,275
 Its authors judged the checkbox
 costly, with close to no security gain,
 
-47
-00:02:26,520 --> 00:02:28,495
+45
+00:02:28,285 --> 00:02:30,260
 and say it should be retired.
 
-48
-00:02:29,046 --> 00:02:32,362
+46
+00:02:30,812 --> 00:02:34,126
 Nobody outside Google knows
 how the signals are weighted.
 
-49
-00:02:32,372 --> 00:02:34,946
+47
+00:02:34,136 --> 00:02:36,712
 So every study tests from the outside.
 
-50
-00:02:35,550 --> 00:02:38,250
+48
+00:02:37,316 --> 00:02:40,016
 So the tap is the last step, not the test.
 
-51
-00:02:38,756 --> 00:02:40,531
+49
+00:02:40,521 --> 00:02:42,296
 It cares how you got there.
