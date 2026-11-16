@@ -4,7 +4,7 @@
   "size_mb": 61.1,
   "container": "QuickTime / MOV",
   "duration_s": 92.667,
-  "overall_bitrate_mbps": 5.27,
+  "overall_bitrate_mbps": 5.28,
   "faststart": true
  },
  "video": {
@@ -17,7 +17,7 @@
   "pix_fmt": "yuv420p",
   "fps": 30.0,
   "frames": 2780,
-  "bitrate_mbps": 5.0,
+  "bitrate_mbps": 5.01,
   "color": "bt709/bt709/bt709 tv"
  },
  "audio": {
@@ -33,7 +33,7 @@
  "freeze_segments": [],
  "encode_fidelity": {
   "ssim_all": 0.996028,
-  "psnr_avg_db": 51.207283
+  "psnr_avg_db": 51.207837
  },
  "loudness": {
   "integrated_lufs": -14.0,

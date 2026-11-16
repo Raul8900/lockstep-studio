@@ -1,8 +1,10 @@
 ## Technical accuracy review
 
 Every scan claim in the video was checked on a real QR code with a real decoder, first on the model
-(`tools/qr_model.py`) and then on frames taken from the finished MP4 (`tools/verify_frames.py`, results
-in `tools/verify_frames.json`).
+(`tools/qr_model.py`, including 80 random renders per damage shape) and then on frames taken from the
+finished MP4 (`tools/verify_frames.py`, results in `tools/verify_frames.json`): 8 single checkpoints
+and 3 whole windows — every sampled frame of the torn hook decodes (34/34), every frame after the
+corner-square tear fails (13/13), every end-card frame decodes (46/46). All 11 checks pass.
 
 | On screen / spoken | Status |
 |---|---|
@@ -17,7 +19,7 @@ in `tools/verify_frames.json`).
 | “That's why a logo can sit in the middle. It's damage, on purpose.” | A blank 7 × 7-module plate decodes in the model; the drawn plate (white with a pink cup icon) decodes from the MP4 frame. |
 | “Thirty percent of the bytes, not of the paper” / “BYTES = 47% OF THIS CODE” | 208 of 441 modules carry codewords (47.2 %). |
 | “These three corner squares aren't protected at all… Tear into one, and this code won't scan.” | Finder patterns are function modules, not codewords (sources 2). A 3.1 % tear through one changes no codeword; the code decoded in 0 of 80 random renders and in none of the sampled MP4 frames from the tear to the next scene. Worded “this code” because it was tested with one decoder. |
-| “It took six of the nine message bytes” | The hero tear changes codewords 0, 1, 2, 4, 5, 6 (message) and 11 (check) in the model; the module grid sampled from the MP4 frame is compared in `tools/verify_frames.json`. |
+| “It took six of the nine message bytes” | The hero tear changes codewords 0, 1, 2, 4, 5, 6 (message) and 11 (check) in the model, and the same seven when the module grid is sampled from the MP4's own frames at 4.2 s and 7.4 s (`tools/verify_frames.json`). |
 | “The extra points rebuilt every one” | The torn frame decodes to the full message. |
 | “SAME RULE · BYTE ARITHMETIC · NO PICTURE” | Real QR codes compute in GF(256); the straight line is the analogy, and the screen says where it stops being literal. |
 

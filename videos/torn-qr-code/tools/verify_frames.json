@@ -74,20 +74,16 @@
   {
    "check": "fine print: corner square torn, \"won't\"",
    "t": 77.34,
-   "decoded": [
-    "STILL HERE"
-   ],
+   "decoded": [],
    "expected": null,
-   "ok": false
+   "ok": true
   },
   {
    "check": "fine print: corner square torn, \"scan\" (before the slide out)",
    "t": 77.47,
-   "decoded": [
-    "STILL HERE"
-   ],
+   "decoded": [],
    "expected": null,
-   "ok": false
+   "ok": true
   },
   {
    "check": "payoff: rebuilt, \"every one\"",
@@ -129,7 +125,37 @@
     5,
     6
    ]
+  },
+  {
+   "window": "hook: torn, every frame until the slide",
+   "t0": 1.59,
+   "t1": 7.18,
+   "frames": 34,
+   "as_expected": 34,
+   "expected": "STILL HERE",
+   "exceptions": [],
+   "ok": true
+  },
+  {
+   "window": "fine print: corner square torn, every frame until the slide",
+   "t0": 75.67,
+   "t1": 77.81,
+   "frames": 13,
+   "as_expected": 13,
+   "expected": null,
+   "exceptions": [],
+   "ok": true
+  },
+  {
+   "window": "end card: every frame",
+   "t0": 84.94,
+   "t1": 92.57,
+   "frames": 46,
+   "as_expected": 46,
+   "expected": "STILL HERE",
+   "exceptions": [],
+   "ok": true
   }
  ],
- "all_ok": false
+ "all_ok": true
 }

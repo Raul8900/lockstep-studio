@@ -439,7 +439,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 | | |
 |---|---|
 | **Objects on screen** | A small rip takes the top-left corner square's outer corner; brackets search and turn red; readout fails. |
-| **Position and size (1080 × 1920)** | Rip polygon from the verified model (1.3 % of the code). |
+| **Position and size (1080 × 1920)** | Rip polygon from the verified model (3.1 % of the code; 0/80 decodes in the robustness test). |
 | **Background** | Cream riso stock with a faint blue halftone field drifting slowly (style backdrop). |
 | **Movement** | Rip on “tear”; brackets jitter; on “won't scan” they go red and the pill reads NO CODE FOUND. |
 | **Timing and easing** | Rip instant; jitter 0.6 s; fail E.outBack. |
