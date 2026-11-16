@@ -158,6 +158,7 @@ in art-direction.md). Characters, gestures and effects with real motion can come
 animations: find them with `lockstep lottie-search <slug> <words>`, take one with `lottie-get`, and
 pin its key frames to words (reference/lottie.md). Write a scene, then look at it immediately:
 ```bash
+bin/lockstep lint <slug>                              # cues, sounds, icons, colours, typed-in times; where text lands
 bin/lockstep meta <slug>                              # loads every scene; reports cue or syntax errors
 bin/lockstep sheet <slug> 12s 13.5s 15s 17s 19s       # stills tiled into out/sheet.jpg — open it
 bin/lockstep still <slug> --safe 15s                  # one full-size frame with the keep-out zones shaded
@@ -165,6 +166,14 @@ bin/lockstep scan <slug>                              # draws the whole timeline
 ```
 Review a still every 1–2 seconds of each scene plus the moments just before and after each cue,
 at full size where there is small text.
+
+Run `lint` after every scene, not only at the end: it reads the code for mistakes that otherwise
+surface minutes into a build (a misspelt cue word, a sound or icon that does not exist,
+`Math.random()`, a time typed in seconds) and draws a frame every 0.2 s to find text under the
+platform's buttons or the captions, text too small for a phone, labels drawn over something in
+their own colour, and labels on top of each other — each with its time and scene. Errors stop the
+build. Fix every warning or, if it is intended, mark it (reference/qa.md, "Reading lint"). Lint
+does not judge taste: still look at the frames.
 
 Let the person watch the video take shape: once the first scene draws, start
 `bin/lockstep preview <slug>` in the background (it keeps running) and tell them the address it
@@ -179,8 +188,8 @@ judge frames with `sheet`, `still` and `scan`.
 ```bash
 bin/lockstep build <slug>
 ```
-direction check → meta → scan → audio → render → assemble → srt → validate → docs → report, then
-the verdict. A 160 s video takes about 17 minutes (scan and audio ≈ 3, render ≈ 2, encode ≈ 6,
+direction check → captions → lint → meta → scan → audio → render → assemble → srt → validate →
+docs → report, then the verdict. A 160 s video takes about 17 minutes (scan and audio ≈ 3, render ≈ 2, encode ≈ 6,
 validation ≈ 6); a 90 s one about half that. Run it in the background and keep working.
 
 ### 10. Review and fix

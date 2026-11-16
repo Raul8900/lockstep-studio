@@ -19,6 +19,7 @@ recognise this as a different video?
 ## Pass 1 — while drawing (per scene)
 
 ```bash
+bin/lockstep lint <slug>                          # code mistakes and text placement, with times (see below)
 bin/lockstep meta <slug>                          # scenes load, cues resolve
 bin/lockstep sheet <slug> 30s 31s 32s 33.5s 35s   # tile of stills -> out/sheet.jpg
 bin/lockstep still <slug> --safe 33.5s            # full size with keep-out zones -> out/stills/
@@ -44,6 +45,43 @@ Open the image and check, for every still:
 
 Sample densely around cues — the frame 0.1 s before, on, and 0.3 s after each reveal — and at
 least every 1–2 seconds elsewhere. View small text at full size, not only on the sheet.
+
+### Reading lint
+
+`bin/lockstep lint <slug>` answers several of the questions above mechanically, for every 0.2 s of
+the video; `--static` reads the code only (a second, instead of about half a minute). It sees text
+drawn with `text()`/`fillText` on the scene itself; text drawn into an off-screen canvas, an icon or
+a Lottie file is invisible to it. Errors stop `build`:
+
+| Error | Means |
+|---|---|
+| `boot`, `draw` | the page does not start, or a frame throws (the message and the time) |
+| `narration` | no recording yet, or script.py says something the recording does not |
+| `captions` | caption_phrases.json does not match the narration |
+| `nondeterministic` | `Math.random()`, `Date` or `performance.now()`: frames would differ between renders |
+| `cue` | `at('beat', 'word', n)` names a beat or word that is not there (with the nearest words) |
+| `sound`, `icon`, `lottie` | a sound type, icon name or Lottie file that does not exist, or a Lottie file without credits |
+
+Warnings hold for at least 0.4 s while the text stays put (text sliding or zooming through a zone
+is animation) and need a decision:
+
+| Warning | Means | Usual fix |
+|---|---|---|
+| `typed-time` | a time in seconds in the code (`prog(t, 24.0, 26.5)`) | anchor it to a word: `at('beat', 'word') - 0.3` |
+| `hex-colour`, `legacy-colour` | a colour typed as a value, or `COL.cyan`-style names | a role: `COL.subject`, `COL.accent`, … |
+| `top-band`, `bottom-band`, `side-margin`, `right-column` | text under the app's interface | move it inside the safe zone (`still --safe`) |
+| `under-captions` | scene text where the captions are drawn | lay out above y ≈ 1210 |
+| `small-text` | under 20 px on screen | 24 px or more for anything that must be read |
+| `low-contrast` | at least 5 % of a label's box is something drawn in nearly its colour — usually its own icon, a line or a glow | move it clear, or give it a plate (`pill`) or an outline |
+| `off-frame` | text cut off by the frame's edge | bring it in |
+| `text-overlap` | two different texts on top of each other | lay out from measured widths (`measure`) |
+
+To accept a warning, end its line with `// lint-ignore` (or `// lint-ignore typed-time`), or list
+it in `video.json` with the reason, narrowed to a text or a file when you can:
+
+```json
+"lint": { "ignore": [ { "rule": "low-contrast", "text": "ON PURPOSE", "why": "the stamp's own border" } ] }
+```
 
 ## Pass 2 — after the first full build
 
@@ -114,9 +152,9 @@ it is acceptable.
 | A product's figure presented as universal | Missing attribution | Put the product name next to the number, or use a generic label |
 | Huge file, 70+ Mbps | Animated grain or full-frame flicker | Remove it; the engine's static dither already prevents banding |
 | Rendering crawls (a few fps) | Heavy per-frame work in a scene | `render.js … bench <time>`; replace `shadowBlur`/`filter` with `glow()`; hoist gradients out of loops |
-| `cue not found` after a script edit | The cue word was removed or moved to another beat | `lockstep words <slug> <beat>`; re-anchor to a word that exists |
-| Frames differ between runs | `Math.random()`, `Date`, or state kept across frames | Use `hash`/`rng`; compute everything from `t` |
-| Build refuses: "script.py is newer than the recorded narration" | Script edited after recording | `lockstep voice <slug>` (identical text re-records identically) |
+| `cue not found` after a script edit | The cue word was removed or moved to another beat | `lockstep lint <slug>` names every broken cue with the nearest words; re-anchor to a word that exists |
+| Frames differ between runs | `Math.random()`, `Date`, or state kept across frames | Use `hash`/`rng`; compute everything from `t` (`lint` finds the first two) |
+| Lint or build refuses: "script.py has changed since the narration was recorded" | The spoken text, a beat or a pause in the script differs from the recording | `lockstep voice <slug>` (identical text re-records identically); notes and comments in script.py do not count |
 | Voice or build refuses: "creative direction is not done yet" | Brief incomplete or no style.json | Do the creative-direction step (creative-direction.md); the message lists what is missing |
 | Text in an unexpected font | Family name misspelt in style.json | `lockstep style-check <slug>` names it; `lockstep fonts` lists what exists |
 | Words vanish against a light background | Legacy colour names (`COL.white` is dark ink on paper styles, `COL.bg0` light) or hard-coded hex | Use roles: `COL.ink`, `COL.onAccent` |

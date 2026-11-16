@@ -5,6 +5,7 @@
      node engine/render.js <video-dir> meta
      node engine/render.js <video-dir> still [--safe] [--out dir] <frame|12.5s> ...
      node engine/render.js <video-dir> scan
+     node engine/render.js <video-dir> lint [--step N]
      node engine/render.js <video-dir> bench <frame|time> ...
      node engine/render.js <video-dir> video [--workers N] [--from s] [--to s]
 
@@ -14,6 +15,8 @@
      still  writes single frames as JPEG for review
      scan   draws every 2nd frame without saving and reports script errors
             and near-black frames
+     lint   draws every Nth frame (6) and prints, as one JSON line, where every
+            piece of scene text lands; engine/lint.py turns it into findings
      video  each frame leaves the page as a JPEG (q 0.97) and is written to
             out/frames/fNNNNN.jpg; work is handed out in 5-second chunks, so a
             changed scene can be re-rendered on its own with --from/--to
@@ -285,6 +288,25 @@ async function scan() {
   });
 }
 
+/* lint [--step N]: one JSON line for engine/lint.py — text boxes per sampled frame, frames that
+   throw, sound cue types — or {boot_error} when the page does not start */
+async function lint(args) {
+  let step = 6;
+  for (let i = 0; i < args.length; i++) if (args[i] === '--step') step = Math.max(1, parseInt(args[++i], 10) || 6);
+  const server = await startServer(); const port = server.address().port;
+  const browser = await chromium.launch();
+  let out;
+  try {
+    let page = null;
+    try { page = await openPage(browser, port, false); } catch (e) { out = { boot_error: String(e.message || e).replace(/^boot failed: /, '') }; }
+    if (page) {
+      await page.addScriptTag({ path: path.join(ANIM, 'js', 'lint.js') });
+      out = await page.evaluate((s) => lintLayout(s), step);
+    }
+  } finally { await browser.close(); server.close(); }
+  process.stdout.write(JSON.stringify(out) + '\n');
+}
+
 async function bench(specs) {
   await withPage(false, async (page) => {
     for (const spec of specs) {
@@ -344,6 +366,7 @@ async function video(args) {
   else if (mode === 'preview') await preview(rest);
   else if (mode === 'lottiesheet') await lottiesheet(rest);
   else if (mode === 'scan') await scan();
+  else if (mode === 'lint') await lint(rest);
   else if (mode === 'bench') await bench(rest);
   else if (mode === 'video') await video(rest);
   else { console.error('unknown mode: ' + mode); process.exit(1); }

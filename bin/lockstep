@@ -40,6 +40,9 @@ lockstep <command> [<video>] [options]
  pictures
   preview <video> [--port 4173] [--host 0.0.0.0]
                                 play and scrub the video in a browser, with audio; reloads itself when files change
+  lint <video> [--static]       check the scenes before rendering: cues, sounds, icons, Lottie files, determinism,
+                                colours, typed-in times; where text lands (interface, captions, size, contrast,
+                                overlaps). Errors stop the build. --static: the code only, no frames drawn
   meta <video>                  export data/timeline.json (scenes, captions, sound cues); also proves the scenes load
   still <video> [--safe] T...   render single frames, e.g. 3.2s 12s 450   -> out/stills/
   sheet <video> [--cols N] T... render frames and tile them into out/sheet.jpg for review
@@ -170,6 +173,7 @@ PY
   captions)     V=$(resolve "${1:-}"); shift; python3 "$E/make_captions.py" "$V" "$@" ;;
   words)        V=$(resolve "${1:-}"); shift; python3 "$E/words.py" "$V" "$@" ;;
   meta)         V=$(resolve "${1:-}"); node "$E/render.js" "$V" meta ;;
+  lint)         V=$(resolve "${1:-}"); shift; exec python3 "$E/lint.py" "$V" "$@" ;;
   preview)      V=$(resolve "${1:-}"); shift; exec node "$E/render.js" "$V" preview "$@" ;;
   still)        V=$(resolve "${1:-}"); shift; node "$E/render.js" "$V" still "$@" ;;
   scan)         V=$(resolve "${1:-}"); node "$E/render.js" "$V" scan ;;
@@ -191,11 +195,9 @@ PY
     V=$(resolve "${1:-}"); shift
     echo "== direction"; python3 "$E/check_brief.py" "$V"; style_gate "$V"; python3 "$E/lottie_tool.py" check "$V"
     [ -f "$V/data/words.json" ] || { echo "no narration yet: run 'lockstep voice $(basename "$V")' first" >&2; exit 1; }
-    if [ "$V/script.py" -nt "$V/data/words.json" ]; then
-      echo "script.py is newer than the recorded narration: run 'lockstep voice $(basename "$V")' first (or touch data/words.json if only notes changed)" >&2; exit 1
-    fi
     mkdir -p "$V/out"
     echo "== captions"; python3 "$E/make_captions.py" "$V"
+    echo "== lint";     python3 "$E/lint.py" "$V"
     echo "== meta";     node "$E/render.js" "$V" meta
     echo "== scan";     node "$E/render.js" "$V" scan
     echo "== audio";    python3 "$E/audio/make_audio.py" "$V" | tail -4

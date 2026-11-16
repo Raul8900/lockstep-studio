@@ -100,6 +100,7 @@ script.py ──► voice ──► words.json (every word, to 25 ms) ──┬�
 | Music and sound | Synthesised in NumPy: pads, bass, arpeggio and drums arranged per chapter, with tempo, key and one of five instrument kits chosen per video; 24 sound-effect types triggered by the scenes at the same cues as the picture. |
 | Mix and master | Voice processing, ducking under speech, look-ahead limiter, −14 LUFS. |
 | Encode | FFmpeg libx264 (CRF 16, BT.709), AAC 256 kbps, streamable MP4. |
+| Checks before rendering | `lockstep lint`: misspelt cue words, unknown sounds, icons and Lottie files, non-deterministic code, typed-in times and colours; and, drawing a frame every 0.2 s, text under the platform's interface or the captions, too small, cut off, overlapping, or drawn over something in its own colour. Errors stop the build. |
 | QA | Stream facts, full decode, black-frame and freeze detection, SSIM against the rendered frames, loudness, audio/picture sync, speech recognition on the final mix, caption geometry, contact sheet and phone-size previews. |
 
 ## Commands
@@ -119,6 +120,7 @@ bin/lockstep voice <video>            record the narration, extract word timings
 bin/lockstep check-voice <video>      transcribe it back and compare with the script
 bin/lockstep words <video> [beat]     list every spoken word with its time
 bin/lockstep captions <video>         check (or --draft) the caption chunking
+bin/lockstep lint <video>             check the scenes before rendering: code mistakes, where text lands
 bin/lockstep still|sheet|scan <video> review frames while designing
 bin/lockstep preview <video>          play and scrub in a browser with sound; reloads on every save
 bin/lockstep build <video>            everything from scenes to validated MP4, docs and verdict
