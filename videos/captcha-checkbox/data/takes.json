@@ -1,0 +1,308 @@
+{
+ "meta": {
+  "voice": "af_heart",
+  "speed": 1.0,
+  "sample_rate": 24000,
+  "duration": 163.721,
+  "speech_end": 160.2308,
+  "word_count": 405
+ },
+ "beats": [
+  {
+   "id": "hook",
+   "title": "Hook",
+   "t0": 0.3748,
+   "t1": 6.4157
+  },
+  {
+   "id": "old",
+   "title": "The old test",
+   "t0": 7.3417,
+   "t1": 23.7665
+  },
+  {
+   "id": "click",
+   "title": "The tap",
+   "t0": 24.6732,
+   "t1": 34.9964
+  },
+  {
+   "id": "watch",
+   "title": "What it watches",
+   "t0": 35.9676,
+   "t1": 54.7589
+  },
+  {
+   "id": "cursor",
+   "title": "The cursor",
+   "t0": 55.6795,
+   "t1": 88.7126
+  },
+  {
+   "id": "browser",
+   "title": "The browser",
+   "t0": 89.6506,
+   "t1": 104.3932
+  },
+  {
+   "id": "score",
+   "title": "The score",
+   "t0": 105.3439,
+   "t1": 134.9461
+  },
+  {
+   "id": "limits",
+   "title": "The limits",
+   "t0": 135.8731,
+   "t1": 154.6465
+  },
+  {
+   "id": "payoff",
+   "title": "The takeaway",
+   "t0": 155.6004,
+   "t1": 160.2308
+  }
+ ],
+ "takes": [
+  {
+   "take": 0,
+   "beat": "hook",
+   "text": "You tap a box that says you're not a robot.",
+   "t0": 0.3748,
+   "t1": 2.5748,
+   "pause_after": 0.4
+  },
+  {
+   "take": 1,
+   "beat": "hook",
+   "text": "Researchers say the test started before your finger got there.",
+   "t0": 3.1407,
+   "t1": 6.4157,
+   "pause_after": 0.75
+  },
+  {
+   "take": 2,
+   "beat": "old",
+   "text": "For years, the test was reading wobbly letters.",
+   "t0": 7.3417,
+   "t1": 10.1417,
+   "pause_after": 0.45
+  },
+  {
+   "take": 3,
+   "beat": "old",
+   "text": "In twenty thirteen, Google said its risk analysis covers everything you do around a challenge, not only the answer you type.",
+   "t0": 10.7352,
+   "t1": 18.2102,
+   "pause_after": 0.6
+  },
+  {
+   "take": 4,
+   "beat": "old",
+   "text": "In twenty fourteen, the checkbox arrived, and many people passed with one click.",
+   "t0": 18.9665,
+   "t1": 23.7665,
+   "pause_after": 0.75
+  },
+  {
+   "take": 5,
+   "beat": "click",
+   "text": "The click feels like the test. It's really a request for a verdict.",
+   "t0": 24.6732,
+   "t1": 28.4482,
+   "pause_after": 0.5
+  },
+  {
+   "take": 6,
+   "beat": "click",
+   "text": "The evidence was gathered around it. If it looks human, you pass. If it can't tell, you get a puzzle.",
+   "t0": 29.0964,
+   "t1": 34.9964,
+   "pause_after": 0.75
+  },
+  {
+   "take": 7,
+   "beat": "watch",
+   "text": "So what does it watch? Google doesn't publish the full list.",
+   "t0": 35.9676,
+   "t1": 39.1676,
+   "pause_after": 0.45
+  },
+  {
+   "take": 8,
+   "beat": "watch",
+   "text": "A twenty twenty-one survey describes the checkbox recording cursor movement, where you click, and how long the pointer hovers.",
+   "t0": 39.794,
+   "t1": 47.069,
+   "pause_after": 0.45
+  },
+  {
+   "take": 9,
+   "beat": "watch",
+   "text": "It also records browser details and cookies. Google's own FAQ calls a cookie essential to that analysis.",
+   "t0": 47.6589,
+   "t1": 54.7589,
+   "pause_after": 0.75
+  },
+  {
+   "take": 10,
+   "beat": "cursor",
+   "text": "A real hand never moves at one steady speed.",
+   "t0": 55.6795,
+   "t1": 58.4795,
+   "pause_after": 0.35
+  },
+  {
+   "take": 11,
+   "beat": "cursor",
+   "text": "It speeds up, peaks, and eases into the target.",
+   "t0": 58.9804,
+   "t1": 61.7804,
+   "pause_after": 0.5
+  },
+  {
+   "take": 12,
+   "beat": "cursor",
+   "text": "In nineteen eighty-five, Flash and Hogan modeled arm movement this way: a smooth, bell-shaped curve of speed.",
+   "t0": 62.4367,
+   "t1": 68.9867,
+   "pause_after": 0.55
+  },
+  {
+   "take": 13,
+   "beat": "cursor",
+   "text": "One published detector checks cursor paths against a model like that.",
+   "t0": 69.7333,
+   "t1": 73.8833,
+   "pause_after": 0.6
+  },
+  {
+   "take": 14,
+   "beat": "cursor",
+   "text": "In a twenty twenty-four study of reCAPTCHA version two, any cursor movement cut the number of puzzles needed to pass.",
+   "t0": 74.6294,
+   "t1": 81.4544,
+   "pause_after": 0.45
+  },
+  {
+   "take": 15,
+   "beat": "cursor",
+   "text": "Straight paths and curved ones were not significantly different.",
+   "t0": 82.1147,
+   "t1": 85.6647,
+   "pause_after": 0.45
+  },
+  {
+   "take": 16,
+   "beat": "cursor",
+   "text": "So is it the wobble? Google doesn't say.",
+   "t0": 86.3376,
+   "t1": 88.7126,
+   "pause_after": 0.75
+  },
+  {
+   "take": 17,
+   "beat": "browser",
+   "text": "Then there's the browser.",
+   "t0": 89.6506,
+   "t1": 90.9756,
+   "pause_after": 0.4
+  },
+  {
+   "take": 18,
+   "beat": "browser",
+   "text": "A twenty twenty-four study reports that cookies and browsing history carry substantial weight in whether a visitor seems human.",
+   "t0": 91.5505,
+   "t1": 99.3005,
+   "pause_after": 0.55
+  },
+  {
+   "take": 19,
+   "beat": "browser",
+   "text": "Browsing history is what researchers report. Google hasn't confirmed it.",
+   "t0": 99.9932,
+   "t1": 104.3932,
+   "pause_after": 0.75
+  },
+  {
+   "take": 20,
+   "beat": "score",
+   "text": "Version three has no checkbox at all.",
+   "t0": 105.3439,
+   "t1": 107.6439,
+   "pause_after": 0.4
+  },
+  {
+   "take": 21,
+   "beat": "score",
+   "text": "It returns a score from zero to one. One means very likely a good interaction. Zero means very likely a bot.",
+   "t0": 108.1915,
+   "t1": 115.2415,
+   "pause_after": 0.55
+  },
+  {
+   "take": 22,
+   "beat": "score",
+   "text": "Each site sets its own cutoff, and Google suggests starting at point five.",
+   "t0": 115.9577,
+   "t1": 120.2827,
+   "pause_after": 0.55
+  },
+  {
+   "take": 23,
+   "beat": "score",
+   "text": "But a score can be pushed. In twenty nineteen, researchers trained an AI agent to move and click in a simulator they built.",
+   "t0": 120.9712,
+   "t1": 128.1962,
+   "pause_after": 0.45
+  },
+  {
+   "take": 24,
+   "beat": "score",
+   "text": "It reached a score of point nine about ninety-seven percent of the time. The simulator isn't the live site.",
+   "t0": 128.7961,
+   "t1": 134.9461,
+   "pause_after": 0.75
+  },
+  {
+   "take": 25,
+   "beat": "limits",
+   "text": "A twenty twenty-three study ran for thirteen months with more than thirty-six hundred people.",
+   "t0": 135.8731,
+   "t1": 141.2731,
+   "pause_after": 0.45
+  },
+  {
+   "take": 26,
+   "beat": "limits",
+   "text": "Its authors judged the checkbox costly, with close to no security gain, and say it should be retired.",
+   "t0": 141.8699,
+   "t1": 148.1949,
+   "pause_after": 0.7
+  },
+  {
+   "take": 27,
+   "beat": "limits",
+   "text": "Nobody outside Google knows how the signals are weighted. So every study tests from the outside.",
+   "t0": 149.0965,
+   "t1": 154.6465,
+   "pause_after": 0.75
+  },
+  {
+   "take": 28,
+   "beat": "payoff",
+   "text": "So the tap is the last step, not the test.",
+   "t0": 155.6004,
+   "t1": 157.9504,
+   "pause_after": 0.7
+  },
+  {
+   "take": 29,
+   "beat": "payoff",
+   "text": "It cares how you got there.",
+   "t0": 158.8057,
+   "t1": 160.2308,
+   "pause_after": 0.8
+  }
+ ]
+}

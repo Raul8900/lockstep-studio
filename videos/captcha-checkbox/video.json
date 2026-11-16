@@ -1,0 +1,17 @@
+{
+  "title": "The 'I'm not a robot' box",
+  "tag": "CAPTCHA CHECKBOX",
+  "output": "captcha_checkbox_vertical",
+  "max_seconds": 180,
+  "chapters": [
+    { "id": "hook",    "name": "THE QUESTION",    "mood": "drone" },
+    { "id": "old",     "name": "THE OLD TEST",    "mood": "light" },
+    { "id": "click",   "name": "THE TAP",         "mood": "build" },
+    { "id": "watch",   "name": "WHAT IT WATCHES", "mood": "groove" },
+    { "id": "cursor",  "name": "THE CURSOR",      "mood": "mechanical" },
+    { "id": "browser", "name": "THE BROWSER",     "mood": "dark" },
+    { "id": "score",   "name": "THE SCORE",       "mood": "drive" },
+    { "id": "limits",  "name": "THE LIMITS",      "mood": "tense" },
+    { "id": "payoff",  "name": "THE TAKEAWAY",    "mood": "finale" }
+  ]
+}

@@ -1,0 +1,61 @@
+[
+ "You tap a box", "that says you're not", "a robot.",
+
+ "Researchers say the", "test started before", "your finger got there.",
+
+ "For years,", "the test was reading", "wobbly letters.",
+
+ "In twenty thirteen,", "Google said its risk", "analysis covers", "everything you do", "around a challenge,", "not only the answer", "you type.",
+
+ "In twenty fourteen,", "the checkbox arrived,", "and many people passed", "with one click.",
+
+ "The click feels like", "the test.", "It's really a request", "for a verdict.",
+
+ "The evidence was", "gathered around it.", "If it looks human,", "you pass.", "If it can't tell,", "you get a puzzle.",
+
+ "So what does it watch?", "Google doesn't publish", "the full list.",
+
+ "A twenty twenty-one", "survey describes the", "checkbox recording", "cursor movement,", "where you click,", "and how long the", "pointer hovers.",
+
+ "It also records", "browser details and", "cookies.", "Google's own FAQ calls", "a cookie essential to", "that analysis.",
+
+ "A real hand", "never moves at one", "steady speed.",
+
+ "It speeds up,", "peaks, and eases", "into the target.",
+
+ "In nineteen eighty-five,", "Flash and Hogan", "modeled arm movement", "this way: a smooth,", "bell-shaped curve", "of speed.",
+
+ "One published detector", "checks cursor paths", "against a model", "like that.",
+
+ "In a twenty twenty-four", "study of reCAPTCHA", "version two,", "any cursor movement", "cut the number of", "puzzles needed", "to pass.",
+
+ "Straight paths and", "curved ones were", "not significantly", "different.",
+
+ "So is it the", "wobble?", "Google doesn't say.",
+
+ "Then there's the", "browser.",
+
+ "A twenty twenty-four", "study reports that", "cookies and browsing", "history carry", "substantial weight", "in whether a visitor", "seems human.",
+
+ "Browsing history is", "what researchers", "report.", "Google hasn't", "confirmed it.",
+
+ "Version three has", "no checkbox at all.",
+
+ "It returns a score", "from zero to one.", "One means very", "likely a good", "interaction.", "Zero means very", "likely a bot.",
+
+ "Each site sets its", "own cutoff,", "and Google suggests", "starting at", "point five.",
+
+ "But a score can", "be pushed.", "In twenty nineteen,", "researchers trained an", "AI agent to move", "and click in a", "simulator they built.",
+
+ "It reached a score", "of point nine", "about ninety-seven", "percent of the time.", "The simulator isn't", "the live site.",
+
+ "A twenty twenty-three", "study ran for", "thirteen months", "with more than", "thirty-six hundred", "people.",
+
+ "Its authors judged", "the checkbox costly,", "with close to no", "security gain,", "and say it should", "be retired.",
+
+ "Nobody outside Google", "knows how the signals", "are weighted.", "So every study", "tests from the", "outside.",
+
+ "So the tap is", "the last step,", "not the test.",
+
+ "It cares how you", "got there."
+]
