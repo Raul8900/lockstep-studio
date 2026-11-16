@@ -1,0 +1,16 @@
+{
+  "title": "Your painkiller doesn't know where it hurts",
+  "tag": "PAINKILLERS",
+  "output": "how_painkillers_work_vertical",
+  "max_seconds": 180,
+  "music": { "bpm": 108, "transpose": -2, "kit": "pluck" },
+  "chapters": [
+    { "id": "hook",    "name": "THE MYTH",               "mood": "drone" },
+    { "id": "why",     "name": "WHY IT SEEMS TRUE",      "mood": "light" },
+    { "id": "flood",   "name": "THE FLOOD",              "mood": "groove" },
+    { "id": "factory", "name": "THE FACTORY",            "mood": "mechanical" },
+    { "id": "cost",    "name": "THE COST",               "mood": "dark" },
+    { "id": "breaks",  "name": "WHERE THE MYTH BREAKS",  "mood": "tense" },
+    { "id": "truth",   "name": "THE TRUTH",              "mood": "finale" }
+  ]
+}

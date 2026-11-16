@@ -1,0 +1,216 @@
+{
+ "meta": {
+  "voice": "af_heart",
+  "speed": 1.07,
+  "sample_rate": 24000,
+  "duration": 93.137,
+  "speech_end": 89.6966,
+  "word_count": 224
+ },
+ "beats": [
+  {
+   "id": "hook",
+   "title": "The myth",
+   "t0": 0.3582,
+   "t1": 3.3835
+  },
+  {
+   "id": "why",
+   "title": "Why it seems true",
+   "t0": 4.2816,
+   "t1": 9.491
+  },
+  {
+   "id": "flood",
+   "title": "The flood",
+   "t0": 10.3974,
+   "t1": 23.6207
+  },
+  {
+   "id": "factory",
+   "title": "The factory",
+   "t0": 24.533,
+   "t1": 42.97
+  },
+  {
+   "id": "cost",
+   "title": "The cost",
+   "t0": 43.8734,
+   "t1": 62.0515
+  },
+  {
+   "id": "breaks",
+   "title": "Where the myth breaks",
+   "t0": 62.979,
+   "t1": 79.9633
+  },
+  {
+   "id": "truth",
+   "title": "The truth",
+   "t0": 80.9095,
+   "t1": 89.6966
+  }
+ ],
+ "takes": [
+  {
+   "take": 0,
+   "beat": "hook",
+   "text": "Your painkiller knows where it hurts.",
+   "t0": 0.3582,
+   "t1": 2.2082,
+   "pause_after": 0.22
+  },
+  {
+   "take": 1,
+   "beat": "hook",
+   "text": "It doesn't.",
+   "t0": 2.5835,
+   "t1": 3.3835,
+   "pause_after": 0.75
+  },
+  {
+   "take": 2,
+   "beat": "why",
+   "text": "It seems to.",
+   "t0": 4.2816,
+   "t1": 5.2066,
+   "pause_after": 0.36
+  },
+  {
+   "take": 3,
+   "beat": "why",
+   "text": "You swallow one, the ankle feels better, so the pill must have gone there.",
+   "t0": 5.716,
+   "t1": 9.491,
+   "pause_after": 0.75
+  },
+  {
+   "take": 4,
+   "beat": "flood",
+   "text": "The pill dissolves and passes into your blood.",
+   "t0": 10.3974,
+   "t1": 12.8474,
+   "pause_after": 0.36
+  },
+  {
+   "take": 5,
+   "beat": "flood",
+   "text": "Its level peaks within one to two hours. It sticks to blood proteins, so it mostly stays in the bloodstream.",
+   "t0": 13.343,
+   "t1": 19.818,
+   "pause_after": 0.5
+  },
+  {
+   "take": 6,
+   "beat": "flood",
+   "text": "Blood reaches every organ, and the drug travels with it.",
+   "t0": 20.4707,
+   "t1": 23.6207,
+   "pause_after": 0.75
+  },
+  {
+   "take": 7,
+   "beat": "factory",
+   "text": "Hurt tissue switches on an enzyme called COX-2. It makes prostaglandins.",
+   "t0": 24.533,
+   "t1": 28.983,
+   "pause_after": 0.36
+  },
+  {
+   "take": 8,
+   "beat": "factory",
+   "text": "They make nerves more sensitive to the chemicals injury releases.",
+   "t0": 29.4816,
+   "t1": 33.0816,
+   "pause_after": 0.5
+  },
+  {
+   "take": 9,
+   "beat": "factory",
+   "text": "Ibuprofen blocks both versions of that enzyme, everywhere it works.",
+   "t0": 33.7417,
+   "t1": 37.6667,
+   "pause_after": 0.5
+  },
+  {
+   "take": 10,
+   "beat": "factory",
+   "text": "The sore ankle is where that enzyme is busiest, so the block removes the most there.",
+   "t0": 38.32,
+   "t1": 42.97,
+   "pause_after": 0.75
+  },
+  {
+   "take": 11,
+   "beat": "cost",
+   "text": "The same block runs everywhere. Your stomach makes its own prostaglandins to help guard its lining.",
+   "t0": 43.8734,
+   "t1": 49.6234,
+   "pause_after": 0.4
+  },
+  {
+   "take": 12,
+   "beat": "cost",
+   "text": "Block it, and ulcers and bleeding can happen. The label calls them serious.",
+   "t0": 50.1732,
+   "t1": 54.3482,
+   "pause_after": 0.5
+  },
+  {
+   "take": 13,
+   "beat": "cost",
+   "text": "Your kidneys use prostaglandins to keep blood flowing. In people with kidney problems, ibuprofen can cut that flow.",
+   "t0": 55.0015,
+   "t1": 62.0515,
+   "pause_after": 0.75
+  },
+  {
+   "take": 14,
+   "beat": "breaks",
+   "text": "Not every painkiller plays this game.",
+   "t0": 62.979,
+   "t1": 65.129,
+   "pause_after": 0.4
+  },
+  {
+   "take": 15,
+   "beat": "breaks",
+   "text": "Paracetamol, or acetaminophen, has almost no anti-inflammatory effect.",
+   "t0": 65.6824,
+   "t1": 70.4074,
+   "pause_after": 0.36
+  },
+  {
+   "take": 16,
+   "beat": "breaks",
+   "text": "It works mostly in the brain and spinal cord. Scientists still argue about exactly how.",
+   "t0": 70.9069,
+   "t1": 76.0069,
+   "pause_after": 0.5
+  },
+  {
+   "take": 17,
+   "beat": "breaks",
+   "text": "Opioids like morphine work largely through the nervous system.",
+   "t0": 76.6633,
+   "t1": 79.9633,
+   "pause_after": 0.75
+  },
+  {
+   "take": 18,
+   "beat": "truth",
+   "text": "So it doesn't know where your pain is.",
+   "t0": 80.9095,
+   "t1": 82.5845,
+   "pause_after": 0.4
+  },
+  {
+   "take": 19,
+   "beat": "truth",
+   "text": "It doesn't need to. The sore spot is just the busiest factory, and the pill shuts down every factory it reaches.",
+   "t0": 83.1216,
+   "t1": 89.6966,
+   "pause_after": 0.75
+  }
+ ]
+}
