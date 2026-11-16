@@ -50,8 +50,8 @@
         const a = prog(t, c.thirteen + i * 0.035, c.thirteen + i * 0.035 + 0.12);
         fillRR(ctx, 150 + i * 60, 520, 52, 22, 6, rgba(COL.amber, 0.2 + 0.7 * a));
       }
-      const tri = Math.abs(((t / 2.5) % 1) * 2 - 1);                           // a triangle wave: the light never stops changing
-      glow(ctx, 540, 810, 620, COL.amber, 0.10 + 0.20 * tri);   // the field's light breathes behind the dots
+      const tri = Math.abs(((t / 2.0) % 1) * 2 - 1);                           // a triangle wave: the light never stops changing
+      glow(ctx, 540, 810, 620, COL.amber, 0.10 + 0.30 * tri);   // the field's light breathes behind the dots
       dotField(ctx, 150, 600, 780, 420, 60, 60, prog(t, c.more - 0.2, c.people + 0.1), COL.amber);
       const sweep = 150 + ((t * 140) % 680);                              // a soft amber sweep crosses the field
       fillRR(ctx, sweep, 600, 100, 420, 0, rgba(COL.amber, 0.16));
