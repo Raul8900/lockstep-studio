@@ -4,6 +4,44 @@
  "fps": 30,
  "width": 1080,
  "height": 1920,
+ "style": {
+  "name": "neon-blueprint",
+  "mode": "dark",
+  "backdrop": "circuit",
+  "fonts": {
+   "disp": "Inter Display",
+   "ui": "Inter",
+   "mono": "JetBrains Mono"
+  },
+  "palette": {
+   "bg": [
+    "#05080D",
+    "#090E17",
+    "#04060A"
+   ],
+   "ink": "#F3F8FF",
+   "subject": "#27E1FF",
+   "accent": "#FFA91E",
+   "data": "#A073FF",
+   "alert": "#FF5F70",
+   "good": "#4DFFB5"
+  },
+  "captions": {
+   "size": 74,
+   "weight": 800,
+   "family": "Inter Display",
+   "y": 1350,
+   "lineH": 90,
+   "maxW": 800,
+   "highlight": "color",
+   "case": "none"
+  },
+  "hud": "segments",
+  "transition": {
+   "duration": 0.84,
+   "default": "fade"
+  }
+ },
  "scenes": [
   {
    "id": "hook",

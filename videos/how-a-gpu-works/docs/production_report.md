@@ -28,7 +28,8 @@ All figures in the numbered sections were measured on the delivered file by `eng
 | Word timing | Read from the voice model’s own phoneme durations: every word boundary is exact to one 25 ms model frame. |
 | Animation | 10 chapters drawn on an HTML Canvas; every frame is a pure function of time and of the narration’s word timings. |
 | Rendering | Headless Chromium, 1080 × 1920 native, 4862 frames, each leaving the page as a JPEG (q 0.97). |
-| Music | Original, synthesised: pads, bass, arpeggio, soft kick and hats at 100 BPM, arranged per chapter, ending on a held major chord. |
+| Look | `neon-blueprint` (dark theme); the reasoning behind it and the story shape is in docs/creative_brief.md. |
+| Music | Original, synthesised at 100 BPM (synth kit), arranged per chapter from the moods in video.json, ending on a held major chord. |
 | Sound design | 235 synthesised cues, emitted by the animation code at the same cue times as the visuals. |
 | Mix | Voice lightly compressed and peak-controlled; bed ducked under speech; mastered to −14 LUFS with a look-ahead limiter. |
 | Encode | FFmpeg libx264 (CRF, preset slow), BT.709 limited range, 2 s keyframe interval; AAC-LC 256 kbps. |
@@ -58,7 +59,7 @@ The narration was transcribed back by an independent recogniser (Whisper small.e
 ## 5. Mobile viewing
 
 - Layout zones (1080 × 1920): top 0–270 backdrop only; chapter bar y 286–340; diagrams y 372–1210; captions y 1260–1440; bottom 1470–1920 backdrop only.
-- Captions: 74 px ExtraBold with a 15 px outline, widest phrase 799 px.
+- Captions: Inter Display 800, 74 px, highlight mode `color`, widest phrase 799 px.
 - `dist/mobile_preview_reels_style.jpg` and `dist/mobile_preview_shorts_style.jpg` show frames at phone size under generic interface overlays. The overlays are approximations built from third-party measurements (neither platform publishes fixed pixel values), drawn conservatively.
 
 ## 6. Motion and encode fidelity

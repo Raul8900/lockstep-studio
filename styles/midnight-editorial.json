@@ -1,0 +1,47 @@
+{
+  "name": "midnight-editorial",
+  "about": "A dark stage, one warm light, gold on aubergine, high-contrast serif. Space, psychology, true stories, anything told quietly.",
+  "palette": {
+    "bg": [
+      "#120E1B",
+      "#171226",
+      "#0B0811"
+    ],
+    "ink": "#F5EEE6",
+    "subject": "#E9B96E",
+    "accent": "#FF8FA3",
+    "data": "#8FB8DE",
+    "alert": "#FF5A4E",
+    "good": "#9BD3AE"
+  },
+  "fonts": {
+    "display": "Playfair Display",
+    "body": "DM Sans",
+    "mono": "DM Mono"
+  },
+  "backdrop": {
+    "type": "stage",
+    "color": "subject",
+    "strength": 1
+  },
+  "post": {
+    "bloom": 0.45
+  },
+  "captions": {
+    "highlight": "underline",
+    "weight": 800,
+    "size": 72
+  },
+  "hud": {
+    "type": "line"
+  },
+  "shape": {
+    "radius": 4,
+    "stroke": 2,
+    "strokeAlpha": 0.5
+  },
+  "transition": {
+    "duration": 1.0,
+    "default": "fade"
+  }
+}

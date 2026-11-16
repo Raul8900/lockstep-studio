@@ -17,14 +17,91 @@ const CX = 540;
 
 const COL = {
   bg0: '#04060A', bg1: '#080C13', bg2: '#0B111B',
+  bgTop: '#05080D', bgMid: '#090E17', bgBot: '#04060A',          // backdrop gradient
   panel: '#0D141F', panelHi: '#152032', line: '#24364E', lineHi: '#3A5578',
   white: '#F3F8FF', text: '#DCE6F3', dim: '#8494AC', faint: '#44566E',
   cyan: '#27E1FF', violet: '#A073FF', amber: '#FFA91E', coral: '#FF5F70', mint: '#4DFFB5',
   cyanDeep: '#0B6E86', violetDeep: '#4B2FA0', amberDeep: '#8A5A08',
+  chip: '#0A121B', cell: '#102230', well: '#0C1A26', token: '#141B26',   // dark fills inside components
 };
+/* Role names. Scenes should use these: the style decides what colour each role is.
+     ink      primary text and the thing in focus          (legacy name: white)
+     subject  the video's subject and core mechanism       (cyan)
+     accent   numbers, the contrasting element             (amber)
+     data     the secondary family                         (violet)
+     alert    limits, failure, negation                    (coral)
+     good     success                                      (mint)
+     onAccent text drawn on top of an accent-coloured fill                         */
+const ROLE_ALIAS = { ink: 'white', subject: 'cyan', accent: 'amber', data: 'violet', alert: 'coral', good: 'mint',
+  subjectDeep: 'cyanDeep', dataDeep: 'violetDeep', accentDeep: 'amberDeep' };
+function syncRoles() { for (const r in ROLE_ALIAS) COL[r] = COL[ROLE_ALIAS[r]]; if (!COL.onAccent) COL.onAccent = COL.bg0; }
+syncRoles();
+
 const F = { disp: 'Inter Display', ui: 'Inter', mono: 'JetBrains Mono' };
 /* CSS font shorthand with fallbacks, so a missing family degrades instead of dropping to a serif */
 const fontCSS = (weight, size, family) => `${weight} ${size}px "${family}", ${family === F.mono ? '"DejaVu Sans Mono", monospace' : '"Inter", "DejaVu Sans", sans-serif'}`;
+
+/* ---------- style ----------
+   Everything about the look that is not a scene's own drawing lives here and is
+   overridden per video by its style.json (see applyStyle). The defaults reproduce
+   the engine's original look exactly.                                              */
+const STYLE = {
+  name: 'neon-blueprint', mode: 'dark',
+  backdrop: { type: 'circuit' },
+  post: { bloom: 1, vignette: 1, scrim: 0.6, scrimColor: '#030509', dither: 0.014 },
+  captions: { font: 'disp', weight: 800, size: 74, lineH: 90, maxW: 800, y: 1350, case: 'none', highlight: 'color',
+    future: 0.44, fill: null, stroke: 'rgba(3,5,9,0.94)', strokeW: 15, glow: true, boxText: null, boxRadius: 14 },
+  hud: { type: 'segments', track: 'rgba(210,228,250,0.16)', done: 'rgba(220,235,255,0.6)' },
+  shape: { radius: 22, stroke: 2, panelAlpha: 0.9, strokeAlpha: 0.55, shadow: null },
+  transition: { duration: 0.84, default: 'fade' },
+};
+const _h2 = (n) => Math.round(clamp(n, 0, 255)).toString(16).padStart(2, '0');
+function mixToHex(h1, h2, t) { const A = hexRGB(h1), B = hexRGB(h2); return '#' + _h2(lerp(A[0], B[0], t)) + _h2(lerp(A[1], B[1], t)) + _h2(lerp(A[2], B[2], t)); }
+function luminance(hex) { const c = hexRGB(hex).map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; }
+
+/* Merge a video's style.json into STYLE / COL / F. Anything not given is derived from
+   what is given (a palette needs only bg, ink and the five roles), or keeps its default. */
+function applyStyle(s) {
+  if (!s) return;
+  const P = s.palette || {};
+  const has = Object.keys(P).length > 0;
+  if (s.name) STYLE.name = s.name;
+  if (has) {
+    const bg = Array.isArray(P.bg) ? P.bg : [P.bg || COL.bgTop];
+    COL.bgTop = bg[0]; COL.bgMid = bg[1] || bg[0]; COL.bgBot = bg[2] || bg[bg.length - 1];
+    const ink = P.ink || COL.white, base = COL.bgMid;
+    STYLE.mode = s.mode || (luminance(base) > 0.4 ? 'light' : 'dark');
+    COL.bg0 = P.bg0 || COL.bgBot; COL.bg1 = P.bg1 || COL.bgMid; COL.bg2 = P.bg2 || mixToHex(base, ink, 0.04);
+    COL.white = ink;
+    COL.text = P.text || mixToHex(ink, base, 0.1);
+    COL.dim = P.dim || mixToHex(ink, base, 0.45);
+    COL.faint = P.faint || mixToHex(ink, base, 0.7);
+    COL.panel = P.panel || mixToHex(base, ink, STYLE.mode === 'light' ? 0.0 : 0.05);
+    COL.panelHi = P.panelHi || mixToHex(base, ink, 0.1);
+    COL.line = P.line || mixToHex(base, ink, 0.18);
+    COL.lineHi = P.lineHi || mixToHex(base, ink, 0.32);
+    COL.cyan = P.subject || COL.cyan; COL.amber = P.accent || COL.amber; COL.violet = P.data || COL.violet;
+    COL.coral = P.alert || COL.coral; COL.mint = P.good || COL.mint;
+    COL.cyanDeep = P.subjectDeep || mixToHex(COL.cyan, base, 0.6);
+    COL.violetDeep = P.dataDeep || mixToHex(COL.violet, base, 0.6);
+    COL.amberDeep = P.accentDeep || mixToHex(COL.amber, base, 0.6);
+    COL.chip = P.chip || mixToHex(COL.panel, COL.bgBot, 0.3); COL.cell = P.cell || mixToHex(COL.panel, COL.cyan, 0.12);
+    COL.well = P.well || mixToHex(COL.panel, COL.cyan, 0.08); COL.token = P.token || COL.panelHi;
+    COL.onAccent = P.onAccent || (luminance(COL.cyan) > 0.35 ? (STYLE.mode === 'light' ? ink : COL.bgBot) : (STYLE.mode === 'light' ? COL.bgMid : ink));
+  } else if (s.mode) STYLE.mode = s.mode;
+  syncRoles();
+  const light = STYLE.mode === 'light';
+  if (has) {                                   // defaults that follow the palette unless the style says otherwise
+    STYLE.post.scrimColor = COL.bgBot;
+    STYLE.post.bloom = light ? 0 : 1; STYLE.post.vignette = light ? 0.3 : 1; STYLE.post.scrim = light ? 0.75 : 0.6;
+    STYLE.captions.stroke = rgba(COL.bgBot, 0.94);
+    STYLE.captions.glow = !light;
+    STYLE.hud.track = rgba(COL.white, 0.16); STYLE.hud.done = rgba(COL.white, 0.6);
+  }
+  for (const k of ['backdrop', 'post', 'captions', 'hud', 'shape', 'transition']) if (s[k]) Object.assign(STYLE[k], s[k]);
+  const f = s.fonts || {};
+  if (f.display) F.disp = f.display; if (f.body) F.ui = f.body; if (f.mono) F.mono = f.mono;
+}
 
 /* ---------- maths ---------- */
 const clamp = (x, a = 0, b = 1) => (x < a ? a : x > b ? b : x);
@@ -116,7 +193,12 @@ function strokeRR(ctx, x, y, w, h, r, stroke, lw = 2) { rr(ctx, x, y, w, h, r); 
 
 /* standard dark glass panel */
 function panel(ctx, x, y, w, h, o = {}) {
-  const { r = 22, fill = rgba(COL.panel, 0.9), stroke = rgba(COL.lineHi, 0.55), lw = 2, accent = null, accentA = 0.9 } = o;
+  const S = STYLE.shape;
+  const { r = S.radius, fill = rgba(COL.panel, S.panelAlpha), stroke = S.strokeAlpha > 0 ? rgba(COL.lineHi, S.strokeAlpha) : null, lw = S.stroke, accent = null, accentA = 0.9 } = o;
+  if (S.shadow) {                              // solid offset shadow (poster / cut-paper looks)
+    rr(ctx, x + (S.shadow.dx || 0), y + (S.shadow.dy || 0), w, h, r);
+    ctx.fillStyle = S.shadow.color ? (COL[S.shadow.color] || S.shadow.color) : rgba(COL.white, 0.9); ctx.fill();
+  }
   rr(ctx, x, y, w, h, r);
   ctx.fillStyle = fill; ctx.fill();
   if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lw; ctx.stroke(); }
@@ -157,7 +239,7 @@ function tag(ctx, str, x, y, o = {}) {
 }
 /* pill label with background */
 function pill(ctx, str, x, y, o = {}) {
-  const { size = 28, weight = 700, family = F.mono, color = COL.bg0, bg = COL.cyan, padX = 18, h = null, align = 'center',
+  const { size = 28, weight = 700, family = F.mono, color = COL.onAccent, bg = COL.cyan, padX = 18, h = null, align = 'center',
     alpha = 1, ls = 1, r = null, stroke = null } = o;
   if (alpha <= 0.002) return 0;
   const wdt = measure(ctx, str, size, weight, family, ls) + padX * 2;
@@ -260,7 +342,7 @@ function glowSprite(hex) {
 function glow(ctx, x, y, r, hex, a = 1) {
   if (a <= 0.003 || r <= 0) return;
   const ga = ctx.globalAlpha, op = ctx.globalCompositeOperation;
-  ctx.globalAlpha = ga * clamp(a); ctx.globalCompositeOperation = 'lighter';
+  ctx.globalAlpha = ga * clamp(a); ctx.globalCompositeOperation = STYLE.mode === 'light' ? 'multiply' : 'lighter';
   ctx.drawImage(glowSprite(hex), x - r, y - r, 2 * r, 2 * r);
   ctx.globalCompositeOperation = op; ctx.globalAlpha = ga;
 }

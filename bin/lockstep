@@ -11,21 +11,34 @@ lockstep <command> [<video>] [options]
 
   setup [--with-asr]            install dependencies and models (scripts/setup.sh)
   doctor                        report what is installed, change nothing
-  new <slug> ["Title"]          scaffold videos/<slug>/ from the template
-  list                          list video projects
+  new <slug> ["Title"]          scaffold videos/<slug>/ (blank creative brief, no style yet)
+  list                          list video projects and the look each one uses
 
+ creative direction — decided before any narration or scene; voice and build refuse until it is done
+  brief <video>                 check docs/creative_brief.md and style.json are complete
+  styles                        preview every look in the library (styles/) -> styles/previews/
+  tile <video> [style.json...]  preview this video's look, or candidate style files side by side -> out/style_tile(s).jpg
+  style-check <video>           legibility and validity of style.json    (style-check --style file.json for any file)
+  palettes <video> [words]      browse 1000 palettes (dark light pastel vivid muted warm cool #hex) -> out/palettes.jpg
+  fonts                         the bundled font families and their character
+  icons <word>                  search the 2,300 bundled icons
+  save-style <video> [name]     add this video's look to the library, so later videos can build on it
+
+ narration
   voice <video> [voice] [speed] record the narration from script.py -> audio/narration_24k.wav, data/words.json
                                 ("voice <video> list" prints the available voices)
   check-voice <video>           transcribe the narration back and compare with the script (needs --with-asr)
   captions <video> [--draft]    check caption_phrases.json against the narration, or draft it
   words <video> [beat]          print every spoken word with its start time (for choosing cues)
 
+ pictures
   meta <video>                  export data/timeline.json (scenes, captions, sound cues); also proves the scenes load
   still <video> [--safe] T...   render single frames, e.g. 3.2s 12s 450   -> out/stills/
   sheet <video> [--cols N] T... render frames and tile them into out/sheet.jpg for review
   scan <video>                  draw every 2nd frame; report script errors and near-black frames
   filmstrip <video> A:B[:n]...  rows of consecutive frames from out/frames -> out/filmstrip.jpg (motion check)
 
+ finishing
   audio <video>                 synthesise score + sound effects and mix with the voice
   render <video> [--from s] [--to s] [--workers N]   render frames -> out/frames/
   assemble <video> [--crf 16] [--preset slow] [--remux]   master audio + encode -> dist/<output>.mp4
@@ -34,7 +47,7 @@ lockstep <command> [<video>] [options]
   docs <video>                  docs/narration_script.md and docs/visual_storyboard.md
   report <video>                docs/production_report.md
 
-  build <video>                 meta -> scan -> audio -> render -> assemble -> srt -> validate -> docs -> report
+  build <video>                 brief + style check -> meta -> scan -> audio -> render -> assemble -> srt -> validate -> docs -> report
   selftest                      scaffold a throw-away video and run the whole pipeline on it
 EOF
 }
@@ -47,14 +60,93 @@ resolve() {
   else echo "no video project '$a' (expected videos/$a/video.json)" >&2; exit 1; fi
 }
 
+json_field() { python3 -c 'import json,sys; print(json.load(open(sys.argv[1])).get(sys.argv[2], ""))' "$1" "$2"; }
+
+style_gate() {   # the look must be legible before anything is rendered with it
+  local out
+  out=$(python3 "$E/style_check.py" "$1") || { echo "$out"; exit 1; }
+  echo "$out" | grep -v -e '  PASS' -e '^$' || true
+}
+
 cmd="${1:-help}"; [ $# -gt 0 ] && shift
 case "$cmd" in
   help|-h|--help) usage ;;
   setup)   exec bash "$REPO/scripts/setup.sh" "$@" ;;
   doctor)  exec bash "$REPO/scripts/setup.sh" --check ;;
   new)     exec python3 "$E/new_video.py" "$@" ;;
-  list)    for d in "$REPO"/videos/*/; do [ -f "$d/video.json" ] && basename "$d"; done ;;
-  voice)        V=$(resolve "${1:-}"); shift; python3 "$E/tts/synth.py" "$V" "$@" ;;
+  list)
+    for d in "$REPO"/videos/*/; do
+      [ -f "$d/video.json" ] || continue
+      s="(no style.json yet)"; [ -f "$d/style.json" ] && s=$(json_field "$d/style.json" name)
+      printf '  %-28s %s\n' "$(basename "$d")" "$s"
+    done ;;
+
+  brief)        V=$(resolve "${1:-}"); python3 "$E/check_brief.py" "$V" ;;
+  style-check)
+    if [ "${1:-}" = "--style" ]; then python3 "$E/style_check.py" --style "${2:?style file}"
+    else V=$(resolve "${1:-}"); python3 "$E/style_check.py" "$V"; fi ;;
+  styles)
+    mkdir -p "$REPO/styles/previews"
+    echo "library (styles/):"
+    for f in "$REPO"/styles/*.json; do
+      n=$(basename "$f" .json)
+      node "$E/render.js" "$E/tile" tile --style "$f" --out "$REPO/styles/previews/$n.jpg" >/dev/null
+      printf '  %-20s %s\n' "$n" "$(json_field "$f" about)"
+    done
+    python3 "$E/sheet.py" "$REPO/styles/previews/[!_]*.jpg" "$REPO/styles/previews/_all.jpg" 8 300 >/dev/null
+    echo "previews: styles/previews/<name>.jpg; all side by side: styles/previews/_all.jpg"
+    echo "looks used by videos in this repo:"
+    for d in "$REPO"/videos/*/; do
+      [ -f "$d/style.json" ] && printf '  %-28s %s\n' "$(basename "$d")" "$(json_field "$d/style.json" name)"
+    done; true ;;
+  tile)
+    V=$(resolve "${1:-}"); shift
+    if [ $# -eq 0 ]; then
+      node "$E/render.js" "$V" tile --out "$V/out/style_tile.jpg"
+    else
+      rm -rf "$V/out/tiles"; mkdir -p "$V/out/tiles"; i=0
+      for f in "$@"; do
+        [ -f "$f" ] || f="$V/$f"
+        [ -f "$f" ] || { echo "no such style file: $f" >&2; exit 1; }
+        i=$((i + 1))
+        node "$E/render.js" "$V" tile --style "$f" --out "$V/out/tiles/$(printf %02d $i)_$(basename "$f" .json).jpg" >/dev/null
+      done
+      python3 "$E/sheet.py" "$V/out/tiles/*.jpg" "$V/out/style_tiles.jpg" "$i" 432 >/dev/null
+      echo "$i candidate looks side by side -> $V/out/style_tiles.jpg"
+    fi ;;
+  palettes)     V=$(resolve "${1:-}"); shift; python3 "$E/palettes.py" "$V" "$@" ;;
+  fonts)
+    sed -n '/^| Family/,/^$/p' "$REPO/assets/fonts/README.md"
+    echo "Also installed system-wide by setup: Inter, Inter Display, JetBrains Mono." ;;
+  icons)
+    q="${1:?give a word, e.g.: lockstep icons heart}"
+    n=$(grep -ci -- "$q" "$REPO/assets/icons/names.txt" || true)
+    echo "$n icons match '$q':"
+    grep -i -- "$q" "$REPO/assets/icons/names.txt" | head -120 | paste -sd ' ' | fold -s -w 110 | sed 's/^/  /' ;;
+  save-style)
+    V=$(resolve "${1:-}"); N="${2:-}"
+    [ -f "$V/style.json" ] || { echo "no style.json in $V" >&2; exit 1; }
+    [ -n "$N" ] || N=$(json_field "$V/style.json" name)
+    [[ "$N" =~ ^[a-z0-9][a-z0-9-]+$ ]] || { echo "style name must be lower-case letters, digits and hyphens: '$N'" >&2; exit 1; }
+    [ ! -f "$REPO/styles/$N.json" ] || { echo "styles/$N.json already exists: give another name (lockstep save-style <video> <name>)" >&2; exit 1; }
+    [ -n "$(json_field "$V/style.json" about)" ] || { echo "add an \"about\" line to style.json first: what this look is and which topics it suits" >&2; exit 1; }
+    python3 "$E/style_check.py" --style "$V/style.json" >/dev/null || { python3 "$E/style_check.py" --style "$V/style.json"; exit 1; }
+    if grep -q "window.drawBackdrop" "$V/components.js" 2>/dev/null; then
+      echo "note: this video draws its own backdrop in components.js; the library copy uses backdrop.type instead" >&2
+    fi
+    python3 - "$V/style.json" "$REPO/styles/$N.json" "$N" "$(basename "$V")" <<'PY'
+import json, sys
+d = json.load(open(sys.argv[1]))
+d["name"], d["first_used_in"] = sys.argv[3], sys.argv[4]
+open(sys.argv[2], "w").write(json.dumps(d, indent=2, ensure_ascii=False) + "\n")
+PY
+    node "$E/render.js" "$E/tile" tile --style "$REPO/styles/$N.json" --out "$REPO/styles/previews/$N.jpg" >/dev/null
+    echo "saved styles/$N.json (preview: styles/previews/$N.jpg)" ;;
+
+  voice)
+    V=$(resolve "${1:-}"); shift
+    if [ "${1:-}" != "list" ]; then python3 "$E/check_brief.py" "$V" >/dev/null || { python3 "$E/check_brief.py" "$V"; exit 1; }; fi
+    python3 "$E/tts/synth.py" "$V" "$@" ;;
   check-voice)  V=$(resolve "${1:-}"); python3 "$E/tts/asr_check.py" "$V" 2> >(grep -v -e 'Creating a resampler' -e '_sample_rate:' -e '^[[:space:]]*$' >&2) ;;
   captions)     V=$(resolve "${1:-}"); shift; python3 "$E/make_captions.py" "$V" "$@" ;;
   words)        V=$(resolve "${1:-}"); shift; python3 "$E/words.py" "$V" "$@" ;;
@@ -77,6 +169,7 @@ case "$cmd" in
   report)       V=$(resolve "${1:-}"); python3 "$E/make_report.py" "$V" ;;
   build)
     V=$(resolve "${1:-}"); shift
+    echo "== direction"; python3 "$E/check_brief.py" "$V"; style_gate "$V"
     [ -f "$V/data/words.json" ] || { echo "no narration yet: run 'lockstep voice $(basename "$V")' first" >&2; exit 1; }
     if [ "$V/script.py" -nt "$V/data/words.json" ]; then
       echo "script.py is newer than the recorded narration: run 'lockstep voice $(basename "$V")' first (or touch data/words.json if only notes changed)" >&2; exit 1

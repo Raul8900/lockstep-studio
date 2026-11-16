@@ -51,16 +51,16 @@
         const y = 870 + Math.sin(t * 1.6 + i * 1.3) * 9 * (hero ? 1 - k : 1);
         if (hero) {
           const r = lerp(44, 80, on) + 5 * beat * k;
-          glow(ctx, x, y, 250 + 70 * beat, COL.amber, (0.4 + 0.25 * beat) * k);
-          dot(ctx, x, y, r, mixHex(COL.lineHi, COL.amber, k));
-          ctx.save(); ctx.strokeStyle = rgba(COL.amber, 0.75 * k); ctx.lineWidth = 5; ctx.lineCap = 'round';
+          glow(ctx, x, y, 250 + 70 * beat, COL.accent, (0.4 + 0.25 * beat) * k);
+          dot(ctx, x, y, r, mixHex(COL.lineHi, COL.accent, k));
+          ctx.save(); ctx.strokeStyle = rgba(COL.accent, 0.75 * k); ctx.lineWidth = 5; ctx.lineCap = 'round';
           for (let a = 0; a < 3; a++) { ctx.beginPath(); ctx.arc(x, y, r + 26, t * 1.5 + a * TAU / 3, t * 1.5 + a * TAU / 3 + 1.0); ctx.stroke(); }
           ctx.restore();
         } else {
           dot(ctx, x, y, lerp(44, 32, k), COL.lineHi, 1 - 0.55 * k);
         }
       }
-      text(ctx, '1', CX, 870 + 34, { size: 96, weight: 900, family: F.disp, color: COL.bg0, align: 'center', alpha: prog(t, c.one + 0.02, c.one + 0.18) });
+      text(ctx, '1', CX, 870 + 34, { size: 96, weight: 900, family: F.disp, color: COL.onAccent, align: 'center', alpha: prog(t, c.one + 0.02, c.one + 0.18) });
     }));
 
     /* ---- sequence 2: the picture lands on its word ---- */
@@ -70,25 +70,25 @@
       line(ctx, X0, TY, X1, TY, rgba(COL.lineHi, 0.9), 3);
       for (const w of ticks) {
         const hit = pulse(t, w.t0, 0.03, 0.35);
-        line(ctx, X(w.t0), TY - 16 - 14 * hit, X(w.t0), TY + 16, t >= w.t0 ? COL.violet : COL.faint, 4);
+        line(ctx, X(w.t0), TY - 16 - 14 * hit, X(w.t0), TY + 16, t >= w.t0 ? COL.data : COL.faint, 4);
       }
       tag(ctx, 'NARRATION', X0, TY + 84);
 
       const xp = X(clamp(t, T0, T1));                          // playhead moves in real time
-      glow(ctx, xp, TY, 80, COL.cyan, 0.7);
-      line(ctx, xp, TY - 64, xp, TY + 44, COL.cyan, 4);
+      glow(ctx, xp, TY, 80, COL.subject, 0.7);
+      line(ctx, xp, TY - 64, xp, TY + 44, COL.subject, 4);
 
       const land = tw(t, c.word - 0.02, c.word + 0.28, E.outBack);
       if (land > 0) {
         const s = lerp(0.6, 1, land) * (1 + 0.012 * Math.sin(t * 2.6));
-        glow(ctx, CX, BY, 300, COL.mint, 0.3 * clamp(land));
+        glow(ctx, CX, BY, 300, COL.good, 0.3 * clamp(land));
         ctx.save(); ctx.translate(CX, BY); ctx.scale(s, s);
         withAlpha(ctx, clamp(land * 2), () => {
-          panel(ctx, -105, -85, 210, 170, { accent: COL.mint });
-          check(ctx, 0, 4, 52, COL.mint, prog(t, c.word + 0.08, c.word + 0.34), 10);
+          panel(ctx, -105, -85, 210, 170, { accent: COL.good });
+          check(ctx, 0, 4, 52, COL.good, prog(t, c.word + 0.08, c.word + 0.34), 10);
         });
         ctx.restore();
-        line(ctx, CX, BY + 92, CX, TY - 24, COL.mint, 3, clamp(land));
+        line(ctx, CX, BY + 92, CX, TY - 24, COL.good, 3, clamp(land));
       }
       ghostBox(ctx, CX - 250, BY, 190, 150, tw(t, c.before - 0.05, c.before + 0.2, E.out3), 'EARLY');   // from this video's components.js
       ghostBox(ctx, CX + 250, BY, 190, 150, tw(t, c.after - 0.05, c.after + 0.2, E.out3), 'LATE');

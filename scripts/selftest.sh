@@ -11,7 +11,7 @@ TMP="$(mktemp -d "${TMPDIR:-/tmp}/lockstep-selftest.XXXXXX")"
 cleanup() { if [ "$KEEP" = 0 ]; then rm -rf "$TMP"; fi; }
 trap cleanup EXIT
 
-python3 "$REPO/engine/new_video.py" selftest "Lockstep Self-Test" --into "$TMP" >/dev/null
+python3 "$REPO/engine/new_video.py" selftest "Lockstep Self-Test" --into "$TMP" --example >/dev/null
 V="$TMP/selftest"
 echo "== voice";  "$REPO/bin/lockstep" voice "$V" | head -1
 "$REPO/bin/lockstep" build "$V" --preset veryfast --crf 20

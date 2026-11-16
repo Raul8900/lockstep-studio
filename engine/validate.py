@@ -112,9 +112,11 @@ else:
 tl = json.load(open(ROOT / "data/timeline.json"))
 caps = tl["caps"]
 if caps and "width" in caps[0]:
+    cst = tl.get("style", {}).get("captions", {})
+    cy, lh = cst.get("y", 1350), cst.get("lineH", 90)        # two lines centred on cy reach one line height either side
     wmax = max(c["width"] for c in caps)
     R["captions"] = {"phrases": len(caps), "two_line": sum(1 for c in caps if c["lines"] > 1), "max_width_px": round(wmax),
-                     "x_extent": [round(540 - wmax / 2), round(540 + wmax / 2)], "y_extent": [1350 - 45 - 45, 1350 + 45 + 45],
+                     "x_extent": [round(540 - wmax / 2), round(540 + wmax / 2)], "y_extent": [round(cy - lh), round(cy + lh)],
                      "min_on_screen_s": round(min(c["show1"] - c["show0"] for c in caps), 2),
                      "max_words": max(len(c["text"].split()) for c in caps)}
 

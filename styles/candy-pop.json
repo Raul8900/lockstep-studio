@@ -1,0 +1,58 @@
+{
+  "name": "candy-pop",
+  "about": "Pastel light background, saturated sweets colours, rounded type and shapes, soft drifting blobs. Food, pets, body and brain, feel-good curiosities.",
+  "palette": {
+    "bg": [
+      "#FFE9F1",
+      "#FBEFFF",
+      "#E7F3FF"
+    ],
+    "ink": "#2A2040",
+    "subject": "#F0437B",
+    "accent": "#E8590C",
+    "data": "#6C4FF0",
+    "alert": "#E03131",
+    "good": "#099268",
+    "panel": "#FFFFFF"
+  },
+  "fonts": {
+    "display": "Fredoka",
+    "body": "Nunito",
+    "mono": "DM Mono"
+  },
+  "backdrop": {
+    "type": "blobs",
+    "colors": [
+      "subject",
+      "accent",
+      "data",
+      "good"
+    ],
+    "strength": 1.1
+  },
+  "captions": {
+    "highlight": "box",
+    "weight": 700,
+    "size": 78,
+    "strokeW": 12,
+    "boxRadius": 26
+  },
+  "hud": {
+    "type": "segments"
+  },
+  "shape": {
+    "radius": 36,
+    "stroke": 0,
+    "strokeAlpha": 0,
+    "panelAlpha": 0.92,
+    "shadow": {
+      "dx": 0,
+      "dy": 12,
+      "color": "rgba(42,32,64,0.14)"
+    }
+  },
+  "transition": {
+    "duration": 0.7,
+    "default": "slideLeft"
+  }
+}

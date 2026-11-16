@@ -32,8 +32,10 @@ try { ({ chromium } = require('playwright')); } catch (e1) {
 
 const ENGINE = __dirname;
 const ANIM = path.join(ENGINE, 'anim');
+const ASSETS = path.join(ENGINE, '..', 'assets');
+let STYLE_OVERRIDE = null;      // tile --style file.json: preview a style other than the video's own
 const W = 1080, H = 1920, FPS = 30, CHUNK = 150;
-const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.css': 'text/css', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml' };
+const MIME = { '.woff2': 'font/woff2', '.ttf': 'font/ttf', '.otf': 'font/otf', '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.css': 'text/css', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml' };
 
 const [projArg, mode, ...rest] = process.argv.slice(2);
 if (!projArg || !mode) {
@@ -43,11 +45,12 @@ if (!projArg || !mode) {
 const PROJECT = path.resolve(projArg);
 if (!fs.existsSync(path.join(PROJECT, 'video.json'))) { console.error(`no video.json in ${PROJECT}`); process.exit(1); }
 const DATA = path.join(PROJECT, 'data');
-if (!fs.existsSync(path.join(DATA, 'words.json'))) {
+const NEEDS_NARRATION = mode !== 'tile';
+if (NEEDS_NARRATION && !fs.existsSync(path.join(DATA, 'words.json'))) {
   console.error(`no narration recorded yet for ${path.basename(PROJECT)}: run  bin/lockstep voice ${path.basename(PROJECT)}  first`);
   process.exit(1);
 }
-if (!fs.existsSync(path.join(PROJECT, 'caption_phrases.json'))) {
+if (NEEDS_NARRATION && !fs.existsSync(path.join(PROJECT, 'caption_phrases.json'))) {
   console.error(`no caption_phrases.json: run  bin/lockstep captions ${path.basename(PROJECT)} --draft  and edit the result`);
   process.exit(1);
 }
@@ -85,9 +88,11 @@ function startServer() {
         res.end(JSON.stringify(manifest()));
         return;
       }
-      const base = rel.startsWith('/project/') ? PROJECT : ANIM;
-      const file = path.normalize(path.join(base, rel.startsWith('/project/') ? rel.slice(9) : rel));
-      if (!file.startsWith(base)) { res.writeHead(403); res.end('forbidden'); return; }
+      const isProj = rel.startsWith('/project/'), isAsset = rel.startsWith('/assets/');
+      const base = isProj ? PROJECT : isAsset ? ASSETS : ANIM;
+      let file = path.normalize(path.join(base, isProj ? rel.slice(9) : isAsset ? rel.slice(8) : rel));
+      if (rel === '/project/style.json' && STYLE_OVERRIDE) file = STYLE_OVERRIDE;
+      if (!file.startsWith(base) && file !== STYLE_OVERRIDE) { res.writeHead(403); res.end('forbidden'); return; }
       fs.readFile(file, (err, data) => {
         if (err) { res.writeHead(404); res.end('not found'); return; }
         res.writeHead(200, { 'Content-Type': MIME[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
@@ -98,11 +103,12 @@ function startServer() {
   });
 }
 
-async function openPage(browser, port, debugSafe) {
+async function openPage(browser, port, debugSafe, tile) {
   const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
   page.on('pageerror', (e) => console.error('[pageerror]', e.message));
   page.on('console', (m) => { if (m.type() === 'error' && !/404/.test(m.text())) console.error('[console]', m.text()); });
   if (debugSafe) await page.addInitScript(() => { window.DEBUG_SAFE = true; });
+  if (tile) await page.addInitScript(() => { window.TILE_MODE = true; });
   await page.goto(`http://127.0.0.1:${port}/index.html`);
   await page.waitForFunction(() => window.READY || window.BOOT_ERROR, null, { timeout: 60000 });
   const err = await page.evaluate(() => window.BOOT_ERROR);
@@ -110,10 +116,10 @@ async function openPage(browser, port, debugSafe) {
   return page;
 }
 
-async function withPage(debugSafe, fn) {
+async function withPage(debugSafe, fn, tile) {
   const server = await startServer(); const port = server.address().port;
   const browser = await chromium.launch();
-  try { return await fn(await openPage(browser, port, debugSafe), browser, port); }
+  try { return await fn(await openPage(browser, port, debugSafe, tile), browser, port); }
   finally { await browser.close(); server.close(); }
 }
 
@@ -146,6 +152,9 @@ async function meta() {
   await withPage(false, async (page) => {
     const info = await page.evaluate(() => ({
       total: window.TOTAL_FRAMES, dur: DATA.dur, fps: FPS, width: W, height: H,
+      style: { name: STYLE.name, mode: STYLE.mode, backdrop: typeof window.drawBackdrop === 'function' ? 'custom' : STYLE.backdrop.type, fonts: F,
+        palette: { bg: [COL.bgTop, COL.bgMid, COL.bgBot], ink: COL.white, subject: COL.subject, accent: COL.accent, data: COL.data, alert: COL.alert, good: COL.good },
+        captions: { size: CAP.size, weight: CAP.weight, family: CAP.family, y: CAP.cy, lineH: CAP.lineH, maxW: CAP.maxW, highlight: STYLE.captions.highlight, case: STYLE.captions.case }, hud: STYLE.hud.type, transition: STYLE.transition },
       scenes: SCENES.map((s) => ({ id: s.id, name: chapterName(s.id), t0: s.t0, t1: s.t1, trans: s.trans })),
       sfx: SFX,
       caps: CAPS.map((c) => ({ text: c.text, show0: c.show0, show1: c.show1, t0: c.t0, t1: c.t1, lines: c.lines.length, width: Math.max(...c.lines.map((l) => l.w)) * c.scale })),
@@ -153,6 +162,22 @@ async function meta() {
     fs.writeFileSync(path.join(DATA, 'timeline.json'), JSON.stringify(info, null, 1));
     console.log(`timeline.json: ${info.total} frames, ${info.scenes.length} scenes, ${info.sfx.length} sfx cues, ${info.caps.length} caption phrases`);
   });
+}
+
+/* tile [--style file.json] [--out file.jpg]: one frame showing the style (works before any narration exists) */
+async function tile(args) {
+  let out = path.join(OUT, 'style_tile.jpg');
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--style') STYLE_OVERRIDE = path.resolve(args[++i]);
+    else if (args[i] === '--out') out = path.resolve(args[++i]);
+  }
+  if (STYLE_OVERRIDE && !fs.existsSync(STYLE_OVERRIDE)) { console.error('no such style file: ' + STYLE_OVERRIDE); process.exit(1); }
+  fs.mkdirSync(path.dirname(out), { recursive: true });
+  await withPage(args.includes('--safe'), async (page) => {
+    const b64 = await page.evaluate(() => { renderFrame(66); return document.getElementById('c').toDataURL('image/jpeg', 0.92).split(',')[1]; });
+    fs.writeFileSync(out, Buffer.from(b64, 'base64'));
+    console.log('style tile -> ' + out);
+  }, true);
 }
 
 async function scan() {
@@ -230,6 +255,7 @@ async function video(args) {
 (async () => {
   if (mode === 'still') await still(rest);
   else if (mode === 'meta') await meta();
+  else if (mode === 'tile') await tile(rest);
   else if (mode === 'scan') await scan();
   else if (mode === 'bench') await bench(rest);
   else if (mode === 'video') await video(rest);

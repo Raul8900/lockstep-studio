@@ -40,7 +40,7 @@
     /* headline */
     tag(ctx, 'WHAT MAKES AN EXPLAINER', CX, 432, { align: 'center' });
     text(ctx, 'JUST ANOTHER POST', CX, 510, { size: 62, weight: 900, family: F.disp, color: COL.dim, align: 'center', alpha: 1 - locked });
-    riseText(ctx, 'SCROLL-PROOF?', CX, 512, locked, { size: 88, weight: 900, family: F.disp, color: COL.white, align: 'center', ls: -1 });
+    riseText(ctx, 'SCROLL-PROOF?', CX, 512, locked, { size: 88, weight: 900, family: F.disp, color: COL.ink, align: 'center', ls: -1 });
 
     /* the feed, clipped to its window */
     ctx.save();
@@ -54,10 +54,10 @@
       withAlpha(ctx, a, () => {
         const sc = hero ? breathe * (1 + 0.05 * pop) : 1;
         ctx.save(); ctx.translate(CX, yc); ctx.scale(sc, sc); ctx.translate(-CX, -yc);
-        if (hero) glow(ctx, CX, yc, 430, COL.cyan, 0.24 * locked);
-        panel(ctx, CARD.x, y, CARD.w, CARD.h, { accent: hero && locked > 0 ? COL.cyan : null, accentA: 0.9 * locked });
-        dot(ctx, CARD.x + 74, yc, 34, hero ? mixHex(COL.lineHi, COL.cyan, locked) : COL.line);
-        fillRR(ctx, CARD.x + 134, yc - 36, 380, 24, 12, rgba(hero ? COL.white : COL.dim, hero ? 0.25 + 0.6 * locked : 0.25));
+        if (hero) glow(ctx, CX, yc, 430, COL.subject, 0.24 * locked);
+        panel(ctx, CARD.x, y, CARD.w, CARD.h, { accent: hero && locked > 0 ? COL.subject : null, accentA: 0.9 * locked });
+        dot(ctx, CARD.x + 74, yc, 34, hero ? mixHex(COL.lineHi, COL.subject, locked) : COL.line);
+        fillRR(ctx, CARD.x + 134, yc - 36, 380, 24, 12, rgba(hero ? COL.ink : COL.dim, hero ? 0.25 + 0.6 * locked : 0.25));
         fillRR(ctx, CARD.x + 134, yc + 12, 230 + 110 * hash(i), 24, 12, rgba(COL.dim, 0.2));
         ctx.restore();
       });
@@ -66,9 +66,9 @@
 
     /* shock ring when the feed stops */
     const rp = prog(t, stop, stop + 0.8);
-    if (rp > 0 && rp < 1) ring(ctx, CX, MID, 130 + 420 * E.out3(rp), COL.cyan, 5 * (1 - rp) + 1, Math.pow(1 - rp, 2));
+    if (rp > 0 && rp < 1) ring(ctx, CX, MID, 130 + 420 * E.out3(rp), COL.subject, 5 * (1 - rp) + 1, Math.pow(1 - rp, 2));
 
     /* the answer is promised, not given */
-    riseText(ctx, 'ONE RULE  ↓', CX, 1168, prog(t, c.end - 0.1, c.end + 0.25), { size: 26, weight: 800, family: F.mono, color: COL.cyan, align: 'center', ls: 4, rise: 12 });
+    riseText(ctx, 'ONE RULE  ↓', CX, 1168, prog(t, c.end - 0.1, c.end + 0.25), { size: 26, weight: 800, family: F.mono, color: COL.subject, align: 'center', ls: 4, rise: 12 });
   }, { type: 'fade' });
 });

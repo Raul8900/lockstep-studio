@@ -1,41 +1,43 @@
 # Writing the narration (`script.py`)
 
-The narration fixes the length, the pacing and every cue in the video. Get it right before
-drawing anything: a script change after the scenes exist means re-recording, and any cue word you
-removed breaks its scene.
+The narration fixes the length, the pacing and every cue in the video. It is written after the
+creative brief (creative-direction.md), in the story shape, pacing and tone the brief chose — not in
+a default arc. Get it right before drawing anything: a script change after the scenes exist means
+re-recording, and any cue word you removed breaks its scene.
 
 ## Length
 
-The reference video: 390 words → 162 s, including pauses, a 0.3 s lead-in and a 2.6 s end card.
-Plan on **2.45 words per second of finished video**.
+The brief sets the length; choose the shortest that delivers the angle (story-formats.md). Words
+for a target length, from the measured pacing presets (0.3 s lead-in and 2.6 s end card included):
 
-| Target length | Words |
-|---|---|
-| 60 s | ≈ 140 |
-| 90 s | ≈ 215 |
-| 150–170 s | 365–410 |
+| Finished length | calm (≈ 150 wpm) | brisk (≈ 163 wpm) | rapid (≈ 172 wpm) |
+|---|---|---|---|
+| 45 s | ≈ 105 | ≈ 115 | ≈ 120 |
+| 60 s | ≈ 145 | ≈ 155 | ≈ 165 |
+| 90 s | ≈ 215 | ≈ 235 | ≈ 250 |
+| 150 s | ≈ 370 | ≈ 400 | ≈ 420 |
 
 `bin/lockstep voice <slug>` prints the real length of every beat. If the total is over, cut
-sentences — do not raise `SPEED` above about 1.05; faster speech costs clarity on a phone speaker.
+sentences. `SPEED` is a weak lever (1.1 is only 5 % shorter than 1.0) and above 1.15 the voice
+starts to blur consonants; fewer words and shorter pauses are what make a video faster.
 
 ## Shape
 
-6–10 beats. Each beat is one chapter: one scene file, one segment of the progress bar, one music
-mood. An arc that works for almost any "how does X work" topic:
+The beats come from the brief's story shape and beat map. Whatever the shape:
 
-1. **Hook** (≤ 8 s). A concrete, checkable fact that contradicts what the viewer assumes, and a
-   promise to resolve it. The first sentence must make sense with the sound off (it is also the
-   first caption). No greeting, no "in this video".
-2. **The familiar thing** it differs from. Explain by contrast.
-3. **A misconception, corrected** lightly.
-4. **Zoom in**: what it is made of.
-5. **The core mechanism.** The slowest, clearest beat; the longest one. If an analogy helps, use
-   one — exactly one in the whole video — and make sure it is true to the mechanism.
-6. **Pay off the hook** with the mechanism the viewer now understands.
-7. **A second-order consequence** (the bottleneck, the cost, the thing people get wrong next).
-8. **Why it matters**: two real uses, shown, not listed.
-9. **The limits.** When it fails or does not apply. This is what makes the rest credible.
-10. **Payoff.** One sentence that restates the idea, and a callback to the hook's image or words.
+- 3–10 beats. Each beat is one chapter: one scene file, one segment of the progress bar (if the
+  style has one), one music mood.
+- The first sentence must make sense with the sound off — it is also the first caption. No
+  greeting, no "in this video", no channel intro.
+- One idea per beat; the beat's last sentence turns toward the next.
+- If an analogy carries the explanation, use one and keep it (unless the format *is* the analogy
+  world); make sure it is true to the mechanism, and say where it breaks.
+- If the topic has real limits, give them a beat: it is what makes the rest credible.
+- The last line pays off the hook — answers its question, removes its quotation marks, or loops
+  back to its first image.
+
+Before recording, check the script against the brief's beat map: if it has drifted back to
+"hook → contrast → mechanism → limits → payoff" when the brief chose a different shape, rewrite it.
 
 ## Style
 

@@ -1,7 +1,20 @@
 # Review, QA and known pitfalls
 
-A build that passes its technical checks is not yet a good video. Review in three passes: while
-drawing each scene, after the first full build, and before delivery.
+A build that passes its technical checks is not yet a good video. Review in four passes: the
+look before any scene exists, while drawing each scene, after the first full build, and before
+delivery.
+
+## Pass 0 — the look, before drawing
+
+```bash
+bin/lockstep brief <slug>          # brief complete, style.json present
+bin/lockstep style-check <slug>    # legibility: contrast, distinct roles, fonts, caption size and position
+bin/lockstep tile <slug>           # -> out/style_tile.jpg — open it at full size
+```
+
+Check the tile against the quality bar in art-direction.md, and against the brief: does it look
+like the world the brief describes? Would someone who saw the previous video in this repo
+recognise this as a different video?
 
 ## Pass 1 — while drawing (per scene)
 
@@ -20,6 +33,10 @@ Open the image and check, for every still:
 - Is anything essential under the caption, in the top or bottom band, or — below y ≈ 900 — right
   of x ≈ 910?
 - Does the picture show what the caption on that frame says?
+- Is it drawn in the video's world? Crisp vector diagrams in a hand-drawn look, or hairlines in a
+  poster look, break the style; see "Make the scenes match the look" in art-direction.md.
+- Are colours used by role (`COL.subject`, `COL.accent`, …), never as hex values or as the
+  legacy hue names?
 - At the first and last still of the scene: is the frame already (still) full and alive?
 
 Sample densely around cues — the frame 0.1 s before, on, and 0.3 s after each reveal — and at
@@ -64,6 +81,8 @@ it is acceptable.
 ## Pass 3 — before delivery
 
 - [ ] Verdict has no FAIL; every `check` row is resolved or explained.
+- [ ] The finished video matches its brief: the chosen story shape, pacing, visual world and look —
+      not a drift back to a default arc or a default style.
 - [ ] You opened the contact sheet and both mobile previews after the final build.
 - [ ] First frame: lit, composed, hook visible. Last 2.5 s: takeaway on screen, still moving.
 - [ ] Every number on screen and in the narration is in `docs/sources.md`; product-specific
@@ -72,6 +91,8 @@ it is acceptable.
 - [ ] `docs/report_notes.md` filled in honestly, including what could not be verified (you
       cannot listen to the mix or watch it play inside the apps — say so).
 - [ ] `bin/lockstep report <slug>` re-run after the last build.
+- [ ] A `## Retrospective` section appended to `docs/creative_brief.md`: what worked, what did not.
+      If the look could serve other topics, `bin/lockstep save-style <slug> <name>`.
 - [ ] The user gets the MP4 itself, not only a path in a container that will be discarded.
 
 ## Pitfalls already paid for
@@ -93,6 +114,10 @@ it is acceptable.
 | `cue not found` after a script edit | The cue word was removed or moved to another beat | `lockstep words <slug> <beat>`; re-anchor to a word that exists |
 | Frames differ between runs | `Math.random()`, `Date`, or state kept across frames | Use `hash`/`rng`; compute everything from `t` |
 | Build refuses: "script.py is newer than the recorded narration" | Script edited after recording | `lockstep voice <slug>` (identical text re-records identically) |
+| Voice or build refuses: "creative direction is not done yet" | Brief incomplete or no style.json | Do the creative-direction step (creative-direction.md); the message lists what is missing |
+| Text in an unexpected font | Family name misspelt in style.json | `lockstep style-check <slug>` names it; `lockstep fonts` lists what exists |
+| Words vanish against a light background | Legacy colour names (`COL.white` is dark ink on paper styles, `COL.bg0` light) or hard-coded hex | Use roles: `COL.ink`, `COL.onAccent` |
+| Muddy blotches on a light style | Large or strong `glow()` (it becomes a tint on light backgrounds) | Smaller radius, lower alpha, or emphasise with a fill or `highlighter` |
 | Voice sounds buried or the music vanishes | Voice-to-bed ratio outside 15–17 dB | `"mix"` in `video.json` (audio.md) |
 
 ## Honest reporting
