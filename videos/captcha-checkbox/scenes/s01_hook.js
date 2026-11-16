@@ -26,6 +26,7 @@
   sfx(c.there, 'impact', 0.45);
 
   addScene('hook', function (ctx, t) {
+    ambient(ctx, t);
     const frac = REST + (1 - REST) * tw(t, 0, c.tap - 0.03, E.out3);   // approaches, lands on the tap
     const lit = prog(t, c.started, c.started + 0.45);                    // trail lights on "started"
     const pulse2 = prog(t, c.started, c.there - 0.02);                   // a pulse runs back along the trail

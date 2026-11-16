@@ -12,7 +12,7 @@
     what: at('watch', 'what'),
     publish: at('watch', 'publish'),
     full: at('watch', 'full'),
-    twentyone: at('watch', 'twenty-one'),
+    twentyone: at('watch', '2021'),
     describes: at('watch', 'describes'),
     cursor: at('watch', 'cursor'),
     where: at('watch', 'where'),
@@ -36,6 +36,7 @@
   sfx(c.essential, 'chime', 0.6);
 
   addScene('watch', function (ctx, t) {
+    ambient(ctx, t);
     /* A: the list, locked */
     const gA = tw(t, c.what - 0.2, c.what + 0.3) * (1 - tw(t, c.twentyone - 0.6, c.twentyone - 0.1));
     withAlpha(ctx, gA, () => {

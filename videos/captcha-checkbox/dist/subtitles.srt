@@ -1,0 +1,230 @@
+1
+00:00:00,325 --> 00:00:02,875
+You tap a box that says
+you're not a robot.
+
+2
+00:00:03,091 --> 00:00:06,716
+Researchers say the test started
+before your finger got there.
+
+3
+00:00:07,292 --> 00:00:10,442
+For years, the test was
+reading wobbly letters.
+
+4
+00:00:10,685 --> 00:00:15,025
+In twenty thirteen, Google said its
+risk analysis covers everything you do
+
+5
+00:00:15,035 --> 00:00:18,510
+around a challenge, not
+only the answer you type.
+
+6
+00:00:18,916 --> 00:00:22,732
+In twenty fourteen, the checkbox
+arrived, and many people passed
+
+7
+00:00:22,742 --> 00:00:24,066
+with one click.
+
+8
+00:00:24,623 --> 00:00:26,488
+The click feels like the test.
+
+9
+00:00:26,498 --> 00:00:28,748
+It's really a request for a verdict.
+
+10
+00:00:29,046 --> 00:00:31,086
+The evidence was gathered around it.
+
+11
+00:00:31,096 --> 00:00:33,061
+If it looks human, you pass.
+
+12
+00:00:33,071 --> 00:00:35,296
+If it can't tell, you get a puzzle.
+
+13
+00:00:35,918 --> 00:00:37,233
+So what does it watch?
+
+14
+00:00:37,243 --> 00:00:39,468
+Google doesn't publish the full list.
+
+15
+00:00:39,744 --> 00:00:43,034
+A twenty twenty-one survey
+describes the checkbox recording
+
+16
+00:00:43,044 --> 00:00:47,369
+cursor movement, where you click,
+and how long the pointer hovers.
+
+17
+00:00:47,609 --> 00:00:50,874
+It also records browser
+details and cookies.
+
+18
+00:00:50,884 --> 00:00:55,059
+Google's own FAQ calls a cookie
+essential to that analysis.
+
+19
+00:00:55,630 --> 00:00:58,780
+A real hand never moves
+at one steady speed.
+
+20
+00:00:58,930 --> 00:01:02,080
+It speeds up, peaks,
+and eases into the target.
+
+21
+00:01:02,387 --> 00:01:05,652
+In nineteen eighty-five, Flash
+and Hogan modeled arm movement
+
+22
+00:01:05,662 --> 00:01:09,287
+this way: a smooth,
+bell-shaped curve of speed.
+
+23
+00:01:09,683 --> 00:01:14,183
+One published detector checks cursor
+paths against a model like that.
+
+24
+00:01:14,579 --> 00:01:18,019
+In a twenty twenty-four study
+of reCAPTCHA version two,
+
+25
+00:01:18,029 --> 00:01:21,754
+any cursor movement cut the number
+of puzzles needed to pass.
+
+26
+00:01:22,065 --> 00:01:25,965
+Straight paths and curved ones
+were not significantly different.
+
+27
+00:01:26,288 --> 00:01:27,503
+So is it the wobble?
+
+28
+00:01:27,513 --> 00:01:29,013
+Google doesn't say.
+
+29
+00:01:29,601 --> 00:01:31,276
+Then there's the browser.
+
+30
+00:01:31,500 --> 00:01:36,066
+A twenty twenty-four study reports
+that cookies and browsing history carry
+
+31
+00:01:36,076 --> 00:01:39,600
+substantial weight in whether
+a visitor seems human.
+
+32
+00:01:39,943 --> 00:01:42,783
+Browsing history is
+what researchers report.
+
+33
+00:01:42,793 --> 00:01:44,693
+Google hasn't confirmed it.
+
+34
+00:01:45,294 --> 00:01:47,944
+Version three has no checkbox at all.
+
+35
+00:01:48,142 --> 00:01:50,606
+It returns a score from zero to one.
+
+36
+00:01:50,616 --> 00:01:53,206
+One means very likely a good interaction.
+
+37
+00:01:53,216 --> 00:01:55,542
+Zero means very likely a bot.
+
+38
+00:01:55,908 --> 00:02:00,583
+Each site sets its own cutoff, and
+Google suggests starting at point five.
+
+39
+00:02:00,921 --> 00:02:02,661
+But a score can be pushed.
+
+40
+00:02:02,671 --> 00:02:06,936
+In twenty nineteen, researchers trained
+an AI agent to move and click in a
+
+41
+00:02:06,946 --> 00:02:08,496
+simulator they built.
+
+42
+00:02:08,746 --> 00:02:12,861
+It reached a score of point nine about
+ninety-seven percent of the time.
+
+43
+00:02:12,871 --> 00:02:15,246
+The simulator isn't the live site.
+
+44
+00:02:15,823 --> 00:02:19,688
+A twenty twenty-three study ran
+for thirteen months with more than
+
+45
+00:02:19,698 --> 00:02:21,573
+thirty-six hundred people.
+
+46
+00:02:21,820 --> 00:02:26,510
+Its authors judged the checkbox
+costly, with close to no security gain,
+
+47
+00:02:26,520 --> 00:02:28,495
+and say it should be retired.
+
+48
+00:02:29,046 --> 00:02:32,362
+Nobody outside Google knows
+how the signals are weighted.
+
+49
+00:02:32,372 --> 00:02:34,946
+So every study tests from the outside.
+
+50
+00:02:35,550 --> 00:02:38,250
+So the tap is the last step, not the test.
+
+51
+00:02:38,756 --> 00:02:40,531
+It cares how you got there.

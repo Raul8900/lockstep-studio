@@ -1,0 +1,323 @@
+{
+ "file": {
+  "path": "dist/captcha_checkbox_vertical.mp4",
+  "size_mb": 111.5,
+  "container": "QuickTime / MOV",
+  "duration_s": 163.733,
+  "overall_bitrate_mbps": 5.45,
+  "faststart": true
+ },
+ "video": {
+  "codec": "h264",
+  "profile": "High",
+  "level": 4.2,
+  "width": 1080,
+  "height": 1920,
+  "aspect": "9:16",
+  "pix_fmt": "yuv420p",
+  "fps": 30.0,
+  "frames": 4912,
+  "bitrate_mbps": 5.18,
+  "color": "bt709/bt709/bt709 tv"
+ },
+ "audio": {
+  "codec": "aac",
+  "profile": "LC",
+  "sample_rate": 48000,
+  "channels": 2,
+  "bitrate_kbps": 265,
+  "duration_s": 163.669
+ },
+ "decode_errors": 0,
+ "black_segments": [],
+ "freeze_segments": [
+  [
+   2.0,
+   2.5
+  ],
+  [
+   4.23333,
+   4.66667
+  ],
+  [
+   6.0,
+   6.43333
+  ],
+  [
+   11.4,
+   11.8333
+  ],
+  [
+   13.4333,
+   13.8333
+  ],
+  [
+   19.5333,
+   20.0
+  ],
+  [
+   20.3667,
+   20.7667
+  ],
+  [
+   21.0,
+   21.6
+  ],
+  [
+   28.0,
+   28.5
+  ],
+  [
+   32.4667,
+   32.9
+  ],
+  [
+   34.6667,
+   35.1
+  ],
+  [
+   38.7333,
+   39.2667
+  ],
+  [
+   44.6,
+   45.0667
+  ],
+  [
+   46.5,
+   47.1667
+  ],
+  [
+   49.2667,
+   49.7333
+  ],
+  [
+   50.0,
+   50.5667
+  ],
+  [
+   52.0,
+   52.4667
+  ],
+  [
+   54.0,
+   54.7667
+  ],
+  [
+   58.0,
+   58.5667
+  ],
+  [
+   63.2667,
+   63.7667
+  ],
+  [
+   66.0,
+   66.5
+  ],
+  [
+   66.9333,
+   67.3667
+  ],
+  [
+   68.4667,
+   69.0667
+  ],
+  [
+   77.5667,
+   78.0
+  ],
+  [
+   80.0,
+   80.4
+  ],
+  [
+   83.5,
+   83.9333
+  ],
+  [
+   85.2,
+   85.6667
+  ],
+  [
+   88.3,
+   88.7333
+  ],
+  [
+   90.5333,
+   91.1
+  ],
+  [
+   92.6667,
+   93.1333
+  ],
+  [
+   93.2333,
+   93.6333
+  ],
+  [
+   94.0,
+   94.4
+  ],
+  [
+   95.1667,
+   95.7333
+  ],
+  [
+   96.9667,
+   97.3667
+  ],
+  [
+   98.7667,
+   99.4
+  ],
+  [
+   100.0,
+   100.433
+  ],
+  [
+   100.6,
+   101.0
+  ],
+  [
+   102.0,
+   102.5
+  ],
+  [
+   112.1,
+   112.733
+  ],
+  [
+   112.733,
+   113.133
+  ],
+  [
+   114.767,
+   115.3
+  ],
+  [
+   117.267,
+   117.867
+  ],
+  [
+   120.0,
+   120.433
+  ],
+  [
+   122.0,
+   122.633
+  ],
+  [
+   124.0,
+   124.533
+  ],
+  [
+   132.267,
+   132.833
+  ],
+  [
+   133.3,
+   133.7
+  ],
+  [
+   134.467,
+   135.033
+  ],
+  [
+   136.833,
+   137.233
+  ],
+  [
+   138.567,
+   139.0
+  ],
+  [
+   140.7,
+   141.333
+  ],
+  [
+   144.0,
+   144.433
+  ],
+  [
+   146.0,
+   146.467
+  ],
+  [
+   147.5,
+   148.0
+  ],
+  [
+   154.2,
+   154.733
+  ],
+  [
+   158.3,
+   158.767
+  ],
+  [
+   160.567,
+   161.167
+  ],
+  [
+   161.167,
+   161.967
+  ],
+  [
+   162.033,
+   163.1
+  ]
+ ],
+ "encode_fidelity": {
+  "ssim_all": 0.995382,
+  "psnr_avg_db": 52.481454
+ },
+ "loudness": {
+  "integrated_lufs": -14.0,
+  "range_lu": 2.6,
+  "true_peak_dbtp": -2.6
+ },
+ "sync": {
+  "narration_lag_ms_in_mp4": 0,
+  "method": "cross-correlation of 10 ms envelopes, MP4 audio vs. original narration"
+ },
+ "final_mix_asr": {
+  "wer_percent": 5.81,
+  "errors": 24,
+  "words": 413,
+  "diffs": [
+   "['twenty -> two thousand']",
+   "['twenty -> two thousand']",
+   "['twenty -> two thousand']",
+   "['nineteen -> one thousand nine hundred']",
+   "['twenty -> two thousand']",
+   "['twenty -> two thousand']",
+   "['point five -> 5']",
+   "['twenty -> two thousand']",
+   "['\u2205 -> zero', 'percent -> \u2205']",
+   "['twenty -> two thousand', 'thirty -> three thousand']"
+  ]
+ },
+ "caption_timing_crosscheck": {
+  "matched_words": 371,
+  "median_offset_ms": -120,
+  "mean_abs_dev_ms": 82,
+  "p95_abs_dev_ms": 192,
+  "note": "independent transducer ASR vs. TTS-derived word starts; the median is the recogniser's own emission delay"
+ },
+ "captions": {
+  "phrases": 140,
+  "two_line": 12,
+  "max_width_px": 781,
+  "x_extent": [
+   149,
+   931
+  ],
+  "y_extent": [
+   1260,
+   1440
+  ],
+  "min_on_screen_s": 0.45,
+  "max_words": 5
+ }
+}

@@ -9,11 +9,11 @@
    C: the signals' weights are not published; every study tests from outside.                              */
 (window.SCENE_DEFS = window.SCENE_DEFS || []).push(function () {
   const c = {
-    twentyThree: at('limits', 'twenty-three'),
+    twentyThree: at('limits', '2023'),
     thirteen: at('limits', 'thirteen'),
     months: at('limits', 'months'),
     more: at('limits', 'more'),
-    thirtySix: at('limits', 'thirty-six'),
+    thirtySix: at('limits', '3,600'),
     people: at('limits', 'people'),
     authors: at('limits', 'authors'),
     judged: at('limits', 'judged'),
@@ -41,6 +41,7 @@
   sfx(c.outside2, 'tick', 0.4);
 
   addScene('limits', function (ctx, t) {
+    ambient(ctx, t);
     /* A: thirteen months, and more than 3,600 people */
     const gA = 1 - tw(t, c.authors - 0.6, c.authors - 0.1);
     withAlpha(ctx, gA, () => {

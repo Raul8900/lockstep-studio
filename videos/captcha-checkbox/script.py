@@ -34,8 +34,8 @@ BEATS = [
         "title": "The old test",
         "takes": [
             ("For years, the test was reading wobbly letters.", 0.45),
-            ("In twenty thirteen, Google said its risk analysis covers everything you do around a challenge, not only the answer you type.", 0.60),
-            ("In twenty fourteen, the checkbox arrived, and many people passed with one click.", 0.75),
+            ("In 2013, Google said its risk analysis covers everything you do around a challenge, not only the answer you type.", 0.60),
+            ("In 2014, the checkbox arrived, and many people passed with one click.", 0.75),
         ],
     },
     {
@@ -51,7 +51,7 @@ BEATS = [
         "title": "What it watches",
         "takes": [
             ("So what does it watch? Google doesn't publish the full list.", 0.45),
-            ("A twenty twenty-one survey describes the checkbox recording cursor movement, where you click, and how long the pointer hovers.", 0.45),
+            ("A 2021 survey describes the checkbox recording cursor movement, where you click, and how long the pointer hovers.", 0.45),
             ("It also records browser details and cookies. Google's own FAQ calls a cookie essential to that analysis.", 0.75),
         ],
     },
@@ -61,9 +61,9 @@ BEATS = [
         "takes": [
             ("A real hand never moves at one steady speed.", 0.35),
             ("It speeds up, peaks, and eases into the target.", 0.50),
-            ("In nineteen eighty-five, Flash and Hogan modeled arm movement this way: a smooth, bell-shaped curve of speed.", 0.55),
+            ("In 1985, Flash and Hogan modeled arm movement this way: a smooth, bell-shaped curve of speed.", 0.55),
             ("One published detector checks cursor paths against a model like that.", 0.60),
-            ("In a twenty twenty-four study of [reCAPTCHA](/ɹiːkˈæptʃə/) version two, any cursor movement cut the number of puzzles needed to pass.", 0.45),
+            ("In a 2024 study of [reCAPTCHA](/ɹiːkˈæptʃə/) version two, any cursor movement cut the number of puzzles needed to pass.", 0.45),
             ("Straight paths and curved ones were not significantly different.", 0.45),
             ("So is it the wobble? {p:0.20} Google doesn't say.", 0.75),
         ],
@@ -73,7 +73,7 @@ BEATS = [
         "title": "The browser",
         "takes": [
             ("Then there's the browser.", 0.40),
-            ("A twenty twenty-four study reports that cookies and browsing history carry substantial weight in whether a visitor seems human.", 0.55),
+            ("A 2024 study reports that cookies and browsing history carry substantial weight in whether a visitor seems human.", 0.55),
             ("Browsing history is what researchers report. Google hasn't confirmed it.", 0.75),
         ],
     },
@@ -83,16 +83,16 @@ BEATS = [
         "takes": [
             ("Version three has no checkbox at all.", 0.40),
             ("It returns a score from zero to one. One means very likely a good interaction. Zero means very likely a bot.", 0.55),
-            ("Each site sets its own cutoff, and Google suggests starting at point five.", 0.55),
-            ("But a score can be pushed. In twenty nineteen, researchers trained an AI agent to move and click in a simulator they built.", 0.45),
-            ("It reached a score of point nine about ninety-seven percent of the time. The simulator isn't the live site.", 0.75),
+            ("Each site sets its own cutoff, and Google suggests starting at 0.5.", 0.55),
+            ("But a score can be pushed. In 2019, researchers trained an AI agent to move and click in a simulator they built.", 0.45),
+            ("It reached a score of 0.9, about 97% of the time. The simulator isn't the live site.", 0.75),
         ],
     },
     {
         "id": "limits",
         "title": "The limits",
         "takes": [
-            ("A twenty twenty-three study ran for thirteen months with more than thirty-six hundred people.", 0.45),
+            ("A 2023 study ran for thirteen months with more than 3,600 people.", 0.45),
             ("Its authors judged the checkbox costly, with close to no security gain, and say it should be retired.", 0.70),
             ("Nobody outside Google knows how the signals are weighted. So every study tests from the outside.", 0.75),
         ],
@@ -115,8 +115,9 @@ HIGHLIGHT = {
     "checkbox": "k", "cursor": "k", "click": "k", "verdict": "k", "test": "k", "score": "k",
     "recaptcha": "k", "detector": "k", "tap": "k",
     # amber: numbers
-    "thirteen": "n", "thirty-six": "n", "hundred": "n", "ninety-seven": "n", "percent": "n",
-    "point": "n", "zero": "n", "one": "n", "two": "n", "three": "n", "five": "n", "nine": "n",
+    "thirteen": "n", "3,600": "n", "97": "n", "0.5": "n", "0.9": "n",
+    "2013": "n", "2014": "n", "2019": "n", "2021": "n", "2023": "n", "2024": "n", "1985": "n",
+    "zero": "n", "one": "n", "two": "n", "three": "n",
     # violet: data
     "cookies": "m", "cookie": "m", "history": "m", "browser": "m", "browsing": "m",
     "signals": "m", "months": "m",
@@ -134,7 +135,7 @@ DIRECTIONS = {
     "watch": "Even and factual. Pause before *Google's own FAQ*, which is the turn.",
     "cursor": "The longest beat. Slower on *never moves at one steady speed* and on *bell-shaped*. Then flat on *Google doesn't say.*",
     "browser": "Quiet. The contrast in the last take is the point: *what researchers report* against *Google hasn't confirmed*.",
-    "score": "Brisk on the numbers. Slow on *about ninety-seven percent*, then a clear stop before *The simulator*.",
+    "score": "Brisk on the numbers. Slow on *about 97%*, then a clear stop before *The simulator*.",
     "limits": "Measured and neutral. No judgment in the voice; the authors make the judgment, not the narrator.",
     "payoff": "Quiet and even. Two short takes. A pause before *It cares*, then let *how you got there* land.",
 }
@@ -159,8 +160,8 @@ ACCURACY_NOTES = [
     "*“any cursor movement cut the number of puzzles needed to pass”* and *“Straight paths and curved ones were not significantly different”* — row 6: the 2024 test; the straight-versus-curved comparison has t = 0.58, p = 0.57.",
     "*“cookies and browsing history carry substantial weight”* — row 6: the authors' own report. *“Google hasn't confirmed it”* — no Google statement found in rows 1–4.",
     "*“Version three has no checkbox”*, *“one means very likely a good interaction, zero means very likely a bot”* — row 3: the v3 documentation.",
-    "*“Google suggests starting at point five”* — row 3: Google's suggested starting cutoff; sites tune their own.",
-    "*“In twenty nineteen … about ninety-seven percent of the time”* — row 5: 97.4% and 96.7% success on the simulated grids. The simulator is the authors' own.",
-    "*“more than thirty-six hundred people … thirteen months”* — row 7: a 13-month live study with more than 3,600 participants at one large public university.",
+    "*“Google suggests starting at 0.5”* — row 3: Google's suggested starting cutoff; sites tune their own.",
+    "*“In 2019 … about 97% of the time”* — row 5: 97.4% and 96.7% success on the simulated grids. The simulator is the authors' own.",
+    "*“more than 3,600 people … thirteen months”* — row 7: a 13-month live study with more than 3,600 participants at one large public university.",
     "*“costly, with close to no security gain … say it should be retired”* — row 7: the authors' own judgment and their call for reCAPTCHAv2 to be retired.",
 ]

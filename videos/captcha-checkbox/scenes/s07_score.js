@@ -18,18 +18,18 @@
     one2: at('score', 'one', 2),
     zero2: at('score', 'zero', 2),
     site: at('score', 'site'),
-    point: at('score', 'point'),
-    five: at('score', 'five'),
+    point: at('score', '0.5'),
+    five: at('score', '0.5'),
     but: at('score', 'but'),
     trained: at('score', 'trained'),
-    nineteen: at('score', 'nineteen'),
+    nineteen: at('score', '2019'),
     agent: at('score', 'agent'),
     built: at('score', 'built'),
     simulator: at('score', 'simulator'),
     reached: at('score', 'reached'),
-    point2: at('score', 'point', 2),
-    nine: at('score', 'nine'),
-    ninety: at('score', 'ninety-seven'),
+    point2: at('score', '0.9'),
+    nine: at('score', '0.9', 1, 't1'),
+    ninety: at('score', '97'),
     isnt: at('score', "isn't"),
   };
   /* the simulator's plane: a tilted grid in 2.5D, and the agent's path across it */
@@ -53,6 +53,7 @@
   sfx(c.isnt, 'deny', 0.5);
 
   addScene('score', function (ctx, t) {
+    ambient(ctx, t);
     /* A: the checkbox is gone; the version is three */
     const boxGate = 1 - tw(t, c.checkbox - 0.3, c.checkbox + 0.3);
     riseText(ctx, 'VERSION 3', 540, 470, prog(t, c.version, c.version + 0.3), { size: 72, weight: 900, family: F.disp, color: COL.amber, align: 'center', alpha: 1 - tw(t, c.but - 0.5, c.but - 0.1) });

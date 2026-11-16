@@ -37,6 +37,7 @@
   sfx(c.puzzle, 'stamp', 0.6);
 
   addScene('click', function (ctx, t) {
+    ambient(ctx, t);
     /* A: the tap, the test and the request */
     const gB = 1 - tw(t, c.evidence - 0.1, c.evidence + 0.4);            // the big ring leaves as the evidence arrives
     const cp = polyAt(APP, tw(t, c.click - 0.95, c.click - 0.12, E.out3) * APP_L);

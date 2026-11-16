@@ -36,6 +36,7 @@
   sfx(c.confirmed, 'stamp', 0.7);
 
   addScene('browser', function (ctx, t) {
+    ambient(ctx, t);
     /* the window slides in from above */
     const slide = (1 - tw(t, c.then, c.then + 0.6, E.out3)) * 120;
     const wy = WIN.y - slide;

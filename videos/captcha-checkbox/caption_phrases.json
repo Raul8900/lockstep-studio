@@ -5,9 +5,9 @@
 
  "For years,", "the test was reading", "wobbly letters.",
 
- "In twenty thirteen,", "Google said its risk", "analysis covers", "everything you do", "around a challenge,", "not only the answer", "you type.",
+ "In 2013,", "Google said its risk", "analysis covers", "everything you do", "around a challenge,", "not only the answer", "you type.",
 
- "In twenty fourteen,", "the checkbox arrived,", "and many people passed", "with one click.",
+ "In 2014,", "the checkbox arrived,", "and many people passed", "with one click.",
 
  "The click feels like", "the test.", "It's really a request", "for a verdict.",
 
@@ -15,7 +15,7 @@
 
  "So what does it watch?", "Google doesn't publish", "the full list.",
 
- "A twenty twenty-one", "survey describes the", "checkbox recording", "cursor movement,", "where you click,", "and how long the", "pointer hovers.",
+ "A 2021 survey", "describes the", "checkbox recording", "cursor movement,", "where you click,", "and how long the", "pointer hovers.",
 
  "It also records", "browser details and", "cookies.", "Google's own FAQ calls", "a cookie essential to", "that analysis.",
 
@@ -23,11 +23,11 @@
 
  "It speeds up,", "peaks, and eases", "into the target.",
 
- "In nineteen eighty-five,", "Flash and Hogan", "modeled arm movement", "this way: a smooth,", "bell-shaped curve", "of speed.",
+ "In 1985,", "Flash and Hogan", "modeled arm movement", "this way: a smooth,", "bell-shaped curve", "of speed.",
 
  "One published detector", "checks cursor paths", "against a model", "like that.",
 
- "In a twenty twenty-four", "study of reCAPTCHA", "version two,", "any cursor movement", "cut the number of", "puzzles needed", "to pass.",
+ "In a 2024 study", "of reCAPTCHA", "version two,", "any cursor movement", "cut the number of", "puzzles needed", "to pass.",
 
  "Straight paths and", "curved ones were", "not significantly", "different.",
 
@@ -35,7 +35,7 @@
 
  "Then there's the", "browser.",
 
- "A twenty twenty-four", "study reports that", "cookies and browsing", "history carry", "substantial weight", "in whether a visitor", "seems human.",
+ "A 2024 study reports", "that cookies and browsing", "history carry", "substantial weight", "in whether a visitor", "seems human.",
 
  "Browsing history is", "what researchers", "report.", "Google hasn't", "confirmed it.",
 
@@ -43,13 +43,13 @@
 
  "It returns a score", "from zero to one.", "One means very", "likely a good", "interaction.", "Zero means very", "likely a bot.",
 
- "Each site sets its", "own cutoff,", "and Google suggests", "starting at", "point five.",
+ "Each site sets its", "own cutoff,", "and Google suggests", "starting at", "0.5.",
 
- "But a score can", "be pushed.", "In twenty nineteen,", "researchers trained an", "AI agent to move", "and click in a", "simulator they built.",
+ "But a score can", "be pushed.", "In 2019,", "researchers trained an", "AI agent to move", "and click in a", "simulator they built.",
 
- "It reached a score", "of point nine", "about ninety-seven", "percent of the time.", "The simulator isn't", "the live site.",
+ "It reached a score", "of 0.9, about", "97% of the time.", "The simulator isn't", "the live site.",
 
- "A twenty twenty-three", "study ran for", "thirteen months", "with more than", "thirty-six hundred", "people.",
+ "A 2023 study ran for", "thirteen months", "with more than", "3,600 people.",
 
  "Its authors judged", "the checkbox costly,", "with close to no", "security gain,", "and say it should", "be retired.",
 

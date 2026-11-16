@@ -208,6 +208,13 @@ function dotField(ctx, x0, y0, w, h, cols, rows, lit, color = COL.amber) {
   }
 }
 
+/* a slow, large drift of soft light across the diagram zone. It keeps the frame moving through the
+   pauses between sentences, so no stretch reads as frozen. A pure function of t. */
+function ambient(ctx, t) {
+  glow(ctx, 540 + 300 * Math.sin(t * 0.61), 880 + 110 * Math.cos(t * 0.43), 330, COL.cyan, 0.14);
+  glow(ctx, 540 - 280 * Math.sin(t * 0.52), 700 + 90 * Math.sin(t * 0.37), 280, COL.violet, 0.12);
+}
+
 /* a simple person: a head and a rounded body, centred on (cx, cy) */
 function personIcon(ctx, cx, cy, s, p, color = COL.white) {
   if (p <= 0) return;

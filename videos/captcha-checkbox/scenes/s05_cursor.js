@@ -18,8 +18,8 @@
     eases: at('cursor', 'eases'),
     peaks: at('cursor', 'peaks'),
     target: at('cursor', 'target'),
-    nineteen: at('cursor', 'nineteen'),
-    eighty: at('cursor', 'eighty-five'),
+    nineteen: at('cursor', '1985'),
+    eighty: at('cursor', '1985', 1, 't1'),
     flash: at('cursor', 'flash'),
     modeled: at('cursor', 'modeled'),
     smooth: at('cursor', 'smooth'),
@@ -28,7 +28,7 @@
     detector: at('cursor', 'detector'),
     checks: at('cursor', 'checks'),
     model: at('cursor', 'model'),
-    twentyFour: at('cursor', 'twenty-four'),
+    twentyFour: at('cursor', '2024'),
     study: at('cursor', 'study'),
     any: at('cursor', 'any'),
     cut: at('cursor', 'cut'),
@@ -73,6 +73,7 @@
   sfx(c.wobble, 'impact', 0.6);
 
   addScene('cursor', function (ctx, t) {
+    ambient(ctx, t);
     /* the speed axes, shared by sections A to C */
     const axes = 1 - tw(t, c.detector - 0.9, c.detector - 0.5);
     speedAxes(ctx, GX, GB, GW, GH, prog(t, c.real - 0.5, c.real + 0.1), axes);

@@ -15,7 +15,7 @@
     everything: at('old', 'everything'),
     around: at('old', 'around'),
     answer: at('old', 'answer'),
-    fourteen: at('old', 'fourteen'),
+    fourteen: at('old', '2014'),
     many: at('old', 'many'),
     one: at('old', 'one'),
     click: at('old', 'click'),
@@ -34,6 +34,7 @@
   sfx(c.click, 'lock', 0.9);
 
   addScene('old', function (ctx, t) {
+    ambient(ctx, t);
     /* ---- A and B: the card, then the ring of signals ---- */
     const gAB = 1 - tw(t, c.fourteen - 0.5, c.fourteen - 0.05);       // leaves before the checkbox arrives
     const s = lerp(1, 0.56, tw(t, c.inTwenty, c.inTwenty + 0.5, E.io3)); // shrinks as "in twenty thirteen" is said

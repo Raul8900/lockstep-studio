@@ -3,9 +3,9 @@
   "voice": "af_heart",
   "speed": 1.0,
   "sample_rate": 24000,
-  "duration": 163.721,
-  "speech_end": 160.2308,
-  "word_count": 405
+  "duration": 165.486,
+  "speech_end": 161.9958,
+  "word_count": 393
  },
  "beats": [
   {
@@ -30,37 +30,37 @@
    "id": "watch",
    "title": "What it watches",
    "t0": 35.9676,
-   "t1": 54.7589
+   "t1": 54.8823
   },
   {
    "id": "cursor",
    "title": "The cursor",
-   "t0": 55.6795,
-   "t1": 88.7126
+   "t0": 55.803,
+   "t1": 89.0618
   },
   {
    "id": "browser",
    "title": "The browser",
-   "t0": 89.6506,
-   "t1": 104.3932
+   "t0": 89.9998,
+   "t1": 104.8154
   },
   {
    "id": "score",
    "title": "The score",
-   "t0": 105.3439,
-   "t1": 134.9461
+   "t0": 105.7661,
+   "t1": 136.3117
   },
   {
    "id": "limits",
    "title": "The limits",
-   "t0": 135.8731,
-   "t1": 154.6465
+   "t0": 137.2382,
+   "t1": 156.4115
   },
   {
    "id": "payoff",
    "title": "The takeaway",
-   "t0": 155.6004,
-   "t1": 160.2308
+   "t0": 157.3655,
+   "t1": 161.9958
   }
  ],
  "takes": [
@@ -91,7 +91,7 @@
   {
    "take": 3,
    "beat": "old",
-   "text": "In twenty thirteen, Google said its risk analysis covers everything you do around a challenge, not only the answer you type.",
+   "text": "In 2013, Google said its risk analysis covers everything you do around a challenge, not only the answer you type.",
    "t0": 10.7352,
    "t1": 18.2102,
    "pause_after": 0.6
@@ -99,7 +99,7 @@
   {
    "take": 4,
    "beat": "old",
-   "text": "In twenty fourteen, the checkbox arrived, and many people passed with one click.",
+   "text": "In 2014, the checkbox arrived, and many people passed with one click.",
    "t0": 18.9665,
    "t1": 23.7665,
    "pause_after": 0.75
@@ -131,177 +131,177 @@
   {
    "take": 8,
    "beat": "watch",
-   "text": "A twenty twenty-one survey describes the checkbox recording cursor movement, where you click, and how long the pointer hovers.",
-   "t0": 39.794,
-   "t1": 47.069,
+   "text": "A 2021 survey describes the checkbox recording cursor movement, where you click, and how long the pointer hovers.",
+   "t0": 39.7924,
+   "t1": 47.1924,
    "pause_after": 0.45
   },
   {
    "take": 9,
    "beat": "watch",
    "text": "It also records browser details and cookies. Google's own FAQ calls a cookie essential to that analysis.",
-   "t0": 47.6589,
-   "t1": 54.7589,
+   "t0": 47.7823,
+   "t1": 54.8823,
    "pause_after": 0.75
   },
   {
    "take": 10,
    "beat": "cursor",
    "text": "A real hand never moves at one steady speed.",
-   "t0": 55.6795,
-   "t1": 58.4795,
+   "t0": 55.803,
+   "t1": 58.603,
    "pause_after": 0.35
   },
   {
    "take": 11,
    "beat": "cursor",
    "text": "It speeds up, peaks, and eases into the target.",
-   "t0": 58.9804,
-   "t1": 61.7804,
+   "t0": 59.1038,
+   "t1": 61.9038,
    "pause_after": 0.5
   },
   {
    "take": 12,
    "beat": "cursor",
-   "text": "In nineteen eighty-five, Flash and Hogan modeled arm movement this way: a smooth, bell-shaped curve of speed.",
-   "t0": 62.4367,
-   "t1": 68.9867,
+   "text": "In 1985, Flash and Hogan modeled arm movement this way: a smooth, bell-shaped curve of speed.",
+   "t0": 62.5602,
+   "t1": 69.1352,
    "pause_after": 0.55
   },
   {
    "take": 13,
    "beat": "cursor",
    "text": "One published detector checks cursor paths against a model like that.",
-   "t0": 69.7333,
-   "t1": 73.8833,
+   "t0": 69.8817,
+   "t1": 74.0318,
    "pause_after": 0.6
   },
   {
    "take": 14,
    "beat": "cursor",
-   "text": "In a twenty twenty-four study of reCAPTCHA version two, any cursor movement cut the number of puzzles needed to pass.",
-   "t0": 74.6294,
-   "t1": 81.4544,
+   "text": "In a 2024 study of reCAPTCHA version two, any cursor movement cut the number of puzzles needed to pass.",
+   "t0": 74.7786,
+   "t1": 81.8036,
    "pause_after": 0.45
   },
   {
    "take": 15,
    "beat": "cursor",
    "text": "Straight paths and curved ones were not significantly different.",
-   "t0": 82.1147,
-   "t1": 85.6647,
+   "t0": 82.4639,
+   "t1": 86.0139,
    "pause_after": 0.45
   },
   {
    "take": 16,
    "beat": "cursor",
    "text": "So is it the wobble? Google doesn't say.",
-   "t0": 86.3376,
-   "t1": 88.7126,
+   "t0": 86.6868,
+   "t1": 89.0618,
    "pause_after": 0.75
   },
   {
    "take": 17,
    "beat": "browser",
    "text": "Then there's the browser.",
-   "t0": 89.6506,
-   "t1": 90.9756,
+   "t0": 89.9998,
+   "t1": 91.3248,
    "pause_after": 0.4
   },
   {
    "take": 18,
    "beat": "browser",
-   "text": "A twenty twenty-four study reports that cookies and browsing history carry substantial weight in whether a visitor seems human.",
-   "t0": 91.5505,
-   "t1": 99.3005,
+   "text": "A 2024 study reports that cookies and browsing history carry substantial weight in whether a visitor seems human.",
+   "t0": 91.8977,
+   "t1": 99.7227,
    "pause_after": 0.55
   },
   {
    "take": 19,
    "beat": "browser",
    "text": "Browsing history is what researchers report. Google hasn't confirmed it.",
-   "t0": 99.9932,
-   "t1": 104.3932,
+   "t0": 100.4154,
+   "t1": 104.8154,
    "pause_after": 0.75
   },
   {
    "take": 20,
    "beat": "score",
    "text": "Version three has no checkbox at all.",
-   "t0": 105.3439,
-   "t1": 107.6439,
+   "t0": 105.7661,
+   "t1": 108.0661,
    "pause_after": 0.4
   },
   {
    "take": 21,
    "beat": "score",
    "text": "It returns a score from zero to one. One means very likely a good interaction. Zero means very likely a bot.",
-   "t0": 108.1915,
-   "t1": 115.2415,
+   "t0": 108.6137,
+   "t1": 115.6637,
    "pause_after": 0.55
   },
   {
    "take": 22,
    "beat": "score",
-   "text": "Each site sets its own cutoff, and Google suggests starting at point five.",
-   "t0": 115.9577,
-   "t1": 120.2827,
+   "text": "Each site sets its own cutoff, and Google suggests starting at 0.5.",
+   "t0": 116.3774,
+   "t1": 121.0524,
    "pause_after": 0.55
   },
   {
    "take": 23,
    "beat": "score",
-   "text": "But a score can be pushed. In twenty nineteen, researchers trained an AI agent to move and click in a simulator they built.",
-   "t0": 120.9712,
-   "t1": 128.1962,
+   "text": "But a score can be pushed. In 2019, researchers trained an AI agent to move and click in a simulator they built.",
+   "t0": 121.741,
+   "t1": 128.966,
    "pause_after": 0.45
   },
   {
    "take": 24,
    "beat": "score",
-   "text": "It reached a score of point nine about ninety-seven percent of the time. The simulator isn't the live site.",
-   "t0": 128.7961,
-   "t1": 134.9461,
+   "text": "It reached a score of 0.9, about 97% of the time. The simulator isn't the live site.",
+   "t0": 129.5617,
+   "t1": 136.3117,
    "pause_after": 0.75
   },
   {
    "take": 25,
    "beat": "limits",
-   "text": "A twenty twenty-three study ran for thirteen months with more than thirty-six hundred people.",
-   "t0": 135.8731,
-   "t1": 141.2731,
+   "text": "A 2023 study ran for thirteen months with more than 3,600 people.",
+   "t0": 137.2382,
+   "t1": 143.0382,
    "pause_after": 0.45
   },
   {
    "take": 26,
    "beat": "limits",
    "text": "Its authors judged the checkbox costly, with close to no security gain, and say it should be retired.",
-   "t0": 141.8699,
-   "t1": 148.1949,
+   "t0": 143.635,
+   "t1": 149.96,
    "pause_after": 0.7
   },
   {
    "take": 27,
    "beat": "limits",
    "text": "Nobody outside Google knows how the signals are weighted. So every study tests from the outside.",
-   "t0": 149.0965,
-   "t1": 154.6465,
+   "t0": 150.8615,
+   "t1": 156.4115,
    "pause_after": 0.75
   },
   {
    "take": 28,
    "beat": "payoff",
    "text": "So the tap is the last step, not the test.",
-   "t0": 155.6004,
-   "t1": 157.9504,
+   "t0": 157.3655,
+   "t1": 159.7155,
    "pause_after": 0.7
   },
   {
    "take": 29,
    "beat": "payoff",
    "text": "It cares how you got there.",
-   "t0": 158.8057,
-   "t1": 160.2308,
+   "t0": 160.5708,
+   "t1": 161.9958,
    "pause_after": 0.8
   }
  ]

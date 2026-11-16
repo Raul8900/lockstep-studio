@@ -29,6 +29,7 @@
   sfx(c.there, 'impact', 0.45);
 
   addScene('payoff', function (ctx, t) {
+    ambient(ctx, t);
     const frac = REST + (1 - REST) * tw(t, c.so - 0.5, c.tap - 0.03, E.out3);
     const lit = prog(t, c.not, c.not + 0.5);
     const sheen = (t * 0.16) % 1;
