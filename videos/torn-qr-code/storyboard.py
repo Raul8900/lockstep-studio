@@ -179,7 +179,7 @@ def sequences(at, S, dur):
       "The detection idea: only the liar is off the line."),
      ("Two per liar", at("liar", "every") - 0.2, S("bytes"),
       "A printed ledger: “1 LIAR =” / “2 EXTRA DOTS”, with FIND IT and FIX IT chips.",
-      "Ledger at x 540, y 878–1064, in the empty lower-right of the card.",
+      "Ledger at x 498, y 878–1064, in the empty lower-right of the card (left of the platform buttons).",
       BG,
       "The ledger slides up on “costs”; “FIND” (search icon) pops on “finds”, “FIX” (wrench icon) on “fixes”.",
       "E.outBack 0.3 s each.",

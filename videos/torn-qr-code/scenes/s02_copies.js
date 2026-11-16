@@ -41,10 +41,13 @@
 
   addScene('copies', function (ctx, t) {
     const out = tw(t, leave, leave + 0.35, E.in3);        // the attempt leaves to the left
-    const zoom = lerp(1, 1.03, tw(t, S0, leave, E.io2));
+    const zoom = lerp(1, 1.06, tw(t, S0, leave, E.io2));
 
-    if (out < 1) withCam(ctx, { fx: CX, fy: 800, zoom, dx: -W * 0.9 * out }, () => {
+    if (out < 1) withCam(ctx, { fx: CX, fy: 800, zoom, dx: -W * 0.9 * out, dy: 6 * Math.sin(t * 0.9) }, () => {
       tagPill(ctx, 'ATTEMPT 1', CX, 452, COL.accent, 1);
+      /* a marker swipe under the guess while the copy settles */
+      const sw = tw(t, c.copy + 0.3, c.copy + 0.95, E.io3);
+      if (sw > 0) { const wq = measure(ctx, 'A BACKUP COPY?', 80, 400, F.disp); highlighter(ctx, CX - wq / 2 - 6, 498, wq + 12, 76, COL.accent, sw, 0.35); }
       riseText(ctx, 'A BACKUP COPY?', CX, 560, tw(t, c.backup - 0.1, c.backup + 0.25), { size: 80, weight: 400, family: F.disp, color: COL.ink, align: 'center' });
 
       const drop = tw(t, c.copy - 0.08, c.copy + 0.3, E.outBack);

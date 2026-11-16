@@ -41,6 +41,8 @@
   sfx(c.costs - 0.06, 'blip', 0.4);
   sfx(c.finds - 0.06, 'call', 0.42, { pitch: 1 });
   sfx(c.fixes - 0.06, 'call', 0.42, { pitch: 1.2 });
+  sfx(c.holes + 0.05, 'data', 0.3, { dur: 0.9 });
+  sfx(beatOf('liar').t1 + 0.04, 'lock', 0.42);
 
   addScene('liar', function (ctx, t) {
     const zoom = lerp(1, 1.035, tw(t, S0, c.costs, E.io2)) + 0.03 * win(t, c.which, c.costs, 0.6, 0.6);
@@ -96,7 +98,7 @@
       /* the price, printed in the top-left corner of the card */
       const led = tw(t, c.costs - 0.1, c.costs + 0.25, E.outBack);
       if (led > 0) {
-        ctx.save(); ctx.translate(540, 912); const s = lerp(0.8, 1, led); ctx.scale(s, s); ctx.globalAlpha *= clamp(led * 2);
+        ctx.save(); ctx.translate(498, 912); const s = lerp(0.8, 1, led); ctx.scale(s, s); ctx.globalAlpha *= clamp(led * 2);
         const x1 = text(ctx, '1 LIAR', 0, 0, { size: 46, weight: 400, family: F.disp, color: COL.alert });
         text(ctx, ' =', x1, 0, { size: 46, weight: 400, family: F.disp, color: COL.ink });
         text(ctx, '2 EXTRA DOTS', 0, 60, { size: 46, weight: 400, family: F.disp, color: COL.subject, alpha: tw(t, c.two - 0.1, c.two + 0.2) });
@@ -104,7 +106,7 @@
         for (const [j, cue, name, lab] of [[0, c.finds, 'search', 'FIND IT'], [1, c.fixes, 'wrench', 'FIX IT']]) {
           const p = tw(t, cue - 0.1, cue + 0.2, E.outBack);
           if (t < cue - 0.1) continue;
-          const cx = 540 + j * 205, cy = 1036;
+          const cx = 498 + j * 205, cy = 1036;
           ctx.save(); ctx.translate(cx, cy); ctx.scale(lerp(0.6, 1, p), lerp(0.6, 1, p)); ctx.globalAlpha *= clamp(p * 2);
           fillRR(ctx, 4, -26 + 4, 190, 56, 6, rgba(COL.ink, 0.9));
           fillRR(ctx, 0, -26, 190, 56, 6, COL.subject);
@@ -113,15 +115,19 @@
           ctx.restore();
         }
         /* the two extra dots pulse as they are counted */
-        for (const [i, cue] of [[2, c.two], [3, c.two + 0.22]]) {
+        for (const [i, cue0] of [[2, c.two], [3, c.two + 0.22]]) {
+          const k0 = Math.max(0, Math.floor((t - cue0) / 0.55)), cue = cue0 + Math.min(k0, 3) * 0.55;
           const pp = pulse(t, cue + 0.05, 0.05, 0.45);
           if (pp > 0.01) ring(ctx, gX(i), gY(V[i]), 30 + 20 * (1 - pp), COL.subject, 5, pp);
         }
       }
+      /* the scanner reads the card (and reads it again once the liar is fixed) */
+      scanSweep(ctx, B[0] + 16, B[1] + 20, B[2] - 16, B[3] - 20, prog(t, c.holes + 0.05, c.tear - 0.1), COL.subject);
+      scanSweep(ctx, B[0] + 16, B[1] + 20, B[2] - 16, B[3] - 20, prog(t, c.fixes + 0.25, beatOf('liar').t1 + 0.05), COL.good);
       ctx.restore();
-      /* scanner brackets around the card */
-      const bp = tw(t, c.scanner - 0.1, c.scanner + 0.25, E.lin);
-      brackets(ctx, B[0], B[1], B[2], B[3], { p: bp, k: 0.55 + 0.1 * Math.sin(t * 2.2), col: COL.subject, loose: 26, lw: 8, arm: 64 });
+      /* scanner brackets around the card; green once the re-scan is done */
+      const bp = tw(t, c.scanner - 0.1, c.scanner + 0.25, E.lin), ok2 = tw(t, beatOf('liar').t1 + 0.02, beatOf('liar').t1 + 0.2);
+      brackets(ctx, B[0], B[1], B[2], B[3], { p: bp, k: 0.55 + 0.1 * Math.sin(t * 2.2) + 0.45 * ok2, col: ok2 > 0.5 ? COL.good : COL.subject, loose: 26, lw: 8, arm: 64 });
     });
   }, { type: 'fade' });
 });

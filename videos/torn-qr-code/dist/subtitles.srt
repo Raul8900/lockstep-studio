@@ -1,0 +1,151 @@
+1
+00:00:00,295 --> 00:00:02,635
+I just tore a chunk off this QR code.
+
+2
+00:00:02,645 --> 00:00:04,195
+It still scans.
+
+3
+00:00:04,389 --> 00:00:07,489
+That's because most of it
+isn't your message at all.
+
+4
+00:00:07,975 --> 00:00:09,065
+So what's the rest?
+
+5
+00:00:09,075 --> 00:00:10,650
+A backup copy?
+
+6
+00:00:10,798 --> 00:00:13,973
+Smudge one letter, and
+the two copies disagree.
+
+7
+00:00:14,056 --> 00:00:15,071
+Which one's right?
+
+8
+00:00:15,081 --> 00:00:16,731
+Copies can't tell you.
+
+9
+00:00:16,993 --> 00:00:20,968
+Reed-Solomon codes, from
+1960, do something smarter.
+
+10
+00:00:21,444 --> 00:00:23,694
+Say your message is just two numbers.
+
+11
+00:00:23,780 --> 00:00:26,330
+Two dots fix exactly one line.
+
+12
+00:00:26,695 --> 00:00:29,345
+Now add extra dots on that same line.
+
+13
+00:00:29,510 --> 00:00:33,274
+Tear any two away: the survivors
+still fix the line, and it puts
+
+14
+00:00:33,284 --> 00:00:34,984
+the missing dots back.
+
+15
+00:00:35,420 --> 00:00:37,470
+But a scanner can't see holes.
+
+16
+00:00:37,528 --> 00:00:40,554
+To a scanner, a tear
+looks like a wrong number.
+
+17
+00:00:40,793 --> 00:00:42,253
+So which dot is lying?
+
+18
+00:00:42,263 --> 00:00:43,938
+The one that's off the line.
+
+19
+00:00:44,137 --> 00:00:48,687
+Every liar costs two extra dots:
+one finds it, one fixes it.
+
+20
+00:00:49,145 --> 00:00:51,970
+A QR code does the same trick, with bytes.
+
+21
+00:00:52,064 --> 00:00:53,949
+This one has twenty-six bytes.
+
+22
+00:00:53,959 --> 00:00:55,269
+Nine are your message.
+
+23
+00:00:55,279 --> 00:00:57,404
+Seventeen are extra points.
+
+24
+00:00:57,591 --> 00:00:59,856
+At two per liar, it can fix any eight.
+
+25
+00:00:59,866 --> 00:01:01,515
+About thirty percent.
+
+26
+00:01:01,756 --> 00:01:03,796
+That's why a logo can sit in the middle.
+
+27
+00:01:03,806 --> 00:01:05,931
+It's damage, on purpose.
+
+28
+00:01:06,382 --> 00:01:10,107
+The catch: that's thirty percent
+of the bytes, not of the paper.
+
+29
+00:01:10,255 --> 00:01:13,070
+These three corner squares
+aren't protected at all.
+
+30
+00:01:13,080 --> 00:01:15,355
+They're how the scanner finds the code.
+
+31
+00:01:15,466 --> 00:01:18,166
+Tear into one, and this code won't scan.
+
+32
+00:01:18,612 --> 00:01:19,752
+That first tear?
+
+33
+00:01:19,762 --> 00:01:22,187
+It took six of the nine message bytes.
+
+34
+00:01:22,278 --> 00:01:24,828
+The extra points rebuilt every one.
+
+35
+00:01:25,090 --> 00:01:27,405
+A torn QR code isn't lucky.
+
+36
+00:01:27,415 --> 00:01:29,665
+It was built expecting to be torn.

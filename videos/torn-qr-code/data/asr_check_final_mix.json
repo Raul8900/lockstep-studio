@@ -1,0 +1,12 @@
+{
+ "wer_percent": 1.22,
+ "ref_words": 246,
+ "errors": 3,
+ "spacing_variants": [
+  "every one -> everyone"
+ ],
+ "timing_matched_words": 224,
+ "timing_median_ms": -110.0376215934773,
+ "timing_mean_abs_ms": 83.19112406298522,
+ "timing_p95_abs_ms": 190.01237840652152
+}
