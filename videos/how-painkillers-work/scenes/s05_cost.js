@@ -20,7 +20,7 @@
   sfx(c.kidneys, 'pop', 0.4);
   sfx(c.cut, 'deny', 0.6);
 
-  addScene('cost', function (ctx, t) {
+  addScene('cost', anatScene('cost', function (ctx, t) {
     const shieldIn = prog(t, c.stomach, c.stomach + 0.6);
     const thin = prog(t, c.block2, c.block2 + 0.4);
     const shieldCol = mixHex(COL.good, COL.alert, thin);
@@ -57,8 +57,8 @@
     }
 
     withAlpha(ctx, prog(t, c.cut, c.cut + 0.4), function () {
-      tag(ctx, 'FLOW DOWN', 700, 880, { align: 'left', color: COL.alert, size: 26 });
+      tag(ctx, 'IN KIDNEY PROBLEMS', 100, 880, { align: 'left', color: COL.alert, size: 24 });
     });
     tag(ctx, 'THE COST', 90, 400, { align: 'left', color: COL.alert, size: 26 });
-  }, { type: 'fade' });
+  }), { type: 'fade' });
 });

@@ -18,7 +18,7 @@
   sfx(c.pill, 'whoosh', 0.45);
   sfx(c.feels, 'chime', 0.6);
 
-  addScene('why', function (ctx, t) {
+  addScene('why', anatScene('why', function (ctx, t) {
     const pop = prog(t, c.swallow - 0.1, c.swallow + 0.3);
     const draw = tw(t, c.pill - 0.5, c.there, E.io3);
     const ok = tw(t, c.feels - 0.1, c.better + 0.25, E.outBack);
@@ -38,5 +38,5 @@
     check(ctx, A.x + 84, A.y - 70, 66, COL.good, ok, 9);
 
     tag(ctx, 'WHY IT SEEMS TRUE', 90, 400, { align: 'left', color: COL.accent, size: 26 });
-  }, { type: 'slideLeft' });
+  }), { type: 'slideLeft' });
 });

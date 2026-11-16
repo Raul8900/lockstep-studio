@@ -14,7 +14,7 @@
   sfx(c.doesnt, 'impact', 0.9);
   sfx(c.doesnt, 'deny', 0.5);
 
-  addScene('hook', function (ctx, t) {
+  addScene('hook', anatScene('hook', function (ctx, t) {
     const A = ANAT_AT.ankle;
     const fly = tw(t, c.knows - 0.2, c.hurts, E.io3);
     const lock = tw(t, c.hurts - 0.15, c.hurts + 0.25, E.outBack);
@@ -55,5 +55,5 @@
       anatDrug(ctx, t, 8, 0.03, 0.06, 7, sh * 0.9);
     }
     tag(ctx, 'THE MYTH', 90, 400, { align: 'left', color: COL.accent, size: 26 });
-  }, { type: 'fade' });
+  }), { type: 'fade' });
 });

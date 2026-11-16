@@ -15,7 +15,7 @@
   sfx(c.doesnt2, 'deny', 0.5);
   sfx(c.end + 0.2, 'chime', 0.7);
 
-  addScene('truth', function (ctx, t) {
+  addScene('truth', anatScene('truth', function (ctx, t) {
     const A = ANAT_AT.ankle;
     const card = prog(t, c.end + 0.1, c.end + 0.6);
     const bodyA = 1 - 0.92 * card;
@@ -56,5 +56,5 @@
     }
 
     tag(ctx, 'THE TRUTH', 90, 400, { align: 'left', color: COL.ink, size: 26 });
-  }, { type: 'zoomOut', fx: 540, fy: 800 });
+  }), { type: 'zoomOut', fx: 540, fy: 800 });
 });
