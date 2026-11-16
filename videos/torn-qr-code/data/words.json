@@ -1,0 +1,1922 @@
+[
+{
+"w": "I",
+"t0": 0.345,
+"t1": 0.42,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "just",
+"t0": 0.47,
+"t1": 0.595,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "tore",
+"t0": 0.645,
+"t1": 0.795,
+"beat": "hook",
+"take": 0,
+"cls": "w"
+},
+{
+"w": "a",
+"t0": 0.82,
+"t1": 0.845,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "chunk",
+"t0": 0.92,
+"t1": 1.145,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "off",
+"t0": 1.17,
+"t1": 1.295,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "this",
+"t0": 1.32,
+"t1": 1.445,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "QR",
+"t0": 1.495,
+"t1": 1.795,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "code.",
+"t0": 1.845,
+"t1": 2.395,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "It",
+"t0": 2.695,
+"t1": 2.795,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "still",
+"t0": 2.845,
+"t1": 3.07,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "scans.",
+"t0": 3.145,
+"t1": 3.895,
+"beat": "hook",
+"take": 0,
+"cls": "k"
+},
+{
+"w": "That's",
+"t0": 4.4389,
+"t1": 4.7139,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "because",
+"t0": 4.7639,
+"t1": 5.0639,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "most",
+"t0": 5.1389,
+"t1": 5.3889,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "of",
+"t0": 5.4139,
+"t1": 5.4639,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "it",
+"t0": 5.5139,
+"t1": 5.7139,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "isn't",
+"t0": 5.7889,
+"t1": 5.9889,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "your",
+"t0": 6.0139,
+"t1": 6.0889,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "message",
+"t0": 6.1389,
+"t1": 6.4639,
+"beat": "hook",
+"take": 1,
+"cls": "m"
+},
+{
+"w": "at",
+"t0": 6.4889,
+"t1": 6.5389,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "all.",
+"t0": 6.5889,
+"t1": 7.1889,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "So",
+"t0": 8.0247,
+"t1": 8.1248,
+"beat": "copies",
+"take": 2,
+"cls": null
+},
+{
+"w": "what's",
+"t0": 8.1497,
+"t1": 8.3247,
+"beat": "copies",
+"take": 2,
+"cls": null
+},
+{
+"w": "the",
+"t0": 8.3498,
+"t1": 8.3997,
+"beat": "copies",
+"take": 2,
+"cls": null
+},
+{
+"w": "rest?",
+"t0": 8.4497,
+"t1": 8.9247,
+"beat": "copies",
+"take": 2,
+"cls": null
+},
+{
+"w": "A",
+"t0": 9.1248,
+"t1": 9.1747,
+"beat": "copies",
+"take": 2,
+"cls": null
+},
+{
+"w": "backup",
+"t0": 9.2248,
+"t1": 9.5998,
+"beat": "copies",
+"take": 2,
+"cls": null
+},
+{
+"w": "copy?",
+"t0": 9.6497,
+"t1": 10.3498,
+"beat": "copies",
+"take": 2,
+"cls": null
+},
+{
+"w": "Smudge",
+"t0": 10.8483,
+"t1": 11.1233,
+"beat": "copies",
+"take": 3,
+"cls": "w"
+},
+{
+"w": "one",
+"t0": 11.1733,
+"t1": 11.3233,
+"beat": "copies",
+"take": 3,
+"cls": null
+},
+{
+"w": "letter,",
+"t0": 11.3733,
+"t1": 11.8483,
+"beat": "copies",
+"take": 3,
+"cls": "m"
+},
+{
+"w": "and",
+"t0": 11.9733,
+"t1": 12.0483,
+"beat": "copies",
+"take": 3,
+"cls": null
+},
+{
+"w": "the",
+"t0": 12.0733,
+"t1": 12.1233,
+"beat": "copies",
+"take": 3,
+"cls": null
+},
+{
+"w": "two",
+"t0": 12.1983,
+"t1": 12.3483,
+"beat": "copies",
+"take": 3,
+"cls": "n"
+},
+{
+"w": "copies",
+"t0": 12.3983,
+"t1": 12.7483,
+"beat": "copies",
+"take": 3,
+"cls": null
+},
+{
+"w": "disagree.",
+"t0": 12.7983,
+"t1": 13.6733,
+"beat": "copies",
+"take": 3,
+"cls": "w"
+},
+{
+"w": "Which",
+"t0": 14.1063,
+"t1": 14.2563,
+"beat": "copies",
+"take": 4,
+"cls": null
+},
+{
+"w": "one's",
+"t0": 14.2813,
+"t1": 14.4563,
+"beat": "copies",
+"take": 4,
+"cls": null
+},
+{
+"w": "right?",
+"t0": 14.5063,
+"t1": 14.9313,
+"beat": "copies",
+"take": 4,
+"cls": null
+},
+{
+"w": "Copies",
+"t0": 15.1313,
+"t1": 15.4813,
+"beat": "copies",
+"take": 4,
+"cls": null
+},
+{
+"w": "can't",
+"t0": 15.5313,
+"t1": 15.7063,
+"beat": "copies",
+"take": 4,
+"cls": null
+},
+{
+"w": "tell",
+"t0": 15.7563,
+"t1": 15.9563,
+"beat": "copies",
+"take": 4,
+"cls": null
+},
+{
+"w": "you.",
+"t0": 16.0063,
+"t1": 16.4313,
+"beat": "copies",
+"take": 4,
+"cls": null
+},
+{
+"w": "Reed-Solomon",
+"t0": 17.043,
+"t1": 17.668,
+"beat": "copies",
+"take": 5,
+"cls": "k"
+},
+{
+"w": "codes,",
+"t0": 17.718,
+"t1": 18.118,
+"beat": "copies",
+"take": 5,
+"cls": null
+},
+{
+"w": "from",
+"t0": 18.168,
+"t1": 18.268,
+"beat": "copies",
+"take": 5,
+"cls": null
+},
+{
+"w": "1960,",
+"t0": 18.293,
+"t1": 19.268,
+"beat": "copies",
+"take": 5,
+"cls": "n"
+},
+{
+"w": "do",
+"t0": 19.393,
+"t1": 19.493,
+"beat": "copies",
+"take": 5,
+"cls": null
+},
+{
+"w": "something",
+"t0": 19.543,
+"t1": 19.793,
+"beat": "copies",
+"take": 5,
+"cls": null
+},
+{
+"w": "smarter.",
+"t0": 19.868,
+"t1": 20.668,
+"beat": "copies",
+"take": 5,
+"cls": null
+},
+{
+"w": "Say",
+"t0": 21.4938,
+"t1": 21.6188,
+"beat": "curve",
+"take": 6,
+"cls": null
+},
+{
+"w": "your",
+"t0": 21.6688,
+"t1": 21.7438,
+"beat": "curve",
+"take": 6,
+"cls": null
+},
+{
+"w": "message",
+"t0": 21.7938,
+"t1": 22.1188,
+"beat": "curve",
+"take": 6,
+"cls": "m"
+},
+{
+"w": "is",
+"t0": 22.1688,
+"t1": 22.2438,
+"beat": "curve",
+"take": 6,
+"cls": null
+},
+{
+"w": "just",
+"t0": 22.2938,
+"t1": 22.4188,
+"beat": "curve",
+"take": 6,
+"cls": null
+},
+{
+"w": "two",
+"t0": 22.4688,
+"t1": 22.6188,
+"beat": "curve",
+"take": 6,
+"cls": "n"
+},
+{
+"w": "numbers.",
+"t0": 22.6688,
+"t1": 23.3938,
+"beat": "curve",
+"take": 6,
+"cls": "m"
+},
+{
+"w": "Two",
+"t0": 23.8302,
+"t1": 23.9802,
+"beat": "curve",
+"take": 7,
+"cls": "n"
+},
+{
+"w": "dots",
+"t0": 24.0302,
+"t1": 24.3052,
+"beat": "curve",
+"take": 7,
+"cls": null
+},
+{
+"w": "fix",
+"t0": 24.3552,
+"t1": 24.5802,
+"beat": "curve",
+"take": 7,
+"cls": null
+},
+{
+"w": "exactly",
+"t0": 24.6302,
+"t1": 25.1052,
+"beat": "curve",
+"take": 7,
+"cls": null
+},
+{
+"w": "one",
+"t0": 25.1552,
+"t1": 25.3302,
+"beat": "curve",
+"take": 7,
+"cls": null
+},
+{
+"w": "line.",
+"t0": 25.3802,
+"t1": 26.0302,
+"beat": "curve",
+"take": 7,
+"cls": "k"
+},
+{
+"w": "Now",
+"t0": 26.7451,
+"t1": 26.9201,
+"beat": "curve",
+"take": 8,
+"cls": null
+},
+{
+"w": "add",
+"t0": 26.9701,
+"t1": 27.1201,
+"beat": "curve",
+"take": 8,
+"cls": null
+},
+{
+"w": "extra",
+"t0": 27.1701,
+"t1": 27.4951,
+"beat": "curve",
+"take": 8,
+"cls": "k"
+},
+{
+"w": "dots",
+"t0": 27.5451,
+"t1": 27.7951,
+"beat": "curve",
+"take": 8,
+"cls": null
+},
+{
+"w": "on",
+"t0": 27.8201,
+"t1": 27.8951,
+"beat": "curve",
+"take": 8,
+"cls": null
+},
+{
+"w": "that",
+"t0": 27.9201,
+"t1": 28.0701,
+"beat": "curve",
+"take": 8,
+"cls": null
+},
+{
+"w": "same",
+"t0": 28.1201,
+"t1": 28.3451,
+"beat": "curve",
+"take": 8,
+"cls": null
+},
+{
+"w": "line.",
+"t0": 28.3951,
+"t1": 29.0451,
+"beat": "curve",
+"take": 8,
+"cls": "k"
+},
+{
+"w": "Tear",
+"t0": 29.5595,
+"t1": 29.7845,
+"beat": "curve",
+"take": 9,
+"cls": "w"
+},
+{
+"w": "any",
+"t0": 29.8095,
+"t1": 29.9595,
+"beat": "curve",
+"take": 9,
+"cls": null
+},
+{
+"w": "two",
+"t0": 30.0095,
+"t1": 30.1595,
+"beat": "curve",
+"take": 9,
+"cls": "n"
+},
+{
+"w": "away:",
+"t0": 30.2095,
+"t1": 30.7845,
+"beat": "curve",
+"take": 9,
+"cls": null
+},
+{
+"w": "the",
+"t0": 30.9595,
+"t1": 31.0095,
+"beat": "curve",
+"take": 9,
+"cls": null
+},
+{
+"w": "survivors",
+"t0": 31.0595,
+"t1": 31.5845,
+"beat": "curve",
+"take": 9,
+"cls": null
+},
+{
+"w": "still",
+"t0": 31.6345,
+"t1": 31.8595,
+"beat": "curve",
+"take": 9,
+"cls": null
+},
+{
+"w": "fix",
+"t0": 31.9095,
+"t1": 32.1095,
+"beat": "curve",
+"take": 9,
+"cls": null
+},
+{
+"w": "the",
+"t0": 32.1595,
+"t1": 32.2345,
+"beat": "curve",
+"take": 9,
+"cls": null
+},
+{
+"w": "line,",
+"t0": 32.2845,
+"t1": 32.7845,
+"beat": "curve",
+"take": 9,
+"cls": "k"
+},
+{
+"w": "and",
+"t0": 32.8845,
+"t1": 32.9595,
+"beat": "curve",
+"take": 9,
+"cls": null
+},
+{
+"w": "it",
+"t0": 32.9845,
+"t1": 33.0345,
+"beat": "curve",
+"take": 9,
+"cls": null
+},
+{
+"w": "puts",
+"t0": 33.0845,
+"t1": 33.2845,
+"beat": "curve",
+"take": 9,
+"cls": null
+},
+{
+"w": "the",
+"t0": 33.3345,
+"t1": 33.3845,
+"beat": "curve",
+"take": 9,
+"cls": null
+},
+{
+"w": "missing",
+"t0": 33.4345,
+"t1": 33.7095,
+"beat": "curve",
+"take": 9,
+"cls": null
+},
+{
+"w": "dots",
+"t0": 33.7595,
+"t1": 34.0345,
+"beat": "curve",
+"take": 9,
+"cls": null
+},
+{
+"w": "back.",
+"t0": 34.0845,
+"t1": 34.6845,
+"beat": "curve",
+"take": 9,
+"cls": null
+},
+{
+"w": "But",
+"t0": 35.4695,
+"t1": 35.5695,
+"beat": "liar",
+"take": 10,
+"cls": null
+},
+{
+"w": "a",
+"t0": 35.5945,
+"t1": 35.6195,
+"beat": "liar",
+"take": 10,
+"cls": null
+},
+{
+"w": "scanner",
+"t0": 35.6695,
+"t1": 36.0195,
+"beat": "liar",
+"take": 10,
+"cls": null
+},
+{
+"w": "can't",
+"t0": 36.0695,
+"t1": 36.2695,
+"beat": "liar",
+"take": 10,
+"cls": null
+},
+{
+"w": "see",
+"t0": 36.3195,
+"t1": 36.4695,
+"beat": "liar",
+"take": 10,
+"cls": null
+},
+{
+"w": "holes.",
+"t0": 36.5195,
+"t1": 37.1695,
+"beat": "liar",
+"take": 10,
+"cls": "w"
+},
+{
+"w": "To",
+"t0": 37.5785,
+"t1": 37.6535,
+"beat": "liar",
+"take": 11,
+"cls": null
+},
+{
+"w": "a",
+"t0": 37.6785,
+"t1": 37.7035,
+"beat": "liar",
+"take": 11,
+"cls": null
+},
+{
+"w": "scanner,",
+"t0": 37.7535,
+"t1": 38.3285,
+"beat": "liar",
+"take": 11,
+"cls": null
+},
+{
+"w": "a",
+"t0": 38.4535,
+"t1": 38.5035,
+"beat": "liar",
+"take": 11,
+"cls": null
+},
+{
+"w": "tear",
+"t0": 38.5785,
+"t1": 38.8285,
+"beat": "liar",
+"take": 11,
+"cls": "w"
+},
+{
+"w": "looks",
+"t0": 38.8785,
+"t1": 39.0535,
+"beat": "liar",
+"take": 11,
+"cls": null
+},
+{
+"w": "like",
+"t0": 39.0785,
+"t1": 39.1785,
+"beat": "liar",
+"take": 11,
+"cls": null
+},
+{
+"w": "a",
+"t0": 39.2035,
+"t1": 39.2285,
+"beat": "liar",
+"take": 11,
+"cls": null
+},
+{
+"w": "wrong",
+"t0": 39.2785,
+"t1": 39.5285,
+"beat": "liar",
+"take": 11,
+"cls": "w"
+},
+{
+"w": "number.",
+"t0": 39.5785,
+"t1": 40.2535,
+"beat": "liar",
+"take": 11,
+"cls": null
+},
+{
+"w": "So",
+"t0": 40.8426,
+"t1": 40.9426,
+"beat": "liar",
+"take": 12,
+"cls": null
+},
+{
+"w": "which",
+"t0": 40.9676,
+"t1": 41.1426,
+"beat": "liar",
+"take": 12,
+"cls": null
+},
+{
+"w": "dot",
+"t0": 41.1926,
+"t1": 41.3926,
+"beat": "liar",
+"take": 12,
+"cls": null
+},
+{
+"w": "is",
+"t0": 41.4176,
+"t1": 41.5176,
+"beat": "liar",
+"take": 12,
+"cls": null
+},
+{
+"w": "lying?",
+"t0": 41.5676,
+"t1": 42.0926,
+"beat": "liar",
+"take": 12,
+"cls": "w"
+},
+{
+"w": "The",
+"t0": 42.3126,
+"t1": 42.3626,
+"beat": "liar",
+"take": 12,
+"cls": null
+},
+{
+"w": "one",
+"t0": 42.3876,
+"t1": 42.4876,
+"beat": "liar",
+"take": 12,
+"cls": null
+},
+{
+"w": "that's",
+"t0": 42.5126,
+"t1": 42.6876,
+"beat": "liar",
+"take": 12,
+"cls": null
+},
+{
+"w": "off",
+"t0": 42.7126,
+"t1": 42.8626,
+"beat": "liar",
+"take": 12,
+"cls": null
+},
+{
+"w": "the",
+"t0": 42.8876,
+"t1": 42.9376,
+"beat": "liar",
+"take": 12,
+"cls": null
+},
+{
+"w": "line.",
+"t0": 42.9876,
+"t1": 43.6376,
+"beat": "liar",
+"take": 12,
+"cls": "k"
+},
+{
+"w": "Every",
+"t0": 44.1871,
+"t1": 44.4371,
+"beat": "liar",
+"take": 13,
+"cls": null
+},
+{
+"w": "liar",
+"t0": 44.4871,
+"t1": 44.7621,
+"beat": "liar",
+"take": 13,
+"cls": "w"
+},
+{
+"w": "costs",
+"t0": 44.8121,
+"t1": 45.1371,
+"beat": "liar",
+"take": 13,
+"cls": null
+},
+{
+"w": "two",
+"t0": 45.1871,
+"t1": 45.3371,
+"beat": "liar",
+"take": 13,
+"cls": "n"
+},
+{
+"w": "extra",
+"t0": 45.3871,
+"t1": 45.7121,
+"beat": "liar",
+"take": 13,
+"cls": "k"
+},
+{
+"w": "dots:",
+"t0": 45.7621,
+"t1": 46.3621,
+"beat": "liar",
+"take": 13,
+"cls": null
+},
+{
+"w": "one",
+"t0": 46.512,
+"t1": 46.687,
+"beat": "liar",
+"take": 13,
+"cls": null
+},
+{
+"w": "finds",
+"t0": 46.762,
+"t1": 47.037,
+"beat": "liar",
+"take": 13,
+"cls": null
+},
+{
+"w": "it,",
+"t0": 47.087,
+"t1": 47.187,
+"beat": "liar",
+"take": 13,
+"cls": null
+},
+{
+"w": "one",
+"t0": 47.262,
+"t1": 47.437,
+"beat": "liar",
+"take": 13,
+"cls": null
+},
+{
+"w": "fixes",
+"t0": 47.512,
+"t1": 47.887,
+"beat": "liar",
+"take": 13,
+"cls": null
+},
+{
+"w": "it.",
+"t0": 47.962,
+"t1": 48.387,
+"beat": "liar",
+"take": 13,
+"cls": null
+},
+{
+"w": "A",
+"t0": 49.1947,
+"t1": 49.2448,
+"beat": "bytes",
+"take": 14,
+"cls": null
+},
+{
+"w": "QR",
+"t0": 49.2948,
+"t1": 49.5947,
+"beat": "bytes",
+"take": 14,
+"cls": null
+},
+{
+"w": "code",
+"t0": 49.6448,
+"t1": 49.8447,
+"beat": "bytes",
+"take": 14,
+"cls": null
+},
+{
+"w": "does",
+"t0": 49.8698,
+"t1": 49.9948,
+"beat": "bytes",
+"take": 14,
+"cls": null
+},
+{
+"w": "the",
+"t0": 50.0198,
+"t1": 50.0697,
+"beat": "bytes",
+"take": 14,
+"cls": null
+},
+{
+"w": "same",
+"t0": 50.1198,
+"t1": 50.3447,
+"beat": "bytes",
+"take": 14,
+"cls": null
+},
+{
+"w": "trick,",
+"t0": 50.3948,
+"t1": 50.7448,
+"beat": "bytes",
+"take": 14,
+"cls": null
+},
+{
+"w": "with",
+"t0": 50.8197,
+"t1": 50.9447,
+"beat": "bytes",
+"take": 14,
+"cls": null
+},
+{
+"w": "bytes.",
+"t0": 50.9948,
+"t1": 51.6698,
+"beat": "bytes",
+"take": 14,
+"cls": null
+},
+{
+"w": "This",
+"t0": 52.1137,
+"t1": 52.2637,
+"beat": "bytes",
+"take": 15,
+"cls": null
+},
+{
+"w": "one",
+"t0": 52.2887,
+"t1": 52.3887,
+"beat": "bytes",
+"take": 15,
+"cls": null
+},
+{
+"w": "has",
+"t0": 52.4387,
+"t1": 52.5887,
+"beat": "bytes",
+"take": 15,
+"cls": null
+},
+{
+"w": "twenty-six",
+"t0": 52.6387,
+"t1": 53.1387,
+"beat": "bytes",
+"take": 15,
+"cls": "n"
+},
+{
+"w": "bytes.",
+"t0": 53.1887,
+"t1": 53.7887,
+"beat": "bytes",
+"take": 15,
+"cls": null
+},
+{
+"w": "Nine",
+"t0": 54.0087,
+"t1": 54.2337,
+"beat": "bytes",
+"take": 15,
+"cls": "n"
+},
+{
+"w": "are",
+"t0": 54.2587,
+"t1": 54.3087,
+"beat": "bytes",
+"take": 15,
+"cls": null
+},
+{
+"w": "your",
+"t0": 54.3337,
+"t1": 54.4087,
+"beat": "bytes",
+"take": 15,
+"cls": null
+},
+{
+"w": "message.",
+"t0": 54.4587,
+"t1": 55.1087,
+"beat": "bytes",
+"take": 15,
+"cls": "m"
+},
+{
+"w": "Seventeen",
+"t0": 55.3287,
+"t1": 55.8537,
+"beat": "bytes",
+"take": 15,
+"cls": "n"
+},
+{
+"w": "are",
+"t0": 55.9037,
+"t1": 55.9787,
+"beat": "bytes",
+"take": 15,
+"cls": null
+},
+{
+"w": "extra",
+"t0": 56.0287,
+"t1": 56.3537,
+"beat": "bytes",
+"take": 15,
+"cls": "k"
+},
+{
+"w": "points.",
+"t0": 56.4037,
+"t1": 57.1037,
+"beat": "bytes",
+"take": 15,
+"cls": "k"
+},
+{
+"w": "At",
+"t0": 57.6405,
+"t1": 57.7655,
+"beat": "bytes",
+"take": 16,
+"cls": null
+},
+{
+"w": "two",
+"t0": 57.8405,
+"t1": 57.9905,
+"beat": "bytes",
+"take": 16,
+"cls": "n"
+},
+{
+"w": "per",
+"t0": 58.0405,
+"t1": 58.1405,
+"beat": "bytes",
+"take": 16,
+"cls": null
+},
+{
+"w": "liar,",
+"t0": 58.1905,
+"t1": 58.5155,
+"beat": "bytes",
+"take": 16,
+"cls": "w"
+},
+{
+"w": "it",
+"t0": 58.6155,
+"t1": 58.6655,
+"beat": "bytes",
+"take": 16,
+"cls": null
+},
+{
+"w": "can",
+"t0": 58.6905,
+"t1": 58.7905,
+"beat": "bytes",
+"take": 16,
+"cls": null
+},
+{
+"w": "fix",
+"t0": 58.8405,
+"t1": 59.0155,
+"beat": "bytes",
+"take": 16,
+"cls": null
+},
+{
+"w": "any",
+"t0": 59.0405,
+"t1": 59.1905,
+"beat": "bytes",
+"take": 16,
+"cls": null
+},
+{
+"w": "eight.",
+"t0": 59.2405,
+"t1": 59.7155,
+"beat": "bytes",
+"take": 16,
+"cls": "n"
+},
+{
+"w": "About",
+"t0": 59.9155,
+"t1": 60.1655,
+"beat": "bytes",
+"take": 16,
+"cls": null
+},
+{
+"w": "thirty",
+"t0": 60.2155,
+"t1": 60.4155,
+"beat": "bytes",
+"take": 16,
+"cls": "n"
+},
+{
+"w": "percent.",
+"t0": 60.4655,
+"t1": 61.2155,
+"beat": "bytes",
+"take": 16,
+"cls": "n"
+},
+{
+"w": "That's",
+"t0": 61.8062,
+"t1": 61.9812,
+"beat": "bytes",
+"take": 17,
+"cls": null
+},
+{
+"w": "why",
+"t0": 62.0062,
+"t1": 62.1312,
+"beat": "bytes",
+"take": 17,
+"cls": null
+},
+{
+"w": "a",
+"t0": 62.1562,
+"t1": 62.2062,
+"beat": "bytes",
+"take": 17,
+"cls": null
+},
+{
+"w": "logo",
+"t0": 62.2562,
+"t1": 62.5312,
+"beat": "bytes",
+"take": 17,
+"cls": null
+},
+{
+"w": "can",
+"t0": 62.5812,
+"t1": 62.7062,
+"beat": "bytes",
+"take": 17,
+"cls": null
+},
+{
+"w": "sit",
+"t0": 62.7812,
+"t1": 62.9312,
+"beat": "bytes",
+"take": 17,
+"cls": null
+},
+{
+"w": "in",
+"t0": 62.9562,
+"t1": 63.0062,
+"beat": "bytes",
+"take": 17,
+"cls": null
+},
+{
+"w": "the",
+"t0": 63.0312,
+"t1": 63.0812,
+"beat": "bytes",
+"take": 17,
+"cls": null
+},
+{
+"w": "middle.",
+"t0": 63.1312,
+"t1": 63.6562,
+"beat": "bytes",
+"take": 17,
+"cls": null
+},
+{
+"w": "It's",
+"t0": 63.8562,
+"t1": 64.0562,
+"beat": "bytes",
+"take": 17,
+"cls": null
+},
+{
+"w": "damage,",
+"t0": 64.1062,
+"t1": 64.5812,
+"beat": "bytes",
+"take": 17,
+"cls": "w"
+},
+{
+"w": "on",
+"t0": 64.6812,
+"t1": 64.8062,
+"beat": "bytes",
+"take": 17,
+"cls": null
+},
+{
+"w": "purpose.",
+"t0": 64.8562,
+"t1": 65.6312,
+"beat": "bytes",
+"take": 17,
+"cls": null
+},
+{
+"w": "The",
+"t0": 66.4322,
+"t1": 66.5072,
+"beat": "fineprint",
+"take": 18,
+"cls": null
+},
+{
+"w": "catch:",
+"t0": 66.5823,
+"t1": 67.1322,
+"beat": "fineprint",
+"take": 18,
+"cls": "w"
+},
+{
+"w": "that's",
+"t0": 67.2823,
+"t1": 67.5072,
+"beat": "fineprint",
+"take": 18,
+"cls": null
+},
+{
+"w": "thirty",
+"t0": 67.5572,
+"t1": 67.8323,
+"beat": "fineprint",
+"take": 18,
+"cls": "n"
+},
+{
+"w": "percent",
+"t0": 67.8822,
+"t1": 68.1822,
+"beat": "fineprint",
+"take": 18,
+"cls": "n"
+},
+{
+"w": "of",
+"t0": 68.2073,
+"t1": 68.2572,
+"beat": "fineprint",
+"take": 18,
+"cls": null
+},
+{
+"w": "the",
+"t0": 68.2823,
+"t1": 68.3323,
+"beat": "fineprint",
+"take": 18,
+"cls": null
+},
+{
+"w": "bytes,",
+"t0": 68.3822,
+"t1": 68.7322,
+"beat": "fineprint",
+"take": 18,
+"cls": null
+},
+{
+"w": "not",
+"t0": 68.7823,
+"t1": 68.9073,
+"beat": "fineprint",
+"take": 18,
+"cls": null
+},
+{
+"w": "of",
+"t0": 68.9322,
+"t1": 68.9822,
+"beat": "fineprint",
+"take": 18,
+"cls": null
+},
+{
+"w": "the",
+"t0": 69.0072,
+"t1": 69.0572,
+"beat": "fineprint",
+"take": 18,
+"cls": null
+},
+{
+"w": "paper.",
+"t0": 69.1072,
+"t1": 69.8072,
+"beat": "fineprint",
+"take": 18,
+"cls": null
+},
+{
+"w": "These",
+"t0": 70.3053,
+"t1": 70.5553,
+"beat": "fineprint",
+"take": 19,
+"cls": null
+},
+{
+"w": "three",
+"t0": 70.6303,
+"t1": 70.8303,
+"beat": "fineprint",
+"take": 19,
+"cls": "n"
+},
+{
+"w": "corner",
+"t0": 70.8803,
+"t1": 71.1803,
+"beat": "fineprint",
+"take": 19,
+"cls": null
+},
+{
+"w": "squares",
+"t0": 71.2303,
+"t1": 71.6053,
+"beat": "fineprint",
+"take": 19,
+"cls": null
+},
+{
+"w": "aren't",
+"t0": 71.6553,
+"t1": 71.8053,
+"beat": "fineprint",
+"take": 19,
+"cls": "w"
+},
+{
+"w": "protected",
+"t0": 71.8303,
+"t1": 72.2803,
+"beat": "fineprint",
+"take": 19,
+"cls": null
+},
+{
+"w": "at",
+"t0": 72.3053,
+"t1": 72.3553,
+"beat": "fineprint",
+"take": 19,
+"cls": null
+},
+{
+"w": "all.",
+"t0": 72.4053,
+"t1": 72.9803,
+"beat": "fineprint",
+"take": 19,
+"cls": null
+},
+{
+"w": "They're",
+"t0": 73.1303,
+"t1": 73.2303,
+"beat": "fineprint",
+"take": 19,
+"cls": null
+},
+{
+"w": "how",
+"t0": 73.2803,
+"t1": 73.4053,
+"beat": "fineprint",
+"take": 19,
+"cls": null
+},
+{
+"w": "the",
+"t0": 73.4303,
+"t1": 73.4803,
+"beat": "fineprint",
+"take": 19,
+"cls": null
+},
+{
+"w": "scanner",
+"t0": 73.5553,
+"t1": 73.9303,
+"beat": "fineprint",
+"take": 19,
+"cls": null
+},
+{
+"w": "finds",
+"t0": 74.0053,
+"t1": 74.2803,
+"beat": "fineprint",
+"take": 19,
+"cls": null
+},
+{
+"w": "the",
+"t0": 74.3053,
+"t1": 74.3553,
+"beat": "fineprint",
+"take": 19,
+"cls": null
+},
+{
+"w": "code.",
+"t0": 74.4053,
+"t1": 75.0553,
+"beat": "fineprint",
+"take": 19,
+"cls": null
+},
+{
+"w": "Tear",
+"t0": 75.5161,
+"t1": 75.6911,
+"beat": "fineprint",
+"take": 20,
+"cls": "w"
+},
+{
+"w": "into",
+"t0": 75.7161,
+"t1": 75.9161,
+"beat": "fineprint",
+"take": 20,
+"cls": null
+},
+{
+"w": "one,",
+"t0": 75.9661,
+"t1": 76.3661,
+"beat": "fineprint",
+"take": 20,
+"cls": null
+},
+{
+"w": "and",
+"t0": 76.4411,
+"t1": 76.5161,
+"beat": "fineprint",
+"take": 20,
+"cls": null
+},
+{
+"w": "this",
+"t0": 76.5411,
+"t1": 76.6661,
+"beat": "fineprint",
+"take": 20,
+"cls": null
+},
+{
+"w": "code",
+"t0": 76.7161,
+"t1": 76.9161,
+"beat": "fineprint",
+"take": 20,
+"cls": null
+},
+{
+"w": "won't",
+"t0": 76.9411,
+"t1": 77.1161,
+"beat": "fineprint",
+"take": 20,
+"cls": "w"
+},
+{
+"w": "scan.",
+"t0": 77.1661,
+"t1": 77.8661,
+"beat": "fineprint",
+"take": 20,
+"cls": null
+},
+{
+"w": "That",
+"t0": 78.6618,
+"t1": 78.8618,
+"beat": "payoff",
+"take": 21,
+"cls": null
+},
+{
+"w": "first",
+"t0": 78.9118,
+"t1": 79.1368,
+"beat": "payoff",
+"take": 21,
+"cls": null
+},
+{
+"w": "tear?",
+"t0": 79.1868,
+"t1": 79.6618,
+"beat": "payoff",
+"take": 21,
+"cls": "w"
+},
+{
+"w": "It",
+"t0": 79.8118,
+"t1": 79.9118,
+"beat": "payoff",
+"take": 21,
+"cls": null
+},
+{
+"w": "took",
+"t0": 79.9618,
+"t1": 80.1118,
+"beat": "payoff",
+"take": 21,
+"cls": null
+},
+{
+"w": "six",
+"t0": 80.1868,
+"t1": 80.3868,
+"beat": "payoff",
+"take": 21,
+"cls": "n"
+},
+{
+"w": "of",
+"t0": 80.4118,
+"t1": 80.4618,
+"beat": "payoff",
+"take": 21,
+"cls": null
+},
+{
+"w": "the",
+"t0": 80.4868,
+"t1": 80.5368,
+"beat": "payoff",
+"take": 21,
+"cls": null
+},
+{
+"w": "nine",
+"t0": 80.5868,
+"t1": 80.8368,
+"beat": "payoff",
+"take": 21,
+"cls": "n"
+},
+{
+"w": "message",
+"t0": 80.8868,
+"t1": 81.2118,
+"beat": "payoff",
+"take": 21,
+"cls": "m"
+},
+{
+"w": "bytes.",
+"t0": 81.2618,
+"t1": 81.8868,
+"beat": "payoff",
+"take": 21,
+"cls": null
+},
+{
+"w": "The",
+"t0": 82.3275,
+"t1": 82.4275,
+"beat": "payoff",
+"take": 22,
+"cls": null
+},
+{
+"w": "extra",
+"t0": 82.4775,
+"t1": 82.8025,
+"beat": "payoff",
+"take": 22,
+"cls": "k"
+},
+{
+"w": "points",
+"t0": 82.8525,
+"t1": 83.2025,
+"beat": "payoff",
+"take": 22,
+"cls": "k"
+},
+{
+"w": "rebuilt",
+"t0": 83.2525,
+"t1": 83.6275,
+"beat": "payoff",
+"take": 22,
+"cls": "k"
+},
+{
+"w": "every",
+"t0": 83.6775,
+"t1": 83.9025,
+"beat": "payoff",
+"take": 22,
+"cls": null
+},
+{
+"w": "one.",
+"t0": 83.9525,
+"t1": 84.5275,
+"beat": "payoff",
+"take": 22,
+"cls": null
+},
+{
+"w": "A",
+"t0": 85.1404,
+"t1": 85.1904,
+"beat": "payoff",
+"take": 23,
+"cls": null
+},
+{
+"w": "torn",
+"t0": 85.2654,
+"t1": 85.5904,
+"beat": "payoff",
+"take": 23,
+"cls": "w"
+},
+{
+"w": "QR",
+"t0": 85.6404,
+"t1": 85.9904,
+"beat": "payoff",
+"take": 23,
+"cls": null
+},
+{
+"w": "code",
+"t0": 86.0404,
+"t1": 86.3404,
+"beat": "payoff",
+"take": 23,
+"cls": null
+},
+{
+"w": "isn't",
+"t0": 86.3904,
+"t1": 86.5904,
+"beat": "payoff",
+"take": 23,
+"cls": null
+},
+{
+"w": "lucky.",
+"t0": 86.6404,
+"t1": 87.2654,
+"beat": "payoff",
+"take": 23,
+"cls": null
+},
+{
+"w": "It",
+"t0": 87.4654,
+"t1": 87.5654,
+"beat": "payoff",
+"take": 23,
+"cls": null
+},
+{
+"w": "was",
+"t0": 87.5904,
+"t1": 87.6904,
+"beat": "payoff",
+"take": 23,
+"cls": null
+},
+{
+"w": "built",
+"t0": 87.7404,
+"t1": 87.9404,
+"beat": "payoff",
+"take": 23,
+"cls": null
+},
+{
+"w": "expecting",
+"t0": 87.9654,
+"t1": 88.3904,
+"beat": "payoff",
+"take": 23,
+"cls": null
+},
+{
+"w": "to",
+"t0": 88.4154,
+"t1": 88.4654,
+"beat": "payoff",
+"take": 23,
+"cls": null
+},
+{
+"w": "be",
+"t0": 88.4904,
+"t1": 88.5904,
+"beat": "payoff",
+"take": 23,
+"cls": null
+},
+{
+"w": "torn.",
+"t0": 88.6654,
+"t1": 89.3654,
+"beat": "payoff",
+"take": 23,
+"cls": "w"
+}
+]

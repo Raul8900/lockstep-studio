@@ -1,0 +1,16 @@
+{
+  "title": "Why a Torn QR Code Still Scans",
+  "tag": "TORN QR CODE",
+  "output": "torn_qr_code_vertical",
+  "max_seconds": 120,
+  "music": { "bpm": 108, "transpose": 2, "kit": "pluck" },
+  "chapters": [
+    { "id": "hook",      "name": "THE TEAR",       "mood": "drone" },
+    { "id": "copies",    "name": "ATTEMPT 1",      "mood": "light" },
+    { "id": "curve",     "name": "ATTEMPT 2",      "mood": "build" },
+    { "id": "liar",      "name": "THE LIAR",       "mood": "mechanical" },
+    { "id": "bytes",     "name": "THE REAL CODE",  "mood": "bright" },
+    { "id": "fineprint", "name": "THE FINE PRINT", "mood": "tense" },
+    { "id": "payoff",    "name": "THE FIRST TEAR", "mood": "finale" }
+  ]
+}
