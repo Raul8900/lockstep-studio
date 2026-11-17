@@ -1,6 +1,6 @@
 """Master the audio and assemble the final MP4.
 
-  python3 engine/assemble.py <video-dir> [--crf 16] [--preset slow] [--out file.mp4] [--remux] [--audio-only]
+  python3 engine/assemble.py <video-dir> [--crf 16] [--preset slow] [--out file.mp4] [--remux] [--audio-only] [--compatible]
 
 1. mix_premaster.wav -> gain to -14 LUFS integrated, look-ahead limited to -1.5 dBFS
    (measured with FFmpeg's EBU R128 meter, corrected, measured again)
@@ -60,11 +60,18 @@ def master_audio():
     src = ROOT / "audio/mix_premaster.wav"
     x, sr = sf.read(src, dtype="float64")
     out = ROOT / "audio/final_mix.wav"
+    if not np.any(x):
+        sf.write(out, x, sr, subtype="PCM_24")
+        return out, {"premaster_lufs": None, "final_lufs": None, "final_true_peak_db": None,
+                     "max_limiter_reduction_db": 0, "silent": True}
     gain_db, report = 0.0, {}
+    ceiling = float(load_config(ROOT).get('mix', {}).get('master_ceiling_db', CEILING_DB))
+    if not np.isfinite(ceiling) or not -12 <= ceiling <= -1:
+        raise ValueError('mix.master_ceiling_db must be between -12 and -1; allow headroom for AAC overshoot and measure the exported file')
     i0, lra0, tp0 = measure(src)
     for attempt in range(4):
         gain_db += TARGET_LUFS - (i0 if attempt == 0 else i_now)
-        y, max_gr = limiter(x * 10 ** (gain_db / 20), CEILING_DB, sr)
+        y, max_gr = limiter(x * 10 ** (gain_db / 20), ceiling, sr)
         sf.write(out, y, sr, subtype="PCM_24")
         i_now, lra, tp = measure(out)
         if abs(i_now - TARGET_LUFS) <= 0.15:
@@ -83,21 +90,32 @@ def main():
     ap.add_argument("--out", default=None, help="default: <video>/dist/<output>.mp4")
     ap.add_argument("--audio-only", action="store_true")
     ap.add_argument("--remux", action="store_true", help="keep the existing video stream, replace the audio")
+    ap.add_argument("--compatible", action="store_true", help="encode H.264 Constrained Baseline without B-frames or inherited image side data for broad player compatibility")
     args = ap.parse_args()
 
     ROOT = project_dir(args.project)
     cfg = load_config(ROOT)
+    compatible = args.compatible or cfg.get('encode', {}).get('compatible', False)
+    if compatible and args.remux:
+        ap.error('compatible export requires re-encoding the picture: run assemble without --remux')
     if not args.out:
         (ROOT / "dist").mkdir(exist_ok=True)
         args.out = str(ROOT / "dist" / (cfg.get("output", ROOT.name) + ".mp4"))
     need(ROOT / "audio/mix_premaster.wav", "run: lockstep audio <video>")
     tl = json.load(open(need(ROOT / "data/timeline.json", "run: lockstep meta <video>")))
     total = tl["total"]
+    opted_in = bool(compatible or cfg.get('choices') or cfg.get('audio') or cfg.get('music', {}).get('source') or cfg.get('clock'))
+    # Bound new productions explicitly. FFmpeg's shortest buffering can otherwise
+    # discard ~70 ms of AAC from a finite image sequence; preserve legacy encoding.
+    end_args = ["-t", f"{total / 30:.6f}"] if opted_in else ["-shortest", "-fflags", "+shortest", "-max_interleave_delta", "100M"]
     frames = sorted((ROOT / "out/frames").glob("f*.jpg"))
     if not args.audio_only and not args.remux and len(frames) != total:
         sys.exit(f"expected {total} frames, found {len(frames)} — render first")
 
     audio, arep = master_audio()
+    if compatible:
+        arep['export'] = dict(profile='Constrained Baseline', level='4.0', b_frames=0, reference_frames=1,
+                              keyframe_interval=30, image_side_data='removed', video_timescale=30000)
     print("audio master:", json.dumps(arep))
     if args.audio_only:
         return
@@ -105,7 +123,7 @@ def main():
         tmp = args.out + ".remux.mp4"
         subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", args.out, "-i", str(audio),
                         "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-af", "apad", "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
-                        "-movflags", "+faststart", "-shortest", "-fflags", "+shortest", "-max_interleave_delta", "100M",
+                        "-movflags", "+faststart", *end_args,
                         "-map_metadata", "0", tmp], check=True)
         Path(tmp).replace(args.out)
         json.dump(arep, open(ROOT / "data/master_report.json", "w"), indent=1)
@@ -114,18 +132,31 @@ def main():
 
     vf = ("scale=in_range=full:in_color_matrix=bt601:out_range=tv:out_color_matrix=bt709:"
           "flags=bicubic+accurate_rnd+full_chroma_int+full_chroma_inp,format=yuv420p")
+    video_args = ["-profile:v", "high", "-level:v", "4.2",
+                  "-x264-params", "aq-mode=3:aq-strength=0.9:keyint=60:min-keyint=30:deblock=-1,-1",
+                  "-maxrate", "16M", "-bufsize", "32M"]
+    if compatible:
+        # Canvas JPEGs carry ICC side data. Do not inherit it into H.264 SEI or
+        # container color metadata; describe ordinary SDR explicitly instead.
+        # This opt-in path also removes frame reordering and uses one reference.
+        vf = ("sidedata=mode=delete," + vf +
+              ",setparams=field_mode=prog:range=limited:color_primaries=bt709:color_trc=bt709:colorspace=bt709,setpts=N/(30*TB)")
+        video_args = ["-profile:v", "baseline", "-level:v", "4.0", "-bf", "0", "-refs", "1",
+                      "-g", "30", "-keyint_min", "30", "-sc_threshold", "0",
+                      "-x264-params", "aq-mode=3:aq-strength=0.9:deblock=-1,-1:force-cfr=1",
+                      "-maxrate", "8M", "-bufsize", "16M", "-r", "30", "-fps_mode", "cfr",
+                      "-video_track_timescale", "30000", "-bsf:v", "filter_units=remove_types=6"]
     cmd = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-stats", "-y",
            "-framerate", "30", "-start_number", "0", "-i", str(ROOT / "out/frames/f%05d.jpg"),
            "-i", str(audio),
            "-vf", vf, "-af", "apad",
-           "-c:v", "libx264", "-preset", args.preset, "-crf", args.crf, "-profile:v", "high", "-level:v", "4.2",
-           "-pix_fmt", "yuv420p", "-x264-params", "aq-mode=3:aq-strength=0.9:keyint=60:min-keyint=30:deblock=-1,-1",
-           "-maxrate", "16M", "-bufsize", "32M",
+           "-c:v", "libx264", "-preset", args.preset, "-crf", args.crf, *video_args,
+           "-pix_fmt", "yuv420p",
            "-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709", "-color_range", "tv",
            "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
-           "-movflags", "+faststart", "-shortest", "-fflags", "+shortest", "-max_interleave_delta", "100M",
+           "-movflags", "+faststart", *end_args,
            "-metadata", "title=" + cfg.get("title", ROOT.name),
-           "-metadata", "comment=Programmatically rendered (HTML Canvas + FFmpeg). Voice: Kokoro TTS. Music and sound design: original synthesis.",
+           "-metadata", ("comment=Deterministic local Lockstep production. See saved choices and provenance in production_report.md." if opted_in else "comment=Programmatically rendered (HTML Canvas + FFmpeg). Voice: Kokoro TTS. Music and sound design: original synthesis."),
            args.out]
     subprocess.run(cmd, check=True)
     json.dump(arep, open(ROOT / "data/master_report.json", "w"), indent=1)

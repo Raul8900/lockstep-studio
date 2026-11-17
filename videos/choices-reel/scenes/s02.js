@@ -1,0 +1,1 @@
+(window.SCENE_DEFS=window.SCENE_DEFS||[]).push(()=>{const s=prepareChoice('shot2');const cue=choiceTime({marker:'accent2'});sfx(cue,'thump',.4);addScene('shot2',(ctx,t)=>s.draw(ctx,t),{type:'fade'});});

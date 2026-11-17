@@ -1,0 +1,10 @@
+{
+  "command": [
+    "bin/lockstep",
+    "voice",
+    "aircraft-window"
+  ],
+  "elapsed_s": 23.639,
+  "authoring_model_calls": 0,
+  "local_neural_tts": true
+}

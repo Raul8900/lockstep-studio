@@ -1,0 +1,9 @@
+{
+ "errors": [],
+ "dark_frames": [],
+ "darkest": {
+  "t": 118.2,
+  "mean": 19.9
+ },
+ "sampled": 811
+}

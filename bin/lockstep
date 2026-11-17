@@ -11,6 +11,14 @@ lockstep <command> [<video>] [options]
 
   setup [--with-asr]            install dependencies and models (scripts/setup.sh)
   doctor                        report what is installed, change nothing
+  setup-optional three|maps     install only the selected pinned local backend
+  catalog search <intent>       shortlist visual/audio choices; catalog show <id> for details
+  catalog preview <id>          render a working example or copy a playable WAV preview
+  choose <video> shot <scene> <id> [--inputs JSON]  save one shot's treatment
+  choose <video> narration|score|effects|ambience <id>  save independent sound choices
+  clock <video>                 prepare an explicit music-only duration/beat timeline
+  audition <video> <take-index> [voice] [speed]  record one take in out/auditions/
+  import-voice <video> WAV JSON  import a recording and reviewed timings bound to its hash
   new <slug> ["Title"]          scaffold videos/<slug>/ (blank creative brief, no style yet)
   list                          list video projects and the look each one uses
 
@@ -41,9 +49,10 @@ lockstep <command> [<video>] [options]
  finishing
   audio <video>                 synthesise score + sound effects and mix with the voice
   render <video> [--from s] [--to s] [--workers N]   render frames -> out/frames/
-  assemble <video> [--crf 16] [--preset slow] [--remux]   master audio + encode -> dist/<output>.mp4
+  assemble <video> [--crf 16] [--preset slow] [--remux] [--compatible]   master audio + encode -> dist/<output>.mp4
   srt <video>                   dist/subtitles.srt
   validate <video>              technical, sync and layout checks -> data/validation.json, dist/contact_sheet.jpg
+  check-playback <video> [MP4]  play the complete export in Chromium without seeking -> out/playback/playback.json
   docs <video>                  docs/narration_script.md and docs/visual_storyboard.md
   report <video>                docs/production_report.md
 
@@ -73,6 +82,14 @@ case "$cmd" in
   help|-h|--help) usage ;;
   setup)   exec bash "$REPO/scripts/setup.sh" "$@" ;;
   doctor)  exec bash "$REPO/scripts/setup.sh" --check ;;
+  setup-optional)
+    case "${1:-}" in three|maps) exec npm ci --prefix "$E/optional/$1" --ignore-scripts --no-audit --no-fund ;; *) echo 'choose three or maps' >&2; exit 2 ;; esac ;;
+  catalog) exec python3 "$E/catalogue.py" "$@" ;;
+  choose) exec python3 "$E/catalogue.py" choose "$@" ;;
+  clock|import-voice) exec python3 "$E/production.py" "$cmd" "$@" ;;
+  audition)
+    V=$(resolve "${1:-}"); shift
+    python3 "$E/tts/audition.py" "$V" "$@" ;;
   new)     exec python3 "$E/new_video.py" "$@" ;;
   list)
     for d in "$REPO"/videos/*/; do
@@ -146,13 +163,17 @@ PY
   voice)
     V=$(resolve "${1:-}"); shift
     if [ "${1:-}" != "list" ]; then python3 "$E/check_brief.py" "$V" >/dev/null || { python3 "$E/check_brief.py" "$V"; exit 1; }; fi
-    python3 "$E/tts/synth.py" "$V" "$@" ;;
+    python3 "$E/production.py" preflight "$V"
+    if [ "$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1])).get("clock",{}).get("mode",""))' "$V/video.json")" = music ]; then
+      echo 'music clock prepared; no narration requested'
+    else python3 "$E/tts/synth.py" "$V" "$@"; fi ;;
   check-voice)  V=$(resolve "${1:-}"); python3 "$E/tts/asr_check.py" "$V" 2> >(grep -v -e 'Creating a resampler' -e '_sample_rate:' -e '^[[:space:]]*$' >&2) ;;
   captions)     V=$(resolve "${1:-}"); shift; python3 "$E/make_captions.py" "$V" "$@" ;;
   words)        V=$(resolve "${1:-}"); shift; python3 "$E/words.py" "$V" "$@" ;;
   meta)         V=$(resolve "${1:-}"); node "$E/render.js" "$V" meta ;;
   still)        V=$(resolve "${1:-}"); shift; node "$E/render.js" "$V" still "$@" ;;
   scan)         V=$(resolve "${1:-}"); node "$E/render.js" "$V" scan ;;
+  verify-seek)  V=$(resolve "${1:-}"); shift; node "$E/render.js" "$V" verify-seek "$@" ;;
   sheet)
     V=$(resolve "${1:-}"); shift
     COLS=6; if [ "${1:-}" = "--cols" ]; then COLS="$2"; shift 2; fi
@@ -165,13 +186,18 @@ PY
   assemble)     V=$(resolve "${1:-}"); shift; python3 "$E/assemble.py" "$V" "$@" ;;
   srt)          V=$(resolve "${1:-}"); python3 "$E/make_srt.py" "$V" ;;
   validate)     V=$(resolve "${1:-}"); shift; python3 "$E/validate.py" "$V" "$@" ;;
+  check-playback)
+    V=$(resolve "${1:-}"); shift
+    M="${1:-$V/dist/$(json_field "$V/video.json" output).mp4}"
+    node "$REPO/scripts/check_playback.js" "$M" "$V/out/playback" ;;
   docs)         V=$(resolve "${1:-}"); python3 "$E/make_docs.py" "$V" ;;
   report)       V=$(resolve "${1:-}"); python3 "$E/make_report.py" "$V" ;;
   build)
     V=$(resolve "${1:-}"); shift
     echo "== direction"; python3 "$E/check_brief.py" "$V"; style_gate "$V"
+    python3 "$E/production.py" preflight "$V"
     [ -f "$V/data/words.json" ] || { echo "no narration yet: run 'lockstep voice $(basename "$V")' first" >&2; exit 1; }
-    if [ "$V/script.py" -nt "$V/data/words.json" ]; then
+    if [ "$V/script.py" -nt "$V/data/words.json" ] && [ "$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1])).get("clock",{}).get("mode",""))' "$V/video.json")" != music ]; then
       echo "script.py is newer than the recorded narration: run 'lockstep voice $(basename "$V")' first (or touch data/words.json if only notes changed)" >&2; exit 1
     fi
     mkdir -p "$V/out"

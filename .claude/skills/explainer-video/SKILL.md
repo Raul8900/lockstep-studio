@@ -66,6 +66,21 @@ build still works but the intelligibility checks are reported as "not measured".
 
 ## Workflow
 
+### Discover treatments and direct sound independently
+
+Before writing a shot, use `bin/lockstep catalog search <intent>` and `catalog show <id>`.
+Useful intents include “follow a signal”, “show what is inside”, “introduce a scale comparison”
+and “give this hit weight”. Audition with `catalog preview`; use `choose` to save each shot's
+treatment independently from narration, score/ambience and effects. Load only the selected
+recipes. A native shot can neighbour local illustration or real 3D. A visible event may be silent.
+The existing style suggests a look, not mandatory audio. See [production choices](../../../docs/production-choices.md).
+
+Narrated productions still use measured word anchors. For explicitly music-only productions,
+the saved duration/beat/frame clock replaces narration: use `clock`, `choiceTime`, no invented
+words or captions. `audition <video> <take-index>` tests one Kokoro take cheaply; `import-voice`
+accepts supplied audio only with reviewed timings bound to that recording's hash. Regenerate
+picture/captions after timing changes; reuse `assemble --remux` for sound-only changes.
+
 Work in this order. Each step has a reference file — read it when you reach the step.
 
 | # | Step | You produce | Commands / reference |

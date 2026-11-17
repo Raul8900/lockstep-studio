@@ -1,0 +1,16 @@
+{
+  "legacy_torn_compared_files": 2798,
+  "differences": [
+    "data/validation.json"
+  ],
+  "equal_frames": 2782,
+  "equal_stems": [
+    "audio/narration_24k.wav",
+    "audio/music.wav",
+    "audio/sfx.wav",
+    "audio/mix_premaster.wav",
+    "audio/voice.wav",
+    "audio/final_mix.wav"
+  ],
+  "equal_timings": true
+}

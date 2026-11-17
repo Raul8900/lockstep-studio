@@ -1,0 +1,406 @@
+{
+ "total": 450,
+ "dur": 15,
+ "fps": 30,
+ "width": 1080,
+ "height": 1920,
+ "style": {
+  "name": "studio-grid",
+  "mode": "light",
+  "backdrop": "grid",
+  "fonts": {
+   "disp": "Space Grotesk",
+   "ui": "DM Sans",
+   "mono": "Space Mono"
+  },
+  "palette": {
+   "bg": [
+    "#F5F3EE",
+    "#F2F0EA",
+    "#ECE9E1"
+   ],
+   "ink": "#16171B",
+   "subject": "#2554F4",
+   "accent": "#D9480F",
+   "data": "#7C3AED",
+   "alert": "#D62839",
+   "good": "#0B8A5E"
+  },
+  "captions": {
+   "size": 78,
+   "weight": 700,
+   "family": "Space Grotesk",
+   "y": 1350,
+   "lineH": 90,
+   "maxW": 800,
+   "highlight": "box",
+   "case": "none"
+  },
+  "hud": "line",
+  "transition": {
+   "duration": 0.6,
+   "default": "slideLeft"
+  }
+ },
+ "scenes": [
+  {
+   "id": "shot0",
+   "name": "NATIVE.SIGNAL",
+   "t0": 0,
+   "t1": 2.5,
+   "trans": {
+    "type": "fade"
+   }
+  },
+  {
+   "id": "shot1",
+   "name": "NATIVE.EVIDENCE",
+   "t0": 2.5,
+   "t1": 5,
+   "trans": {
+    "type": "fade"
+   }
+  },
+  {
+   "id": "shot2",
+   "name": "NATIVE.NUMBER",
+   "t0": 5,
+   "t1": 7.5,
+   "trans": {
+    "type": "fade"
+   }
+  },
+  {
+   "id": "shot3",
+   "name": "NATIVE.SCALE",
+   "t0": 7.5,
+   "t1": 10,
+   "trans": {
+    "type": "fade"
+   }
+  },
+  {
+   "id": "shot4",
+   "name": "NATIVE.PARALLAX",
+   "t0": 10,
+   "t1": 12.5,
+   "trans": {
+    "type": "fade"
+   }
+  },
+  {
+   "id": "shot5",
+   "name": "NATIVE.ZOOM",
+   "t0": 12.5,
+   "t1": 15,
+   "trans": {
+    "type": "zoomIn"
+   }
+  }
+ ],
+ "sfx": [
+  {
+   "t": 2.5,
+   "type": "sample",
+   "gain": 0.5,
+   "file": "assets/production/paper.wav"
+  },
+  {
+   "t": 5,
+   "type": "thump",
+   "gain": 0.4
+  }
+ ],
+ "caps": [],
+ "choices": {
+  "loaded": {
+   "backends": [
+    "native"
+   ],
+   "assets": [],
+   "renderers": [],
+   "cues": [
+    {
+     "scene": "shot0",
+     "item": "native.signal",
+     "t": 0,
+     "source": {
+      "marker": "accent0"
+     }
+    },
+    {
+     "scene": "shot1",
+     "item": "native.evidence",
+     "t": 2.5,
+     "source": {
+      "marker": "accent1"
+     }
+    },
+    {
+     "scene": "shot2",
+     "item": "native.number",
+     "t": 5,
+     "source": {
+      "marker": "accent2"
+     }
+    },
+    {
+     "scene": "shot3",
+     "item": "native.scale",
+     "t": 7.5,
+     "source": {
+      "marker": "accent3"
+     }
+    },
+    {
+     "scene": "shot4",
+     "item": "native.parallax",
+     "t": 10,
+     "source": {
+      "marker": "accent4"
+     }
+    },
+    {
+     "scene": "shot5",
+     "item": "native.zoom",
+     "t": 12.5,
+     "source": {
+      "marker": "accent5"
+     }
+    }
+   ]
+  },
+  "clock": {
+   "mode": "music",
+   "duration": 15,
+   "bpm": 120,
+   "markers": {
+    "accent0": {
+     "frame": 0
+    },
+    "accent1": {
+     "frame": 75
+    },
+    "accent2": {
+     "frame": 150
+    },
+    "accent3": {
+     "frame": 225
+    },
+    "accent4": {
+     "frame": 300
+    },
+    "accent5": {
+     "frame": 375
+    }
+   }
+  },
+  "resolved": {
+   "schema": 1,
+   "selected": [
+    {
+     "id": "native.signal",
+     "version": 1,
+     "slot": "shots",
+     "backend": "native",
+     "inputs": {
+      "points": [
+       [
+        180,
+        800
+       ],
+       [
+        540,
+        800
+       ],
+       [
+        540,
+        620
+       ],
+       [
+        900,
+        620
+       ]
+      ],
+      "duration": 2.5,
+      "label": "FOLLOW THE SIGNAL",
+      "cue": {
+       "marker": "accent0"
+      }
+     },
+     "source": "Original Lockstep recipes and assets",
+     "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+     "id": "native.evidence",
+     "version": 1,
+     "slot": "shots",
+     "backend": "native",
+     "inputs": {
+      "text": "THE EVIDENCE",
+      "detail": "One detail changes the explanation.",
+      "duration": 2.5,
+      "cue": {
+       "marker": "accent1"
+      }
+     },
+     "source": "Original Lockstep recipes and assets",
+     "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+     "id": "native.number",
+     "version": 1,
+     "slot": "shots",
+     "backend": "native",
+     "inputs": {
+      "value": 42,
+      "unit": "UNITS",
+      "duration": 2.5,
+      "cue": {
+       "marker": "accent2"
+      }
+     },
+     "source": "Original Lockstep recipes and assets",
+     "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+     "id": "native.scale",
+     "version": 1,
+     "slot": "shots",
+     "backend": "native",
+     "inputs": {
+      "values": [
+       1,
+       3
+      ],
+      "labels": [
+       "ONE",
+       "THREE"
+      ],
+      "unit": "relative units",
+      "duration": 2.5,
+      "cue": {
+       "marker": "accent3"
+      }
+     },
+     "source": "Original Lockstep recipes and assets",
+     "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+     "id": "native.parallax",
+     "version": 1,
+     "slot": "shots",
+     "backend": "native",
+     "inputs": {
+      "speed": 0.18,
+      "growth": true,
+      "duration": 2.5,
+      "cue": {
+       "marker": "accent4"
+      }
+     },
+     "source": "Original Lockstep recipes and assets",
+     "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+     "id": "native.zoom",
+     "version": 1,
+     "slot": "shots",
+     "backend": "native",
+     "inputs": {
+      "label": "A WORLD INSIDE",
+      "duration": 2.5,
+      "cue": {
+       "marker": "accent5"
+      }
+     },
+     "source": "Original Lockstep recipes and assets",
+     "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+     "id": "voice.none",
+     "version": 1,
+     "slot": "narration",
+     "backend": "audio",
+     "inputs": {},
+     "source": "Original Lockstep recipes and assets",
+     "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+     "id": "score.synth",
+     "version": 1,
+     "slot": "score",
+     "backend": "audio",
+     "inputs": {},
+     "source": "Original Lockstep recipes and assets",
+     "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+     "id": "effects.mixed",
+     "version": 1,
+     "slot": "effects",
+     "backend": "audio",
+     "inputs": {},
+     "source": "Original Lockstep recipes and assets",
+     "license": "CC0-1.0 (new example assets); repository code terms"
+    }
+   ],
+   "assets": {
+    "assets/production/paper.wav": "8259049a6d8231d6249543a60e983c1758e405f0605ec72f9a70b70cba47bfad"
+   },
+   "backends": [
+    "audio",
+    "native"
+   ],
+   "clock": {
+    "mode": "music",
+    "duration": 15,
+    "bpm": 120,
+    "markers": {
+     "accent0": {
+      "frame": 0
+     },
+     "accent1": {
+      "frame": 75
+     },
+     "accent2": {
+      "frame": 150
+     },
+     "accent3": {
+      "frame": 225
+     },
+     "accent4": {
+      "frame": 300
+     },
+     "accent5": {
+      "frame": 375
+     }
+    }
+   },
+   "timing_provenance": "explicit duration/beat clock",
+   "audio": {
+    "music": {
+     "bpm": 120,
+     "kit": "pulse"
+    },
+    "mix": {},
+    "direction": {
+     "effects": "mixed",
+     "music_envelopes": [
+      {
+       "from": {
+        "beat": 10
+       },
+       "to": {
+        "beat": 12
+       },
+       "gain_db": -8,
+       "fade": 0.12
+      }
+     ]
+    }
+   },
+   "render_model_calls": 0
+  }
+ }
+}

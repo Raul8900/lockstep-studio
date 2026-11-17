@@ -1,0 +1,38 @@
+[
+  {
+    "frame": 1170,
+    "sha256": "6379502f603ca7ac2af4dffb6ec32e93d41918b1a3b8d5656098dc4f10895111",
+    "seek_identical": true,
+    "saved_frame_identical": true
+  },
+  {
+    "frame": 990,
+    "sha256": "2bfaa75f457bd5775d6fba550be41713c30fb27351ed1ffe2f3cfa78f175b6d9",
+    "seek_identical": true,
+    "saved_frame_identical": true
+  },
+  {
+    "frame": 825,
+    "sha256": "22ca6adaed906a596c81a1d69b63bffe41d7bf9e243c26edb5fd220544634d4c",
+    "seek_identical": true,
+    "saved_frame_identical": true
+  },
+  {
+    "frame": 690,
+    "sha256": "568733d17b1880243eccbeae5fa2008870b5edb9e25c50078d41b91c1c782ca6",
+    "seek_identical": true,
+    "saved_frame_identical": true
+  },
+  {
+    "frame": 360,
+    "sha256": "e9829d43b68be9365d51d70d38545ba63636af5a81790e0f5220f0759d28c073",
+    "seek_identical": true,
+    "saved_frame_identical": true
+  },
+  {
+    "frame": 60,
+    "sha256": "9b99b7083b92bafcefecd1a693f08dd14fb408028eb90ffe8381624b5f64641c",
+    "seek_identical": true,
+    "saved_frame_identical": true
+  }
+]

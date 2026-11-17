@@ -1,0 +1,1 @@
+(window.SCENE_DEFS=window.SCENE_DEFS||[]).push(()=>{const s=prepareChoice('shot1');const cue=choiceTime({marker:'accent1'});sfx(cue,'sample',.5,{file:'assets/production/paper.wav'});addScene('shot1',(ctx,t)=>s.draw(ctx,t),{type:'fade'});});

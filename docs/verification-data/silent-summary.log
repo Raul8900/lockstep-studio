@@ -1,0 +1,17 @@
+
+  choices-reel.mp4   15.00 s   4.6 MB   2.46 Mbps
+  PASS  1080 x 1920, 9:16              1080 x 1920
+  PASS  30 fps, all frames present     30 fps, 450 of 450 frames
+  PASS  H.264 + AAC in MP4             h264 High / aac 48000 Hz
+  PASS  streamable (index first)       faststart
+  PASS  length <= 20 s                 15.00 s
+  PASS  decodes cleanly                0 errors
+  PASS  no black frames                0 segments 
+  check audio/picture sync             inapplicable: silent track
+  PASS  stream durations agree         0.000 s difference
+  PASS  intentional silent soundtrack  loudness/peak inapplicable
+  PASS  no invented speech/captions    music clock; speech metrics inapplicable
+  PASS  continuous motion              no holds
+
+  all hard requirements pass; 1 item(s) to look at above.
+  next: look at silent-fixture/dist/contact_sheet.jpg and the mobile previews before calling it done.

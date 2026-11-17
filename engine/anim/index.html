@@ -10,6 +10,7 @@
 </head>
 <body>
 <canvas id="c" width="1080" height="1920"></canvas>
+<script type="importmap">{"imports":{"three":"/optional/three/three/build/three.module.js"}}</script>
 <script src="js/core.js"></script>
 <script src="js/engine.js"></script>
 <script src="js/backdrops.js"></script>
@@ -24,7 +25,8 @@
       for (const src of manifest.scripts) {
         await new Promise((resolve, reject) => {
           const s = document.createElement('script');
-          s.src = src; s.async = false;
+          s.src = typeof src === 'string' ? src : src.src; s.async = false;
+          if (src.type) s.type = src.type;
           s.onload = resolve;
           s.onerror = () => reject(new Error('could not load ' + src));
           document.body.appendChild(s);

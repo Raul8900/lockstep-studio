@@ -1,0 +1,15 @@
+{
+ "wer_percent": 0.0,
+ "ref_words": 103,
+ "errors": 0,
+ "spacing_variants": [
+  "windowpane -> window pane",
+  "windowpane -> window pane",
+  "windowpane -> window pane",
+  "windowpane -> window pane"
+ ],
+ "timing_matched_words": 96,
+ "timing_median_ms": -125.01245231628388,
+ "timing_mean_abs_ms": 76.30258634736137,
+ "timing_p95_abs_ms": 176.26870708465424
+}

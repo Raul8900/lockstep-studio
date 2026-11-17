@@ -35,7 +35,7 @@ from misaki import en, espeak  # noqa: E402
 from kokoro_onnx.config import get_vocab  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from common import MODELS, load_script, need, project_dir  # noqa: E402
+from common import MODELS, load_config, load_script, need, project_dir  # noqa: E402
 
 ROOT = project_dir()
 S = load_script(ROOT)
@@ -178,8 +178,13 @@ def clean_word(text):
 
 
 def main():
-    voice = sys.argv[2] if len(sys.argv) > 2 else getattr(S, "VOICE", "af_heart")
-    speed = float(sys.argv[3]) if len(sys.argv) > 3 else getattr(S, "SPEED", 1.0)
+    cfg = load_config(ROOT)
+    direction = cfg.get('choices', {}).get('narration', {})
+    if direction.get('item') == 'voice.supplied' and (len(sys.argv) < 3 or sys.argv[2] != 'list'):
+        sys.exit('This production uses a supplied recording. Use import-voice with reviewed timings, then build; Kokoro will not overwrite it.')
+    inputs = direction.get('inputs', {})
+    voice = sys.argv[2] if len(sys.argv) > 2 else inputs.get('voice', getattr(S, "VOICE", "af_heart"))
+    speed = float(sys.argv[3]) if len(sys.argv) > 3 else inputs.get('speed', getattr(S, "SPEED", 1.0))
     out_tag = ""
     english = sorted(v for v in voices if v[0] in "ab")      # a* = American, b* = British; second letter f/m = female/male
     if voice == "list":
@@ -239,6 +244,11 @@ def main():
     meta = {"voice": voice, "speed": speed, "sample_rate": SR,
             "duration": round(len(narration) / SR, 3),
             "speech_end": all_words[-1]["t1"], "word_count": len(all_words)}
+    if cfg.get('choices'):
+        from production import sha256
+        meta['timing_provenance'] = dict(provider='kokoro-phoneme-durations', resolution_ms=25,
+            model_sha256=sha256(MODELS / 'kokoro-v1.0-dur.onnx'), voices_sha256=sha256(MODELS / 'voices-v1.0.bin'),
+            script_sha256=sha256(ROOT / 'script.py'), render_wav_sha256=sha256(ROOT / 'audio/narration_24k.wav'))
     json.dump(all_words, open(ROOT / f"data/words{out_tag}.json", "w"), ensure_ascii=False, indent=0)
     json.dump({"meta": meta, "beats": beats, "takes": takes},
               open(ROOT / f"data/takes{out_tag}.json", "w"), ensure_ascii=False, indent=1)

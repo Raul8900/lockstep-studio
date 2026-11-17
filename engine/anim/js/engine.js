@@ -378,7 +378,7 @@ function finalizeScenes() {
     const b = DATA.beats.find((x) => x.id === SCENES[i].id);
     if (!b) throw new Error('no beat for scene ' + SCENES[i].id);
     if (i > 0 && b.t0 <= DATA.beats.find((x) => x.id === SCENES[i - 1].id).t0) throw new Error('scenes are out of order: ' + SCENES[i - 1].id + ' is registered before ' + SCENES[i].id + ' (name the files s01_, s02_, ... in narration order)');
-    SCENES[i].t0 = i === 0 ? 0 : +(b.t0 - 0.5).toFixed(3);
+    SCENES[i].t0 = i === 0 ? 0 : +(b.t0 - (VIDEO.clock?.mode === 'music' ? 0 : 0.5)).toFixed(3);
     SCENES[i].beat = b;
   }
   for (let i = 0; i < SCENES.length; i++) SCENES[i].t1 = i < SCENES.length - 1 ? SCENES[i + 1].t0 : DATA.dur;
@@ -516,6 +516,7 @@ async function boot() {
     DATA.words = words; DATA.takes = takes.takes; DATA.beats = takes.beats; DATA.meta = takes.meta; DATA.dur = takes.meta.duration;
     CAPS = buildCaptions(words, phrases);
     if (window.defineScenes) window.defineScenes();
+    if (typeof prepareChoices === 'function') await prepareChoices();
   }
   finalizeScenes();
   for (const s of SCENES) if (!TRANSITIONS.includes((s.trans || {}).type)) throw new Error(`scene ${s.id}: unknown transition type "${(s.trans || {}).type}"; choose from: ${TRANSITIONS.join(', ')}`);

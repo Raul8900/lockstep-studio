@@ -1,0 +1,15 @@
+{
+  "base": "575ddb0ee3d5e15096d1fdd54adad54523ef5021",
+  "other_pr": {
+    "number": 2,
+    "state": "open",
+    "head": "5d61565034f438e9b285963a193d051efe3f6287"
+  },
+  "os": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "cpu": "\t: AMD EPYC 9V74 80-Core Processor",
+  "ram_memtotal": "MemTotal:       10207480 kB",
+  "node": "v24.22.1",
+  "ffmpeg": "ffmpeg version 7.1.5-0+deb13u1 Copyright (c) 2000-2026 the FFmpeg developers",
+  "chromium": "Chromium 156.0.8078.79 built on Debian GNU/Linux 13 (trixie)"
+}

@@ -21,6 +21,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import ENGINE, MODELS, load_config, need, project_dir  # noqa: E402
+from production import music_only
 
 ROOT = project_dir()
 CFG = load_config(ROOT)
@@ -74,13 +75,18 @@ e = sh(["ffmpeg", "-hide_banner", "-nostats", "-i", str(MP4), "-af", "ebur128=pe
 tail = e[e.rfind("Summary:"):]
 R["loudness"] = {"integrated_lufs": float(re.search(r"I:\s*(-?[\d.]+) LUFS", tail).group(1)),
                  "range_lu": float(re.search(r"LRA:\s*(-?[\d.]+) LU", tail).group(1)),
-                 "true_peak_dbtp": float(re.search(r"Peak:\s*(-?[\d.]+) dBFS", tail).group(1))}
+                 "true_peak_dbtp": float(re.search(r"Peak:\s*(-?(?:[\d.]+|inf)) dBFS", tail).group(1))}
+if not np.isfinite(R['loudness']['true_peak_dbtp']):
+    R['loudness'] = {'integrated_lufs': None, 'range_lu': None, 'true_peak_dbtp': None, 'meaningful': False, 'reason': 'digital silence'}
 
 # ---------------------------------------------------- 5. audio/video sync
 wav = TMP / "final_audio_24k.wav"
 sh(["ffmpeg", "-y", "-v", "error", "-i", str(MP4), "-vn", "-ac", "1", "-ar", "24000", str(wav)])
 fin, sr = sf.read(wav, dtype="float32")
-nar, _ = sf.read(ROOT / "audio/narration_24k.wav", dtype="float32")
+nar, _ = sf.read(ROOT / ("audio/final_mix.wav" if music_only(CFG) else "audio/narration_24k.wav"), dtype="float32")
+if music_only(CFG):
+    from scipy.signal import resample_poly
+    nar = resample_poly(nar.mean(axis=1), 1, 2)
 n = min(len(fin), len(nar))
 A, B_ = np.abs(fin[:n]), np.abs(nar[:n])
 k = 240                                                    # 10 ms envelope
@@ -92,12 +98,17 @@ lags = range(-30, 31)
 cc = [float(np.dot(A[max(0, l):len(A) + min(0, l)], B_[max(0, -l):len(B_) + min(0, -l)])) for l in lags]
 best = list(lags)[int(np.argmax(cc))]
 R["sync"] = {"narration_lag_ms_in_mp4": best * 10, "method": "cross-correlation of 10 ms envelopes, MP4 audio vs. original narration"}
+if music_only(CFG):
+    R["sync"] = {"music_lag_ms_in_mp4": best * 10, "method": "10 ms envelope correlation against mastered music; no speech metrics"}
+    if not np.any(nar):
+        R['sync'] = {'music_lag_ms_in_mp4': None, 'method': 'silent track: correlation inapplicable; stream durations checked separately'}
+R["stream_duration_error_s"] = round(abs(float(v["duration"]) - float(a["duration"])), 4)
 
 # ------------------------------------- 6. speech recognition on the final mix
-have_asr = (MODELS / "asr/sherpa-onnx-whisper-small.en").exists()
+have_asr = not music_only(CFG) and (MODELS / "asr/sherpa-onnx-whisper-small.en").exists()
 asr = sh([sys.executable, str(ENGINE / "tts/asr_check.py"), str(ROOT), str(wav)]) if have_asr else None
 if asr is None:
-    R["final_mix_asr"] = {"skipped": "speech-recognition models not installed (scripts/setup.sh --with-asr)"}
+    R["final_mix_asr"] = {"skipped": "inapplicable: no narration" if music_only(CFG) else "speech-recognition models not installed (scripts/setup.sh --with-asr)"}
 else:
     m = re.search(r"WER \(script vs Whisper small\.en\): (\d+)/(\d+) = ([\d.]+)%", asr.stdout)
     R["final_mix_asr"] = {"wer_percent": float(m.group(3)), "errors": int(m.group(1)), "words": int(m.group(2)),

@@ -1,0 +1,9 @@
+{
+  "data/words.json": true,
+  "data/takes.json": true,
+  "audio/narration_24k.wav": true,
+  "audio/music.wav": true,
+  "audio/sfx.wav": true,
+  "audio/mix_premaster.wav": true,
+  "dist/selftest_vertical.mp4": true
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "frame": 360,
+    "sha256": "a0ff6f9ad2662c84647d9ab090c84642dd70cde91d51f9dd410f465c9c889109",
+    "seek_identical": true,
+    "saved_frame_identical": true
+  },
+  {
+    "frame": 306,
+    "sha256": "8a4c2e5f45603061cb21387ef9248514a692de9a11541d1bc158c88ea895211f",
+    "seek_identical": true,
+    "saved_frame_identical": true
+  },
+  {
+    "frame": 294,
+    "sha256": "8e7ed73e0dae006615d73544c54c39cf33c58a144123b20a5180acc9c7b19f60",
+    "seek_identical": true,
+    "saved_frame_identical": true
+  },
+  {
+    "frame": 90,
+    "sha256": "47222f672a581479afec5107d944e2343336db8ae620c7467fddb62c5ae6a6b4",
+    "seek_identical": true,
+    "saved_frame_identical": true
+  }
+]

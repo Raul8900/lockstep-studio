@@ -24,9 +24,12 @@ import numpy as np
 import soundfile as sf
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from common import MODELS, project_dir  # noqa: E402
+from common import MODELS, load_config, project_dir  # noqa: E402
 
 ROOT = project_dir()
+if load_config(ROOT).get('clock', {}).get('mode') == 'music':
+    print('Speech recognition inapplicable: this production has no narration.')
+    sys.exit(0)
 A = MODELS / "asr"
 if not (A / "sherpa-onnx-whisper-small.en").exists():
     print("speech-recognition models not installed: run scripts/setup.sh --with-asr")

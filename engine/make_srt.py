@@ -54,7 +54,8 @@ for it in items:
         cur["text"] += " " + it["text"]
         cur["t1"] = it["t1"]
         cur["end_sentence"] = it["end_sentence"]
-cues.append(cur)
+if cur is not None:
+    cues.append(cur)
 
 
 def wrap(text):

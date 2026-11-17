@@ -1,0 +1,268 @@
+{
+ "total": 450,
+ "dur": 15,
+ "fps": 30,
+ "width": 1080,
+ "height": 1920,
+ "style": {
+  "name": "studio-grid",
+  "mode": "light",
+  "backdrop": "grid",
+  "fonts": {
+   "disp": "Space Grotesk",
+   "ui": "DM Sans",
+   "mono": "Space Mono"
+  },
+  "palette": {
+   "bg": [
+    "#F5F3EE",
+    "#F2F0EA",
+    "#ECE9E1"
+   ],
+   "ink": "#16171B",
+   "subject": "#2554F4",
+   "accent": "#D9480F",
+   "data": "#7C3AED",
+   "alert": "#D62839",
+   "good": "#0B8A5E"
+  },
+  "captions": {
+   "size": 78,
+   "weight": 700,
+   "family": "Space Grotesk",
+   "y": 1350,
+   "lineH": 90,
+   "maxW": 800,
+   "highlight": "box",
+   "case": "none"
+  },
+  "hud": "line",
+  "transition": {
+   "duration": 0.6,
+   "default": "slideLeft"
+  }
+ },
+ "scenes": [
+  {
+   "id": "shot0",
+   "name": "NATIVE.GROWTH",
+   "t0": 0,
+   "t1": 5,
+   "trans": {
+    "type": "fade"
+   }
+  },
+  {
+   "id": "shot1",
+   "name": "NATIVE.CELL",
+   "t0": 5,
+   "t1": 10,
+   "trans": {
+    "type": "fade"
+   }
+  },
+  {
+   "id": "shot2",
+   "name": "THREE.RIG",
+   "t0": 10,
+   "t1": 15,
+   "trans": {
+    "type": "fade"
+   }
+  }
+ ],
+ "sfx": [
+  {
+   "t": 5,
+   "type": "sample",
+   "gain": 0.5,
+   "file": "assets/production/paper.wav"
+  },
+  {
+   "t": 10,
+   "type": "thump",
+   "gain": 0.4
+  }
+ ],
+ "caps": [],
+ "choices": {
+  "loaded": {
+   "backends": [
+    "native",
+    "three"
+   ],
+   "assets": [
+    "assets/production/hinge-rig.glb"
+   ],
+   "renderers": [
+    "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+   ],
+   "cues": [
+    {
+     "scene": "shot0",
+     "item": "native.growth",
+     "t": 0,
+     "source": {
+      "marker": "accent0"
+     }
+    },
+    {
+     "scene": "shot1",
+     "item": "native.cell",
+     "t": 5,
+     "source": {
+      "marker": "accent1"
+     }
+    },
+    {
+     "scene": "shot2",
+     "item": "three.rig",
+     "t": 10,
+     "source": {
+      "marker": "accent2"
+     }
+    }
+   ]
+  },
+  "clock": {
+   "mode": "music",
+   "duration": 15,
+   "bpm": 120,
+   "markers": {
+    "accent0": {
+     "frame": 0
+    },
+    "accent1": {
+     "frame": 150
+    },
+    "accent2": {
+     "frame": 300
+    }
+   }
+  },
+  "resolved": {
+   "schema": 1,
+   "selected": [
+    {
+     "id": "native.growth",
+     "version": 1,
+     "slot": "shots",
+     "backend": "native",
+     "inputs": {
+      "duration": 5,
+      "cue": {
+       "marker": "accent0"
+      }
+     },
+     "source": "Original Lockstep recipes and assets",
+     "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+     "id": "native.cell",
+     "version": 1,
+     "slot": "shots",
+     "backend": "native",
+     "inputs": {
+      "duration": 5,
+      "cue": {
+       "marker": "accent1"
+      }
+     },
+     "source": "Original Lockstep recipes and assets",
+     "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+     "id": "three.rig",
+     "version": 1,
+     "slot": "shots",
+     "backend": "three",
+     "inputs": {
+      "model": "assets/production/hinge-rig.glb",
+      "duration": 5,
+      "cue": {
+       "marker": "accent2"
+      }
+     },
+     "source": "Three.js 0.180.0; original CC0 verification asset",
+     "license": "MIT runtime; CC0-1.0 original model"
+    },
+    {
+     "id": "voice.none",
+     "version": 1,
+     "slot": "narration",
+     "backend": "audio",
+     "inputs": {},
+     "source": "Original Lockstep recipes and assets",
+     "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+     "id": "score.synth",
+     "version": 1,
+     "slot": "score",
+     "backend": "audio",
+     "inputs": {},
+     "source": "Original Lockstep recipes and assets",
+     "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+     "id": "effects.mixed",
+     "version": 1,
+     "slot": "effects",
+     "backend": "audio",
+     "inputs": {},
+     "source": "Original Lockstep recipes and assets",
+     "license": "CC0-1.0 (new example assets); repository code terms"
+    }
+   ],
+   "assets": {
+    "assets/production/hinge-rig.glb": "f95a6325c2536d9fb41a9049bd493a202acd7644718d844e667d081d1a1d8545",
+    "assets/production/paper.wav": "8259049a6d8231d6249543a60e983c1758e405f0605ec72f9a70b70cba47bfad"
+   },
+   "backends": [
+    "audio",
+    "native",
+    "three"
+   ],
+   "clock": {
+    "mode": "music",
+    "duration": 15,
+    "bpm": 120,
+    "markers": {
+     "accent0": {
+      "frame": 0
+     },
+     "accent1": {
+      "frame": 150
+     },
+     "accent2": {
+      "frame": 300
+     }
+    }
+   },
+   "timing_provenance": "explicit duration/beat clock",
+   "audio": {
+    "music": {
+     "bpm": 120,
+     "kit": "soft"
+    },
+    "mix": {},
+    "direction": {
+     "effects": "mixed",
+     "music_envelopes": [
+      {
+       "from": {
+        "beat": 10
+       },
+       "to": {
+        "beat": 12
+       },
+       "gain_db": -8,
+       "fade": 0.12
+      }
+     ]
+    }
+   },
+   "render_model_calls": 0
+  }
+ }
+}

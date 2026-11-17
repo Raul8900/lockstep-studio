@@ -1,0 +1,16 @@
+{
+  "export_commit": "4b820e553b5d1a007e34a493fcb4e8223b667790",
+  "command": [
+    "bin/lockstep",
+    "assemble",
+    "aircraft-window",
+    "--preset",
+    "veryfast",
+    "--crf",
+    "20"
+  ],
+  "elapsed_s": 98.549,
+  "cached_picture_render_commit": "4fafaedffac5d9b0d6fee0ff3afb18a51cc1b3a5",
+  "reencoded_picture": true,
+  "rerendered_picture": false
+}

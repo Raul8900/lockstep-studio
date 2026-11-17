@@ -1,0 +1,50 @@
+{
+  "name": "cabin-daylight",
+  "about": "Quiet aircraft cabin daylight, teal air and amber mechanical load.",
+  "mode": "light",
+  "palette": {
+    "bg": [
+      "#F1F3F2",
+      "#E6EEEF",
+      "#D5E0E4"
+    ],
+    "ink": "#132C3C",
+    "subject": "#007C83",
+    "accent": "#A45612",
+    "data": "#375FA4",
+    "alert": "#AA3544",
+    "good": "#387345"
+  },
+  "fonts": {
+    "display": "Space Grotesk",
+    "body": "DM Sans",
+    "mono": "IBM Plex Mono"
+  },
+  "backdrop": {
+    "type": "solid"
+  },
+  "post": {
+    "bloom": 0,
+    "vignette": 0.15,
+    "scrim": 0.5
+  },
+  "captions": {
+    "size": 68,
+    "weight": 800,
+    "highlight": "underline",
+    "y": 1350,
+    "maxW": 720,
+    "strokeW": 10
+  },
+  "hud": {
+    "type": "none"
+  },
+  "shape": {
+    "radius": 26,
+    "stroke": 3
+  },
+  "transition": {
+    "duration": 0.6,
+    "default": "fade"
+  }
+}

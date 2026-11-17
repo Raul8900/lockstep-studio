@@ -75,7 +75,7 @@ if draft:
     if path.exists() and not force:
         sys.exit(f"{path} already exists (use --force to replace it)")
     phrases = make_draft()
-    lines, row, take, wi = [], [], words[0]["take"], 0
+    lines, row, take, wi = [], [], words[0]["take"] if words else None, 0
     for ph in phrases:                       # one line of the file per take, for easy hand-editing
         if words[wi]["take"] != take and row:
             lines.append(" " + ", ".join(json.dumps(x, ensure_ascii=False) for x in row))
@@ -90,7 +90,7 @@ else:
     err = check(phrases)
     if err:
         sys.exit("caption_phrases.json does not match the narration: " + err)
-    longest = max(phrases, key=len)
+    longest = max(phrases, key=len, default="")
     many = [p for p in phrases if len(p.split()) > 5]
     print(f"caption_phrases.json: {len(phrases)} phrases cover all {len(words)} words; longest: \"{longest}\" ({len(longest)} chars)")
     if many:

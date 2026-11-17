@@ -21,6 +21,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 
 let chromium;
 try { ({ chromium } = require('playwright')); } catch (e1) {
@@ -45,7 +46,15 @@ if (!projArg || !mode) {
 const PROJECT = path.resolve(projArg);
 if (!fs.existsSync(path.join(PROJECT, 'video.json'))) { console.error(`no video.json in ${PROJECT}`); process.exit(1); }
 const DATA = path.join(PROJECT, 'data');
-const NEEDS_NARRATION = mode !== 'tile';
+const CONFIG = JSON.parse(fs.readFileSync(path.join(PROJECT, 'video.json'), 'utf8'));
+const OPTED_IN = !!CONFIG.choices || !!CONFIG.audio || !!CONFIG.music?.source || CONFIG.clock?.mode === 'music';
+let RESOLVED = null;
+if (OPTED_IN && mode !== 'tile') {
+  try { execFileSync('python3', [path.join(ENGINE, 'production.py'), 'preflight', PROJECT], { stdio: 'pipe' }); }
+  catch (e) { console.error(e.stderr?.toString() || e.message); process.exit(1); }
+  RESOLVED = JSON.parse(fs.readFileSync(path.join(DATA, 'choices_resolved.json'), 'utf8'));
+}
+const NEEDS_NARRATION = mode !== 'tile' && CONFIG.clock?.mode !== 'music';
 if (NEEDS_NARRATION && !fs.existsSync(path.join(DATA, 'words.json'))) {
   console.error(`no narration recorded yet for ${path.basename(PROJECT)}: run  bin/lockstep voice ${path.basename(PROJECT)}  first`);
   process.exit(1);
@@ -56,9 +65,19 @@ if (NEEDS_NARRATION && !fs.existsSync(path.join(PROJECT, 'caption_phrases.json')
 }
 const OUT = path.join(PROJECT, 'out');
 const FRAMES = path.join(OUT, 'frames');
+const REQUESTS = new Set();
 
 function manifest() {
   const scripts = [];
+  if (OPTED_IN) {
+    scripts.push('js/choices.js');
+    const backends = RESOLVED?.backends || [];
+    if (backends.includes('three')) scripts.push({ src: 'js/choices-three.js', type: 'module' });
+    if (backends.includes('maps')) {
+      for (const name of ['d3-array', 'd3-geo', 'd3-path', 'd3-shape']) scripts.push(`optional/maps/${name}/dist/${name}.min.js`);
+      scripts.push('js/choices-maps.js');
+    }
+  }
   if (fs.existsSync(path.join(PROJECT, 'components.js'))) scripts.push('project/components.js');
   const dir = path.join(PROJECT, 'scenes');
   const scenes = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f.endsWith('.js')).sort() : [];
@@ -88,11 +107,12 @@ function startServer() {
         res.end(JSON.stringify(manifest()));
         return;
       }
+      const optional = /^\/optional\/(three|maps)\/(.*)$/.exec(rel);
       const isProj = rel.startsWith('/project/'), isAsset = rel.startsWith('/assets/');
-      const base = isProj ? PROJECT : isAsset ? ASSETS : ANIM;
-      let file = path.normalize(path.join(base, isProj ? rel.slice(9) : isAsset ? rel.slice(8) : rel));
+      const base = optional ? path.join(ENGINE, 'optional', optional[1], 'node_modules') : isProj ? PROJECT : isAsset ? ASSETS : ANIM;
+      let file = path.normalize(path.join(base, optional ? optional[2] : isProj ? rel.slice(9) : isAsset ? rel.slice(8) : rel));
       if (rel === '/project/style.json' && STYLE_OVERRIDE) file = STYLE_OVERRIDE;
-      if (!file.startsWith(base) && file !== STYLE_OVERRIDE) { res.writeHead(403); res.end('forbidden'); return; }
+      if (!(file === base || file.startsWith(base + path.sep)) && file !== STYLE_OVERRIDE) { res.writeHead(403); res.end('forbidden'); return; }
       fs.readFile(file, (err, data) => {
         if (err) { res.writeHead(404); res.end('not found'); return; }
         res.writeHead(200, { 'Content-Type': MIME[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
@@ -105,6 +125,10 @@ function startServer() {
 
 async function openPage(browser, port, debugSafe, tile) {
   const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
+  if (process.env.LOCKSTEP_AUDIT) page.on('request', request => {
+    const url = new URL(request.url());
+    REQUESTS.add(url.origin === `http://127.0.0.1:${port}` ? url.pathname : url.href);
+  });
   page.on('pageerror', (e) => console.error('[pageerror]', e.message));
   page.on('console', (m) => { if (m.type() === 'error' && !/404/.test(m.text())) console.error('[console]', m.text()); });
   if (debugSafe) await page.addInitScript(() => { window.DEBUG_SAFE = true; });
@@ -118,9 +142,15 @@ async function openPage(browser, port, debugSafe, tile) {
 
 async function withPage(debugSafe, fn, tile) {
   const server = await startServer(); const port = server.address().port;
-  const browser = await chromium.launch();
+  const browser = await chromium.launch(browserOptions());
   try { return await fn(await openPage(browser, port, debugSafe, tile), browser, port); }
   finally { await browser.close(); server.close(); }
+}
+
+function browserOptions() {
+  const options = process.env.LOCKSTEP_CHROMIUM ? { executablePath: process.env.LOCKSTEP_CHROMIUM } : {};
+  if (RESOLVED?.backends.includes('three')) options.args = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'];
+  return options;
 }
 
 const parseFrame = (arg) => (/s$/.test(arg) ? Math.round(parseFloat(arg) * FPS) : parseInt(arg, 10));
@@ -140,7 +170,7 @@ async function still(args) {
     const t0 = Date.now();
     for (const spec of specs) {
       const i = parseFrame(spec);
-      const b64 = await page.evaluate((f) => { renderFrame(f); return document.getElementById('c').toDataURL('image/jpeg', 0.93).split(',')[1]; }, i);
+      const b64 = await page.evaluate(([f, quality]) => { renderFrame(f); return document.getElementById('c').toDataURL('image/jpeg', quality).split(',')[1]; }, [i, OPTED_IN ? .97 : .93]);
       fs.writeFileSync(path.join(outDir, `f${String(i).padStart(5, '0')}_${(i / FPS).toFixed(2)}s.jpg`), Buffer.from(b64, 'base64'));
     }
     console.log(`${specs.length} stills in ${((Date.now() - t0) / 1000).toFixed(1)}s -> ${outDir}`);
@@ -158,7 +188,22 @@ async function meta() {
       scenes: SCENES.map((s) => ({ id: s.id, name: chapterName(s.id), t0: s.t0, t1: s.t1, trans: s.trans })),
       sfx: SFX,
       caps: CAPS.map((c) => ({ text: c.text, show0: c.show0, show1: c.show1, t0: c.t0, t1: c.t1, lines: c.lines.length, width: Math.max(...c.lines.map((l) => l.w)) * c.scale })),
+      ...(typeof CHOICE_LOADED === 'undefined' ? {} : { choices: { loaded: CHOICE_LOADED, clock: VIDEO.clock || { mode: 'narration' } } }),
     }));
+    if (RESOLVED) {
+      const crypto = require('crypto');
+      for (const cue of info.sfx.filter(c => c.type === 'sample')) {
+        for (const name of cue.files || [cue.file]) {
+          if (!name || path.isAbsolute(name)) throw new Error('sample cue needs a local file path');
+          const base = name.startsWith('assets/production/') ? path.dirname(ENGINE) : PROJECT;
+          const file = path.resolve(base, name);
+          if (!file.startsWith(base + path.sep) || !fs.existsSync(file)) throw new Error('missing sample ' + name + '; put the WAV in the project and update the cue');
+          RESOLVED.assets[name] = crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+        }
+      }
+      info.choices.resolved = RESOLVED;
+      fs.writeFileSync(path.join(DATA, 'choices_resolved.json'), JSON.stringify(RESOLVED, null, 2));
+    }
     fs.writeFileSync(path.join(DATA, 'timeline.json'), JSON.stringify(info, null, 1));
     console.log(`timeline.json: ${info.total} frames, ${info.scenes.length} scenes, ${info.sfx.length} sfx cues, ${info.caps.length} caption phrases`);
   });
@@ -210,6 +255,27 @@ async function bench(specs) {
   });
 }
 
+async function verifySeek(specs) {
+  const crypto = require('crypto'), frames = specs.map(parseFrame), results = [];
+  if (!frames.length) throw new Error('verify-seek: give frame numbers or times');
+  await withPage(false, async page => {
+    const capture = f => page.evaluate(i => { renderFrame(i); return MAIN.toDataURL('image/jpeg', .97).split(',')[1]; }, f);
+    const expected = new Map();
+    for (const frame of frames) expected.set(frame, await capture(frame));
+    for (const frame of [...frames].reverse()) {
+      const actual = await capture(frame), saved = path.join(FRAMES, `f${String(frame).padStart(5, '0')}.jpg`);
+      const digest = crypto.createHash('sha256').update(Buffer.from(actual, 'base64')).digest('hex');
+      const equal = expected.get(frame) === actual;
+      const full = fs.existsSync(saved) ? fs.readFileSync(saved).equals(Buffer.from(actual, 'base64')) : null;
+      results.push({ frame, sha256: digest, seek_identical: equal, saved_frame_identical: full });
+      if (!equal || full === false) throw new Error('non-deterministic frame ' + frame);
+    }
+  });
+  fs.mkdirSync(DATA, { recursive: true });
+  fs.writeFileSync(path.join(DATA, 'seek_verification.json'), JSON.stringify(results, null, 2));
+  console.log(JSON.stringify(results, null, 2));
+}
+
 async function video(args) {
   const opts = { workers: 4, from: null, to: null };
   for (let i = 0; i < args.length; i++) {
@@ -219,7 +285,7 @@ async function video(args) {
   }
   fs.mkdirSync(FRAMES, { recursive: true });
   const server = await startServer(); const port = server.address().port;
-  const browser = await chromium.launch();
+  const browser = await chromium.launch(browserOptions());
   try {
     const probe = await openPage(browser, port, false);
     const total = await probe.evaluate(() => window.TOTAL_FRAMES);
@@ -258,6 +324,8 @@ async function video(args) {
   else if (mode === 'tile') await tile(rest);
   else if (mode === 'scan') await scan();
   else if (mode === 'bench') await bench(rest);
+  else if (mode === 'verify-seek') await verifySeek(rest);
   else if (mode === 'video') await video(rest);
   else { console.error('unknown mode: ' + mode); process.exit(1); }
+  if (process.env.LOCKSTEP_AUDIT) fs.writeFileSync(process.env.LOCKSTEP_AUDIT, JSON.stringify([...REQUESTS].sort(), null, 2));
 })().catch((e) => { console.error(String((e && e.message) || e)); process.exit(1); });

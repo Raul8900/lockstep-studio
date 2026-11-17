@@ -1,0 +1,683 @@
+[
+  {
+    "id": "native.signal",
+    "version": 1,
+    "kind": "visual",
+    "purpose": "Follow a signal along an editable route.",
+    "tags": [
+      "follow a signal",
+      "flow",
+      "route",
+      "transfer"
+    ],
+    "backend": "native",
+    "inputs": {
+      "points": [
+        [
+          180,
+          800
+        ],
+        [
+          540,
+          800
+        ],
+        [
+          540,
+          620
+        ],
+        [
+          900,
+          620
+        ]
+      ],
+      "duration": 2,
+      "label": "FOLLOW THE SIGNAL"
+    },
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original Lockstep recipes and assets",
+    "license": "CC0-1.0 (new example assets); repository code terms",
+    "assets": [],
+    "preview": "bin/lockstep catalog preview native.signal",
+    "example": "bin/lockstep choose <video> shot <scene-id> native.signal"
+  },
+  {
+    "id": "native.evidence",
+    "version": 1,
+    "kind": "visual",
+    "purpose": "Reveal a piece of evidence and mark the important detail.",
+    "tags": [
+      "annotated evidence",
+      "reveal",
+      "highlight",
+      "proof"
+    ],
+    "backend": "native",
+    "inputs": {
+      "text": "THE EVIDENCE",
+      "detail": "One detail changes the explanation."
+    },
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original Lockstep recipes and assets",
+    "license": "CC0-1.0 (new example assets); repository code terms",
+    "assets": [],
+    "preview": "bin/lockstep catalog preview native.evidence",
+    "example": "bin/lockstep choose <video> shot <scene-id> native.evidence"
+  },
+  {
+    "id": "native.number",
+    "version": 1,
+    "kind": "visual",
+    "purpose": "Land a number on a spoken word or music marker.",
+    "tags": [
+      "number landing on a word",
+      "quantity",
+      "impact"
+    ],
+    "backend": "native",
+    "inputs": {
+      "value": 42,
+      "unit": "UNITS",
+      "duration": 1
+    },
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original Lockstep recipes and assets",
+    "license": "CC0-1.0 (new example assets); repository code terms",
+    "assets": [],
+    "preview": "bin/lockstep catalog preview native.number",
+    "example": "bin/lockstep choose <video> shot <scene-id> native.number"
+  },
+  {
+    "id": "native.scale",
+    "version": 1,
+    "kind": "visual",
+    "purpose": "Compare quantities with one shared linear scale.",
+    "tags": [
+      "introduce a scale comparison",
+      "equal scale",
+      "size",
+      "chart"
+    ],
+    "backend": "native",
+    "inputs": {
+      "values": [
+        1,
+        3
+      ],
+      "labels": [
+        "ONE",
+        "THREE"
+      ],
+      "unit": "relative units"
+    },
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original Lockstep recipes and assets",
+    "license": "CC0-1.0 (new example assets); repository code terms",
+    "assets": [],
+    "preview": "bin/lockstep catalog preview native.scale",
+    "example": "bin/lockstep choose <video> shot <scene-id> native.scale"
+  },
+  {
+    "id": "native.parallax",
+    "version": 1,
+    "kind": "visual",
+    "purpose": "Layer near and distant silhouettes for a calm depth move.",
+    "tags": [
+      "depth layered parallax",
+      "nature",
+      "calm",
+      "landscape"
+    ],
+    "backend": "native",
+    "inputs": {
+      "speed": 0.18,
+      "growth": true
+    },
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original Lockstep recipes and assets",
+    "license": "CC0-1.0 (new example assets); repository code terms",
+    "assets": [],
+    "preview": "bin/lockstep catalog preview native.parallax",
+    "example": "bin/lockstep choose <video> shot <scene-id> native.parallax"
+  },
+  {
+    "id": "native.zoom",
+    "version": 1,
+    "kind": "visual",
+    "purpose": "Connect a whole and a detail with a shared zoom focus.",
+    "tags": [
+      "zoom connecting two scenes",
+      "show what is inside",
+      "detail"
+    ],
+    "backend": "native",
+    "inputs": {
+      "label": "A WORLD INSIDE",
+      "duration": 3
+    },
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original Lockstep recipes and assets",
+    "license": "CC0-1.0 (new example assets); repository code terms",
+    "assets": [],
+    "preview": "bin/lockstep catalog preview native.zoom",
+    "example": "bin/lockstep choose <video> shot <scene-id> native.zoom"
+  },
+  {
+    "id": "native.growth",
+    "version": 1,
+    "kind": "visual",
+    "purpose": "Grow layered stems and leaves from absolute time.",
+    "tags": [
+      "nature",
+      "growth",
+      "leaves",
+      "calm"
+    ],
+    "backend": "native",
+    "inputs": {
+      "duration": 5
+    },
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original Lockstep recipes and assets",
+    "license": "CC0-1.0 (new example assets); repository code terms",
+    "assets": [],
+    "preview": "bin/lockstep catalog preview native.growth",
+    "example": "bin/lockstep choose <video> shot <scene-id> native.growth"
+  },
+  {
+    "id": "native.cell",
+    "version": 1,
+    "kind": "visual",
+    "purpose": "Change a biological pose through an original division schematic.",
+    "tags": [
+      "science",
+      "biology",
+      "cell",
+      "pose",
+      "division"
+    ],
+    "backend": "native",
+    "inputs": {
+      "duration": 5
+    },
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original Lockstep recipes and assets",
+    "license": "CC0-1.0 (new example assets); repository code terms",
+    "assets": [],
+    "preview": "bin/lockstep catalog preview native.cell",
+    "example": "bin/lockstep choose <video> shot <scene-id> native.cell"
+  },
+  {
+    "id": "art.local",
+    "version": 1,
+    "kind": "visual",
+    "purpose": "Place a local SVG, PNG or JPEG preserving alpha, ratio and pivot.",
+    "tags": [
+      "illustration",
+      "photo",
+      "art",
+      "asset"
+    ],
+    "backend": "art",
+    "inputs": {
+      "asset": "assets/production/leaf.svg",
+      "width": 420,
+      "pivot": [
+        0.5,
+        1
+      ]
+    },
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original Lockstep recipes and assets",
+    "license": "CC0-1.0 (new example assets); repository code terms",
+    "assets": [
+      "assets/production/leaf.svg"
+    ],
+    "preview": "bin/lockstep catalog preview art.local",
+    "example": "bin/lockstep choose <video> shot <scene-id> art.local"
+  },
+  {
+    "id": "map.mercator",
+    "version": 1,
+    "kind": "visual",
+    "purpose": "Draw actual country geometry with a Mercator projection.",
+    "tags": [
+      "maps",
+      "geography",
+      "mercator",
+      "editorial"
+    ],
+    "backend": "maps",
+    "inputs": {
+      "highlight": "Greenland"
+    },
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Natural Earth v5.1.2 + D3 geo 3.1.1",
+    "license": "Public domain geometry; ISC runtime",
+    "assets": [
+      "assets/production/countries.geojson"
+    ],
+    "preview": "bin/lockstep catalog preview map.mercator",
+    "example": "bin/lockstep choose <video> shot <scene-id> map.mercator"
+  },
+  {
+    "id": "chart.line",
+    "version": 1,
+    "kind": "visual",
+    "purpose": "Draw a line chart from values on explicit axes.",
+    "tags": [
+      "chart",
+      "line",
+      "data",
+      "trends"
+    ],
+    "backend": "maps",
+    "inputs": {
+      "values": [
+        2,
+        3,
+        1,
+        5,
+        7
+      ]
+    },
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original Lockstep recipes and assets",
+    "license": "CC0-1.0 (new example assets); repository code terms",
+    "assets": [],
+    "preview": "bin/lockstep catalog preview chart.line",
+    "example": "bin/lockstep choose <video> shot <scene-id> chart.line"
+  },
+  {
+    "id": "three.local",
+    "version": 1,
+    "kind": "visual",
+    "purpose": "Show inside an object with a lit 3D camera and real occlusion.",
+    "tags": [
+      "show what is inside",
+      "3d",
+      "cutaway",
+      "mechanism"
+    ],
+    "backend": "three",
+    "inputs": {
+      "fixture": "mechanism"
+    },
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Three.js 0.180.0; original CC0 verification asset",
+    "license": "MIT runtime; CC0-1.0 original model",
+    "assets": [],
+    "preview": "bin/lockstep catalog preview three.local",
+    "example": "bin/lockstep choose <video> shot <scene-id> three.local"
+  },
+  {
+    "id": "three.rig",
+    "version": 1,
+    "kind": "visual",
+    "purpose": "Seek an original skinned GLB clip at absolute shot time.",
+    "tags": [
+      "3d",
+      "character",
+      "rig",
+      "action",
+      "pose"
+    ],
+    "backend": "three",
+    "inputs": {
+      "model": "assets/production/hinge-rig.glb"
+    },
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Three.js 0.180.0; original CC0 verification asset",
+    "license": "MIT runtime; CC0-1.0 original model",
+    "assets": [
+      "assets/production/hinge-rig.glb"
+    ],
+    "preview": "bin/lockstep catalog preview three.rig",
+    "example": "bin/lockstep choose <video> shot <scene-id> three.rig"
+  },
+  {
+    "id": "sound.ack",
+    "version": 1,
+    "kind": "event",
+    "purpose": "A soft two-note acknowledgement.",
+    "tags": [
+      "digital acknowledgement",
+      "confirmation"
+    ],
+    "backend": "wav",
+    "inputs": {
+      "file": "assets/production/ack.wav",
+      "gain_db": -12,
+      "fade_in": 0.01,
+      "fade_out": 0.05
+    },
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original synthetic sample; scripts/generate_production_assets.py seed 2217",
+    "license": "CC0-1.0",
+    "assets": [
+      "assets/production/ack.wav"
+    ],
+    "preview": "bin/lockstep catalog preview sound.ack",
+    "example": "bin/lockstep choose <video> event sound.ack"
+  },
+  {
+    "id": "sound.paper",
+    "version": 1,
+    "kind": "event",
+    "purpose": "A dry synthetic paper movement.",
+    "tags": [
+      "paper movement",
+      "turn",
+      "shuffle"
+    ],
+    "backend": "wav",
+    "inputs": {
+      "file": "assets/production/paper.wav",
+      "gain_db": -12,
+      "fade_in": 0.01,
+      "fade_out": 0.05
+    },
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original synthetic sample; scripts/generate_production_assets.py seed 2217",
+    "license": "CC0-1.0",
+    "assets": [
+      "assets/production/paper.wav"
+    ],
+    "preview": "bin/lockstep catalog preview sound.paper",
+    "example": "bin/lockstep choose <video> event sound.paper"
+  },
+  {
+    "id": "sound.contact",
+    "version": 1,
+    "kind": "event",
+    "purpose": "A muted physical contact with weight.",
+    "tags": [
+      "give this hit weight",
+      "physical contact",
+      "hit"
+    ],
+    "backend": "wav",
+    "inputs": {
+      "file": "assets/production/contact.wav",
+      "gain_db": -12,
+      "fade_in": 0.01,
+      "fade_out": 0.05
+    },
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original synthetic sample; scripts/generate_production_assets.py seed 2217",
+    "license": "CC0-1.0",
+    "assets": [
+      "assets/production/contact.wav"
+    ],
+    "preview": "bin/lockstep catalog preview sound.contact",
+    "example": "bin/lockstep choose <video> event sound.contact"
+  },
+  {
+    "id": "sound.ambience",
+    "version": 1,
+    "kind": "ambience",
+    "purpose": "A quiet continuous filtered-air bed.",
+    "tags": [
+      "ambience",
+      "cabin",
+      "air",
+      "calm"
+    ],
+    "backend": "wav",
+    "inputs": {
+      "file": "assets/production/ambience.wav",
+      "gain_db": -12,
+      "fade_in": 0.01,
+      "fade_out": 0.05
+    },
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original synthetic sample; scripts/generate_production_assets.py seed 2217",
+    "license": "CC0-1.0",
+    "assets": [
+      "assets/production/ambience.wav"
+    ],
+    "preview": "bin/lockstep catalog preview sound.ambience",
+    "example": "bin/lockstep choose <video> ambience sound.ambience"
+  },
+  {
+    "id": "voice.kokoro",
+    "version": 1,
+    "kind": "narration",
+    "purpose": "Use existing local Kokoro voices, short takes, IPA and pauses.",
+    "tags": [
+      "use",
+      "existing",
+      "local",
+      "kokoro",
+      "voices",
+      "",
+      "short",
+      "takes",
+      "",
+      "ipa",
+      "and",
+      "pauses."
+    ],
+    "backend": "audio",
+    "inputs": {
+      "voice": "af_heart",
+      "speed": 1.0
+    },
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original Lockstep recipes and assets",
+    "license": "CC0-1.0 (new example assets); repository code terms",
+    "assets": [],
+    "preview": "bin/lockstep catalog preview voice.kokoro",
+    "example": "bin/lockstep choose <video> narration voice.kokoro"
+  },
+  {
+    "id": "voice.supplied",
+    "version": 1,
+    "kind": "narration",
+    "purpose": "Import a supplied WAV bound to reviewed word and take timings.",
+    "tags": [
+      "import",
+      "a",
+      "supplied",
+      "wav",
+      "bound",
+      "to",
+      "reviewed",
+      "word",
+      "and",
+      "take",
+      "timings."
+    ],
+    "backend": "audio",
+    "inputs": {},
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original Lockstep recipes and assets",
+    "license": "CC0-1.0 (new example assets); repository code terms",
+    "assets": [],
+    "preview": "bin/lockstep catalog preview voice.supplied",
+    "example": "bin/lockstep choose <video> narration voice.supplied"
+  },
+  {
+    "id": "voice.none",
+    "version": 1,
+    "kind": "narration",
+    "purpose": "Choose an explicit duration/beat clock without speech.",
+    "tags": [
+      "choose",
+      "an",
+      "explicit",
+      "duration/beat",
+      "clock",
+      "without",
+      "speech."
+    ],
+    "backend": "audio",
+    "inputs": {},
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original Lockstep recipes and assets",
+    "license": "CC0-1.0 (new example assets); repository code terms",
+    "assets": [],
+    "preview": "bin/lockstep catalog preview voice.none",
+    "example": "bin/lockstep choose <video> narration voice.none"
+  },
+  {
+    "id": "score.synth",
+    "version": 1,
+    "kind": "score",
+    "purpose": "Keep the original score, kit, moods and ducking.",
+    "tags": [
+      "keep",
+      "the",
+      "original",
+      "score",
+      "",
+      "kit",
+      "",
+      "moods",
+      "and",
+      "ducking."
+    ],
+    "backend": "audio",
+    "inputs": {},
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original Lockstep recipes and assets",
+    "license": "CC0-1.0 (new example assets); repository code terms",
+    "assets": [],
+    "preview": "bin/lockstep catalog preview score.synth",
+    "example": "bin/lockstep choose <video> score score.synth"
+  },
+  {
+    "id": "score.local",
+    "version": 1,
+    "kind": "score",
+    "purpose": "Use one local music stem instead of synthesized score.",
+    "tags": [
+      "use",
+      "one",
+      "local",
+      "music",
+      "stem",
+      "instead",
+      "of",
+      "synthesized",
+      "score."
+    ],
+    "backend": "audio",
+    "inputs": {},
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original Lockstep recipes and assets",
+    "license": "CC0-1.0 (new example assets); repository code terms",
+    "assets": [],
+    "preview": "bin/lockstep catalog preview score.local",
+    "example": "bin/lockstep choose <video> score score.local"
+  },
+  {
+    "id": "score.none",
+    "version": 1,
+    "kind": "score",
+    "purpose": "Leave the music bed intentionally silent.",
+    "tags": [
+      "leave",
+      "the",
+      "music",
+      "bed",
+      "intentionally",
+      "silent."
+    ],
+    "backend": "audio",
+    "inputs": {},
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original Lockstep recipes and assets",
+    "license": "CC0-1.0 (new example assets); repository code terms",
+    "assets": [],
+    "preview": "bin/lockstep catalog preview score.none",
+    "example": "bin/lockstep choose <video> score score.none"
+  },
+  {
+    "id": "effects.synth",
+    "version": 1,
+    "kind": "effects",
+    "purpose": "Keep legacy word-timed synthesized effects.",
+    "tags": [
+      "keep",
+      "legacy",
+      "word-timed",
+      "synthesized",
+      "effects."
+    ],
+    "backend": "audio",
+    "inputs": {},
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original Lockstep recipes and assets",
+    "license": "CC0-1.0 (new example assets); repository code terms",
+    "assets": [],
+    "preview": "bin/lockstep catalog preview effects.synth",
+    "example": "bin/lockstep choose <video> effects effects.synth"
+  },
+  {
+    "id": "effects.mixed",
+    "version": 1,
+    "kind": "effects",
+    "purpose": "Mix selected local samples with authored synth effects.",
+    "tags": [
+      "mix",
+      "selected",
+      "local",
+      "samples",
+      "with",
+      "authored",
+      "synth",
+      "effects."
+    ],
+    "backend": "audio",
+    "inputs": {},
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original Lockstep recipes and assets",
+    "license": "CC0-1.0 (new example assets); repository code terms",
+    "assets": [],
+    "preview": "bin/lockstep catalog preview effects.mixed",
+    "example": "bin/lockstep choose <video> effects effects.mixed"
+  },
+  {
+    "id": "effects.local",
+    "version": 1,
+    "kind": "effects",
+    "purpose": "Use only selected local sample cues.",
+    "tags": [
+      "use",
+      "only",
+      "selected",
+      "local",
+      "sample",
+      "cues."
+    ],
+    "backend": "audio",
+    "inputs": {},
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original Lockstep recipes and assets",
+    "license": "CC0-1.0 (new example assets); repository code terms",
+    "assets": [],
+    "preview": "bin/lockstep catalog preview effects.local",
+    "example": "bin/lockstep choose <video> effects effects.local"
+  },
+  {
+    "id": "effects.none",
+    "version": 1,
+    "kind": "effects",
+    "purpose": "Leave visual events intentionally silent.",
+    "tags": [
+      "leave",
+      "visual",
+      "events",
+      "intentionally",
+      "silent."
+    ],
+    "backend": "audio",
+    "inputs": {},
+    "timing": "Absolute production seconds; cue supports spoken word, named marker, beat or frame. No incremental state.",
+    "source": "Original Lockstep recipes and assets",
+    "license": "CC0-1.0 (new example assets); repository code terms",
+    "assets": [],
+    "preview": "bin/lockstep catalog preview effects.none",
+    "example": "bin/lockstep choose <video> effects effects.none"
+  }
+]

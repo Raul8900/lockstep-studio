@@ -1,0 +1,157 @@
+{
+ "file": {
+  "path": "dist/aircraft-window-fixed.mp4",
+  "size_mb": 18.3,
+  "container": "QuickTime / MOV",
+  "duration_s": 40.8,
+  "overall_bitrate_mbps": 3.59,
+  "faststart": true
+ },
+ "video": {
+  "codec": "h264",
+  "profile": "Constrained Baseline",
+  "level": 4.0,
+  "width": 1080,
+  "height": 1920,
+  "aspect": "9:16",
+  "pix_fmt": "yuv420p",
+  "fps": 30.0,
+  "frames": 1224,
+  "bitrate_mbps": 3.34,
+  "color": "bt709/bt709/bt709 tv"
+ },
+ "audio": {
+  "codec": "aac",
+  "profile": "LC",
+  "sample_rate": 48000,
+  "channels": 2,
+  "bitrate_kbps": 246,
+  "duration_s": 40.8
+ },
+ "decode_errors": 0,
+ "black_segments": [],
+ "freeze_segments": [
+  [
+   11.066667,
+   11.633333
+  ],
+  [
+   11.633333,
+   12.033333
+  ],
+  [
+   12.133333,
+   12.533333
+  ],
+  [
+   13.3,
+   13.9
+  ],
+  [
+   13.9,
+   14.466667
+  ],
+  [
+   14.5,
+   15.0
+  ],
+  [
+   16.0,
+   16.566667
+  ],
+  [
+   18.666667,
+   19.5
+  ],
+  [
+   20.6,
+   21.0
+  ],
+  [
+   21.0,
+   21.866667
+  ],
+  [
+   22.766667,
+   23.233333
+  ],
+  [
+   24.3,
+   24.733333
+  ],
+  [
+   24.733333,
+   25.333333
+  ],
+  [
+   26.233333,
+   26.666667
+  ],
+  [
+   27.5,
+   28.1
+  ],
+  [
+   29.0,
+   29.4
+  ],
+  [
+   29.5,
+   30.066667
+  ],
+  [
+   33.0,
+   33.733333
+  ],
+  [
+   37.0,
+   37.666667
+  ],
+  [
+   38.066667,
+   39.033333
+  ]
+ ],
+ "encode_fidelity": {
+  "ssim_all": 0.993122,
+  "psnr_avg_db": 50.18398
+ },
+ "loudness": {
+  "integrated_lufs": -14.0,
+  "range_lu": 2.1,
+  "true_peak_dbtp": -3.1
+ },
+ "sync": {
+  "narration_lag_ms_in_mp4": 0,
+  "method": "cross-correlation of 10 ms envelopes, MP4 audio vs. original narration"
+ },
+ "stream_duration_error_s": 0.0,
+ "final_mix_asr": {
+  "wer_percent": 0.0,
+  "errors": 0,
+  "words": 103,
+  "diffs": []
+ },
+ "caption_timing_crosscheck": {
+  "matched_words": 96,
+  "median_offset_ms": -125,
+  "mean_abs_dev_ms": 76,
+  "p95_abs_dev_ms": 176,
+  "note": "independent transducer ASR vs. TTS-derived word starts; the median is the recogniser's own emission delay"
+ },
+ "captions": {
+  "phrases": 36,
+  "two_line": 6,
+  "max_width_px": 695,
+  "x_extent": [
+   193,
+   887
+  ],
+  "y_extent": [
+   1260,
+   1440
+  ],
+  "min_on_screen_s": 0.42,
+  "max_words": 4
+ }
+}
