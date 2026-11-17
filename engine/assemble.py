@@ -1,6 +1,6 @@
 """Master the audio and assemble the final MP4.
 
-  python3 engine/assemble.py <video-dir> [--crf 16] [--preset slow] [--out file.mp4] [--remux] [--audio-only]
+  python3 engine/assemble.py <video-dir> [--crf 16] [--preset slow] [--out file.mp4] [--remux] [--audio-only] [--compatible]
 
 1. mix_premaster.wav -> gain to -14 LUFS integrated, look-ahead limited to -1.5 dBFS
    (measured with FFmpeg's EBU R128 meter, corrected, measured again)
@@ -90,10 +90,14 @@ def main():
     ap.add_argument("--out", default=None, help="default: <video>/dist/<output>.mp4")
     ap.add_argument("--audio-only", action="store_true")
     ap.add_argument("--remux", action="store_true", help="keep the existing video stream, replace the audio")
+    ap.add_argument("--compatible", action="store_true", help="encode H.264 Constrained Baseline without B-frames or inherited image side data for broad player compatibility")
     args = ap.parse_args()
 
     ROOT = project_dir(args.project)
     cfg = load_config(ROOT)
+    compatible = args.compatible or cfg.get('encode', {}).get('compatible', False)
+    if compatible and args.remux:
+        ap.error('compatible export requires re-encoding the picture: run assemble without --remux')
     if not args.out:
         (ROOT / "dist").mkdir(exist_ok=True)
         args.out = str(ROOT / "dist" / (cfg.get("output", ROOT.name) + ".mp4"))
@@ -109,6 +113,9 @@ def main():
         sys.exit(f"expected {total} frames, found {len(frames)} — render first")
 
     audio, arep = master_audio()
+    if compatible:
+        arep['export'] = dict(profile='Constrained Baseline', level='4.0', b_frames=0, reference_frames=1,
+                              keyframe_interval=30, image_side_data='removed', video_timescale=30000)
     print("audio master:", json.dumps(arep))
     if args.audio_only:
         return
@@ -125,13 +132,26 @@ def main():
 
     vf = ("scale=in_range=full:in_color_matrix=bt601:out_range=tv:out_color_matrix=bt709:"
           "flags=bicubic+accurate_rnd+full_chroma_int+full_chroma_inp,format=yuv420p")
+    video_args = ["-profile:v", "high", "-level:v", "4.2",
+                  "-x264-params", "aq-mode=3:aq-strength=0.9:keyint=60:min-keyint=30:deblock=-1,-1",
+                  "-maxrate", "16M", "-bufsize", "32M"]
+    if compatible:
+        # Canvas JPEGs carry ICC side data. Do not inherit it into H.264 SEI or
+        # container color metadata; describe ordinary SDR explicitly instead.
+        # This opt-in path also removes frame reordering and uses one reference.
+        vf = ("sidedata=mode=delete," + vf +
+              ",setparams=field_mode=prog:range=limited:color_primaries=bt709:color_trc=bt709:colorspace=bt709,setpts=N/(30*TB)")
+        video_args = ["-profile:v", "baseline", "-level:v", "4.0", "-bf", "0", "-refs", "1",
+                      "-g", "30", "-keyint_min", "30", "-sc_threshold", "0",
+                      "-x264-params", "aq-mode=3:aq-strength=0.9:deblock=-1,-1:force-cfr=1",
+                      "-maxrate", "8M", "-bufsize", "16M", "-fps_mode", "cfr",
+                      "-video_track_timescale", "30000", "-bsf:v", "filter_units=remove_types=6"]
     cmd = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-stats", "-y",
            "-framerate", "30", "-start_number", "0", "-i", str(ROOT / "out/frames/f%05d.jpg"),
            "-i", str(audio),
            "-vf", vf, "-af", "apad",
-           "-c:v", "libx264", "-preset", args.preset, "-crf", args.crf, "-profile:v", "high", "-level:v", "4.2",
-           "-pix_fmt", "yuv420p", "-x264-params", "aq-mode=3:aq-strength=0.9:keyint=60:min-keyint=30:deblock=-1,-1",
-           "-maxrate", "16M", "-bufsize", "32M",
+           "-c:v", "libx264", "-preset", args.preset, "-crf", args.crf, *video_args,
+           "-pix_fmt", "yuv420p",
            "-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709", "-color_range", "tv",
            "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
            "-movflags", "+faststart", *end_args,

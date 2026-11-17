@@ -49,9 +49,10 @@ lockstep <command> [<video>] [options]
  finishing
   audio <video>                 synthesise score + sound effects and mix with the voice
   render <video> [--from s] [--to s] [--workers N]   render frames -> out/frames/
-  assemble <video> [--crf 16] [--preset slow] [--remux]   master audio + encode -> dist/<output>.mp4
+  assemble <video> [--crf 16] [--preset slow] [--remux] [--compatible]   master audio + encode -> dist/<output>.mp4
   srt <video>                   dist/subtitles.srt
   validate <video>              technical, sync and layout checks -> data/validation.json, dist/contact_sheet.jpg
+  check-playback <video> [MP4]  play the complete export in Chromium without seeking -> out/playback/playback.json
   docs <video>                  docs/narration_script.md and docs/visual_storyboard.md
   report <video>                docs/production_report.md
 
@@ -185,6 +186,10 @@ PY
   assemble)     V=$(resolve "${1:-}"); shift; python3 "$E/assemble.py" "$V" "$@" ;;
   srt)          V=$(resolve "${1:-}"); python3 "$E/make_srt.py" "$V" ;;
   validate)     V=$(resolve "${1:-}"); shift; python3 "$E/validate.py" "$V" "$@" ;;
+  check-playback)
+    V=$(resolve "${1:-}"); shift
+    M="${1:-$V/dist/$(json_field "$V/video.json" output).mp4}"
+    node "$REPO/scripts/check_playback.js" "$M" "$V/out/playback" ;;
   docs)         V=$(resolve "${1:-}"); python3 "$E/make_docs.py" "$V" ;;
   report)       V=$(resolve "${1:-}"); python3 "$E/make_report.py" "$V" ;;
   build)

@@ -172,3 +172,19 @@ PR #2 overlap: both declare art in setup and preload before frame zero. This imp
 `projectImage`/`drawProjectImage`, not PR #2's Fluent `art`/`drawArt`, and does not change style
 illustration conventions. Both patches touch the boot hook/report/CLI and may need a small merge
 resolution if PR #2 lands first. Neither that PR nor its branch was modified.
+
+## Player compatibility and continuous playback
+
+`bin/lockstep assemble <video> --compatible` selects H.264 Constrained Baseline level 4.0,
+one reference frame, no B-frames, one-second keyframes, constant frame rate and a 30,000-unit
+video timescale. It removes inherited JPEG side data and H.264 SEI while explicitly tagging
+SDR BT.709. Save `"encode":{"compatible":true}` in video.json to use it for normal builds.
+The default encoder remains unchanged. This setting requires a full encode from cached picture
+frames; `--remux` cannot change an existing video stream and fails with an actionable message.
+
+A clean software decode and seeked stills are insufficient to verify player behaviour.
+`bin/lockstep check-playback <video> [MP4]` plays the complete file at 1× in Chromium over a local
+HTTP server with byte-range support, without seeking. Its report records presented-frame times,
+decoder quality counters, per-second picture hashes and seven chronological screenshots.
+It fails if playback does not present the end of the film or its picture stops changing after
+four seconds. `LOCKSTEP_CHROMIUM` can select a system browser as for frame rendering.

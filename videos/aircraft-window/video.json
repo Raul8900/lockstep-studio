@@ -1,7 +1,7 @@
 {
   "title": "The tiny hole in aeroplane windows",
   "tag": "AIRBUS WINDOW DESIGN",
-  "output": "aircraft-window",
+  "output": "aircraft-window-fixed",
   "max_seconds": 50,
   "chapters": [
     {
@@ -87,5 +87,8 @@
   "mix": {
     "master_ceiling_db": -3,
     "duck_ambience_db": -4
+  },
+  "encode": {
+    "compatible": true
   }
 }
