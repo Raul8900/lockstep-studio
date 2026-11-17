@@ -341,7 +341,7 @@ function chapterName(id) {
 }
 function drawHUD(ctx, t) {
   const HS = STYLE.hud;
-  if (HS.type === 'none' || window.LOTTIESHEET || window.BLOCKS_MODE) return;
+  if (HS.type === 'none' || window.LOTTIESHEET || window.BLOCKS_MODE || window.TRANS_MODE) return;
   if (HS.type === 'line') {            // one thin progress line, no labels
     fillRR(ctx, SAFE.l, 292, SAFE.r - SAFE.l, 5, 2.5, HS.track);
     fillRR(ctx, SAFE.l, 292, Math.max(5, (SAFE.r - SAFE.l) * clamp(t / DATA.dur)), 5, 2.5, COL.cyan);
@@ -368,7 +368,7 @@ function drawHUD(ctx, t) {
 
 /* ---------- scenes + transitions ---------- */
 let TR = 0.84;       // transition length (s); style.json -> transition.duration
-function addScene(id, draw, trans = { type: STYLE.transition.default }) { SCENES.push({ id, draw, trans }); }
+function addScene(id, draw, trans = { type: STYLE.transition.default, params: STYLE.transition.params }) { SCENES.push({ id, draw, trans }); }
 
 function finalizeScenes() {
   if (!SCENES.length) throw new Error('no scenes registered: every scenes/*.js must call addScene(beatId, draw, transition)');
@@ -413,6 +413,7 @@ function renderScenes(ctx, t) {
 
   drawLayer(actx, A, t); drawLayer(bctx, B, t);
   const tr = B.trans || { type: 'fade' };
+  if (isGL(tr.type)) { drawGLTransition(ctx, LAYER_A, LAYER_B, p, tr); return; }     // shader transitions: gl.js
   const e = E.io3(p), fx = tr.fx == null ? CX : tr.fx, fy = tr.fy == null ? 800 : tr.fy;
   const aOut = 1 - prog(p, 0.08, 0.62), aIn = prog(p, 0.38, 0.92);
   switch (tr.type) {
@@ -503,7 +504,7 @@ async function boot() {
   VIDEO = await get('project/video.json');
   applyStyle(await opt('project/style.json'));
   if (!BACKDROPS[STYLE.backdrop.type] && typeof window.drawBackdrop !== 'function') throw new Error(`style.json: unknown backdrop type "${STYLE.backdrop.type}"; choose from: ${Object.keys(BACKDROPS).join(', ')} (or define window.drawBackdrop in components.js)`);
-  if (!TRANSITIONS.includes(STYLE.transition.default)) throw new Error(`style.json: unknown default transition "${STYLE.transition.default}"`);
+  if (!isGL(STYLE.transition.default) && !TRANSITIONS.includes(STYLE.transition.default)) throw new Error(`style.json: unknown default transition "${STYLE.transition.default}"`);
   TR = STYLE.transition.duration;
   initCaptionStyle();
   await loadFonts(opt);
@@ -513,6 +514,8 @@ async function boot() {
     setupTile();
   } else if (window.LOTTIESHEET) {
     setupLottieSheet(window.LOTTIESHEET);
+  } else if (window.TRANS_MODE) {
+    setupTransitionSheet();
   } else if (window.BLOCKS_MODE) {
     setupBlockSheet();
   } else {
@@ -523,7 +526,8 @@ async function boot() {
   }
   await loadLotties();                  // every file declared with useLottie(), loaded and recoloured once
   finalizeScenes();
-  for (const s of SCENES) if (!TRANSITIONS.includes((s.trans || {}).type)) throw new Error(`scene ${s.id}: unknown transition type "${(s.trans || {}).type}"; choose from: ${TRANSITIONS.join(', ')}`);
+  for (const s of SCENES) if (!isGL((s.trans || {}).type) && !TRANSITIONS.includes((s.trans || {}).type)) throw new Error(`scene ${s.id}: unknown transition type "${(s.trans || {}).type}"; choose from: ${TRANSITIONS.join(', ')}, or a shader transition gl:<Name> (lockstep transitions lists them)`);
+  await prepareGLTransitions();        // shader transitions the scenes use: loaded and compiled now
   SFX.sort((a, b) => a.t - b.t);
   window.TOTAL_FRAMES = Math.round(DATA.dur * FPS);
   window.READY = true;

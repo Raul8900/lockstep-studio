@@ -1,10 +1,11 @@
-"""Tile the frames that `render.js <video> blocks` drew into one sheet.
+"""Tile the frames that `render.js <video> blocks` or `… transitions` drew into one sheet.
 
-  python3 engine/blocks_sheet.py <manifest.json> <out.jpg>
+  python3 engine/gallery.py <manifest.json> <out.jpg>
 
-One frame per block: a grid, three to a row, each cell labelled with the block's name and what
-it is for. Several frames per block (`lockstep blocks <video> barChart …`): one row per block,
-its build-in from left to right, with the build-in progress under each frame.
+manifest: { "title", "style", "crop": [x0, y0, x1, y1] or null (whole frame), "rows": [{ "name",
+"about", "images": [jpg…], "stages": [p…] }] }. One frame per row: a grid, each cell labelled with
+its name and what it is for. Several frames per row: one strip per row, left to right, with the
+progress under each frame.
 """
 import json
 import sys
@@ -15,8 +16,9 @@ from PIL import Image, ImageDraw, ImageFont
 REPO = Path(__file__).resolve().parent.parent
 man = json.load(open(sys.argv[1]))
 out = Path(sys.argv[2])
-x0, y0, x1, y1 = man["crop"]
+x0, y0, x1, y1 = man.get("crop") or [0, 0, 1080, 1920]
 rows = man["rows"]
+title = man.get("title", "lockstep")
 BG, INK, DIM = (22, 23, 27), (240, 242, 246), (150, 156, 168)
 
 
@@ -52,15 +54,17 @@ f_name, f_about, f_head = font(26, True), font(18), font(30, True)
 pad, head = 24, 76
 probe = ImageDraw.Draw(Image.new("RGB", (8, 8)))
 
-if not strips:                                     # every block, finished: a labelled grid
-    cols, cw = 3, 400
+if not strips:                                     # one frame per row: a labelled grid
+    cols, cw = (3, 400) if (y1 - y0) < 1200 else (6, 200)
+    if cw < 300:
+        f_name, f_about = font(19, True), font(15)
     ch = round(cw * (y1 - y0) / (x1 - x0))
     lab = 32 + 3 * 24
     nrows = (len(rows) + cols - 1) // cols
     W, H = pad + cols * (cw + pad), head + nrows * (ch + lab + pad)
     sheet = Image.new("RGB", (W, H), BG)
     d = ImageDraw.Draw(sheet)
-    d.text((pad, 22), f"lockstep blocks · look: {man.get('style', '')}", font=f_head, fill=INK)
+    d.text((pad, 22), f"{title} · look: {man.get('style', '')}", font=f_head, fill=INK)
     for i, r in enumerate(rows):
         x, y = pad + (i % cols) * (cw + pad), head + (i // cols) * (ch + lab + pad)
         sheet.paste(frame(r["images"][0], cw), (x, y))
@@ -69,13 +73,13 @@ if not strips:                                     # every block, finished: a la
             d.text((x, y + ch + 42 + j * 22), ln, font=f_about, fill=DIM)
 else:                                              # build-ins: one strip per block
     n = max(len(r["images"]) for r in rows)
-    cw = 300 if n > 3 else 360
+    cw = (300 if n > 3 else 360) if (y1 - y0) < 1200 else 216
     ch = round(cw * (y1 - y0) / (x1 - x0))
     rh = 64 + ch + 30
     W, H = pad + n * (cw + 12), head + len(rows) * (rh + pad)
     sheet = Image.new("RGB", (W, H), BG)
     d = ImageDraw.Draw(sheet)
-    d.text((pad, 22), f"lockstep blocks · build-in · look: {man.get('style', '')}", font=f_head, fill=INK)
+    d.text((pad, 22), f"{title} · step by step · look: {man.get('style', '')}", font=f_head, fill=INK)
     for i, r in enumerate(rows):
         y = head + i * (rh + pad)
         d.text((pad, y), r["name"], font=f_name, fill=INK)
@@ -86,4 +90,4 @@ else:                                              # build-ins: one strip per bl
             d.text((x, y + 64 + ch + 4), f"p = {r['stages'][k]:g}", font=f_about, fill=DIM)
 
 sheet.save(out, quality=86)
-print(f"{len(rows)} block{'s' if len(rows) != 1 else ''} -> {out}  ({sheet.size[0]} x {sheet.size[1]})")
+print(f"{len(rows)} {man.get('unit', 'item')}{'s' if len(rows) != 1 else ''} -> {out}  ({sheet.size[0]} x {sheet.size[1]})")

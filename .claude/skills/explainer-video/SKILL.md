@@ -79,7 +79,7 @@ Work in this order. Each step has a reference file — read it when you reach th
 | 5 | Captions | `caption_phrases.json` | `lockstep captions <slug> --draft`, then edit |
 | 6 | Chapters and music | `video.json` (names, moods, `music`) | → reference/audio.md |
 | 7 | Storyboard | `storyboard.py` | plan every sequence before drawing |
-| 8 | Scenes | `scenes/sNN_<beat>.js`, `components.js`, `lottie/` | `blocks`, `lint`, `still`, `sheet`, `scan`, `lottie-get`, `lottie-sheet`, `preview` → reference/scene-api.md, blocks.md, lottie.md, design.md |
+| 8 | Scenes | `scenes/sNN_<beat>.js`, `components.js`, `lottie/` | `blocks`, `transitions`, `lint`, `still`, `sheet`, `scan`, `lottie-get`, `lottie-sheet`, `preview` → reference/scene-api.md, blocks.md, lottie.md, design.md |
 | 9 | Build | MP4 + SRT + QA data + docs | `lockstep build <slug>` |
 | 10 | Review and fix | a video you would publish | → reference/qa.md |
 | 11 | Report, deliver, learn | report, retrospective, library | `lockstep report`, `save-style` |

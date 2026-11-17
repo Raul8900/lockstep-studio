@@ -1,0 +1,238 @@
+# gl-transitions
+
+The shader transitions behind `addScene(id, draw, { type: 'gl:<Name>' })` (engine/anim/js/gl.js).
+
+- Source: the `gl-transitions` package, version 3.3.0, from npm
+  (https://github.com/gl-transitions/gl-transitions, https://gl-transitions.com).
+- Licence: MIT (`LICENSE`). Each transition's author is in `transitions.json` and below.
+- Included: every transition published under MIT that needs no texture besides the two images —
+  223 of the package's 227. Left out: `DisplacementMap` and `LumaWipe` (they need extra
+  textures) and the two published under BSD licences.
+- `transitions.json` keeps each transition's name, author, licence, description, tags, GLSL source,
+  default parameters and parameter types, unchanged.
+
+## Authors
+
+- **Accordion** — gre
+- **ApertureWipe** — gre
+- **ArrowWipe** — gre
+- **Ascii** — gre
+- **BandWipe** — gre
+- **BlockCover** — gre
+- **BlockSlide** — gre
+- **BloomDissolve** — gre
+- **BokehDissolve** — gre
+- **BookFlip** — hong
+- **Bounce** — Adrian Purser
+- **BowTie** — KMojek
+- **BowTieHorizontal** — huynx
+- **BrushWipe** — gre
+- **BurnThrough** — liubailin2020@gmail.com
+- **ButterflyWaveScrawler** — mandubian
+- **CameraShake** — gre
+- **CardDeal** — gre
+- **CardSwipe** — gre
+- **CellDissolve** — gre
+- **Chessboard** — lql
+- **CircleBurst** — gre
+- **CircleIris** — Fernando Kuteken
+- **CircleOpen** — gre
+- **ClockWipe** — Fernando Kuteken
+- **Clothesline** — gre
+- **CodeRain** — gre
+- **ColorCoords** — haiyoucuv
+- **ColorDistance** — P-Seebauer
+- **ColorPanelWipe** — gre
+- **ColorPhase** — gre
+- **ColorWrap** — Yoni Maltsman @friendlyspinach
+- **Comb** — gre
+- **ComicPanels** — gre
+- **CrazyParametricFun** — mandubian
+- **Crosshatch** — pthrasher
+- **CrossWarp** — Eke Péter <peterekepeter@gmail.com>
+- **CrossZoom** — rectalogic
+- **Crumple** — gre
+- **Cube** — gre
+- **CurtainRise** — gre
+- **Curtains** — gre
+- **CurvedWipe** — gre
+- **CylinderRoll** — gre
+- **DefocusBlur** — Sergey Kosarevsky
+- **DiamondWipe** — gre
+- **Directional** — Gaëtan Renaudeau
+- **DirectionalEased** — Max Plotnikov
+- **DirectionalScaled** — Thibaut Foussard
+- **DirectionalWarp** — pschroen
+- **DirectionalWipe** — gre
+- **Disintegrate** — gre
+- **DitherDissolve** — gre
+- **DominoFall** — gre
+- **DoomMelt** — Zeh Fernando
+- **Doorway** — gre
+- **Drape** — gre
+- **Dreamy** — mikolalysenko
+- **DreamyZoom** — Zeh Fernando
+- **DuotoneFade** — gre
+- **EchoSlide** — gre
+- **EdgeGlow** — Woohyun Kim
+- **EyeBlink** — gre
+- **FacetedGlass** — gre
+- **Fade** — gre
+- **FadeColor** — gre
+- **FadeGrayscale** — gre
+- **FallOver** — gre
+- **FilmBurn** — Anastasia Dunbar
+- **FilmDissolve** — gre
+- **FilmStrip** — gre
+- **Fisheye** — gre
+- **FlameWipe** — gre
+- **FlashFade** — gre
+- **FlowerWipe** — Fernando Kuteken
+- **FlyEye** — gre
+- **Fold** — nwoeanhinnogaehr
+- **FrostWipe** — gre
+- **Funnel** — gre
+- **Gallery** — gre
+- **GeometricCollage** — gre
+- **GlintDissolve** — gre
+- **GlitchBands** — Yoni Maltsman @friendlyspinach
+- **GlitchDisplace** — Matt DesLauriers
+- **GlitchFlicker** — bread
+- **GlitchMemories** — Gunnar Roth
+- **GlitterDissolve** — gre
+- **GlowDissolve** — hjm1fb
+- **GooeyWipe** — gre
+- **GravityLens** — gre
+- **GridFlip** — TimDonselaar
+- **Halftone** — gre
+- **HeartWipe** — gre
+- **HeatHaze** — gre
+- **Hexagonalize** — Fernando Kuteken
+- **HingedSquares** — gre
+- **Hologram** — gre
+- **Honeycomb** — gre
+- **HorizontalClose** — martiniti
+- **HorizontalHold** — gre
+- **HorizontalOpen** — martiniti
+- **HsvFade** — nwoeanhinnogaehr
+- **InkBleed** — gre
+- **InsetWipe** — gre
+- **InsideCube** — gre
+- **Kaleidoscope** — nwoeanhinnogaehr
+- **KeyholeWipe** — gre
+- **LayoutGrid** — gre
+- **LeafWipe** — @Flexi23
+- **LedWall** — gre
+- **LeftRight** — zhmy
+- **LensFlare** — gre
+- **LightningFlash** — gre
+- **LightRays** — gre
+- **LightStreaks** — gre
+- **LightWipe** — gre
+- **LiquidFill** — gre
+- **LissajousTiles** — Boundless <info@boundless-beta.com>
+- **LuminanceMelt** — 0gust1
+- **MoireWipe** — gre
+- **Morph** — paniq
+- **Mosaic** — Xaychru
+- **MultiplyBlend** — Fernando Kuteken
+- **NoiseDissolve** — towrabbit
+- **Overexposure** — Ben Zhang
+- **PaperFold** — gre
+- **PaperTear** — gre
+- **PerlinDissolve** — Rich Harris
+- **PhotoDevelop** — gre
+- **Pinwheel** — Mr Speaker
+- **Pixelize** — gre
+- **PixelStretch** — gre
+- **PlasmaDissolve** — gre
+- **PlusWipe** — gre
+- **PolkaDotsCurtain** — bobylito
+- **PopIn** — gre
+- **PowerKaleido** — Boundless
+- **Prisms** — gre
+- **ProjectorThrow** — gre
+- **Puzzle** — gre
+- **PuzzleCube** — gre
+- **RadialWipe** — Xaychru
+- **RandomSquares** — gre
+- **Reassemble** — gre
+- **RectangleCover** — martiniti
+- **RectangleIris** — martiniti
+- **Refraction** — gre
+- **Revolve** — bread
+- **RibbonTwist** — gre
+- **RingSpin** — gre
+- **RingsWipe** — gre
+- **Ripple** — gre
+- **Rolls** — Mark Craig
+- **RotateScaleFade** — Fernando Kuteken
+- **RotateScaleVanish** — Mark Craig
+- **SawtoothWipe** — gre
+- **Shatter** — lbl
+- **Shockwave** — Gilad Levi, github @Giladx
+- **ShoreWash** — gre
+- **Shred** — gre
+- **ShutterWipe** — gre
+- **SimpleFlip** — nwoeanhinnogaehr
+- **SimpleZoom** — 0gust1
+- **SimpleZoomOut** — Tianshuo
+- **SketchDissolve** — gre
+- **SlideAwayRight** — lizhongjian
+- **Slides** — Mark Craig
+- **SlotReels** — gre
+- **SmokeDissolve** — gre
+- **SnakeBlockWipe** — gre
+- **Snapshot** — gre
+- **Sphere** — gre
+- **SpiralBlockWipe** — gre
+- **SpiralWipe** — gre
+- **SplatterWipe** — gre
+- **SplitFlap** — gre
+- **SplitSlideInHorizontal** — OllyOllyOlly
+- **SplitSlideInOutHorizontal** — OllyOllyOlly
+- **SplitSlideInOutVertical** — OllyOllyOlly
+- **SplitSlideInVertical** — OllyOllyOlly
+- **SplitSlideOutHorizontal** — OllyOllyOlly
+- **SplitSlideOutVertical** — OllyOllyOlly
+- **SpotlightWipe** — gre
+- **SquaresWipe** — gre
+- **Squeeze** — gre
+- **StarWipe** — Ben Lucas
+- **StaticFade** — Ben Lucas
+- **StaticWipe** — Ben Lucas
+- **StopMotion** — gre
+- **StretchSlide** — gre
+- **StripDatamoshGlitch** — bread
+- **Swap** — gre
+- **Swirl** — Sergey Kosarevsky
+- **TangentMotionBlur** — chenkai
+- **TilesWave** — numb3r23
+- **TopBottom** — zhmy
+- **TruchetWipe** — gre
+- **Tumble** — gre
+- **Tunnel** — gre
+- **TvLostSignal** — mernking (gitlab.com/Godswork)
+- **TvRoll** — gre
+- **TvStatic** — Brandon Anzaldi
+- **TvTurnOff** — gre
+- **UndulatingBurnOut** — pthrasher
+- **Vaporize** — gre
+- **VerticalClose** — martiniti
+- **VerticalOpen** — martiniti
+- **VhsTracking** — gre
+- **Vortex** — gre
+- **WarpSpeed** — gre
+- **WaterDrop** — Paweł Płóciennik
+- **WaveWipe** — gre
+- **WedgeWipe** — gre
+- **WhipPan** — gre
+- **WhipSpin** — gre
+- **WhipTilt** — gre
+- **Wind** — gre
+- **WindowBlinds** — Fabien Benetou
+- **WindowSlices** — gre
+- **ZoomInCircles** — dycm8009
+- **ZoomInOut** — OllyOllyOlly
+- **ZoomWipeLeft** — Handk
+- **ZoomWipeRight** — Handk

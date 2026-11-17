@@ -7,6 +7,7 @@
      node engine/render.js <video-dir> scan
      node engine/render.js <video-dir> lint [--step N]
      node engine/render.js <video-dir> blocks [--style f.json] [--names a,b] [--stages 0.3,1] [--out f.jpg]
+     node engine/render.js <video-dir> transitions [--style f.json] [--names a,b] [--all] [--stages 0.3,0.7] [--out f.jpg]
      node engine/render.js <video-dir> bench <frame|time> ...
      node engine/render.js <video-dir> video [--workers N] [--from s] [--to s]
 
@@ -19,7 +20,7 @@
      lint   draws every Nth frame (6) and prints, as one JSON line, where every
             piece of scene text lands; engine/lint.py turns it into findings
      blocks draws the ready-made blocks (js/blocks.js) in the video's look and
-            tiles them with engine/blocks_sheet.py: every block finished, or with
+            tiles them with engine/gallery.py: every block finished, or with
             --names, each named block's build-in as a strip
      video  each frame leaves the page as a JPEG (q 0.97) and is written to
             out/frames/fNNNNN.jpg; work is handed out in 5-second chunks, so a
@@ -52,7 +53,7 @@ if (!projArg || !mode) {
 const PROJECT = path.resolve(projArg);
 if (!fs.existsSync(path.join(PROJECT, 'video.json'))) { console.error(`no video.json in ${PROJECT}`); process.exit(1); }
 const DATA = path.join(PROJECT, 'data');
-const NEEDS_NARRATION = mode !== 'tile' && mode !== 'lottiesheet' && mode !== 'blocks';
+const NEEDS_NARRATION = mode !== 'tile' && mode !== 'lottiesheet' && mode !== 'blocks' && mode !== 'transitions';
 if (NEEDS_NARRATION && !fs.existsSync(path.join(DATA, 'words.json'))) {
   console.error(`no narration recorded yet for ${path.basename(PROJECT)}: run  bin/lockstep voice ${path.basename(PROJECT)}  first`);
   process.exit(1);
@@ -120,6 +121,7 @@ async function openPage(browser, port, debugSafe, special) {
   if (special && special.tile) await page.addInitScript(() => { window.TILE_MODE = true; });
   if (special && special.lottiesheet) await page.addInitScript((o) => { window.LOTTIESHEET = o; }, special.lottiesheet);
   if (special && special.blocks) await page.addInitScript(() => { window.BLOCKS_MODE = true; });
+  if (special && special.transitions) await page.addInitScript(() => { window.TRANS_MODE = true; });
   await page.goto(`http://127.0.0.1:${port}/index.html`);
   await page.waitForFunction(() => window.READY || window.BOOT_ERROR, null, { timeout: 60000 });
   const err = await page.evaluate(() => window.BOOT_ERROR);
@@ -127,9 +129,14 @@ async function openPage(browser, port, debugSafe, special) {
   return page;
 }
 
+/* One place to start Chromium. (Forcing SwiftShader with --use-angle=swiftshader made every frame
+   about 6x slower — it moves 2D canvases onto the software GPU too — so it is not set: headless
+   Chromium already runs WebGL in software where there is no GPU.) */
+const launchBrowser = () => chromium.launch();
+
 async function withPage(debugSafe, fn, special) {
   const server = await startServer(); const port = server.address().port;
-  const browser = await chromium.launch();
+  const browser = await launchBrowser();
   try { return await fn(await openPage(browser, port, debugSafe, special), browser, port); }
   finally { await browser.close(); server.close(); }
 }
@@ -299,7 +306,7 @@ async function lint(args) {
   let step = 6;
   for (let i = 0; i < args.length; i++) if (args[i] === '--step') step = Math.max(1, parseInt(args[++i], 10) || 6);
   const server = await startServer(); const port = server.address().port;
-  const browser = await chromium.launch();
+  const browser = await launchBrowser();
   let out;
   try {
     let page = null;
@@ -313,7 +320,7 @@ async function lint(args) {
 }
 
 /* blocks: every block of js/blocks.js drawn in the video's look (or --style file's), cropped to
-   the content zone and tiled by engine/blocks_sheet.py — finished, or with --names as build-in strips */
+   the content zone and tiled by engine/gallery.py — finished, or with --names as build-in strips */
 async function blockSheet(args) {
   let names = null, stages = null, out = path.join(OUT, 'blocks.jpg');
   for (let i = 0; i < args.length; i++) {
@@ -344,8 +351,68 @@ async function blockSheet(args) {
     }
   }, { blocks: true });
   const man = path.join(dir, 'manifest.json');
-  fs.writeFileSync(man, JSON.stringify({ style: styleName, rows, crop: [0, 360, 1080, 1240] }));
-  const r = require('child_process').spawnSync('python3', [path.join(ENGINE, 'blocks_sheet.py'), man, out], { stdio: 'inherit' });
+  fs.writeFileSync(man, JSON.stringify({ title: 'lockstep blocks', style: styleName, rows, crop: [0, 360, 1080, 1240] }));
+  const r = require('child_process').spawnSync('python3', [path.join(ENGINE, 'gallery.py'), man, out], { stdio: 'inherit' });
+  fs.rmSync(dir, { recursive: true, force: true });
+  if (r.status) process.exit(r.status);
+}
+
+/* transitions: the scene transitions in the video's look (or --style file's), each between the
+   same two pictures. With --names: strips through each named one. Without: the middle frame of
+   the recommended ones (TRANSITION_PICKS in gl.js), or of every one with --all. */
+const BUILTIN_ABOUT = {
+  fade: 'built in: a cross-fade', cut: 'built in: a hard cut on the boundary', flash: 'built in: the cut hidden under a flash',
+  zoomIn: 'built in: dive into the old scene, the new one grows out of that point', zoomOut: 'built in: pull back from the old scene',
+  panDown: 'built in: the camera travels down', panUp: 'built in: the camera travels up',
+  slideLeft: 'built in: the new scene pushes the old one out to the left', slideRight: 'built in: the new scene pushes the old one out to the right',
+};
+async function transitionSheet(args) {
+  let names = null, stages = null, all = false, out = path.join(OUT, 'transitions.jpg');
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--style') STYLE_OVERRIDE = path.resolve(args[++i]);
+    else if (args[i] === '--names') names = args[++i].split(',').filter(Boolean);
+    else if (args[i] === '--stages') stages = args[++i].split(',').map(Number);
+    else if (args[i] === '--all') all = true;
+    else if (args[i] === '--out') out = path.resolve(args[++i]);
+  }
+  const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'lockstep-transitions-'));
+  fs.mkdirSync(path.dirname(out), { recursive: true });
+  const rows = [];
+  let styleName = '';
+  await withPage(false, async (page) => {
+    const info = await page.evaluate(async () => {
+      await loadGLTransitions();
+      return { style: STYLE.name, builtin: TRANSITIONS.slice(), picks: TRANSITION_PICKS, gl: GLT.list.map((x) => [x.name, x.author, x.description || '']) };
+    });
+    styleName = info.style;
+    const known = new Map();
+    for (const n of info.builtin) known.set(n.toLowerCase(), { type: n, about: BUILTIN_ABOUT[n] || 'built in' });
+    for (const [n, a, d] of info.gl) known.set('gl:' + n.toLowerCase(), { type: 'gl:' + n, about: (d ? d.replace(/\.$/, '') + ' · ' : '') + 'by ' + a });
+    const find = (n) => known.get(n.toLowerCase()) || known.get('gl:' + n.toLowerCase().replace(/^gl:/, ''));
+    const want = names || (all ? [...known.values()].map((k) => k.type) : [...info.builtin, ...info.picks.map((p) => p.type)]);
+    const bad = want.filter((n) => !find(n));
+    if (bad.length) throw new Error(`no transition ${bad.join(', ')}; built in: ${info.builtin.join(', ')}; shader ones: gl:<Name> — lockstep transitions --all shows every one`);
+    const st = stages || (names ? [0.15, 0.32, 0.5, 0.68, 0.85] : [0.5]);
+    const pickAbout = new Map(info.picks.map((p) => [p.type.toLowerCase(), p.for]));
+    for (const n of want) {
+      const k = find(n), images = [];
+      for (let s = 0; s < st.length; s++) {
+        const b64 = await page.evaluate(({ type, p }) => {
+          SCENES[1].trans = { type };
+          if (isGL(type)) glProgram(glFind(type));
+          renderFrame((SCENES[1].t0 - TR / 2 + p * TR) * FPS);
+          return document.getElementById('c').toDataURL('image/jpeg', 0.9).split(',')[1];
+        }, { type: k.type, p: st[s] });
+        const f = path.join(dir, `${rows.length}_${s}.jpg`);
+        fs.writeFileSync(f, Buffer.from(b64, 'base64')); images.push(f);
+      }
+      const why = pickAbout.get(k.type.toLowerCase());
+      rows.push({ name: k.type, about: why ? `${why} · ${k.about}` : k.about, images, stages: st });
+    }
+  }, { transitions: true });
+  const man = path.join(dir, 'manifest.json');
+  fs.writeFileSync(man, JSON.stringify({ title: 'lockstep transitions', style: styleName, rows, crop: null }));
+  const r = require('child_process').spawnSync('python3', [path.join(ENGINE, 'gallery.py'), man, out], { stdio: 'inherit' });
   fs.rmSync(dir, { recursive: true, force: true });
   if (r.status) process.exit(r.status);
 }
@@ -369,7 +436,7 @@ async function video(args) {
   }
   fs.mkdirSync(FRAMES, { recursive: true });
   const server = await startServer(); const port = server.address().port;
-  const browser = await chromium.launch();
+  const browser = await launchBrowser();
   try {
     const probe = await openPage(browser, port, false);
     const total = await probe.evaluate(() => window.TOTAL_FRAMES);
@@ -411,6 +478,7 @@ async function video(args) {
   else if (mode === 'scan') await scan();
   else if (mode === 'lint') await lint(rest);
   else if (mode === 'blocks') await blockSheet(rest);
+  else if (mode === 'transitions') await transitionSheet(rest);
   else if (mode === 'bench') await bench(rest);
   else if (mode === 'video') await video(rest);
   else { console.error('unknown mode: ' + mode); process.exit(1); }

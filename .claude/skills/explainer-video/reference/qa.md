@@ -96,7 +96,8 @@ it in `video.json` with the reason, narrowed to a text or a file when you can:
 3. **Transitions** — `bin/lockstep filmstrip <slug> 7.4:8.6:10 28.9:30.1:10` makes rows of
    consecutive frames across each scene change (use the scene start times from
    `data/timeline.json`). Look for an empty or half-drawn frame mid-transition, a jump, or an
-   element popping.
+   element popping. With shader transitions, also check the look survives them: a colour that
+   clashes (set it with a role in `params`), or a black 3D background on a light look.
 4. **`docs/visual_storyboard.md` against the frames** — does each sequence do what you planned?
 5. **Accuracy re-read** — go through every frame's on-screen text against `docs/sources.md`.
    Labels drift during design ("never idle" where the truth is "kept busy").
@@ -167,6 +168,7 @@ it is acceptable.
 | A Lottie vanishes on the background | White artwork on a light look (or dark on dark) | `recolor` (lottie.md) or another file |
 | Build refuses: "Lottie files without a source and licence" | A file in `lottie/` has no entry in `credits.json` | `lottie-get` writes it; add your own files' entries by hand |
 | Voice sounds buried or the music vanishes | Voice-to-bed ratio outside 15–17 dB | `"mix"` in `video.json` (audio.md) |
+| Rendering slows down around scene changes | A heavy shader transition (blurs, glows) costs up to ~0.5 s a frame in software | Accept it, or pick a lighter one from `lockstep transitions` |
 
 ## Honest reporting
 

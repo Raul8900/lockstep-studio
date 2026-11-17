@@ -16,6 +16,7 @@ or mark it as intended. --strict counts warnings as errors.
   error  sound             a sound cue type the mixer does not know
   error  icon              an icon name (icon(ctx, 'x', …) or { icon: 'x' }) not in assets/icons/names.txt
   error  lottie            useLottie('name') without lottie/name.json, or a file without credits
+  error  transition        a shader transition 'gl:Name' that does not exist
   warn   typed-time        a time typed in seconds, which drifts when the narration is re-recorded
   warn   hex-colour        a colour typed as a value instead of a role (COL.subject, ...)
   warn   legacy-colour     COL.cyan, COL.white ...: the role names say what a colour means
@@ -62,6 +63,7 @@ LEGACY = {"white": "ink", "cyan": "subject", "amber": "accent", "violet": "data"
 ROLES = "COL.subject, COL.accent, COL.data, COL.alert, COL.good, COL.ink"
 SOUNDS = sorted(set(re.findall(r'typ == "(\w+)"', (ENGINE / "audio/make_audio.py").read_text())))
 ICONS = set((REPO / "assets/icons/names.txt").read_text().split())
+GL_NAMES = {x["name"].lower(): x["name"] for x in json.load(open(ENGINE / "anim/vendor/gl-transitions/transitions.json"))["transitions"]}
 _CORE = (ENGINE / "anim/js/core.js").read_text()
 COL_KEYS = (set(re.findall(r"\b(\w+):\s*'#[0-9A-Fa-f]{6}'", _CORE.split("const COL = {")[1].split("};")[0]))
             | set(re.findall(r"\b(\w+):\s*'", _CORE.split("const ROLE_ALIAS = {")[1].split("};")[0])) | {"onAccent"})
@@ -248,6 +250,11 @@ def check_static(sources, words):
                 if v not in COL_KEYS and not re.match(r"^(#|rgba?\(|hsla?\()", v):
                     s.flag("warn", "colour-role", m.start(), f"colour '{v}' is neither a role nor a colour{suggest(v, COL_KEYS)} "
                            "(roles: subject, accent, data, good, alert, ink, text, dim, panel …)")
+
+        for m in re.finditer(r"(['\"`])gl:([\w-]+)\1", s.txt):
+            if m.group(2).lower() not in GL_NAMES:
+                s.flag("error", "transition", m.start(), f"'gl:{m.group(2)}' is not a shader transition"
+                       f"{suggest(m.group(2), GL_NAMES.values())} (lockstep transitions --all shows them)")
 
         for pos, a in s.calls("useLottie"):
             name = lit(a[0]) if a else None

@@ -47,6 +47,10 @@ lockstep <command> [<video>] [options]
                                 the ready-made blocks (charts, stat tiles, comparisons, lists, timelines, flows,
                                 pointers) drawn in the video's look -> out/blocks.jpg; name blocks to see their
                                 build-in as strips. Without a video: in the default look, or --style's
+  transitions [<video>] [name...] [--all] [--style f.json]
+                                the scene transitions drawn in the video's look -> out/transitions.jpg: the built-in
+                                ones and the recommended shader ones (--all: every one of the 223); naming some
+                                shows each step by step
   meta <video>                  export data/timeline.json (scenes, captions, sound cues); also proves the scenes load
   still <video> [--safe] T...   render single frames, e.g. 3.2s 12s 450   -> out/stills/
   sheet <video> [--cols N] T... render frames and tile them into out/sheet.jpg for review
@@ -178,6 +182,19 @@ PY
   words)        V=$(resolve "${1:-}"); shift; python3 "$E/words.py" "$V" "$@" ;;
   meta)         V=$(resolve "${1:-}"); node "$E/render.js" "$V" meta ;;
   lint)         V=$(resolve "${1:-}"); shift; exec python3 "$E/lint.py" "$V" "$@" ;;
+  transitions)
+    V="$E/tile"; OUTF=""; EXTRA=(); NAMES=()
+    if [ $# -gt 0 ] && { [ -f "$1/video.json" ] || [ -f "$REPO/videos/$1/video.json" ]; }; then V=$(resolve "$1"); shift; fi
+    while [ $# -gt 0 ]; do
+      case "$1" in --style) EXTRA+=(--style "$2"); shift 2 ;; --out) OUTF="$2"; shift 2 ;; --all) EXTRA+=(--all); shift ;; *) NAMES+=("$1"); shift ;; esac
+    done
+    if [ -z "$OUTF" ]; then
+      if [ "$V" = "$E/tile" ]; then OUTF="${TMPDIR:-/tmp}/lockstep-transitions/transitions${NAMES[0]+_strips}.jpg"; else OUTF="$V/out/transitions${NAMES[0]+_strips}.jpg"; fi
+    fi
+    ARGS=("$V" transitions --out "$OUTF")
+    [ ${#EXTRA[@]} -gt 0 ] && ARGS+=("${EXTRA[@]}")
+    [ ${#NAMES[@]} -gt 0 ] && ARGS+=(--names "$(IFS=,; echo "${NAMES[*]}")")
+    node "$E/render.js" "${ARGS[@]}" ;;
   blocks)
     V="$E/tile"; OUTF=""; STYLE_ARG=(); NAMES=()
     if [ $# -gt 0 ] && { [ -f "$1/video.json" ] || [ -f "$REPO/videos/$1/video.json" ]; }; then V=$(resolve "$1"); shift; fi

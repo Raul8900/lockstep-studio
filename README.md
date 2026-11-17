@@ -98,6 +98,7 @@ script.py ──► voice ──► words.json (every word, to 25 ms) ──┬�
 | Animation | HTML Canvas 2D. Each scene is a JavaScript function of time; cues are `at('beat', 'word')`. |
 | Ready-made blocks | Bar, rank, line, donut and unit charts, rings, gauges, stat tiles, versus and before/after cards, quotes, step and check lists, timelines, flows and pointers that take on the video's look (palette, fonts, card shapes, hand-drawn outlines) and build in on a word. `lockstep blocks` shows them in any look. |
 | Rendering | Headless Chromium draws every frame deterministically across four workers (≈ 40 fps). |
+| Transitions | Built-in zooms, pans, slides, cuts and flashes, plus 223 GPU shader transitions (gl-transitions) — paper tears, ink, comic panels, halftone, glitches, whip pans — run on whole frames under the captions, their colours following the look. |
 | Music and sound | Synthesised in NumPy: pads, bass, arpeggio and drums arranged per chapter, with tempo, key and one of five instrument kits chosen per video; 24 sound-effect types triggered by the scenes at the same cues as the picture. |
 | Mix and master | Voice processing, ducking under speech, look-ahead limiter, −14 LUFS. |
 | Encode | FFmpeg libx264 (CRF 16, BT.709), AAC 256 kbps, streamable MP4. |
@@ -122,6 +123,7 @@ bin/lockstep check-voice <video>      transcribe it back and compare with the sc
 bin/lockstep words <video> [beat]     list every spoken word with its time
 bin/lockstep captions <video>         check (or --draft) the caption chunking
 bin/lockstep blocks <video>           the ready-made blocks (charts, stats, lists, timelines…) in the video's look
+bin/lockstep transitions <video>      scene transitions in the video's look: built-ins and 223 GPU shaders
 bin/lockstep lint <video>             check the scenes before rendering: code mistakes, where text lands
 bin/lockstep still|sheet|scan <video> review frames while designing
 bin/lockstep preview <video>          play and scrub in a browser with sound; reloads on every save
@@ -182,7 +184,8 @@ Stored in `assets/` (see `assets/README.md`): 33 type families from Google Fonts
 (SIL Open Font License, two under Apache 2.0), Lucide icons (ISC), nice-color-palettes and Open
 Color (MIT); each with its licence file.
 
-In `engine/anim/vendor/`: lottie-web (MIT), the Lottie player. Lottie animations from LottieFiles are
+In `engine/anim/vendor/`: lottie-web (MIT), the Lottie player; gl-transitions (MIT), 223 shader
+transitions, each with its author in `gl-transitions/transitions.json`. Lottie animations from LottieFiles are
 downloaded per video under the Lottie Simple License and credited in that video's `lottie/credits.json`.
 
 Downloaded at setup, not stored here: Kokoro-82M voice model and `kokoro-onnx` (Apache-2.0 / MIT),

@@ -23,6 +23,7 @@ else:
     STYLE_PATH = ROOT / "style.json"
 BACKDROPS = re.findall(r"^  (?:/\*.*?\*/\s*)?(\w+)\s*(?:\(|:)", (REPO / "engine/anim/js/backdrops.js").read_text().split("const BACKDROPS = {")[1], re.M)
 TRANSITIONS = ["fade", "cut", "zoomIn", "zoomOut", "panDown", "panUp", "slideLeft", "slideRight", "flash"]
+GL_NAMES = {t["name"].lower(): t["name"] for t in json.load(open(REPO / "engine/anim/vendor/gl-transitions/transitions.json"))["transitions"]}
 KEYS = {"name", "about", "first_used_in", "mode", "palette", "fonts", "backdrop", "post", "captions", "hud", "shape", "transition", "lottie"}
 DEFAULT = {"bg": ["#05080D", "#090E17", "#04060A"], "ink": "#F3F8FF", "subject": "#27E1FF", "accent": "#FFA91E", "data": "#A073FF",
            "alert": "#FF5F70", "good": "#4DFFB5"}
@@ -152,8 +153,15 @@ elif bd in BACKDROPS:
 else:
     row("FAIL", "backdrop", f"unknown type {bd!r}; library: {', '.join(BACKDROPS)} — or draw your own in components.js")
 tr = S.get("transition", {})
-if tr.get("default", "fade") not in TRANSITIONS:
-    row("FAIL", "transition.default", f"{tr['default']!r}; choose from {', '.join(TRANSITIONS)}")
+default = str(tr.get("default", "fade"))
+if default.startswith("gl:"):
+    if default[3:].lower() not in GL_NAMES:
+        near = __import__("difflib").get_close_matches(default[3:], list(GL_NAMES.values()), n=3, cutoff=0.6)
+        row("FAIL", "transition.default", f"{default!r} is not a shader transition" + (f" (near: {', '.join('gl:' + n for n in near)})" if near else "") + " — lockstep transitions --all shows them")
+    else:
+        row("PASS", "transition.default", f"gl:{GL_NAMES[default[3:].lower()]} (a shader transition)")
+elif default not in TRANSITIONS:
+    row("FAIL", "transition.default", f"{default!r}; choose from {', '.join(TRANSITIONS)}, or gl:<Name> (lockstep transitions)")
 if not 0.2 <= tr.get("duration", 0.84) <= 1.2:
     row("FAIL", "transition.duration", f"{tr['duration']} s: keep between 0.2 and 1.2")
 if S.get("hud", {}).get("type", "segments") not in ("segments", "line", "none"):

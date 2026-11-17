@@ -238,6 +238,45 @@ through scales zooms. Mix types deliberately — a different one marks a change 
 Use the zooms to connect scales (into a part → the part becomes the next scene; back out to the
 whole). Aim `fx, fy` at the object the viewer is looking at. The first scene's transition is unused.
 
+### Shader transitions (`gl.js`)
+
+223 more transitions written as GPU shaders (gl-transitions, MIT): zoom blurs, whip pans, torn
+and folded paper, ink, brush strokes, comic panels, halftone and duotone print, glitches, LED
+walls, ripples, liquid, film burns, 3D cards and cubes. Name one as `gl:<Name>`:
+
+```js
+addScene('factory', draw, { type: 'gl:PaperTear' });
+addScene('verdict', draw, { type: 'gl:ColorPanelWipe', params: { panels: 4, stagger: 0.5 } });
+addScene('deeper', draw, { type: 'gl:CrossZoom', params: { strength: 0.3 }, ease: 'io2' });
+```
+
+```bash
+bin/lockstep transitions <slug>                   # built-ins + ~45 recommended ones, mid-way, in the look
+bin/lockstep transitions <slug> PaperTear WhipPan  # step by step
+bin/lockstep transitions <slug> --all             # every one of the 223
+```
+
+The shortlist in a light and a dark look: [studio-grid](transitions/studio-grid.jpg),
+[neon-blueprint](transitions/neon-blueprint.jpg).
+
+- They work on whole frames: the backdrop and the scene move together; captions, the progress
+  bar and the finish (bloom, vignette, grain, the caption scrim) are drawn on top, untouched.
+- `params` override the shader's own settings (`--all` and the gallery list them by name in each
+  file's description; vendor/gl-transitions/transitions.json holds the defaults). Colour
+  parameters with unambiguous names follow the look — paper and background take the backdrop's
+  colour, ink and borders the ink, `color1`–`color3` and `accent` the accent, subject and data
+  colours — and any colour parameter can be given as a role: `{ params: { glow: 'accent' } }`.
+  `look: false` keeps the author's colours.
+- `ease` names an easing from `E` (default linear: the shaders ease themselves).
+- A misspelt name stops `lint` and the boot with the nearest names; every shader the video uses is
+  compiled at boot.
+- In software (no GPU, as in the renderer) a light shader costs ~0.1 s a frame and a heavy one —
+  blurs, glows, many samples — up to ~0.5 s; a transition is about 25 frames. Frames are identical
+  between renders on the same machine; on a machine with a GPU, shader transitions can differ from
+  this container's by a hair.
+- Restraint: one family per video (see "Transitions" in art-direction.md), and keep novelty
+  transitions (hearts, stars, TV static) for videos whose brief asks for them.
+
 ## Backdrop
 
 The backdrop comes from the style (`style.json` → `backdrop`: `circuit`, `solid`, `aurora`,
