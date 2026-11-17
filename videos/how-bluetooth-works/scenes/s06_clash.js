@@ -26,8 +26,9 @@
   sfx(c.garble - 0.05, 'data', 0.45, { dur: 0.6 });
   sfx(c.confirm - 0.05, 'stall', 0.5);
   sfx(reTx, 'zip', 0.5);
-  sfx(reLand, 'lock', 0.6);
-  sfx(reLand + 0.12, 'chime', 0.45, { pitch: 1.2 });
+  const hopEnd = at('clash', 'hop', 1, 't1');
+  sfx(hopEnd + 0.04, 'lock', 0.5);
+  sfx(hopEnd + 0.16, 'chime', 0.4, { pitch: 1.2 });
   sfx(toBuffer, 'whoosh', 0.35);
   sfx(c.reserve - 0.05, 'blip', 0.4);
   sfx(c.gap - 0.25, 'pop', 0.45, { pitch: 1.1 });

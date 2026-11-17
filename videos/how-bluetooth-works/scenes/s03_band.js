@@ -49,7 +49,7 @@
       const k = 0.6 + 0.4 * tw(t, c.band - 0.1, c.band + 0.4, E.out3);
       fillRR(ctx, fx(2400), RY - 196, fx(2483.5) - fx(2400), 176, 12, rgba(COL.ink, 0.035 * k + 0.02));
       ctx.save(); ctx.setLineDash([8, 8]); strokeRR(ctx, fx(2400), RY - 196, fx(2483.5) - fx(2400), 176, 12, rgba(COL.ink, 0.25 * k), 2); ctx.restore();
-      const crowd = (1 - 0.6 * tw(t, c.shared - 0.2, c.wifi + 0.2, E.io3)) * (1 - tw(t, c.classic - 0.2, c.classic + 0.3, E.io3));
+      const crowd = (1 - 0.6 * tw(t, c.shared - 0.2, c.wifi + 0.2, E.io3)) * (1 - tw(t, c.slices - 0.35, c.slices + 0.15, E.io3));
       if (crowd > 0) {
         for (let i = 0; i < 40; i++) {
           const ph = i === CAR.you ? PHONES.you : i === CAR.nb ? PHONES.nb : CROWD_PHONES[i];

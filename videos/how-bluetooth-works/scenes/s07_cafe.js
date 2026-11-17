@@ -25,7 +25,7 @@
 
   sfx(T0 + 0.05, 'whoosh', 0.45);
   sfx(c.wifi - 0.05, 'swell', 0.45, { dur: 1.0 });
-  sfx(c.hop - 0.05, 'stamp', 0.45);
+  sfx(at('cafe', 'hop', 1, 't1') + 0.06, 'stamp', 0.4);
   sfx(toMap, 'whoosh', 0.35);
   sfx(c.camps - 0.05, 'slide', 0.45, { dur: 0.6 });
   for (const k of fails) sfx(tNow(k) + 0.02, 'deny', 0.35);

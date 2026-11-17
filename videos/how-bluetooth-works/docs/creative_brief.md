@@ -253,3 +253,41 @@ words sit 50–80 ms early at gain ≤ 0.6.
    at phone scale with `sheet` and `still`.
 4. **It looks like every Bluetooth video** — blue glow on black, radio-wave arcs, a logo. Prevented by the
    daylight signage world, plan views and line maps, and by drawing no waves and no logo.
+
+## Retrospective
+
+Written after delivery.
+
+**What worked.**
+- *The real algorithm as the picture.* Implementing the specification's hop selection kernel and checking it
+  against the spec's own sample data (7,680 hops) turned every map into evidence: the line the viewer follows
+  is the sequence a phone with that address and clock would really use, the clash and the shared channel
+  are genuine coincidences found by search, and the café re-routing is the real AFH re-mapping. It also
+  produced facts no desk research gave: a quarter of plain hops land inside one Wi-Fi channel's 20 MHz,
+  and the adapted sequence's reply slot reuses the phone's channel (visible as station pairs).
+- *The user's own setting as the world.* Transit wayfinding graphics (plan views, a line map, a split-flap
+  board, line badges, a strip-map progress bar) carried a technical subject without the default blue-glow
+  look, and gave every mechanism one familiar object.
+- *Reading the spec locally.* The web fetcher only ever saw the spec's navigation (the pages are 1+ MB);
+  downloading the HTML and searching it gave verbatim quotations in minutes — including the sentence that
+  became the clash beat's turn (“a strong likelihood … resulting in a physical channel collision”).
+- The myth → truth opening and the broadcast twist close the hook's question twice.
+
+**What did not.**
+- Nearly every scene's first draft had a collision between two labels or a label and a drawing; the
+  sheet-then-fix loop caught them all, but laying out from measured widths up front would have saved passes.
+- Several labels were stronger than their sources until a dedicated re-read (“anyone may transmit”,
+  “nothing came back”, “≈ 0.15 s”, the oven centred 5 MHz off). Re-read every label against sources.md
+  before the first build, not after it.
+- The default mix left the `pulse` kit 21 dB under the voice. Like the QR video's `pluck`, it needs `"mix"`
+  from the start.
+- Plan-view people at carriage scale are small; the café is the weakest picture (generic tables, tiny figures).
+
+**Next time.**
+- Give components a measured layout helper (text boxes that refuse to overlap) before drawing scenes.
+- When a mechanism has a published algorithm and test vectors, implement it first and draw from it.
+- Set the mix levels for quiet or busy kits in video.json before the first audio pass.
+- A British voice with British spelling made the intelligibility check fail on spellings (“neighbours”,
+  “café”, “sixteen hundred”, “2.4GHz”) rather than on hearing; the checker now folds those variants, so
+  the check measures listening again. One real masking (“clock” → “clerk” under a click) remained, and the
+  fix was to keep cues off the words a sequence explains.

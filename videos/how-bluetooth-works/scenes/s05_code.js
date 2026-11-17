@@ -83,7 +83,8 @@
           withAlpha(ctx, ad, () => {
             const sz = 40, str = PHONES.you.addr, wAll = measure(ctx, str, sz, 600, F.mono), x0 = 540 - wAll / 2;
             const wHead = measure(ctx, str.slice(0, 9), sz, 600, F.mono);
-            fillRR(ctx, x0 - 26, 418, wAll + 52, 96, 14, COL.panel); strokeRR(ctx, x0 - 26, 418, wAll + 52, 96, 14, COL.ink, 3);
+            const pw = Math.max(wAll, measure(ctx, "YOUR PHONE'S ADDRESS (EXAMPLE)", 22, 700, F.mono, 2.5)) + 60;
+            fillRR(ctx, 540 - pw / 2, 418, pw, 96, 14, COL.panel); strokeRR(ctx, 540 - pw / 2, 418, pw, 96, 14, COL.ink, 3);
             tag(ctx, "YOUR PHONE'S ADDRESS (EXAMPLE)", 540, 446, { align: 'center', size: 22 });
             const hl = tw(t, c.address, c.address + 0.4, E.out3);
             highlighter(ctx, x0 + wHead - 4, 462, wAll - wHead + 8, 44, COL.subject, hl, 0.22);
@@ -102,6 +103,7 @@
         const open = tw(t, blueAt - 0.05, blueAt + 0.3, E.io3) * (1 - tw(t, blueAt + 0.95, blueAt + 1.3, E.io3));
         const v1 = tw(t, blueAt, blueAt + 0.35, E.out3) * (1 - tw(t, orangeIn - 0.1, orangeIn + 0.1, E.lin));
         const v2 = tw(t, orangeAt, orangeAt + 0.35, E.out3);
+        ctx.save(); ctx.translate(0, 9 * Math.sin(t * 1.9));
         earbudGate(ctx, G.x, G.y, { s: GS, open, verdict: v2 > 0 ? 'no' : 'ok', vp: v2 > 0 ? v2 : v1 });
         tag(ctx, 'YOUR EARBUD · LISTENING FOR 5B91E3', 540, 500, { align: 'center', size: 24, color: COL.subject });
         /* your packet: arrives, doors open, it goes in */
@@ -111,6 +113,7 @@
         const oIn = tw(t, orangeIn, orangeAt - 0.15, E.out3), oFall = tw(t, orangeAt + 0.25, orangeAt + 0.9, E.in2);
         if (t > orangeIn) packetCapsule(ctx, lerp(1240, G.x + 152 * GS + 205, oIn) + 60 * oFall, G.y + 220 * oFall * oFall, 380, 110, { color: COL.accent, code: PHONES.nb.lap, alpha: 1 - oFall, t });
         const l1 = v1, l2 = v2;
+        ctx.restore();
         if (l1 > 0) pill(ctx, 'YOUR CODE · LET IN', 540, 1150, { size: 28, bg: COL.good, alpha: l1 });
         if (l2 > 0) pill(ctx, 'NOT YOUR CODE · IGNORED', 540, 1150, { size: 28, bg: COL.alert, alpha: l2 });
       });

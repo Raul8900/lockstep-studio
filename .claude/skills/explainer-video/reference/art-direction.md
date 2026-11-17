@@ -48,6 +48,7 @@ must argue why that exact look fits.
 | `sunset-synth` | dark | purple-to-orange fields, wide Unbounded caps, glow | music, internet culture, the future |
 | `studio-grid` | light | graph paper, electric blue, Space Grotesk, cards with shadows | process, craft, how things are made |
 | `riso-sticker` | light | cream stock, black + spot inks, Archivo Black, misregistered blue offset shadows, halftone | printed objects, codes and labels, everyday tech (“Why a Torn QR Code Still Scans”) |
+| `transit-map` | light | station signage: off-white enamel, metro line colours, Work Sans, flat signs, plan views and line maps, a split-flap board | networks, routes, schedules, anything shared by many users at once (“How Bluetooth Works”) |
 
 After a successful video, add its look with `bin/lockstep save-style <video> <name>`.
 

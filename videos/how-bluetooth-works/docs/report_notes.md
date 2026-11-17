@@ -53,10 +53,48 @@ reproduces every map fact quoted below.
 | Failure crosses drew above the map for slots already past | not faded with the line | faded with the line |
 | Lint: speed tag under the like/share buttons; code badges 19 px; clock label past the margin; camera punch pushed a label past the margin; stamp under the buttons; hard-coded hex colours | layout and colour choices | tag moved to the map's top right (and added to every slowed map); badges ≥ 24 px; shorter label; smaller punch, centred; stamp moved; colours by role. The split-flap digits overlap while they flip, by design: recorded in video.json |
 | Accuracy re-read of every label | wording chosen for punch or precision the sources don't give | oven hump centred on 2,450 MHz; “ANYONE MAY TRANSMIT” → “NOBODY OWNS IT”; “NOTHING CAME BACK” → “NO CONFIRMATION” (a NAK can come back); “≈ 0.15 s” → “A FRACTION OF A SECOND”; example address labelled; “HOPS PER SECOND · MAXIMUM”; no bit count on the access-code label |
+| Build 1: voice-to-bed ratio 21.1 dB (music nearly inaudible under the voice) | default bus levels with the `pulse` kit | `"mix"` in video.json (music 0 dB, effects +1 dB, ducking −7 / −3 dB): 16.4 dB |
+| Build 1: “voice intelligible in the mix” FAILED at 4.81 % | 14 of the 15 “errors” were the checker's: “café” cut to “caf”, British spellings, “sixteen hundred” vs “1600”, “2.4GHz” | the engine's checker now folds accents, British spellings, year-style hundreds and units glued to numbers (clean narration: 0.00 %) |
+| Build 1: “clock” heard as “clerk” in the mix | a blip and the board's flap ticks landed on the word | no cue within the words “timetable”, “address”, “clock”; their blips moved to just after each word |
+| Build 1: 16 static holds | elements landed and then stood still | slow camera push-ins (band, board, packet, repair), signal rings and packets on the cable (myth), Wi-Fi traffic flicker and the crowd's hops in the band, a moving music meter in every packet, a packet looping the repaired route |
+| Build 2: “hop” heard as “half”, and “A” as “and”, in the mix | a lock cue on “hop” (clash); a stamp just before “A” (café) | both moved into the pause after the word |
+| Build 2: two remaining holds (25.1 s, 59.6 s) | the crowd's hops faded before the ticks began; the gate stood still after the refusal | hops kept until the ticks start; the gate floats |
+| Mobile preview: the address heading spilled over its plate | plate sized to the address only | plate sized to the wider of the two lines |
+| Café: customers' earbuds invisible, a chair outside the room, your seat hard to find | grey buds on grey heads; seat positions unchecked | white earbuds; seats kept inside the room; your seat ringed in blue |
 
 ## Creative self-assessment
 
-To be completed after the final build (see below).
+**What works.** The video answers the question the user actually asked — why forty sets of earbuds in
+one carriage don't turn into noise — instead of the usual Bluetooth trivia, and it answers it honestly:
+clashes are not prevented, they are made rare (hopping), recognisable (the code) and cheap (the resend and
+the buffer), and avoidable where they persist (adaptive hopping). The transit-map world gives every
+mechanism one familiar object (a line map, a departure board, a line badge, a closed section of track) and
+looks like no other video in this repo or in the default treatment (no blue glow, no radio-wave arcs, no
+logo). The strongest moments are the burst to real speed (the map becomes a mesh at 1,600 hops per
+second), the two identical timetables, and the clash — which is a genuine coincidence of two real hop
+sequences, followed by the specification's own sentence predicting it. The hook's question is closed twice:
+your neighbour's packets carry a different code, and — the twist — newer Bluetooth can share their song on
+purpose.
+
+**What is weakest.** The café is the plainest picture: a generic plan with small figures; its job (Wi-Fi as
+a block that never moves) is done better by the map that follows it. The quote card asks the viewer to read
+a 27-word sentence while the narration only says three of its words; the highlight and the stamp carry it,
+but it is still reading. The hop beat changes layout four times in seventeen seconds (map, burst, board with
+inputs, two boards, map again); it is clear on a second watch, dense on the first. The British voice
+(`bf_emma`) is a lower-graded voice in the model than the American ones used before; it transcribes cleanly
+but may sound flatter.
+
+**A second pass would** draw the café as a cut-away with a counter and a queue (or drop the café picture
+and go straight to its map), replace the quote card's full sentence with the three words and a smaller
+citation, and give the board one layout that grows (inputs → one board → two boards) instead of swapping.
+
+## What was verified by measurement only
+
+- The hop sequences drawn are the kernel's output, and the kernel matches the specification's sample data
+  (`tools/verify_hops.js`); the map facts are reproduced by `tools/map_facts.js`.
+- The narration was transcribed back with Whisper small.en (clean narration: 0.00 % word error after the
+  checker learned accents, British spellings and “sixteen hundred”); the final mix is checked the same way
+  by `validate`.
 
 ## What was not verified
 
@@ -65,3 +103,10 @@ To be completed after the final build (see below).
 - Whether any particular pair of earbuds uses Classic audio (A2DP) or LE Audio: the video's numbers are
   Classic's, and LE's are named on screen.
 - Real collision rates in a real carriage: deliberately not claimed.
+- The one remaining difference in the final mix's transcript is the one-letter article in “Wi-Fi doesn't hop.
+  A network camps…”, heard as “…hop, and network…”; the clean narration transcribes it correctly, the
+  meaning is unchanged, and the caption shows the right word.
+- Engine change: `engine/tts/asr_check.py` now folds accents, British spellings, year-style hundreds
+  (“sixteen hundred”) and units glued to numbers before comparing. Checked with `scripts/selftest.sh`
+  (passed, 0.0 % on the template) and `lockstep scan how-a-gpu-works` (0 errors, no dark frames); the
+  change touches only the speech-recognition comparison, not rendering.

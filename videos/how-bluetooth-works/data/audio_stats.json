@@ -1,11 +1,11 @@
 {
  "duration_s": 112.347,
  "voice_rms_while_speaking_db": -14.7,
- "music_rms_while_speaking_db": -37.3,
- "sfx_rms_while_speaking_db": -40.8,
- "bed_rms_while_speaking_db": -35.8,
- "music_rms_in_pauses_db": -31.6,
+ "music_rms_while_speaking_db": -31.9,
+ "sfx_rms_while_speaking_db": -38.8,
+ "bed_rms_while_speaking_db": -31.1,
+ "music_rms_in_pauses_db": -27.2,
  "premaster_peak_db": -1.5,
- "sfx_cues": 181,
- "speech_to_bed_ratio_db": 21.1
+ "sfx_cues": 172,
+ "speech_to_bed_ratio_db": 16.4
 }

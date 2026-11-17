@@ -378,8 +378,8 @@ function bandRuler(ctx, y, o = {}) {
       const x = fx(f);
       if (x > x1 + 1) continue;
       line(ctx, x, y - 12, x, y + 12, COL.ink, 3);
-      const end = f === 2400 ? 'left' : 'center';
-      text(ctx, String(f), f === 2400 ? x - 6 : x, y + 46, { size: 26, weight: 600, family: F.mono, color: COL.dim, align: end, alpha: labels });
+      const end = f === 2400 ? 'left' : f === 2480 ? 'right' : 'center';     // the end labels tuck inward, clear of the margins and the buttons
+      text(ctx, String(f), f === 2400 ? x - 6 : f === 2480 ? x + 6 : x, y + 46, { size: 26, weight: 600, family: F.mono, color: COL.dim, align: end, alpha: labels });
     }
     text(ctx, 'MHz', BAND.x1, y - 22, { size: 24, weight: 600, family: F.mono, color: COL.dim, align: 'right', alpha: labels });
     if (ticks > 0) {
