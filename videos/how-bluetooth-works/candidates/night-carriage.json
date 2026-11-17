@@ -1,0 +1,21 @@
+{
+  "name": "night-carriage",
+  "about": "A metro carriage at night: deep navy, amber departure-board type, glowing line colours, condensed caps. Night journeys, networks, anything told under artificial light.",
+  "mode": "dark",
+  "palette": {
+    "bg": ["#0E1424", "#0B101D", "#080B15"],
+    "ink": "#F3EFE6",
+    "subject": "#4D8DFF",
+    "accent": "#FFB020",
+    "data": "#B48CFF",
+    "alert": "#FF4D5E",
+    "good": "#3AD98B"
+  },
+  "fonts": { "display": "Oswald", "body": "Manrope", "mono": "Space Mono" },
+  "backdrop": { "type": "aurora", "colors": ["subject", "data", "accent"], "strength": 0.55, "speed": 0.6 },
+  "post": { "bloom": 0.45, "vignette": 0.35, "scrim": 0.7 },
+  "captions": { "highlight": "color", "font": "Oswald", "weight": 600, "size": 86, "case": "upper" },
+  "hud": { "type": "segments" },
+  "shape": { "radius": 6, "stroke": 2, "strokeAlpha": 0.9, "panelAlpha": 0.75 },
+  "transition": { "duration": 0.6, "default": "fade" }
+}

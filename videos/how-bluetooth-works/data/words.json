@@ -1,0 +1,2466 @@
+[
+{
+"w": "Rush",
+"t0": 0.3721,
+"t1": 0.5971,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "hour:",
+"t0": 0.6471,
+"t1": 1.0471,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "forty",
+"t0": 1.1721,
+"t1": 1.4221,
+"beat": "hook",
+"take": 0,
+"cls": "n"
+},
+{
+"w": "people",
+"t0": 1.4721,
+"t1": 1.7221,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "in",
+"t0": 1.7471,
+"t1": 1.7971,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "this",
+"t0": 1.8221,
+"t1": 1.9471,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "carriage",
+"t0": 1.9971,
+"t1": 2.3471,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "are",
+"t0": 2.3971,
+"t1": 2.4471,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "streaming",
+"t0": 2.4971,
+"t1": 2.8471,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "music",
+"t0": 2.8971,
+"t1": 3.1721,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "over",
+"t0": 3.1971,
+"t1": 3.3471,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "the",
+"t0": 3.3721,
+"t1": 3.4221,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "same",
+"t0": 3.4721,
+"t1": 3.6971,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "slice",
+"t0": 3.7471,
+"t1": 4.0471,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "of",
+"t0": 4.0721,
+"t1": 4.1221,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "radio.",
+"t0": 4.1721,
+"t1": 5.0971,
+"beat": "hook",
+"take": 0,
+"cls": "k"
+},
+{
+"w": "So",
+"t0": 5.6708,
+"t1": 5.8208,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "why",
+"t0": 5.8708,
+"t1": 6.0208,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "don't",
+"t0": 6.0708,
+"t1": 6.2208,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "you",
+"t0": 6.2708,
+"t1": 6.3458,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "ever",
+"t0": 6.3958,
+"t1": 6.5958,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "hear",
+"t0": 6.6458,
+"t1": 6.8208,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "your",
+"t0": 6.8708,
+"t1": 6.9458,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "neighbour's?",
+"t0": 6.9958,
+"t1": 7.9208,
+"beat": "hook",
+"take": 1,
+"cls": "n"
+},
+{
+"w": "You",
+"t0": 8.7811,
+"t1": 8.8561,
+"beat": "myth",
+"take": 2,
+"cls": null
+},
+{
+"w": "might",
+"t0": 8.8811,
+"t1": 9.0311,
+"beat": "myth",
+"take": 2,
+"cls": null
+},
+{
+"w": "think",
+"t0": 9.0811,
+"t1": 9.2561,
+"beat": "myth",
+"take": 2,
+"cls": null
+},
+{
+"w": "pairing",
+"t0": 9.3311,
+"t1": 9.6811,
+"beat": "myth",
+"take": 2,
+"cls": null
+},
+{
+"w": "gives",
+"t0": 9.7311,
+"t1": 9.8561,
+"beat": "myth",
+"take": 2,
+"cls": null
+},
+{
+"w": "your",
+"t0": 9.8811,
+"t1": 9.9811,
+"beat": "myth",
+"take": 2,
+"cls": null
+},
+{
+"w": "earbuds",
+"t0": 10.0311,
+"t1": 10.4311,
+"beat": "myth",
+"take": 2,
+"cls": null
+},
+{
+"w": "a",
+"t0": 10.4561,
+"t1": 10.4811,
+"beat": "myth",
+"take": 2,
+"cls": null
+},
+{
+"w": "private",
+"t0": 10.5311,
+"t1": 10.8561,
+"beat": "myth",
+"take": 2,
+"cls": "w"
+},
+{
+"w": "channel,",
+"t0": 10.9311,
+"t1": 11.5061,
+"beat": "myth",
+"take": 2,
+"cls": "k"
+},
+{
+"w": "like",
+"t0": 11.6311,
+"t1": 11.7811,
+"beat": "myth",
+"take": 2,
+"cls": null
+},
+{
+"w": "an",
+"t0": 11.8061,
+"t1": 11.8561,
+"beat": "myth",
+"take": 2,
+"cls": null
+},
+{
+"w": "invisible",
+"t0": 11.9061,
+"t1": 12.3811,
+"beat": "myth",
+"take": 2,
+"cls": null
+},
+{
+"w": "wire.",
+"t0": 12.4311,
+"t1": 13.2561,
+"beat": "myth",
+"take": 2,
+"cls": null
+},
+{
+"w": "There's",
+"t0": 13.7095,
+"t1": 13.8595,
+"beat": "myth",
+"take": 3,
+"cls": null
+},
+{
+"w": "no",
+"t0": 13.9095,
+"t1": 14.0345,
+"beat": "myth",
+"take": 3,
+"cls": null
+},
+{
+"w": "such",
+"t0": 14.0845,
+"t1": 14.3345,
+"beat": "myth",
+"take": 3,
+"cls": null
+},
+{
+"w": "thing.",
+"t0": 14.3845,
+"t1": 14.8345,
+"beat": "myth",
+"take": 3,
+"cls": null
+},
+{
+"w": "Yours",
+"t0": 15.0545,
+"t1": 15.3545,
+"beat": "myth",
+"take": 3,
+"cls": null
+},
+{
+"w": "share",
+"t0": 15.4045,
+"t1": 15.6045,
+"beat": "myth",
+"take": 3,
+"cls": null
+},
+{
+"w": "every",
+"t0": 15.6545,
+"t1": 15.8795,
+"beat": "myth",
+"take": 3,
+"cls": null
+},
+{
+"w": "channel",
+"t0": 15.9545,
+"t1": 16.2545,
+"beat": "myth",
+"take": 3,
+"cls": "k"
+},
+{
+"w": "with",
+"t0": 16.2795,
+"t1": 16.3795,
+"beat": "myth",
+"take": 3,
+"cls": null
+},
+{
+"w": "everyone",
+"t0": 16.4295,
+"t1": 16.8045,
+"beat": "myth",
+"take": 3,
+"cls": null
+},
+{
+"w": "in",
+"t0": 16.8545,
+"t1": 16.9545,
+"beat": "myth",
+"take": 3,
+"cls": null
+},
+{
+"w": "here.",
+"t0": 17.0045,
+"t1": 17.6795,
+"beat": "myth",
+"take": 3,
+"cls": null
+},
+{
+"w": "It's",
+"t0": 18.5108,
+"t1": 18.6608,
+"beat": "band",
+"take": 4,
+"cls": null
+},
+{
+"w": "one",
+"t0": 18.7108,
+"t1": 18.8858,
+"beat": "band",
+"take": 4,
+"cls": null
+},
+{
+"w": "band,",
+"t0": 18.9358,
+"t1": 19.2858,
+"beat": "band",
+"take": 4,
+"cls": "k"
+},
+{
+"w": "at",
+"t0": 19.3608,
+"t1": 19.4108,
+"beat": "band",
+"take": 4,
+"cls": null
+},
+{
+"w": "two",
+"t0": 19.4608,
+"t1": 19.6108,
+"beat": "band",
+"take": 4,
+"cls": "n"
+},
+{
+"w": "point",
+"t0": 19.6608,
+"t1": 19.8858,
+"beat": "band",
+"take": 4,
+"cls": null
+},
+{
+"w": "four",
+"t0": 19.9358,
+"t1": 20.0608,
+"beat": "band",
+"take": 4,
+"cls": "n"
+},
+{
+"w": "gigahertz,",
+"t0": 20.1108,
+"t1": 20.8858,
+"beat": "band",
+"take": 4,
+"cls": "n"
+},
+{
+"w": "shared",
+"t0": 21.0358,
+"t1": 21.2608,
+"beat": "band",
+"take": 4,
+"cls": null
+},
+{
+"w": "with",
+"t0": 21.2858,
+"t1": 21.3858,
+"beat": "band",
+"take": 4,
+"cls": null
+},
+{
+"w": "café",
+"t0": 21.4358,
+"t1": 21.7608,
+"beat": "band",
+"take": 4,
+"cls": null
+},
+{
+"w": "Wi-Fi",
+"t0": 21.8108,
+"t1": 22.2608,
+"beat": "band",
+"take": 4,
+"cls": "w"
+},
+{
+"w": "and",
+"t0": 22.3108,
+"t1": 22.3858,
+"beat": "band",
+"take": 4,
+"cls": null
+},
+{
+"w": "even",
+"t0": 22.4358,
+"t1": 22.6608,
+"beat": "band",
+"take": 4,
+"cls": null
+},
+{
+"w": "microwave",
+"t0": 22.7108,
+"t1": 23.2608,
+"beat": "band",
+"take": 4,
+"cls": null
+},
+{
+"w": "ovens.",
+"t0": 23.3108,
+"t1": 24.2108,
+"beat": "band",
+"take": 4,
+"cls": null
+},
+{
+"w": "Classic",
+"t0": 24.7098,
+"t1": 25.0848,
+"beat": "band",
+"take": 5,
+"cls": null
+},
+{
+"w": "Bluetooth",
+"t0": 25.1348,
+"t1": 25.6098,
+"beat": "band",
+"take": 5,
+"cls": "k"
+},
+{
+"w": "slices",
+"t0": 25.6598,
+"t1": 26.0848,
+"beat": "band",
+"take": 5,
+"cls": null
+},
+{
+"w": "it",
+"t0": 26.1348,
+"t1": 26.2098,
+"beat": "band",
+"take": 5,
+"cls": null
+},
+{
+"w": "into",
+"t0": 26.2348,
+"t1": 26.4348,
+"beat": "band",
+"take": 5,
+"cls": null
+},
+{
+"w": "seventy-nine",
+"t0": 26.5098,
+"t1": 27.1098,
+"beat": "band",
+"take": 5,
+"cls": "n"
+},
+{
+"w": "channels.",
+"t0": 27.1598,
+"t1": 28.0848,
+"beat": "band",
+"take": 5,
+"cls": "k"
+},
+{
+"w": "And",
+"t0": 28.8978,
+"t1": 29.0228,
+"beat": "hop",
+"take": 6,
+"cls": null
+},
+{
+"w": "it",
+"t0": 29.0478,
+"t1": 29.0978,
+"beat": "hop",
+"take": 6,
+"cls": null
+},
+{
+"w": "never",
+"t0": 29.1478,
+"t1": 29.3978,
+"beat": "hop",
+"take": 6,
+"cls": null
+},
+{
+"w": "stays",
+"t0": 29.4478,
+"t1": 29.7228,
+"beat": "hop",
+"take": 6,
+"cls": null
+},
+{
+"w": "on",
+"t0": 29.7478,
+"t1": 29.8728,
+"beat": "hop",
+"take": 6,
+"cls": null
+},
+{
+"w": "one.",
+"t0": 29.9228,
+"t1": 30.4728,
+"beat": "hop",
+"take": 6,
+"cls": null
+},
+{
+"w": "It",
+"t0": 30.5978,
+"t1": 30.6978,
+"beat": "hop",
+"take": 6,
+"cls": null
+},
+{
+"w": "jumps",
+"t0": 30.7478,
+"t1": 31.0478,
+"beat": "hop",
+"take": 6,
+"cls": "k"
+},
+{
+"w": "channel",
+"t0": 31.1228,
+"t1": 31.4228,
+"beat": "hop",
+"take": 6,
+"cls": "k"
+},
+{
+"w": "up",
+"t0": 31.4478,
+"t1": 31.5478,
+"beat": "hop",
+"take": 6,
+"cls": null
+},
+{
+"w": "to",
+"t0": 31.5978,
+"t1": 31.6728,
+"beat": "hop",
+"take": 6,
+"cls": null
+},
+{
+"w": "sixteen",
+"t0": 31.7228,
+"t1": 32.0978,
+"beat": "hop",
+"take": 6,
+"cls": "n"
+},
+{
+"w": "hundred",
+"t0": 32.1478,
+"t1": 32.3728,
+"beat": "hop",
+"take": 6,
+"cls": "n"
+},
+{
+"w": "times",
+"t0": 32.4228,
+"t1": 32.7228,
+"beat": "hop",
+"take": 6,
+"cls": null
+},
+{
+"w": "a",
+"t0": 32.7478,
+"t1": 32.7728,
+"beat": "hop",
+"take": 6,
+"cls": null
+},
+{
+"w": "second.",
+"t0": 32.8228,
+"t1": 33.6978,
+"beat": "hop",
+"take": 6,
+"cls": null
+},
+{
+"w": "The",
+"t0": 34.3114,
+"t1": 34.3614,
+"beat": "hop",
+"take": 7,
+"cls": null
+},
+{
+"w": "jumps",
+"t0": 34.4114,
+"t1": 34.7114,
+"beat": "hop",
+"take": 7,
+"cls": "k"
+},
+{
+"w": "look",
+"t0": 34.7364,
+"t1": 34.8864,
+"beat": "hop",
+"take": 7,
+"cls": null
+},
+{
+"w": "random,",
+"t0": 34.9364,
+"t1": 35.6614,
+"beat": "hop",
+"take": 7,
+"cls": null
+},
+{
+"w": "but",
+"t0": 35.7614,
+"t1": 35.8614,
+"beat": "hop",
+"take": 7,
+"cls": null
+},
+{
+"w": "they",
+"t0": 35.8864,
+"t1": 35.9864,
+"beat": "hop",
+"take": 7,
+"cls": null
+},
+{
+"w": "follow",
+"t0": 36.0364,
+"t1": 36.2614,
+"beat": "hop",
+"take": 7,
+"cls": null
+},
+{
+"w": "a",
+"t0": 36.2864,
+"t1": 36.3114,
+"beat": "hop",
+"take": 7,
+"cls": null
+},
+{
+"w": "timetable",
+"t0": 36.3614,
+"t1": 36.8864,
+"beat": "hop",
+"take": 7,
+"cls": "m"
+},
+{
+"w": "your",
+"t0": 36.9114,
+"t1": 37.0114,
+"beat": "hop",
+"take": 7,
+"cls": null
+},
+{
+"w": "phone",
+"t0": 37.0864,
+"t1": 37.3614,
+"beat": "hop",
+"take": 7,
+"cls": null
+},
+{
+"w": "works",
+"t0": 37.4114,
+"t1": 37.6364,
+"beat": "hop",
+"take": 7,
+"cls": null
+},
+{
+"w": "out",
+"t0": 37.6864,
+"t1": 37.8364,
+"beat": "hop",
+"take": 7,
+"cls": null
+},
+{
+"w": "from",
+"t0": 37.8864,
+"t1": 37.9864,
+"beat": "hop",
+"take": 7,
+"cls": null
+},
+{
+"w": "its",
+"t0": 38.0114,
+"t1": 38.0864,
+"beat": "hop",
+"take": 7,
+"cls": null
+},
+{
+"w": "address",
+"t0": 38.1364,
+"t1": 38.5114,
+"beat": "hop",
+"take": 7,
+"cls": "m"
+},
+{
+"w": "and",
+"t0": 38.5614,
+"t1": 38.6364,
+"beat": "hop",
+"take": 7,
+"cls": null
+},
+{
+"w": "its",
+"t0": 38.6614,
+"t1": 38.7864,
+"beat": "hop",
+"take": 7,
+"cls": null
+},
+{
+"w": "clock.",
+"t0": 38.8364,
+"t1": 39.6614,
+"beat": "hop",
+"take": 7,
+"cls": "m"
+},
+{
+"w": "Your",
+"t0": 40.1937,
+"t1": 40.3437,
+"beat": "hop",
+"take": 8,
+"cls": null
+},
+{
+"w": "earbuds",
+"t0": 40.3937,
+"t1": 40.8187,
+"beat": "hop",
+"take": 8,
+"cls": null
+},
+{
+"w": "work",
+"t0": 40.8687,
+"t1": 41.0187,
+"beat": "hop",
+"take": 8,
+"cls": null
+},
+{
+"w": "out",
+"t0": 41.0437,
+"t1": 41.1937,
+"beat": "hop",
+"take": 8,
+"cls": null
+},
+{
+"w": "the",
+"t0": 41.2187,
+"t1": 41.2687,
+"beat": "hop",
+"take": 8,
+"cls": null
+},
+{
+"w": "same",
+"t0": 41.3187,
+"t1": 41.5437,
+"beat": "hop",
+"take": 8,
+"cls": null
+},
+{
+"w": "one,",
+"t0": 41.5687,
+"t1": 41.9937,
+"beat": "hop",
+"take": 8,
+"cls": null
+},
+{
+"w": "so",
+"t0": 42.1187,
+"t1": 42.2187,
+"beat": "hop",
+"take": 8,
+"cls": null
+},
+{
+"w": "they're",
+"t0": 42.2437,
+"t1": 42.3437,
+"beat": "hop",
+"take": 8,
+"cls": null
+},
+{
+"w": "always",
+"t0": 42.3937,
+"t1": 42.7187,
+"beat": "hop",
+"take": 8,
+"cls": null
+},
+{
+"w": "listening",
+"t0": 42.7687,
+"t1": 43.0937,
+"beat": "hop",
+"take": 8,
+"cls": null
+},
+{
+"w": "in",
+"t0": 43.1187,
+"t1": 43.1687,
+"beat": "hop",
+"take": 8,
+"cls": null
+},
+{
+"w": "the",
+"t0": 43.1937,
+"t1": 43.2437,
+"beat": "hop",
+"take": 8,
+"cls": null
+},
+{
+"w": "right",
+"t0": 43.2937,
+"t1": 43.4937,
+"beat": "hop",
+"take": 8,
+"cls": null
+},
+{
+"w": "place",
+"t0": 43.5437,
+"t1": 43.8187,
+"beat": "hop",
+"take": 8,
+"cls": null
+},
+{
+"w": "at",
+"t0": 43.8437,
+"t1": 43.8937,
+"beat": "hop",
+"take": 8,
+"cls": null
+},
+{
+"w": "the",
+"t0": 43.9187,
+"t1": 43.9687,
+"beat": "hop",
+"take": 8,
+"cls": null
+},
+{
+"w": "right",
+"t0": 44.0187,
+"t1": 44.2437,
+"beat": "hop",
+"take": 8,
+"cls": null
+},
+{
+"w": "moment.",
+"t0": 44.2937,
+"t1": 45.1437,
+"beat": "hop",
+"take": 8,
+"cls": null
+},
+{
+"w": "Still,",
+"t0": 46.0482,
+"t1": 46.3982,
+"beat": "code",
+"take": 9,
+"cls": null
+},
+{
+"w": "someone",
+"t0": 46.4982,
+"t1": 46.6982,
+"beat": "code",
+"take": 9,
+"cls": null
+},
+{
+"w": "else's",
+"t0": 46.7232,
+"t1": 47.0482,
+"beat": "code",
+"take": 9,
+"cls": null
+},
+{
+"w": "packet",
+"t0": 47.0982,
+"t1": 47.4732,
+"beat": "code",
+"take": 9,
+"cls": null
+},
+{
+"w": "will",
+"t0": 47.4982,
+"t1": 47.5982,
+"beat": "code",
+"take": 9,
+"cls": null
+},
+{
+"w": "sometimes",
+"t0": 47.6482,
+"t1": 48.0982,
+"beat": "code",
+"take": 9,
+"cls": null
+},
+{
+"w": "land",
+"t0": 48.1482,
+"t1": 48.4232,
+"beat": "code",
+"take": 9,
+"cls": null
+},
+{
+"w": "on",
+"t0": 48.4482,
+"t1": 48.5232,
+"beat": "code",
+"take": 9,
+"cls": null
+},
+{
+"w": "your",
+"t0": 48.5482,
+"t1": 48.6232,
+"beat": "code",
+"take": 9,
+"cls": null
+},
+{
+"w": "channel.",
+"t0": 48.6732,
+"t1": 49.4982,
+"beat": "code",
+"take": 9,
+"cls": "k"
+},
+{
+"w": "So",
+"t0": 49.9984,
+"t1": 50.1484,
+"beat": "code",
+"take": 10,
+"cls": null
+},
+{
+"w": "every",
+"t0": 50.1984,
+"t1": 50.4234,
+"beat": "code",
+"take": 10,
+"cls": null
+},
+{
+"w": "packet",
+"t0": 50.4734,
+"t1": 50.7984,
+"beat": "code",
+"take": 10,
+"cls": null
+},
+{
+"w": "starts",
+"t0": 50.8484,
+"t1": 51.1734,
+"beat": "code",
+"take": 10,
+"cls": null
+},
+{
+"w": "with",
+"t0": 51.1984,
+"t1": 51.2734,
+"beat": "code",
+"take": 10,
+"cls": null
+},
+{
+"w": "a",
+"t0": 51.2984,
+"t1": 51.3234,
+"beat": "code",
+"take": 10,
+"cls": null
+},
+{
+"w": "name",
+"t0": 51.3734,
+"t1": 51.6234,
+"beat": "code",
+"take": 10,
+"cls": null
+},
+{
+"w": "tag:",
+"t0": 51.6734,
+"t1": 52.2734,
+"beat": "code",
+"take": 10,
+"cls": "k"
+},
+{
+"w": "a",
+"t0": 52.4234,
+"t1": 52.4734,
+"beat": "code",
+"take": 10,
+"cls": null
+},
+{
+"w": "code",
+"t0": 52.5234,
+"t1": 52.8234,
+"beat": "code",
+"take": 10,
+"cls": "k"
+},
+{
+"w": "made",
+"t0": 52.8734,
+"t1": 53.0234,
+"beat": "code",
+"take": 10,
+"cls": null
+},
+{
+"w": "from",
+"t0": 53.0734,
+"t1": 53.1734,
+"beat": "code",
+"take": 10,
+"cls": null
+},
+{
+"w": "your",
+"t0": 53.1984,
+"t1": 53.2734,
+"beat": "code",
+"take": 10,
+"cls": null
+},
+{
+"w": "phone's",
+"t0": 53.3234,
+"t1": 53.5984,
+"beat": "code",
+"take": 10,
+"cls": null
+},
+{
+"w": "address.",
+"t0": 53.6234,
+"t1": 54.4984,
+"beat": "code",
+"take": 10,
+"cls": "m"
+},
+{
+"w": "Your",
+"t0": 54.9783,
+"t1": 55.1033,
+"beat": "code",
+"take": 11,
+"cls": null
+},
+{
+"w": "earbuds",
+"t0": 55.1533,
+"t1": 55.5533,
+"beat": "code",
+"take": 11,
+"cls": null
+},
+{
+"w": "only",
+"t0": 55.6033,
+"t1": 55.8533,
+"beat": "code",
+"take": 11,
+"cls": null
+},
+{
+"w": "open",
+"t0": 55.9033,
+"t1": 56.1283,
+"beat": "code",
+"take": 11,
+"cls": null
+},
+{
+"w": "up",
+"t0": 56.1533,
+"t1": 56.2783,
+"beat": "code",
+"take": 11,
+"cls": null
+},
+{
+"w": "for",
+"t0": 56.3283,
+"t1": 56.4033,
+"beat": "code",
+"take": 11,
+"cls": null
+},
+{
+"w": "that",
+"t0": 56.4283,
+"t1": 56.6033,
+"beat": "code",
+"take": 11,
+"cls": null
+},
+{
+"w": "code.",
+"t0": 56.6533,
+"t1": 57.3033,
+"beat": "code",
+"take": 11,
+"cls": "k"
+},
+{
+"w": "Your",
+"t0": 57.4283,
+"t1": 57.5283,
+"beat": "code",
+"take": 11,
+"cls": null
+},
+{
+"w": "neighbour's",
+"t0": 57.5783,
+"t1": 57.9533,
+"beat": "code",
+"take": 11,
+"cls": "n"
+},
+{
+"w": "music",
+"t0": 58.0033,
+"t1": 58.3283,
+"beat": "code",
+"take": 11,
+"cls": null
+},
+{
+"w": "carries",
+"t0": 58.3783,
+"t1": 58.7283,
+"beat": "code",
+"take": 11,
+"cls": null
+},
+{
+"w": "a",
+"t0": 58.7533,
+"t1": 58.7783,
+"beat": "code",
+"take": 11,
+"cls": null
+},
+{
+"w": "different",
+"t0": 58.8283,
+"t1": 59.0783,
+"beat": "code",
+"take": 11,
+"cls": null
+},
+{
+"w": "one.",
+"t0": 59.1283,
+"t1": 59.7783,
+"beat": "code",
+"take": 11,
+"cls": null
+},
+{
+"w": "And",
+"t0": 60.6313,
+"t1": 60.7563,
+"beat": "clash",
+"take": 12,
+"cls": null
+},
+{
+"w": "sometimes",
+"t0": 60.8063,
+"t1": 61.2813,
+"beat": "clash",
+"take": 12,
+"cls": null
+},
+{
+"w": "two",
+"t0": 61.3313,
+"t1": 61.4563,
+"beat": "clash",
+"take": 12,
+"cls": "n"
+},
+{
+"w": "packets",
+"t0": 61.5063,
+"t1": 61.9313,
+"beat": "clash",
+"take": 12,
+"cls": null
+},
+{
+"w": "hit",
+"t0": 61.9813,
+"t1": 62.1063,
+"beat": "clash",
+"take": 12,
+"cls": null
+},
+{
+"w": "the",
+"t0": 62.1313,
+"t1": 62.1813,
+"beat": "clash",
+"take": 12,
+"cls": null
+},
+{
+"w": "same",
+"t0": 62.2313,
+"t1": 62.4563,
+"beat": "clash",
+"take": 12,
+"cls": null
+},
+{
+"w": "channel",
+"t0": 62.5063,
+"t1": 62.8063,
+"beat": "clash",
+"take": 12,
+"cls": "k"
+},
+{
+"w": "at",
+"t0": 62.8313,
+"t1": 62.8813,
+"beat": "clash",
+"take": 12,
+"cls": null
+},
+{
+"w": "the",
+"t0": 62.9063,
+"t1": 62.9563,
+"beat": "clash",
+"take": 12,
+"cls": null
+},
+{
+"w": "same",
+"t0": 63.0063,
+"t1": 63.2313,
+"beat": "clash",
+"take": 12,
+"cls": null
+},
+{
+"w": "instant.",
+"t0": 63.2813,
+"t1": 64.2313,
+"beat": "clash",
+"take": 12,
+"cls": "m"
+},
+{
+"w": "Bluetooth's",
+"t0": 64.659,
+"t1": 65.109,
+"beat": "clash",
+"take": 13,
+"cls": "k"
+},
+{
+"w": "own",
+"t0": 65.159,
+"t1": 65.309,
+"beat": "clash",
+"take": 13,
+"cls": null
+},
+{
+"w": "rulebook",
+"t0": 65.359,
+"t1": 65.784,
+"beat": "clash",
+"take": 13,
+"cls": null
+},
+{
+"w": "calls",
+"t0": 65.834,
+"t1": 66.084,
+"beat": "clash",
+"take": 13,
+"cls": null
+},
+{
+"w": "that",
+"t0": 66.134,
+"t1": 66.284,
+"beat": "clash",
+"take": 13,
+"cls": null
+},
+{
+"w": "a",
+"t0": 66.309,
+"t1": 66.334,
+"beat": "clash",
+"take": 13,
+"cls": null
+},
+{
+"w": "strong",
+"t0": 66.384,
+"t1": 66.709,
+"beat": "clash",
+"take": 13,
+"cls": null
+},
+{
+"w": "likelihood.",
+"t0": 66.759,
+"t1": 67.784,
+"beat": "clash",
+"take": 13,
+"cls": "w"
+},
+{
+"w": "They",
+"t0": 68.348,
+"t1": 68.473,
+"beat": "clash",
+"take": 14,
+"cls": null
+},
+{
+"w": "garble",
+"t0": 68.523,
+"t1": 68.823,
+"beat": "clash",
+"take": 14,
+"cls": "w"
+},
+{
+"w": "each",
+"t0": 68.848,
+"t1": 68.998,
+"beat": "clash",
+"take": 14,
+"cls": null
+},
+{
+"w": "other.",
+"t0": 69.023,
+"t1": 69.623,
+"beat": "clash",
+"take": 14,
+"cls": null
+},
+{
+"w": "Your",
+"t0": 69.748,
+"t1": 69.898,
+"beat": "clash",
+"take": 14,
+"cls": null
+},
+{
+"w": "earbuds",
+"t0": 69.948,
+"t1": 70.373,
+"beat": "clash",
+"take": 14,
+"cls": null
+},
+{
+"w": "don't",
+"t0": 70.423,
+"t1": 70.573,
+"beat": "clash",
+"take": 14,
+"cls": null
+},
+{
+"w": "confirm,",
+"t0": 70.623,
+"t1": 71.248,
+"beat": "clash",
+"take": 14,
+"cls": null
+},
+{
+"w": "so",
+"t0": 71.348,
+"t1": 71.423,
+"beat": "clash",
+"take": 14,
+"cls": null
+},
+{
+"w": "your",
+"t0": 71.448,
+"t1": 71.548,
+"beat": "clash",
+"take": 14,
+"cls": null
+},
+{
+"w": "phone",
+"t0": 71.598,
+"t1": 71.848,
+"beat": "clash",
+"take": 14,
+"cls": null
+},
+{
+"w": "sends",
+"t0": 71.898,
+"t1": 72.098,
+"beat": "clash",
+"take": 14,
+"cls": null
+},
+{
+"w": "it",
+"t0": 72.123,
+"t1": 72.198,
+"beat": "clash",
+"take": 14,
+"cls": null
+},
+{
+"w": "again",
+"t0": 72.223,
+"t1": 72.448,
+"beat": "clash",
+"take": 14,
+"cls": null
+},
+{
+"w": "on",
+"t0": 72.473,
+"t1": 72.548,
+"beat": "clash",
+"take": 14,
+"cls": null
+},
+{
+"w": "the",
+"t0": 72.573,
+"t1": 72.623,
+"beat": "clash",
+"take": 14,
+"cls": null
+},
+{
+"w": "next",
+"t0": 72.673,
+"t1": 72.923,
+"beat": "clash",
+"take": 14,
+"cls": null
+},
+{
+"w": "hop,",
+"t0": 72.973,
+"t1": 73.198,
+"beat": "clash",
+"take": 14,
+"cls": "k"
+},
+{
+"w": "milliseconds",
+"t0": 73.248,
+"t1": 73.798,
+"beat": "clash",
+"take": 14,
+"cls": "m"
+},
+{
+"w": "later.",
+"t0": 73.848,
+"t1": 74.698,
+"beat": "clash",
+"take": 14,
+"cls": null
+},
+{
+"w": "And",
+"t0": 75.1911,
+"t1": 75.3161,
+"beat": "clash",
+"take": 15,
+"cls": null
+},
+{
+"w": "a",
+"t0": 75.3411,
+"t1": 75.3661,
+"beat": "clash",
+"take": 15,
+"cls": null
+},
+{
+"w": "fraction",
+"t0": 75.4161,
+"t1": 75.8161,
+"beat": "clash",
+"take": 15,
+"cls": null
+},
+{
+"w": "of",
+"t0": 75.8411,
+"t1": 75.8911,
+"beat": "clash",
+"take": 15,
+"cls": null
+},
+{
+"w": "a",
+"t0": 75.9161,
+"t1": 75.9411,
+"beat": "clash",
+"take": 15,
+"cls": null
+},
+{
+"w": "second",
+"t0": 75.9911,
+"t1": 76.3161,
+"beat": "clash",
+"take": 15,
+"cls": null
+},
+{
+"w": "of",
+"t0": 76.3411,
+"t1": 76.3911,
+"beat": "clash",
+"take": 15,
+"cls": null
+},
+{
+"w": "music",
+"t0": 76.4411,
+"t1": 76.7661,
+"beat": "clash",
+"take": 15,
+"cls": null
+},
+{
+"w": "waits",
+"t0": 76.8161,
+"t1": 77.0661,
+"beat": "clash",
+"take": 15,
+"cls": null
+},
+{
+"w": "in",
+"t0": 77.0911,
+"t1": 77.1411,
+"beat": "clash",
+"take": 15,
+"cls": null
+},
+{
+"w": "reserve,",
+"t0": 77.1661,
+"t1": 77.8661,
+"beat": "clash",
+"take": 15,
+"cls": "m"
+},
+{
+"w": "so",
+"t0": 77.9911,
+"t1": 78.0911,
+"beat": "clash",
+"take": 15,
+"cls": null
+},
+{
+"w": "you",
+"t0": 78.1411,
+"t1": 78.1911,
+"beat": "clash",
+"take": 15,
+"cls": null
+},
+{
+"w": "don't",
+"t0": 78.2411,
+"t1": 78.3911,
+"beat": "clash",
+"take": 15,
+"cls": null
+},
+{
+"w": "hear",
+"t0": 78.4411,
+"t1": 78.6161,
+"beat": "clash",
+"take": 15,
+"cls": null
+},
+{
+"w": "the",
+"t0": 78.6411,
+"t1": 78.6911,
+"beat": "clash",
+"take": 15,
+"cls": null
+},
+{
+"w": "gap.",
+"t0": 78.7411,
+"t1": 79.4661,
+"beat": "clash",
+"take": 15,
+"cls": null
+},
+{
+"w": "Cafés",
+"t0": 80.333,
+"t1": 80.808,
+"beat": "cafe",
+"take": 16,
+"cls": null
+},
+{
+"w": "add",
+"t0": 80.858,
+"t1": 81.008,
+"beat": "cafe",
+"take": 16,
+"cls": null
+},
+{
+"w": "a",
+"t0": 81.033,
+"t1": 81.058,
+"beat": "cafe",
+"take": 16,
+"cls": null
+},
+{
+"w": "bigger",
+"t0": 81.108,
+"t1": 81.308,
+"beat": "cafe",
+"take": 16,
+"cls": null
+},
+{
+"w": "problem:",
+"t0": 81.358,
+"t1": 81.958,
+"beat": "cafe",
+"take": 16,
+"cls": "w"
+},
+{
+"w": "Wi-Fi",
+"t0": 82.083,
+"t1": 82.458,
+"beat": "cafe",
+"take": 16,
+"cls": "w"
+},
+{
+"w": "doesn't",
+"t0": 82.508,
+"t1": 82.733,
+"beat": "cafe",
+"take": 16,
+"cls": null
+},
+{
+"w": "hop.",
+"t0": 82.783,
+"t1": 83.383,
+"beat": "cafe",
+"take": 16,
+"cls": "k"
+},
+{
+"w": "A",
+"t0": 83.533,
+"t1": 83.583,
+"beat": "cafe",
+"take": 16,
+"cls": null
+},
+{
+"w": "network",
+"t0": 83.633,
+"t1": 83.983,
+"beat": "cafe",
+"take": 16,
+"cls": null
+},
+{
+"w": "camps",
+"t0": 84.033,
+"t1": 84.333,
+"beat": "cafe",
+"take": 16,
+"cls": null
+},
+{
+"w": "on",
+"t0": 84.358,
+"t1": 84.433,
+"beat": "cafe",
+"take": 16,
+"cls": null
+},
+{
+"w": "about",
+"t0": 84.458,
+"t1": 84.683,
+"beat": "cafe",
+"take": 16,
+"cls": null
+},
+{
+"w": "twenty",
+"t0": 84.733,
+"t1": 85.008,
+"beat": "cafe",
+"take": 16,
+"cls": "n"
+},
+{
+"w": "of",
+"t0": 85.033,
+"t1": 85.083,
+"beat": "cafe",
+"take": 16,
+"cls": null
+},
+{
+"w": "those",
+"t0": 85.133,
+"t1": 85.333,
+"beat": "cafe",
+"take": 16,
+"cls": null
+},
+{
+"w": "channels.",
+"t0": 85.383,
+"t1": 86.308,
+"beat": "cafe",
+"take": 16,
+"cls": "k"
+},
+{
+"w": "So",
+"t0": 86.8684,
+"t1": 86.9434,
+"beat": "cafe",
+"take": 17,
+"cls": null
+},
+{
+"w": "your",
+"t0": 86.9934,
+"t1": 87.0934,
+"beat": "cafe",
+"take": 17,
+"cls": null
+},
+{
+"w": "phone",
+"t0": 87.1434,
+"t1": 87.3934,
+"beat": "cafe",
+"take": 17,
+"cls": null
+},
+{
+"w": "keeps",
+"t0": 87.4434,
+"t1": 87.6434,
+"beat": "cafe",
+"take": 17,
+"cls": null
+},
+{
+"w": "score.",
+"t0": 87.6934,
+"t1": 88.4184,
+"beat": "cafe",
+"take": 17,
+"cls": null
+},
+{
+"w": "Channels",
+"t0": 88.5934,
+"t1": 88.9434,
+"beat": "cafe",
+"take": 17,
+"cls": "k"
+},
+{
+"w": "that",
+"t0": 88.9684,
+"t1": 89.0684,
+"beat": "cafe",
+"take": 17,
+"cls": null
+},
+{
+"w": "keep",
+"t0": 89.1184,
+"t1": 89.2934,
+"beat": "cafe",
+"take": 17,
+"cls": null
+},
+{
+"w": "failing",
+"t0": 89.3434,
+"t1": 89.6684,
+"beat": "cafe",
+"take": 17,
+"cls": "w"
+},
+{
+"w": "are",
+"t0": 89.6934,
+"t1": 89.7434,
+"beat": "cafe",
+"take": 17,
+"cls": null
+},
+{
+"w": "dropped",
+"t0": 89.7934,
+"t1": 90.0434,
+"beat": "cafe",
+"take": 17,
+"cls": null
+},
+{
+"w": "from",
+"t0": 90.0684,
+"t1": 90.1684,
+"beat": "cafe",
+"take": 17,
+"cls": null
+},
+{
+"w": "the",
+"t0": 90.1934,
+"t1": 90.2434,
+"beat": "cafe",
+"take": 17,
+"cls": null
+},
+{
+"w": "timetable,",
+"t0": 90.2934,
+"t1": 90.9684,
+"beat": "cafe",
+"take": 17,
+"cls": "m"
+},
+{
+"w": "though",
+"t0": 91.0684,
+"t1": 91.1684,
+"beat": "cafe",
+"take": 17,
+"cls": null
+},
+{
+"w": "it",
+"t0": 91.1934,
+"t1": 91.2434,
+"beat": "cafe",
+"take": 17,
+"cls": null
+},
+{
+"w": "always",
+"t0": 91.2934,
+"t1": 91.6184,
+"beat": "cafe",
+"take": 17,
+"cls": null
+},
+{
+"w": "keeps",
+"t0": 91.6684,
+"t1": 91.8684,
+"beat": "cafe",
+"take": 17,
+"cls": null
+},
+{
+"w": "at",
+"t0": 91.8934,
+"t1": 91.9434,
+"beat": "cafe",
+"take": 17,
+"cls": null
+},
+{
+"w": "least",
+"t0": 91.9684,
+"t1": 92.1184,
+"beat": "cafe",
+"take": 17,
+"cls": null
+},
+{
+"w": "twenty.",
+"t0": 92.1684,
+"t1": 93.0184,
+"beat": "cafe",
+"take": 17,
+"cls": "n"
+},
+{
+"w": "So",
+"t0": 93.9548,
+"t1": 94.1048,
+"beat": "payoff",
+"take": 18,
+"cls": null
+},
+{
+"w": "your",
+"t0": 94.1548,
+"t1": 94.3048,
+"beat": "payoff",
+"take": 18,
+"cls": null
+},
+{
+"w": "earbuds",
+"t0": 94.3548,
+"t1": 94.7798,
+"beat": "payoff",
+"take": 18,
+"cls": null
+},
+{
+"w": "never",
+"t0": 94.8298,
+"t1": 95.0798,
+"beat": "payoff",
+"take": 18,
+"cls": null
+},
+{
+"w": "had",
+"t0": 95.1298,
+"t1": 95.2548,
+"beat": "payoff",
+"take": 18,
+"cls": null
+},
+{
+"w": "a",
+"t0": 95.2798,
+"t1": 95.3048,
+"beat": "payoff",
+"take": 18,
+"cls": null
+},
+{
+"w": "private",
+"t0": 95.3548,
+"t1": 95.6798,
+"beat": "payoff",
+"take": 18,
+"cls": "w"
+},
+{
+"w": "line.",
+"t0": 95.7298,
+"t1": 96.5298,
+"beat": "payoff",
+"take": 18,
+"cls": null
+},
+{
+"w": "They",
+"t0": 96.934,
+"t1": 97.059,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "have",
+"t0": 97.109,
+"t1": 97.259,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "their",
+"t0": 97.284,
+"t1": 97.434,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "own",
+"t0": 97.484,
+"t1": 97.684,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "timetable,",
+"t0": 97.734,
+"t1": 98.509,
+"beat": "payoff",
+"take": 19,
+"cls": "m"
+},
+{
+"w": "a",
+"t0": 98.634,
+"t1": 98.684,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "name",
+"t0": 98.734,
+"t1": 98.984,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "tag",
+"t0": 99.034,
+"t1": 99.334,
+"beat": "payoff",
+"take": 19,
+"cls": "k"
+},
+{
+"w": "and",
+"t0": 99.359,
+"t1": 99.434,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "a",
+"t0": 99.459,
+"t1": 99.484,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "second",
+"t0": 99.534,
+"t1": 99.834,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "chance,",
+"t0": 99.884,
+"t1": 100.509,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "up",
+"t0": 100.634,
+"t1": 100.759,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "to",
+"t0": 100.809,
+"t1": 100.884,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "sixteen",
+"t0": 100.934,
+"t1": 101.284,
+"beat": "payoff",
+"take": 19,
+"cls": "n"
+},
+{
+"w": "hundred",
+"t0": 101.334,
+"t1": 101.559,
+"beat": "payoff",
+"take": 19,
+"cls": "n"
+},
+{
+"w": "times",
+"t0": 101.609,
+"t1": 101.909,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "a",
+"t0": 101.934,
+"t1": 101.959,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "second.",
+"t0": 102.009,
+"t1": 102.884,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "And",
+"t0": 103.532,
+"t1": 103.657,
+"beat": "payoff",
+"take": 20,
+"cls": null
+},
+{
+"w": "if",
+"t0": 103.682,
+"t1": 103.757,
+"beat": "payoff",
+"take": 20,
+"cls": null
+},
+{
+"w": "you",
+"t0": 103.807,
+"t1": 103.857,
+"beat": "payoff",
+"take": 20,
+"cls": null
+},
+{
+"w": "do",
+"t0": 103.907,
+"t1": 104.032,
+"beat": "payoff",
+"take": 20,
+"cls": null
+},
+{
+"w": "want",
+"t0": 104.082,
+"t1": 104.307,
+"beat": "payoff",
+"take": 20,
+"cls": null
+},
+{
+"w": "your",
+"t0": 104.357,
+"t1": 104.432,
+"beat": "payoff",
+"take": 20,
+"cls": null
+},
+{
+"w": "neighbour's",
+"t0": 104.482,
+"t1": 104.807,
+"beat": "payoff",
+"take": 20,
+"cls": "n"
+},
+{
+"w": "song?",
+"t0": 104.882,
+"t1": 105.532,
+"beat": "payoff",
+"take": 20,
+"cls": null
+},
+{
+"w": "Newer",
+"t0": 105.682,
+"t1": 105.857,
+"beat": "payoff",
+"take": 20,
+"cls": null
+},
+{
+"w": "Bluetooth",
+"t0": 105.907,
+"t1": 106.382,
+"beat": "payoff",
+"take": 20,
+"cls": "k"
+},
+{
+"w": "can",
+"t0": 106.432,
+"t1": 106.557,
+"beat": "payoff",
+"take": 20,
+"cls": null
+},
+{
+"w": "share",
+"t0": 106.607,
+"t1": 106.807,
+"beat": "payoff",
+"take": 20,
+"cls": null
+},
+{
+"w": "one",
+"t0": 106.857,
+"t1": 107.032,
+"beat": "payoff",
+"take": 20,
+"cls": null
+},
+{
+"w": "stream",
+"t0": 107.082,
+"t1": 107.357,
+"beat": "payoff",
+"take": 20,
+"cls": null
+},
+{
+"w": "with",
+"t0": 107.382,
+"t1": 107.457,
+"beat": "payoff",
+"take": 20,
+"cls": null
+},
+{
+"w": "any",
+"t0": 107.507,
+"t1": 107.682,
+"beat": "payoff",
+"take": 20,
+"cls": null
+},
+{
+"w": "number",
+"t0": 107.732,
+"t1": 107.932,
+"beat": "payoff",
+"take": 20,
+"cls": null
+},
+{
+"w": "of",
+"t0": 107.957,
+"t1": 108.007,
+"beat": "payoff",
+"take": 20,
+"cls": null
+},
+{
+"w": "earbuds.",
+"t0": 108.057,
+"t1": 109.057,
+"beat": "payoff",
+"take": 20,
+"cls": null
+}
+]
