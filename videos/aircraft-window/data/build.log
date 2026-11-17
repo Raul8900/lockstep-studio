@@ -1,0 +1,57 @@
+== direction
+creative brief and style.json are complete
+  style: cabin-daylight
+== captions
+caption_phrases.json: 36 phrases cover all 102 words; longest: "In this Airbus design," (22 chars)
+== meta
+timeline.json: 1224 frames, 4 scenes, 0 sfx cues, 36 caption phrases
+== scan
+{
+ "errors": [],
+ "dark_frames": [],
+ "darkest": {
+  "t": 6.2,
+  "mean": 210
+ },
+ "sampled": 204
+}
+== audio
+ "premaster_peak_db": -1.5,
+ "sfx_cues": 0,
+ "speech_to_bed_ratio_db": 35.3
+}
+== render
+rendered 1224 frames in 301.1s -> /workspace/work/lockstep-studio/videos/aircraft-window/out/frames
+== assemble
+audio master: {"premaster_lufs": -11.7, "premaster_true_peak_db": -0.8, "applied_gain_db": -2.3, "max_limiter_reduction_db": -0.0, "final_lufs": -14.0, "final_lra_lu": 2.1, "final_true_peak_db": -3.1}
+wrote /workspace/work/lockstep-studio/videos/aircraft-window/dist/aircraft-window.mp4
+== srt
+13 cues -> /workspace/work/lockstep-studio/videos/aircraft-window/dist/subtitles.srt
+== validate
+data/validation.json written
+== docs
+docs/narration_script.md: 102 words in 7 takes
+docs/visual_storyboard.md: 6 sequences; continuity gaps: none
+== report
+docs/production_report.md written (resolved choices + measurements)
+
+  aircraft-window.mp4   40.80 s   11.8 MB   2.06 Mbps
+  PASS  1080 x 1920, 9:16              1080 x 1920
+  PASS  30 fps, all frames present     30 fps, 1224 of 1224 frames
+  PASS  H.264 + AAC in MP4             h264 High / aac 48000 Hz
+  PASS  streamable (index first)       faststart
+  PASS  length <= 50 s                 40.80 s
+  PASS  decodes cleanly                0 errors
+  PASS  no black frames                0 segments
+  PASS  audio/picture sync             +0 ms
+  PASS  stream durations agree         0.000 s difference
+  PASS  loudness -14 LUFS +/- 1        -14.0 LUFS
+  PASS  true peak <= -1 dBTP           -3.1 dBTP
+  PASS  captions inside safe width     x [193, 887], widest 695 px
+  PASS  captions readable              shortest on screen 0.42 s, longest 4 words
+  PASS  encode fidelity                SSIM 0.9953
+  PASS  voice intelligible in the mix  0.0 % word error (0 of 103)
+  check continuous motion              22 static holds: 11.1-11.6s, 11.6-12.0s, 12.1-12.5s, 13.3-13.9s, 13.9-14.5s, 14.5-15.1s, 16.0-16.6s, 18.7-19.5s
+
+  all hard requirements pass; 1 item(s) to look at above.
+  next: look at aircraft-window/dist/contact_sheet.jpg and the mobile previews before calling it done.

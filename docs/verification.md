@@ -64,6 +64,16 @@ can instead set `LOCKSTEP_CHROMIUM=/usr/bin/chromium`. Local setup uses a Python
 XDG font/cache directories under work/. Full build commands and optional setup are in
 [production-choices.md](production-choices.md).
 
+## Selected-render costs
+
+The renderer's in-browser ten-frame micro-benchmark excludes process startup and catalogue lookup.
+Native starter frame 30 measured 28.4 ms/frame; selected animated-GLB fixture frame 360 measured
+168.1 ms/frame. These are different compositions, so this is a practical per-frame budget comparison,
+not an isolated causal estimate of adding the Three library to identical imagery. Raw measurements
+are [native-cost.log](verification-data/native-cost.log) and [three-cost.log](verification-data/three-cost.log).
+The final aircraft production's complete stage costs are recorded separately in
+[final_verification.md](../videos/aircraft-window/docs/final_verification.md).
+
 ## Audio comparison and intentional silence
 
 Reproduction uses the unchanged built starter from `scripts/selftest.sh --keep`:
@@ -95,6 +105,9 @@ retaining independently selected ambience.
 
 ## Delivery status
 
-Implementation and capability checks are complete. The aeroplane-window production will be authored
-only after the implementation PR is open and its pushed head is confirmed. Final demo, A/B listening
-artifacts and final tested SHA will be added to this same PR. No human listening judgement is claimed.
+Implementation and capability checks are complete. [PR #6](https://github.com/Raul8900/lockstep-studio/pull/6)
+was confirmed open at c7f6946 before any aircraft-video authoring began. The original narrated aircraft
+film and its inputs are on this same branch. See its [final verification](../videos/aircraft-window/docs/final_verification.md)
+for the final render commit, exact delivered checksum, decoded story review, stage costs and reproduction.
+The requester receives the verified MP4 and a secondary review package containing both A/B listening
+clips, capability fixtures, captions, sources and contact sheets. No human listening judgement is claimed.

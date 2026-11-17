@@ -46,3 +46,6 @@ Wrong layer assignment would invalidate the film: only the inner structural geom
 
 ## Style comparison result
 The rendered comparison favours cabin-daylight: its broad pale surfaces resemble cabin trim and make the labelled cutaway feel ordinary and readable. Cabin-night is legible but makes the question look like a failure investigation. Choose daylight.
+
+## Retrospective
+The passenger-to-cutaway return gives the same familiar object a precise structural explanation. Real perspective and physical leaders distinguish the three panes. The separate airflow/load graphics prevented the two processes from becoming one misleading arrow. The first phone review exposed captions too close to the button column; narrower wrapping fixed that without shrinking type. The restrained audio avoids implying a leak outside. Some explanatory passages intentionally move little; a future longer version could give the equal-pressure state a distinct close-up rather than orbiting the same assembly. No human listening judgement was available.

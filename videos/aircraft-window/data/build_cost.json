@@ -1,0 +1,28 @@
+{
+  "render_input_commit": "4fafaedffac5d9b0d6fee0ff3afb18a51cc1b3a5",
+  "command": [
+    "bin/lockstep",
+    "build",
+    "aircraft-window",
+    "--preset",
+    "veryfast",
+    "--crf",
+    "18"
+  ],
+  "elapsed_s": 579.762,
+  "stages_s": {
+    "direction": 0.112,
+    "captions": 0.022,
+    "meta": 2.483,
+    "scan": 115.078,
+    "audio": 2.488,
+    "render": 302.895,
+    "assemble": 66.615,
+    "srt": 0.047,
+    "validate": 89.937,
+    "docs": 0.027,
+    "report": 0.049
+  },
+  "exit_code": 0,
+  "note": "Stage wall times include the corresponding CLI startup; report stage includes the final verdict."
+}

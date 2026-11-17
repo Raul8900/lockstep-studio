@@ -1,0 +1,59 @@
+1
+00:00:00,262 --> 00:00:04,612
+At thirty-five thousand feet, why
+put a hole in a pressurized window?
+
+2
+00:00:04,890 --> 00:00:08,615
+In this Airbus design, look through
+the scratch pane you can touch.
+
+3
+00:00:08,660 --> 00:00:12,075
+Behind it, a tiny vent
+pierces the inner windowpane.
+
+4
+00:00:12,085 --> 00:00:14,460
+Beyond that is the outer windowpane.
+
+5
+00:00:15,774 --> 00:00:19,514
+The vent lets cabin air into the
+gap between the structural panes.
+
+6
+00:00:19,524 --> 00:00:21,724
+It is not a hole to the outside.
+
+7
+00:00:21,884 --> 00:00:25,349
+That puts cabin pressure on
+both sides of the inner pane.
+
+8
+00:00:25,359 --> 00:00:28,484
+The outer pane normally carries
+the pressure difference.
+
+9
+00:00:28,781 --> 00:00:32,696
+If the outer windowpane fails, the
+inner windowpane can take the pressure
+
+10
+00:00:32,706 --> 00:00:33,656
+load.
+
+11
+00:00:33,720 --> 00:00:36,710
+The scratch pane protects
+against passenger contact.
+
+12
+00:00:36,720 --> 00:00:37,660
+Three layers.
+
+13
+00:00:37,670 --> 00:00:38,995
+Different jobs.

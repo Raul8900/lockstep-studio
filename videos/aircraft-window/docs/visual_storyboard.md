@@ -11,7 +11,7 @@
 | Top UI band | 0–270 | Backdrop only |
 | Chapter bar | 286–340 | 4-segment progress bar (y 292) and chapter label (y 334) |
 | Diagram zone | 372–1210 | All essential graphics, x 70–1010 |
-| Caption band | 1250–1450 | Burned-in captions, centred on x 540, y 1350, max width 800 px |
+| Caption band | 1250–1450 | Burned-in captions, centred on x 540, y 1350, max width 720 px |
 | Bottom UI band | 1470–1920 | Backdrop and non-essential spill only |
 
 Below y 900, numbers and names stay left of x ≈ 910, where both platforms stack their action buttons; only repeated or decorative elements extend further right.
@@ -24,7 +24,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 **Type.** Space Grotesk for headlines, DM Sans for glosses and body, IBM Plex Mono for labels and counters. Smallest label 19–22 px; primary labels ≥ 24 px.
 
-**Captions.** Space Grotesk 800, 68 px, centred on y 1350, 1–5 words per phrase (36 phrases, 0 of them two-line); the spoken word takes its role colour and an underline draws in beneath it. Words not yet spoken are dimmed. Position never changes.
+**Captions.** Space Grotesk 800, 68 px, centred on y 1350, 1–5 words per phrase (36 phrases, 6 of them two-line); the spoken word takes its role colour and an underline draws in beneath it. Words not yet spoken are dimmed. Position never changes.
 
 **Scene changes.** 0.6 s, default `fade`; each scene can choose its own arrival (zoom into a point, pull back, pan, slide, cut, flash). The incoming scene is already drawn and moving before the outgoing one has gone.
 
