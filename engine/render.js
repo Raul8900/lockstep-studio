@@ -177,6 +177,7 @@ async function meta() {
       lottie: [...LOT_SPECS.values()].map((s) => ({ name: s.name, dir: s.dir, recolor: s.recolor })),
       sfx: SFX,
       caps: CAPS.map((c) => ({ text: c.text, show0: c.show0, show1: c.show1, t0: c.t0, t1: c.t1, lines: c.lines.length, width: Math.max(...c.lines.map((l) => l.w)) * c.scale })),
+      ...(CAP_HIDE.length ? { caption_hidden: CAP_HIDE } : {}),          // stretches where the scene's own type says the words
     }));
     fs.writeFileSync(path.join(DATA, 'timeline.json'), JSON.stringify(info, null, 1));
     console.log(`timeline.json: ${info.total} frames, ${info.scenes.length} scenes, ${info.sfx.length} sfx cues, ${info.caps.length} caption phrases`);

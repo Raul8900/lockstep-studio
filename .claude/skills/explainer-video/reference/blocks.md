@@ -75,6 +75,9 @@ Gallery in three looks — light ([studio-grid](blocks/studio-grid.jpg)), dark
 | `flowChain(ctx, x, y, w, nodes, o)` | a process: `[{ label, sub, icon }]` joined by arrows | `dir: 'down' \| 'right'`, `active`, `boxH`, `gap`, `t` |
 | `labelPointer(ctx, tx, ty, lx, ly, label, o)` | point at a part of a picture: target dot, elbowed leader, label on a plate | `color`, `size`, `t` |
 
+The gallery also shows the type styles of `textBlock` (`textBlock`, `textBlock.slam`,
+`textBlock.type`); type and narration-synced type are in scene-api.md, "Type that moves".
+
 Helpers, usable in any scene: `blockCard(ctx, x, y, w, h, { alpha, accent, fill })` (a card in the
 look's shape language, hand-drawn in a rough look), `numText(v, { prefix, suffix, decimals, of })`
 and `stagger(p, i, n, spread)`.

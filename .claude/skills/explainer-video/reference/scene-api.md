@@ -181,6 +181,34 @@ and `stagger`. `lockstep blocks <slug>` shows them in the look; signatures and o
 statTile(ctx, 110, 860, 400, 300, 1792, 'GB per second', { p: tw(t, c.fast, c.fast + 0.8, E.lin), icon: 'gauge' });
 ```
 
+### Type that moves (`text.js`)
+
+Type the engine lays out — wrapped, aligned, fitted to a box, with inline emphasis — and builds in
+word by word or letter by letter. Emphasis is marked the way the look marks its captions (a box,
+an underline, or colour).
+
+```js
+textBlock(ctx, 'Painkillers do not *find* the pain. They [block](alert) the signal.', 110, 480, 860,
+  { size: 78, p: tw(t, c.find - 0.3, c.signal + 0.2, E.lin) });           // wrapped to 860 px, word by word
+textBlock(ctx, 'Nobody *reads* the label', 110, 470, 860,
+  { size: 230, fit: true, h: 660, upper: true, reveal: 'slam', p });      // as large as fits 860 × 660
+sayText(ctx, t, 'hook', 110, 470, 860,                                     // the narration's own words, each on its word
+  { em: ['impossible'], current: 'accent', reveal: 'slam', upper: true, size: 150, fit: true, h: 700 });
+hideCaptions(at('hook', 'what') - 0.2, at('hook', 'past', 1, 't1'));      // setup code: the captions step aside
+```
+
+| Function | |
+|---|---|
+| `textBlock(ctx, str, x, y, w, o)` | `y` is the block's top; `x` its left edge, centre or right edge (`align`). `o`: `size` (64), `weight`, `family` (display face), `color`, `emColor` (roles), `mark` (`color`, `box`, `underline`, `highlight`; default: the look's caption highlight), `lineH` (1.16), `ls`, `upper`, `fit` + `h` (shrink to the box), `minSize` (24), `p`, `reveal` (`rise`, `fade`, `pop`, `slam`, `type`, `none`), `spread` (how much words overlap, 0.7), `t` (the typing caret blinks) |
+| `sayText(ctx, t, beat, x, y, w, o)` | the words of a beat (or `from`/`to` cue words, `fromN`/`toN`) each appearing as it is spoken: `lead` (0.05 s early), `dur` (0.22 s), `em` (words to emphasise), `roles` (`{ word: role }`), `current` (a role lights the word being spoken), plus textBlock's options; `reveal` defaults to `pop`. Laid out with every word from the start: nothing reflows |
+| `hideCaptions(t0, t1)` | in setup code: the burned-in captions step aside (widened to whole phrases, 0.15 s fades). The SRT keeps every phrase; lint stops checking the caption zone there |
+| `parseMarkup(str)` · `fitWords(ctx, words, x, y, w, o)` | the layout alone (each word's box), to draw words your own way |
+
+Markup: `*a phrase*` is emphasis; `[a phrase](role)` colours a phrase. Both return the layout —
+every word's `x`, `y` (baseline), `top`, `wd`, `h` and `line` — for a pointer, a highlighter or a
+camera move onto a word. When the words on screen are the narration itself, hide the captions for
+that stretch: two copies of the same sentence compete for the eye.
+
 ### Lottie animations (`lottie.js`)
 
 Designer-made vector animations from the video's `lottie/` folder, played on the narration's clock.

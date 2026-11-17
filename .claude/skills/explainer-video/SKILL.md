@@ -156,7 +156,10 @@ One file per beat, drawn in the brief's visual world and the style's language (h
 rough lines, poster looks get kinetic type and hard shadows — see "Make the scenes match the look"
 in art-direction.md). Charts, big numbers, comparisons, lists, timelines, pointers and processes
 have ready-made blocks that take on the look and build in on a word: `lockstep blocks <slug>`
-shows them all in the video's look (reference/blocks.md). Characters, gestures and effects with
+shows them all in the video's look (reference/blocks.md). Type that matters is laid out by
+`textBlock` (wrapped, fitted, emphasis marked in the look's way, built in word by word); a line
+told in its own words — a hook, a verdict — by `sayText`, each word landing as it is spoken, with
+`hideCaptions` for that stretch (scene-api.md, "Type that moves"). Characters, gestures and effects with
 real motion can come from Lottie animations: find them with `lockstep lottie-search <slug> <words>`,
 take one with `lottie-get`, and pin its key frames to words (reference/lottie.md). Write a scene,
 then look at it immediately:

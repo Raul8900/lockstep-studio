@@ -171,6 +171,20 @@ function drawPost(ctx, frame) {
 }
 
 /* ---------- captions ---------- */
+/* While a scene's own type says the narration (sayText), the captions step aside:
+   hideCaptions(t0, t1) in a scene's setup code. The range widens to whole caption phrases, so
+   no phrase is cut in half, and fades over 0.15 s at both ends. */
+const CAP_HIDE = [];
+function hideCaptions(t0, t1) {
+  let a = +t0, b = +t1;
+  for (const c of CAPS) if (c.show0 < b && c.show1 > a) { a = Math.min(a, c.show0); b = Math.max(b, c.show1); }
+  CAP_HIDE.push([+a.toFixed(3), +b.toFixed(3)]);
+}
+function captionsShown(t) {
+  let k = 1;
+  for (const [a, b] of CAP_HIDE) k = Math.min(k, 1 - clamp((t - a) / 0.15) * clamp((b - t) / 0.15));
+  return k;
+}
 const CAP = { size: 74, weight: 800, family: F.disp, lineH: 90, maxW: 800, cy: 1350, x: CX };
 const CAP_COL = { k: COL.cyan, n: COL.amber, m: COL.violet, w: COL.coral };
 function initCaptionStyle() {          // after applyStyle
@@ -230,7 +244,8 @@ function drawCaptions(ctx, t) {
   for (const k of CAPS) if (t >= k.show0 && t < k.show1) { c = k; break; }
   if (!c) return;
   const pop = E.outBackSoft(prog(t, c.show0, c.show0 + 0.14));
-  const alpha = prog(t, c.show0, c.show0 + 0.06) * (1 - prog(t, c.show1 - 0.05, c.show1));
+  const alpha = prog(t, c.show0, c.show0 + 0.06) * (1 - prog(t, c.show1 - 0.05, c.show1)) * captionsShown(t);
+  if (alpha <= 0) return;                                        // hidden (drawing at alpha 0 changes no pixel either)
   const sc = c.scale * lerp(0.9, 1, pop);
   const n = c.lines.length;
   ctx.save();

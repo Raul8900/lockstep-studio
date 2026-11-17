@@ -117,7 +117,7 @@ function lintLayout(step) {
         for (const it of items) it[9] = lowContrast(it);
       }
       for (const it of items) if (typeof it[7] !== 'string') it[7] = null;
-      samples.push([+t.toFixed(2), items]);
+      samples.push([+t.toFixed(2), items, captionsShown(t) < 0.5 ? 1 : 0]);   // 1: the captions are hidden then
     }
   } finally {
     rec = null; mute = false;

@@ -12,7 +12,7 @@ or mark it as intended. --strict counts warnings as errors.
   error  narration         no narration yet, or script.py says something the recording does not
   error  captions          caption_phrases.json does not match the narration
   error  nondeterministic  Math.random(), Date or performance.now() in scene code
-  error  cue               at('beat', 'word', n) that does not resolve
+  error  cue               at('beat', 'word', n), or sayText's beat, from or to, that does not resolve
   error  sound             a sound cue type the mixer does not know
   error  icon              an icon name (icon(ctx, 'x', …) or { icon: 'x' }) not in assets/icons/names.txt
   error  lottie            useLottie('name') without lottie/name.json, or a file without credits
@@ -232,6 +232,27 @@ def check_static(sources, words):
                     elif n < nth:
                         s.flag("error", "cue", pos, f"{call}: '{word}' is spoken only {n} time{'s' if n > 1 else ''} in '{beat}'")
 
+            for pos, a in s.calls("sayText"):                 # sayText(ctx, t, 'beat', x, y, w, { from, to, fromN, toN })
+                beat = lit(a[2]) if len(a) >= 3 else None
+                if beat is None:
+                    continue
+                if beat not in by_beat:
+                    s.flag("error", "cue", pos, f"sayText(…, '{beat}', …): there is no beat '{beat}'{suggest(beat, by_beat)} (beats: {', '.join(by_beat)})")
+                    continue
+                opts = a[6] if len(a) >= 7 else ""
+                for key in ("from", "to"):
+                    m = re.search(r"(?<![\w$])" + key + r"\s*:\s*(['\"])([^'\"]*)\1", opts)
+                    if not m:
+                        continue
+                    word = m.group(2)
+                    nm = re.search(r"(?<![\w$])" + key + r"N\s*:\s*(\d+)", opts)
+                    nth = int(nm.group(1)) if nm else 1
+                    if word != clean(word):
+                        s.flag("error", "cue", pos, f"sayText {key}: '{word}': cue words are matched in lower case without punctuation — write '{clean(word)}'")
+                    elif by_beat[beat].count(word) < nth:
+                        s.flag("error", "cue", pos, f"sayText {key}: '{word}' is not spoken{' ' + str(nth) + ' times' if nth > 1 else ''} in '{beat}'{suggest(word, by_beat[beat])}"
+                               f" (lockstep words {ROOT.name} {beat} lists the beat's words)")
+
         for pos, a in s.calls("sfx"):
             typ = lit(a[1]) if len(a) >= 2 else None
             if typ is not None and typ not in SOUNDS:
@@ -393,7 +414,8 @@ def check_runtime(static_cue_errors):
 
     def hit(rule, text, t, detail, box):
         runs.setdefault((rule, text), []).append((t, detail, box))
-    for t, items in rt["samples"]:
+    for t, items, *rest in rt["samples"]:
+        caps_hidden = bool(rest and rest[0])
         vis = [it for it in items if it[6] >= 0.5 and it[5] >= 4 and it[3] - it[1] >= 1 and it[4] - it[2] >= 1 and re.search(r"\w", it[0])]
         for s, x0, y0, x1, y1, px, a, colour, outlined, low in vis:
             if px < MIN_PX:
@@ -410,7 +432,7 @@ def check_runtime(static_cue_errors):
                 hit("side-margin", s, t, f"x {x0:.0f}–{x1:.0f}", ((x0 + x1) / 2, (y0 + y1) / 2, px))
             elif x1 > R["x"] and y1 > R["y"]:
                 hit("right-column", s, t, f"right edge x {x1:.0f}, bottom y {y1:.0f}", ((x0 + x1) / 2, (y0 + y1) / 2, px))
-            if cz and x0 < cz["x1"] and x1 > cz["x0"] and y0 < cz["y1"] and y1 > cz["y0"]:
+            if cz and not caps_hidden and x0 < cz["x1"] and x1 > cz["x0"] and y0 < cz["y1"] and y1 > cz["y0"]:
                 hit("under-captions", s, t, f"y {y0:.0f}–{y1:.0f}", ((x0 + x1) / 2, (y0 + y1) / 2, px))
         for i in range(len(vis)):
             for j in range(i + 1, len(vis)):

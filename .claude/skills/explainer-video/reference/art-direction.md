@@ -194,8 +194,8 @@ look with crisp vector diagrams, or a poster look with thin hairlines, reads as 
 | Look | Draw with |
 |---|---|
 | hand-drawn (chalk, notebook, marker) | `roughLine`, `roughRect`, `roughCircle` with boiling seeds; `highlighter`; handwritten labels; no glow; `"shape": { "line": "rough" }` so the blocks are drawn by hand too; paper transitions (`gl:SketchDissolve`, `gl:PaperTear`) |
-| poster, bold | `bigWord` kinetic type, thick strokes (6–10 px), flat fills, hard shadows, hard cuts, few elements |
-| editorial, dark stage | one lit subject at a time, generous space, serif headlines, slow push-ins, fades |
+| poster, bold | kinetic type — `bigWord`, `textBlock` with `reveal: 'slam'`, a hook told in its own words with `sayText` + `hideCaptions` — thick strokes (6–10 px), flat fills, hard shadows, hard cuts, few elements |
+| editorial, dark stage | one lit subject at a time, generous space, serif headlines (`textBlock` with `reveal: 'fade'`), slow push-ins, fades |
 | technical, neon | thin glowing lines, 2.5D slabs, counters, `glow` and bloom |
 | cards and process | panels in sequence, slides, icons as small pictograms, a progress line |
 | soft, friendly | round shapes, springy easing (`E.outBack`), big friendly icons, pastel fills |

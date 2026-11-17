@@ -168,6 +168,7 @@ it is acceptable.
 | A Lottie vanishes on the background | White artwork on a light look (or dark on dark) | `recolor` (lottie.md) or another file |
 | Build refuses: "Lottie files without a source and licence" | A file in `lottie/` has no entry in `credits.json` | `lottie-get` writes it; add your own files' entries by hand |
 | Voice sounds buried or the music vanishes | Voice-to-bed ratio outside 15–17 dB | `"mix"` in `video.json` (audio.md) |
+| The same sentence twice on screen | The scene's own type (`sayText`) and the captions say the same words | `hideCaptions(t0, t1)` for that stretch (scene-api.md) |
 | Rendering slows down around scene changes | A heavy shader transition (blurs, glows) costs up to ~0.5 s a frame in software | Accept it, or pick a lighter one from `lockstep transitions` |
 
 ## Honest reporting
