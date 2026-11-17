@@ -1,0 +1,91 @@
+{
+  "title": "The tiny hole in aeroplane windows",
+  "tag": "AIRBUS WINDOW DESIGN",
+  "output": "aircraft-window",
+  "max_seconds": 50,
+  "chapters": [
+    {
+      "id": "hook",
+      "name": "SPOT THE HOLE",
+      "mood": "drone"
+    },
+    {
+      "id": "layers",
+      "name": "THREE LAYERS",
+      "mood": "drone"
+    },
+    {
+      "id": "pressure",
+      "name": "PRESSURE PATH",
+      "mood": "drone"
+    },
+    {
+      "id": "backup",
+      "name": "BACKUP",
+      "mood": "drone"
+    }
+  ],
+  "choices": {
+    "shots": {
+      "hook": {
+        "item": "three.local"
+      },
+      "layers": {
+        "item": "three.local"
+      },
+      "pressure": {
+        "item": "three.local"
+      },
+      "backup": {
+        "item": "three.local"
+      }
+    },
+    "narration": {
+      "item": "voice.kokoro",
+      "inputs": {
+        "voice": "af_heart",
+        "speed": 1.0
+      }
+    },
+    "score": {
+      "item": "score.none"
+    },
+    "effects": {
+      "item": "effects.none"
+    },
+    "ambience": [
+      {
+        "item": "sound.ambience"
+      }
+    ]
+  },
+  "music": {
+    "source": "none",
+    "bpm": 80,
+    "kit": "soft"
+  },
+  "audio": {
+    "effects": "none",
+    "stems": [
+      {
+        "role": "ambience",
+        "file": "assets/production/ambience.wav",
+        "loop": true,
+        "gain_db": -32,
+        "fade_in": 0.4,
+        "fade_out": 0.8
+      }
+    ],
+    "ambience_envelopes": [
+      {
+        "chapter": "pressure",
+        "gain_db": -6,
+        "fade": 0.2
+      }
+    ]
+  },
+  "mix": {
+    "master_ceiling_db": -3,
+    "duck_ambience_db": -4
+  }
+}

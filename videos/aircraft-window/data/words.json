@@ -1,0 +1,834 @@
+[
+{
+"w": "At",
+"t0": 0.3119,
+"t1": 0.4619,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "thirty-five",
+"t0": 0.5369,
+"t1": 1.0619,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "thousand",
+"t0": 1.1369,
+"t1": 1.5369,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "feet,",
+"t0": 1.6119,
+"t1": 2.1119,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "why",
+"t0": 2.2369,
+"t1": 2.3619,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "put",
+"t0": 2.4119,
+"t1": 2.5119,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "a",
+"t0": 2.5369,
+"t1": 2.5619,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "hole",
+"t0": 2.6119,
+"t1": 2.8619,
+"beat": "hook",
+"take": 0,
+"cls": "k"
+},
+{
+"w": "in",
+"t0": 2.8869,
+"t1": 2.9369,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "a",
+"t0": 2.9619,
+"t1": 2.9869,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "pressurised",
+"t0": 3.0369,
+"t1": 3.5869,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "window?",
+"t0": 3.6369,
+"t1": 4.3119,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "In",
+"t0": 4.9397,
+"t1": 5.0147,
+"beat": "layers",
+"take": 1,
+"cls": null
+},
+{
+"w": "this",
+"t0": 5.0397,
+"t1": 5.1897,
+"beat": "layers",
+"take": 1,
+"cls": null
+},
+{
+"w": "Airbus",
+"t0": 5.2397,
+"t1": 5.5897,
+"beat": "layers",
+"take": 1,
+"cls": null
+},
+{
+"w": "design,",
+"t0": 5.6397,
+"t1": 6.2897,
+"beat": "layers",
+"take": 1,
+"cls": null
+},
+{
+"w": "look",
+"t0": 6.4397,
+"t1": 6.5897,
+"beat": "layers",
+"take": 1,
+"cls": null
+},
+{
+"w": "through",
+"t0": 6.6397,
+"t1": 6.7397,
+"beat": "layers",
+"take": 1,
+"cls": null
+},
+{
+"w": "the",
+"t0": 6.7647,
+"t1": 6.8147,
+"beat": "layers",
+"take": 1,
+"cls": null
+},
+{
+"w": "scratch",
+"t0": 6.8647,
+"t1": 7.1897,
+"beat": "layers",
+"take": 1,
+"cls": null
+},
+{
+"w": "pane",
+"t0": 7.2397,
+"t1": 7.4397,
+"beat": "layers",
+"take": 1,
+"cls": null
+},
+{
+"w": "you",
+"t0": 7.4647,
+"t1": 7.5147,
+"beat": "layers",
+"take": 1,
+"cls": null
+},
+{
+"w": "can",
+"t0": 7.5647,
+"t1": 7.6897,
+"beat": "layers",
+"take": 1,
+"cls": null
+},
+{
+"w": "touch.",
+"t0": 7.7397,
+"t1": 8.3147,
+"beat": "layers",
+"take": 1,
+"cls": null
+},
+{
+"w": "Behind",
+"t0": 8.7102,
+"t1": 9.0852,
+"beat": "layers",
+"take": 2,
+"cls": null
+},
+{
+"w": "it,",
+"t0": 9.1352,
+"t1": 9.2602,
+"beat": "layers",
+"take": 2,
+"cls": null
+},
+{
+"w": "the",
+"t0": 9.3352,
+"t1": 9.4352,
+"beat": "layers",
+"take": 2,
+"cls": null
+},
+{
+"w": "inner",
+"t0": 9.4852,
+"t1": 9.6852,
+"beat": "layers",
+"take": 2,
+"cls": "m"
+},
+{
+"w": "structural",
+"t0": 9.7352,
+"t1": 10.2102,
+"beat": "layers",
+"take": 2,
+"cls": null
+},
+{
+"w": "pane",
+"t0": 10.2602,
+"t1": 10.6102,
+"beat": "layers",
+"take": 2,
+"cls": null
+},
+{
+"w": "has",
+"t0": 10.6602,
+"t1": 10.8102,
+"beat": "layers",
+"take": 2,
+"cls": null
+},
+{
+"w": "the",
+"t0": 10.8352,
+"t1": 10.8852,
+"beat": "layers",
+"take": 2,
+"cls": null
+},
+{
+"w": "tiny",
+"t0": 10.9602,
+"t1": 11.3102,
+"beat": "layers",
+"take": 2,
+"cls": null
+},
+{
+"w": "vent.",
+"t0": 11.3602,
+"t1": 12.0102,
+"beat": "layers",
+"take": 2,
+"cls": "k"
+},
+{
+"w": "Then",
+"t0": 12.1852,
+"t1": 12.5352,
+"beat": "layers",
+"take": 2,
+"cls": null
+},
+{
+"w": "comes",
+"t0": 12.6102,
+"t1": 12.8852,
+"beat": "layers",
+"take": 2,
+"cls": null
+},
+{
+"w": "the",
+"t0": 12.9102,
+"t1": 12.9852,
+"beat": "layers",
+"take": 2,
+"cls": null
+},
+{
+"w": "outer",
+"t0": 13.0602,
+"t1": 13.3352,
+"beat": "layers",
+"take": 2,
+"cls": "m"
+},
+{
+"w": "structural",
+"t0": 13.3852,
+"t1": 13.8352,
+"beat": "layers",
+"take": 2,
+"cls": null
+},
+{
+"w": "pane.",
+"t0": 13.8852,
+"t1": 14.5102,
+"beat": "layers",
+"take": 2,
+"cls": null
+},
+{
+"w": "The",
+"t0": 16.1737,
+"t1": 16.2487,
+"beat": "pressure",
+"take": 3,
+"cls": null
+},
+{
+"w": "vent",
+"t0": 16.3237,
+"t1": 16.6237,
+"beat": "pressure",
+"take": 3,
+"cls": "k"
+},
+{
+"w": "lets",
+"t0": 16.6737,
+"t1": 16.8737,
+"beat": "pressure",
+"take": 3,
+"cls": null
+},
+{
+"w": "cabin",
+"t0": 16.9237,
+"t1": 17.2487,
+"beat": "pressure",
+"take": 3,
+"cls": null
+},
+{
+"w": "air",
+"t0": 17.3237,
+"t1": 17.5237,
+"beat": "pressure",
+"take": 3,
+"cls": "k"
+},
+{
+"w": "into",
+"t0": 17.5487,
+"t1": 17.6987,
+"beat": "pressure",
+"take": 3,
+"cls": null
+},
+{
+"w": "the",
+"t0": 17.7237,
+"t1": 17.7737,
+"beat": "pressure",
+"take": 3,
+"cls": null
+},
+{
+"w": "gap",
+"t0": 17.8237,
+"t1": 18.0987,
+"beat": "pressure",
+"take": 3,
+"cls": "k"
+},
+{
+"w": "between",
+"t0": 18.1487,
+"t1": 18.4237,
+"beat": "pressure",
+"take": 3,
+"cls": null
+},
+{
+"w": "the",
+"t0": 18.4487,
+"t1": 18.4987,
+"beat": "pressure",
+"take": 3,
+"cls": null
+},
+{
+"w": "structural",
+"t0": 18.5487,
+"t1": 18.9737,
+"beat": "pressure",
+"take": 3,
+"cls": null
+},
+{
+"w": "panes.",
+"t0": 19.0237,
+"t1": 19.7987,
+"beat": "pressure",
+"take": 3,
+"cls": null
+},
+{
+"w": "It",
+"t0": 19.9237,
+"t1": 20.0237,
+"beat": "pressure",
+"take": 3,
+"cls": null
+},
+{
+"w": "is",
+"t0": 20.0737,
+"t1": 20.1737,
+"beat": "pressure",
+"take": 3,
+"cls": null
+},
+{
+"w": "not",
+"t0": 20.2237,
+"t1": 20.3737,
+"beat": "pressure",
+"take": 3,
+"cls": null
+},
+{
+"w": "a",
+"t0": 20.3987,
+"t1": 20.4487,
+"beat": "pressure",
+"take": 3,
+"cls": null
+},
+{
+"w": "hole",
+"t0": 20.5237,
+"t1": 20.7237,
+"beat": "pressure",
+"take": 3,
+"cls": "k"
+},
+{
+"w": "to",
+"t0": 20.7737,
+"t1": 20.8237,
+"beat": "pressure",
+"take": 3,
+"cls": null
+},
+{
+"w": "the",
+"t0": 20.8487,
+"t1": 20.9237,
+"beat": "pressure",
+"take": 3,
+"cls": null
+},
+{
+"w": "outside.",
+"t0": 20.9737,
+"t1": 21.7737,
+"beat": "pressure",
+"take": 3,
+"cls": null
+},
+{
+"w": "That",
+"t0": 22.2843,
+"t1": 22.4342,
+"beat": "pressure",
+"take": 4,
+"cls": null
+},
+{
+"w": "puts",
+"t0": 22.4842,
+"t1": 22.6842,
+"beat": "pressure",
+"take": 4,
+"cls": null
+},
+{
+"w": "cabin",
+"t0": 22.7342,
+"t1": 23.0592,
+"beat": "pressure",
+"take": 4,
+"cls": null
+},
+{
+"w": "pressure",
+"t0": 23.1092,
+"t1": 23.5343,
+"beat": "pressure",
+"take": 4,
+"cls": "n"
+},
+{
+"w": "on",
+"t0": 23.5843,
+"t1": 23.7342,
+"beat": "pressure",
+"take": 4,
+"cls": null
+},
+{
+"w": "both",
+"t0": 23.7843,
+"t1": 24.0343,
+"beat": "pressure",
+"take": 4,
+"cls": null
+},
+{
+"w": "sides",
+"t0": 24.1092,
+"t1": 24.4342,
+"beat": "pressure",
+"take": 4,
+"cls": null
+},
+{
+"w": "of",
+"t0": 24.4593,
+"t1": 24.5093,
+"beat": "pressure",
+"take": 4,
+"cls": null
+},
+{
+"w": "the",
+"t0": 24.5343,
+"t1": 24.6092,
+"beat": "pressure",
+"take": 4,
+"cls": null
+},
+{
+"w": "inner",
+"t0": 24.6593,
+"t1": 24.8592,
+"beat": "pressure",
+"take": 4,
+"cls": "m"
+},
+{
+"w": "pane.",
+"t0": 24.9093,
+"t1": 25.6092,
+"beat": "pressure",
+"take": 4,
+"cls": null
+},
+{
+"w": "The",
+"t0": 25.7593,
+"t1": 25.8592,
+"beat": "pressure",
+"take": 4,
+"cls": null
+},
+{
+"w": "outer",
+"t0": 25.9093,
+"t1": 26.0843,
+"beat": "pressure",
+"take": 4,
+"cls": "m"
+},
+{
+"w": "pane",
+"t0": 26.1343,
+"t1": 26.4593,
+"beat": "pressure",
+"take": 4,
+"cls": null
+},
+{
+"w": "normally",
+"t0": 26.5592,
+"t1": 26.9342,
+"beat": "pressure",
+"take": 4,
+"cls": null
+},
+{
+"w": "carries",
+"t0": 27.0093,
+"t1": 27.3592,
+"beat": "pressure",
+"take": 4,
+"cls": null
+},
+{
+"w": "the",
+"t0": 27.4093,
+"t1": 27.4593,
+"beat": "pressure",
+"take": 4,
+"cls": null
+},
+{
+"w": "pressure",
+"t0": 27.5093,
+"t1": 27.7843,
+"beat": "pressure",
+"take": 4,
+"cls": "n"
+},
+{
+"w": "difference.",
+"t0": 27.8343,
+"t1": 28.5343,
+"beat": "pressure",
+"take": 4,
+"cls": null
+},
+{
+"w": "If",
+"t0": 29.1821,
+"t1": 29.3071,
+"beat": "backup",
+"take": 5,
+"cls": null
+},
+{
+"w": "the",
+"t0": 29.3321,
+"t1": 29.4321,
+"beat": "backup",
+"take": 5,
+"cls": null
+},
+{
+"w": "outer",
+"t0": 29.5071,
+"t1": 29.7321,
+"beat": "backup",
+"take": 5,
+"cls": "m"
+},
+{
+"w": "pane",
+"t0": 29.7821,
+"t1": 30.0321,
+"beat": "backup",
+"take": 5,
+"cls": null
+},
+{
+"w": "fails,",
+"t0": 30.0821,
+"t1": 30.7571,
+"beat": "backup",
+"take": 5,
+"cls": "w"
+},
+{
+"w": "the",
+"t0": 30.8821,
+"t1": 30.9821,
+"beat": "backup",
+"take": 5,
+"cls": null
+},
+{
+"w": "inner",
+"t0": 31.0321,
+"t1": 31.2321,
+"beat": "backup",
+"take": 5,
+"cls": "m"
+},
+{
+"w": "structural",
+"t0": 31.2821,
+"t1": 31.7571,
+"beat": "backup",
+"take": 5,
+"cls": null
+},
+{
+"w": "pane",
+"t0": 31.8071,
+"t1": 32.1821,
+"beat": "backup",
+"take": 5,
+"cls": null
+},
+{
+"w": "can",
+"t0": 32.2321,
+"t1": 32.3071,
+"beat": "backup",
+"take": 5,
+"cls": null
+},
+{
+"w": "take",
+"t0": 32.3571,
+"t1": 32.5571,
+"beat": "backup",
+"take": 5,
+"cls": null
+},
+{
+"w": "the",
+"t0": 32.5821,
+"t1": 32.6321,
+"beat": "backup",
+"take": 5,
+"cls": null
+},
+{
+"w": "pressure",
+"t0": 32.6821,
+"t1": 33.0321,
+"beat": "backup",
+"take": 5,
+"cls": "n"
+},
+{
+"w": "load.",
+"t0": 33.0821,
+"t1": 33.6821,
+"beat": "backup",
+"take": 5,
+"cls": null
+},
+{
+"w": "The",
+"t0": 34.0957,
+"t1": 34.1457,
+"beat": "backup",
+"take": 6,
+"cls": null
+},
+{
+"w": "scratch",
+"t0": 34.1957,
+"t1": 34.5207,
+"beat": "backup",
+"take": 6,
+"cls": null
+},
+{
+"w": "pane",
+"t0": 34.5707,
+"t1": 34.8457,
+"beat": "backup",
+"take": 6,
+"cls": null
+},
+{
+"w": "protects",
+"t0": 34.8957,
+"t1": 35.2457,
+"beat": "backup",
+"take": 6,
+"cls": null
+},
+{
+"w": "against",
+"t0": 35.2707,
+"t1": 35.5457,
+"beat": "backup",
+"take": 6,
+"cls": null
+},
+{
+"w": "passenger",
+"t0": 35.5957,
+"t1": 35.9707,
+"beat": "backup",
+"take": 6,
+"cls": null
+},
+{
+"w": "contact.",
+"t0": 36.0207,
+"t1": 36.8957,
+"beat": "backup",
+"take": 6,
+"cls": null
+},
+{
+"w": "Three",
+"t0": 37.0957,
+"t1": 37.2957,
+"beat": "backup",
+"take": 6,
+"cls": "n"
+},
+{
+"w": "layers.",
+"t0": 37.3457,
+"t1": 37.9207,
+"beat": "backup",
+"take": 6,
+"cls": null
+},
+{
+"w": "Different",
+"t0": 38.0457,
+"t1": 38.2957,
+"beat": "backup",
+"take": 6,
+"cls": null
+},
+{
+"w": "jobs.",
+"t0": 38.3457,
+"t1": 39.0207,
+"beat": "backup",
+"take": 6,
+"cls": null
+}
+]

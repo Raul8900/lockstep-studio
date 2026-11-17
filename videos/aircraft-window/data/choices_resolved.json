@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "selected": [
+    {
+      "id": "three.local",
+      "version": 1,
+      "slot": "shots",
+      "backend": "three",
+      "inputs": {},
+      "source": "Three.js 0.180.0; original CC0 verification asset",
+      "license": "MIT runtime; CC0-1.0 original model"
+    },
+    {
+      "id": "three.local",
+      "version": 1,
+      "slot": "shots",
+      "backend": "three",
+      "inputs": {},
+      "source": "Three.js 0.180.0; original CC0 verification asset",
+      "license": "MIT runtime; CC0-1.0 original model"
+    },
+    {
+      "id": "three.local",
+      "version": 1,
+      "slot": "shots",
+      "backend": "three",
+      "inputs": {},
+      "source": "Three.js 0.180.0; original CC0 verification asset",
+      "license": "MIT runtime; CC0-1.0 original model"
+    },
+    {
+      "id": "three.local",
+      "version": 1,
+      "slot": "shots",
+      "backend": "three",
+      "inputs": {},
+      "source": "Three.js 0.180.0; original CC0 verification asset",
+      "license": "MIT runtime; CC0-1.0 original model"
+    },
+    {
+      "id": "voice.kokoro",
+      "version": 1,
+      "slot": "narration",
+      "backend": "audio",
+      "inputs": {
+        "voice": "af_heart",
+        "speed": 1
+      },
+      "source": "Original Lockstep recipes and assets",
+      "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+      "id": "score.none",
+      "version": 1,
+      "slot": "score",
+      "backend": "audio",
+      "inputs": {},
+      "source": "Original Lockstep recipes and assets",
+      "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+      "id": "effects.none",
+      "version": 1,
+      "slot": "effects",
+      "backend": "audio",
+      "inputs": {},
+      "source": "Original Lockstep recipes and assets",
+      "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+      "id": "sound.ambience",
+      "version": 1,
+      "slot": "ambience",
+      "backend": "wav",
+      "inputs": {},
+      "source": "Original synthetic sample; scripts/generate_production_assets.py seed 2217",
+      "license": "CC0-1.0"
+    }
+  ],
+  "assets": {
+    "assets/production/ambience.wav": "028af9c3b27c43d56c5864f172ba8f4e326e0cf6d8ea5a792551b4d8b6f84f8d"
+  },
+  "backends": [
+    "audio",
+    "three",
+    "wav"
+  ],
+  "clock": {
+    "mode": "narration"
+  },
+  "timing_provenance": {
+    "provider": "kokoro-phoneme-durations",
+    "resolution_ms": 25,
+    "model_sha256": "13ea8cc2a2742b2ee5b6d1407b6aba099b4904478dd9ce9f45b2bebab0bed74f",
+    "voices_sha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+    "script_sha256": "6b46cb9c42d70ae44d572c424cfed24305bab7f4a806e7c0157c7c2622f7c9ac",
+    "render_wav_sha256": "cd3237492ca04b8e5abe6220ad7cb1c901b95523ee4d26f20bbc99782f4e683d"
+  },
+  "audio": {
+    "music": {
+      "source": "none",
+      "bpm": 80,
+      "kit": "soft"
+    },
+    "mix": {
+      "master_ceiling_db": -3,
+      "duck_ambience_db": -4
+    },
+    "direction": {
+      "effects": "none",
+      "stems": [
+        {
+          "role": "ambience",
+          "file": "assets/production/ambience.wav",
+          "loop": true,
+          "gain_db": -32,
+          "fade_in": 0.4,
+          "fade_out": 0.8
+        }
+      ],
+      "ambience_envelopes": [
+        {
+          "chapter": "pressure",
+          "gain_db": -6,
+          "fade": 0.2
+        }
+      ]
+    }
+  },
+  "render_model_calls": 0
+}

@@ -1,0 +1,50 @@
+{
+  "name": "cabin-night",
+  "about": "Quiet aircraft cabin daylight, teal air and amber mechanical load.",
+  "mode": "dark",
+  "palette": {
+    "bg": [
+      "#101D2A",
+      "#152D3B",
+      "#081621"
+    ],
+    "ink": "#EEF5F3",
+    "subject": "#5AD8D6",
+    "accent": "#F2B36B",
+    "data": "#91B8F5",
+    "alert": "#FF7D89",
+    "good": "#98D7A6"
+  },
+  "fonts": {
+    "display": "Space Grotesk",
+    "body": "DM Sans",
+    "mono": "IBM Plex Mono"
+  },
+  "backdrop": {
+    "type": "solid"
+  },
+  "post": {
+    "bloom": 0,
+    "vignette": 0.15,
+    "scrim": 0.5
+  },
+  "captions": {
+    "size": 68,
+    "weight": 800,
+    "highlight": "underline",
+    "y": 1350,
+    "maxW": 800,
+    "strokeW": 10
+  },
+  "hud": {
+    "type": "none"
+  },
+  "shape": {
+    "radius": 26,
+    "stroke": 3
+  },
+  "transition": {
+    "duration": 0.6,
+    "default": "fade"
+  }
+}

@@ -1,0 +1,10 @@
+{
+ "wer_percent": 4.76,
+ "ref_words": 105,
+ "errors": 5,
+ "spacing_variants": [],
+ "timing_matched_words": 96,
+ "timing_median_ms": -120.04379053115954,
+ "timing_mean_abs_ms": 77.86183623025838,
+ "timing_p95_abs_ms": 179.9718344688413
+}

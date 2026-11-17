@@ -1,0 +1,566 @@
+{
+ "total": 1233,
+ "dur": 41.111,
+ "fps": 30,
+ "width": 1080,
+ "height": 1920,
+ "style": {
+  "name": "cabin-daylight",
+  "mode": "light",
+  "backdrop": "solid",
+  "fonts": {
+   "disp": "Space Grotesk",
+   "ui": "DM Sans",
+   "mono": "IBM Plex Mono"
+  },
+  "palette": {
+   "bg": [
+    "#F1F3F2",
+    "#E6EEEF",
+    "#D5E0E4"
+   ],
+   "ink": "#132C3C",
+   "subject": "#007C83",
+   "accent": "#A45612",
+   "data": "#375FA4",
+   "alert": "#AA3544",
+   "good": "#387345"
+  },
+  "captions": {
+   "size": 68,
+   "weight": 800,
+   "family": "Space Grotesk",
+   "y": 1350,
+   "lineH": 90,
+   "maxW": 800,
+   "highlight": "underline",
+   "case": "none"
+  },
+  "hud": "none",
+  "transition": {
+   "duration": 0.6,
+   "default": "fade"
+  }
+ },
+ "scenes": [
+  {
+   "id": "hook",
+   "name": "SPOT THE HOLE",
+   "t0": 0,
+   "t1": 4.44,
+   "trans": {
+    "type": "fade"
+   }
+  },
+  {
+   "id": "layers",
+   "name": "THREE LAYERS",
+   "t0": 4.44,
+   "t1": 15.674,
+   "trans": {
+    "type": "fade"
+   }
+  },
+  {
+   "id": "pressure",
+   "name": "PRESSURE PATH",
+   "t0": 15.674,
+   "t1": 28.682,
+   "trans": {
+    "type": "fade"
+   }
+  },
+  {
+   "id": "backup",
+   "name": "BACKUP",
+   "t0": 28.682,
+   "t1": 41.111,
+   "trans": {
+    "type": "fade"
+   }
+  }
+ ],
+ "sfx": [],
+ "caps": [
+  {
+   "text": "At thirty-five",
+   "show0": 0.2519,
+   "show1": 1.0769,
+   "t0": 0.3119,
+   "t1": 1.0619,
+   "lines": 1,
+   "width": 438.32849884033203
+  },
+  {
+   "text": "thousand feet,",
+   "show0": 1.0769,
+   "show1": 2.1769,
+   "t0": 1.1369,
+   "t1": 2.1119,
+   "lines": 1,
+   "width": 479.1965560913086
+  },
+  {
+   "text": "why put a hole",
+   "show0": 2.1769,
+   "show1": 2.8268999999999997,
+   "t0": 2.2369,
+   "t1": 2.8619,
+   "lines": 1,
+   "width": 510.6805648803711
+  },
+  {
+   "text": "in a pressurised",
+   "show0": 2.8268999999999997,
+   "show1": 3.5768999999999997,
+   "t0": 2.8869,
+   "t1": 3.5869,
+   "lines": 1,
+   "width": 535.8405609130859
+  },
+  {
+   "text": "window?",
+   "show0": 3.5768999999999997,
+   "show1": 4.6518999999999995,
+   "t0": 3.6369,
+   "t1": 4.3119,
+   "lines": 1,
+   "width": 290.768310546875
+  },
+  {
+   "text": "In this Airbus design,",
+   "show0": 4.879700000000001,
+   "show1": 6.379700000000001,
+   "t0": 4.9397,
+   "t1": 6.2897,
+   "lines": 1,
+   "width": 694.8247756958008
+  },
+  {
+   "text": "look through the",
+   "show0": 6.379700000000001,
+   "show1": 6.8047,
+   "t0": 6.4397,
+   "t1": 6.8147,
+   "lines": 1,
+   "width": 570.9966278076172
+  },
+  {
+   "text": "scratch pane you can",
+   "show0": 6.8047,
+   "show1": 7.6797,
+   "t0": 6.8647,
+   "t1": 7.6897,
+   "lines": 1,
+   "width": 737.9368515014648
+  },
+  {
+   "text": "touch.",
+   "show0": 7.6797,
+   "show1": 8.6502,
+   "t0": 7.7397,
+   "t1": 8.3147,
+   "lines": 1,
+   "width": 195.02423095703125
+  },
+  {
+   "text": "Behind it,",
+   "show0": 8.6502,
+   "show1": 9.2752,
+   "t0": 8.7102,
+   "t1": 9.2602,
+   "lines": 1,
+   "width": 304.6403579711914
+  },
+  {
+   "text": "the inner structural",
+   "show0": 9.2752,
+   "show1": 10.200199999999999,
+   "t0": 9.3352,
+   "t1": 10.2102,
+   "lines": 1,
+   "width": 661.9127655029297
+  },
+  {
+   "text": "pane has the tiny",
+   "show0": 10.200199999999999,
+   "show1": 11.3002,
+   "t0": 10.2602,
+   "t1": 11.3102,
+   "lines": 1,
+   "width": 602.5486679077148
+  },
+  {
+   "text": "vent.",
+   "show0": 11.3002,
+   "show1": 12.1252,
+   "t0": 11.3602,
+   "t1": 12.0102,
+   "lines": 1,
+   "width": 147.49217224121094
+  },
+  {
+   "text": "Then comes the outer",
+   "show0": 12.1252,
+   "show1": 13.325199999999999,
+   "t0": 12.1852,
+   "t1": 13.3352,
+   "lines": 1,
+   "width": 746.7088088989258
+  },
+  {
+   "text": "structural pane.",
+   "show0": 13.325199999999999,
+   "show1": 14.8502,
+   "t0": 13.3852,
+   "t1": 14.5102,
+   "lines": 1,
+   "width": 519.656608581543
+  },
+  {
+   "text": "The vent lets cabin",
+   "show0": 16.1137,
+   "show1": 17.2637,
+   "t0": 16.1737,
+   "t1": 17.2487,
+   "lines": 1,
+   "width": 651.7127456665039
+  },
+  {
+   "text": "air into the gap",
+   "show0": 17.2637,
+   "show1": 18.088700000000003,
+   "t0": 17.3237,
+   "t1": 18.0987,
+   "lines": 1,
+   "width": 530.6726150512695
+  },
+  {
+   "text": "between the structural",
+   "show0": 18.088700000000003,
+   "show1": 18.963700000000003,
+   "t0": 18.1487,
+   "t1": 18.9737,
+   "lines": 1,
+   "width": 779.9608764648438
+  },
+  {
+   "text": "panes.",
+   "show0": 18.963700000000003,
+   "show1": 19.8637,
+   "t0": 19.0237,
+   "t1": 19.7987,
+   "lines": 1,
+   "width": 199.4442138671875
+  },
+  {
+   "text": "It is not a",
+   "show0": 19.8637,
+   "show1": 20.463700000000003,
+   "t0": 19.9237,
+   "t1": 20.4487,
+   "lines": 1,
+   "width": 333.1323928833008
+  },
+  {
+   "text": "hole to the outside.",
+   "show0": 20.463700000000003,
+   "show1": 22.224300000000003,
+   "t0": 20.5237,
+   "t1": 21.7737,
+   "lines": 1,
+   "width": 652.9367294311523
+  },
+  {
+   "text": "That puts cabin",
+   "show0": 22.224300000000003,
+   "show1": 23.049200000000003,
+   "t0": 22.2843,
+   "t1": 23.0592,
+   "lines": 1,
+   "width": 535.9766235351562
+  },
+  {
+   "text": "pressure on both sides",
+   "show0": 23.049200000000003,
+   "show1": 24.3993,
+   "t0": 23.1092,
+   "t1": 24.4342,
+   "lines": 1,
+   "width": 776.4248275756836
+  },
+  {
+   "text": "of the inner pane.",
+   "show0": 24.3993,
+   "show1": 25.6993,
+   "t0": 24.4593,
+   "t1": 25.6092,
+   "lines": 1,
+   "width": 591.8726577758789
+  },
+  {
+   "text": "The outer pane",
+   "show0": 25.6993,
+   "show1": 26.499200000000002,
+   "t0": 25.7593,
+   "t1": 26.4593,
+   "lines": 1,
+   "width": 516.1885528564453
+  },
+  {
+   "text": "normally carries the",
+   "show0": 26.499200000000002,
+   "show1": 27.4493,
+   "t0": 26.5592,
+   "t1": 27.4593,
+   "lines": 1,
+   "width": 675.7847442626953
+  },
+  {
+   "text": "pressure difference.",
+   "show0": 27.4493,
+   "show1": 28.8743,
+   "t0": 27.5093,
+   "t1": 28.5343,
+   "lines": 1,
+   "width": 649.6727066040039
+  },
+  {
+   "text": "If the outer pane",
+   "show0": 29.1221,
+   "show1": 30.022100000000002,
+   "t0": 29.1821,
+   "t1": 30.0321,
+   "lines": 1,
+   "width": 580.7206497192383
+  },
+  {
+   "text": "fails,",
+   "show0": 30.022100000000002,
+   "show1": 30.822100000000002,
+   "t0": 30.0821,
+   "t1": 30.7571,
+   "lines": 1,
+   "width": 140.21617126464844
+  },
+  {
+   "text": "the inner structural",
+   "show0": 30.822100000000002,
+   "show1": 31.7471,
+   "t0": 30.8821,
+   "t1": 31.7571,
+   "lines": 1,
+   "width": 661.9127655029297
+  },
+  {
+   "text": "pane can take the",
+   "show0": 31.7471,
+   "show1": 32.622099999999996,
+   "t0": 31.8071,
+   "t1": 32.6321,
+   "lines": 1,
+   "width": 620.568717956543
+  },
+  {
+   "text": "pressure load.",
+   "show0": 32.622099999999996,
+   "show1": 34.0357,
+   "t0": 32.6821,
+   "t1": 33.6821,
+   "lines": 1,
+   "width": 454.03649139404297
+  },
+  {
+   "text": "The scratch pane",
+   "show0": 34.0357,
+   "show1": 34.835699999999996,
+   "t0": 34.0957,
+   "t1": 34.8457,
+   "lines": 1,
+   "width": 586.7046661376953
+  },
+  {
+   "text": "protects against",
+   "show0": 34.835699999999996,
+   "show1": 35.5357,
+   "t0": 34.8957,
+   "t1": 35.5457,
+   "lines": 1,
+   "width": 557.1926498413086
+  },
+  {
+   "text": "passenger contact.",
+   "show0": 35.5357,
+   "show1": 37.0357,
+   "t0": 35.5957,
+   "t1": 36.8957,
+   "lines": 1,
+   "width": 632.0607376098633
+  },
+  {
+   "text": "Three layers.",
+   "show0": 37.0357,
+   "show1": 37.985699999999994,
+   "t0": 37.0957,
+   "t1": 37.9207,
+   "lines": 1,
+   "width": 411.26444244384766
+  },
+  {
+   "text": "Different jobs.",
+   "show0": 37.985699999999994,
+   "show1": 39.3607,
+   "t0": 38.0457,
+   "t1": 39.0207,
+   "lines": 1,
+   "width": 454.9885025024414
+  }
+ ],
+ "choices": {
+  "loaded": {
+   "backends": [
+    "native",
+    "three"
+   ],
+   "assets": [],
+   "renderers": [
+    "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+   ],
+   "cues": []
+  },
+  "clock": {
+   "mode": "narration"
+  },
+  "resolved": {
+   "schema": 1,
+   "selected": [
+    {
+     "id": "three.local",
+     "version": 1,
+     "slot": "shots",
+     "backend": "three",
+     "inputs": {},
+     "source": "Three.js 0.180.0; original CC0 verification asset",
+     "license": "MIT runtime; CC0-1.0 original model"
+    },
+    {
+     "id": "three.local",
+     "version": 1,
+     "slot": "shots",
+     "backend": "three",
+     "inputs": {},
+     "source": "Three.js 0.180.0; original CC0 verification asset",
+     "license": "MIT runtime; CC0-1.0 original model"
+    },
+    {
+     "id": "three.local",
+     "version": 1,
+     "slot": "shots",
+     "backend": "three",
+     "inputs": {},
+     "source": "Three.js 0.180.0; original CC0 verification asset",
+     "license": "MIT runtime; CC0-1.0 original model"
+    },
+    {
+     "id": "three.local",
+     "version": 1,
+     "slot": "shots",
+     "backend": "three",
+     "inputs": {},
+     "source": "Three.js 0.180.0; original CC0 verification asset",
+     "license": "MIT runtime; CC0-1.0 original model"
+    },
+    {
+     "id": "voice.kokoro",
+     "version": 1,
+     "slot": "narration",
+     "backend": "audio",
+     "inputs": {
+      "voice": "af_heart",
+      "speed": 1
+     },
+     "source": "Original Lockstep recipes and assets",
+     "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+     "id": "score.none",
+     "version": 1,
+     "slot": "score",
+     "backend": "audio",
+     "inputs": {},
+     "source": "Original Lockstep recipes and assets",
+     "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+     "id": "effects.none",
+     "version": 1,
+     "slot": "effects",
+     "backend": "audio",
+     "inputs": {},
+     "source": "Original Lockstep recipes and assets",
+     "license": "CC0-1.0 (new example assets); repository code terms"
+    },
+    {
+     "id": "sound.ambience",
+     "version": 1,
+     "slot": "ambience",
+     "backend": "wav",
+     "inputs": {},
+     "source": "Original synthetic sample; scripts/generate_production_assets.py seed 2217",
+     "license": "CC0-1.0"
+    }
+   ],
+   "assets": {
+    "assets/production/ambience.wav": "028af9c3b27c43d56c5864f172ba8f4e326e0cf6d8ea5a792551b4d8b6f84f8d"
+   },
+   "backends": [
+    "audio",
+    "three",
+    "wav"
+   ],
+   "clock": {
+    "mode": "narration"
+   },
+   "timing_provenance": {
+    "provider": "kokoro-phoneme-durations",
+    "resolution_ms": 25,
+    "model_sha256": "13ea8cc2a2742b2ee5b6d1407b6aba099b4904478dd9ce9f45b2bebab0bed74f",
+    "voices_sha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+    "script_sha256": "6b46cb9c42d70ae44d572c424cfed24305bab7f4a806e7c0157c7c2622f7c9ac",
+    "render_wav_sha256": "cd3237492ca04b8e5abe6220ad7cb1c901b95523ee4d26f20bbc99782f4e683d"
+   },
+   "audio": {
+    "music": {
+     "source": "none",
+     "bpm": 80,
+     "kit": "soft"
+    },
+    "mix": {
+     "master_ceiling_db": -3,
+     "duck_ambience_db": -4
+    },
+    "direction": {
+     "effects": "none",
+     "stems": [
+      {
+       "role": "ambience",
+       "file": "assets/production/ambience.wav",
+       "loop": true,
+       "gain_db": -32,
+       "fade_in": 0.4,
+       "fade_out": 0.8
+      }
+     ],
+     "ambience_envelopes": [
+      {
+       "chapter": "pressure",
+       "gain_db": -6,
+       "fade": 0.2
+      }
+     ]
+    }
+   },
+   "render_model_calls": 0
+  }
+ }
+}
