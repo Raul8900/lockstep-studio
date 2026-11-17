@@ -104,7 +104,7 @@ def main():
     need(ROOT / "audio/mix_premaster.wav", "run: lockstep audio <video>")
     tl = json.load(open(need(ROOT / "data/timeline.json", "run: lockstep meta <video>")))
     total = tl["total"]
-    opted_in = bool(cfg.get('choices') or cfg.get('audio') or cfg.get('music', {}).get('source') or cfg.get('clock'))
+    opted_in = bool(compatible or cfg.get('choices') or cfg.get('audio') or cfg.get('music', {}).get('source') or cfg.get('clock'))
     # Bound new productions explicitly. FFmpeg's shortest buffering can otherwise
     # discard ~70 ms of AAC from a finite image sequence; preserve legacy encoding.
     end_args = ["-t", f"{total / 30:.6f}"] if opted_in else ["-shortest", "-fflags", "+shortest", "-max_interleave_delta", "100M"]
@@ -144,7 +144,7 @@ def main():
         video_args = ["-profile:v", "baseline", "-level:v", "4.0", "-bf", "0", "-refs", "1",
                       "-g", "30", "-keyint_min", "30", "-sc_threshold", "0",
                       "-x264-params", "aq-mode=3:aq-strength=0.9:deblock=-1,-1:force-cfr=1",
-                      "-maxrate", "8M", "-bufsize", "16M", "-fps_mode", "cfr",
+                      "-maxrate", "8M", "-bufsize", "16M", "-r", "30", "-fps_mode", "cfr",
                       "-video_track_timescale", "30000", "-bsf:v", "filter_units=remove_types=6"]
     cmd = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-stats", "-y",
            "-framerate", "30", "-start_number", "0", "-i", str(ROOT / "out/frames/f%05d.jpg"),
