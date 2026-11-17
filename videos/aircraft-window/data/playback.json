@@ -1,0 +1,268 @@
+{
+  "duration": 40.8,
+  "currentTime": 40.8,
+  "lastPresentedMediaTime": 40.766667,
+  "frameCallbacks": 1219,
+  "maxWallGapMs": 133.29999999999927,
+  "elapsedMs": 40842.09999999404,
+  "quality": {
+    "totalVideoFrames": 1224,
+    "droppedVideoFrames": 1,
+    "corruptedVideoFrames": 0
+  },
+  "samples": [
+    {
+      "mediaTime": 0.033333,
+      "pixelHash": "9bbd15ae",
+      "presentedFrames": 2
+    },
+    {
+      "mediaTime": 1,
+      "pixelHash": "9ae7e4fe",
+      "presentedFrames": 31
+    },
+    {
+      "mediaTime": 2,
+      "pixelHash": "6c7f94eb",
+      "presentedFrames": 61
+    },
+    {
+      "mediaTime": 3,
+      "pixelHash": "bc67c84b",
+      "presentedFrames": 91
+    },
+    {
+      "mediaTime": 4,
+      "pixelHash": "95b30ad2",
+      "presentedFrames": 121
+    },
+    {
+      "mediaTime": 5,
+      "pixelHash": "b282c4a7",
+      "presentedFrames": 151
+    },
+    {
+      "mediaTime": 6,
+      "pixelHash": "977f4e74",
+      "presentedFrames": 181
+    },
+    {
+      "mediaTime": 7,
+      "pixelHash": "b6551691",
+      "presentedFrames": 211
+    },
+    {
+      "mediaTime": 8,
+      "pixelHash": "7eb7d40c",
+      "presentedFrames": 241
+    },
+    {
+      "mediaTime": 9,
+      "pixelHash": "22beca60",
+      "presentedFrames": 271
+    },
+    {
+      "mediaTime": 10,
+      "pixelHash": "2574af4f",
+      "presentedFrames": 301
+    },
+    {
+      "mediaTime": 11,
+      "pixelHash": "9766b854",
+      "presentedFrames": 331
+    },
+    {
+      "mediaTime": 12,
+      "pixelHash": "2ac7eda9",
+      "presentedFrames": 361
+    },
+    {
+      "mediaTime": 13,
+      "pixelHash": "2c93e838",
+      "presentedFrames": 391
+    },
+    {
+      "mediaTime": 14,
+      "pixelHash": "76f93bff",
+      "presentedFrames": 421
+    },
+    {
+      "mediaTime": 15,
+      "pixelHash": "f9989693",
+      "presentedFrames": 451
+    },
+    {
+      "mediaTime": 16,
+      "pixelHash": "1139bd44",
+      "presentedFrames": 481
+    },
+    {
+      "mediaTime": 17,
+      "pixelHash": "592d5b98",
+      "presentedFrames": 511
+    },
+    {
+      "mediaTime": 18,
+      "pixelHash": "518bcadf",
+      "presentedFrames": 541
+    },
+    {
+      "mediaTime": 19,
+      "pixelHash": "b1b6779",
+      "presentedFrames": 571
+    },
+    {
+      "mediaTime": 20,
+      "pixelHash": "be668ad8",
+      "presentedFrames": 601
+    },
+    {
+      "mediaTime": 21,
+      "pixelHash": "5b2952e2",
+      "presentedFrames": 631
+    },
+    {
+      "mediaTime": 22,
+      "pixelHash": "cf140ef4",
+      "presentedFrames": 661
+    },
+    {
+      "mediaTime": 23,
+      "pixelHash": "d191263c",
+      "presentedFrames": 691
+    },
+    {
+      "mediaTime": 24,
+      "pixelHash": "6d922ff3",
+      "presentedFrames": 721
+    },
+    {
+      "mediaTime": 25,
+      "pixelHash": "51e34057",
+      "presentedFrames": 751
+    },
+    {
+      "mediaTime": 26,
+      "pixelHash": "51934910",
+      "presentedFrames": 781
+    },
+    {
+      "mediaTime": 27,
+      "pixelHash": "5862b30",
+      "presentedFrames": 811
+    },
+    {
+      "mediaTime": 28,
+      "pixelHash": "e23f2ca2",
+      "presentedFrames": 841
+    },
+    {
+      "mediaTime": 29,
+      "pixelHash": "b7a85038",
+      "presentedFrames": 871
+    },
+    {
+      "mediaTime": 30,
+      "pixelHash": "390ebf66",
+      "presentedFrames": 901
+    },
+    {
+      "mediaTime": 31,
+      "pixelHash": "eac240d1",
+      "presentedFrames": 931
+    },
+    {
+      "mediaTime": 32,
+      "pixelHash": "9c9e3983",
+      "presentedFrames": 961
+    },
+    {
+      "mediaTime": 33,
+      "pixelHash": "595521f7",
+      "presentedFrames": 991
+    },
+    {
+      "mediaTime": 34,
+      "pixelHash": "a287c9af",
+      "presentedFrames": 1021
+    },
+    {
+      "mediaTime": 35,
+      "pixelHash": "e65a2a9e",
+      "presentedFrames": 1051
+    },
+    {
+      "mediaTime": 36,
+      "pixelHash": "6d776a91",
+      "presentedFrames": 1081
+    },
+    {
+      "mediaTime": 37,
+      "pixelHash": "dc0ac552",
+      "presentedFrames": 1111
+    },
+    {
+      "mediaTime": 38,
+      "pixelHash": "d2e219a3",
+      "presentedFrames": 1141
+    },
+    {
+      "mediaTime": 39,
+      "pixelHash": "c7cfa93b",
+      "presentedFrames": 1171
+    },
+    {
+      "mediaTime": 40,
+      "pixelHash": "d17c4563",
+      "presentedFrames": 1201
+    }
+  ],
+  "events": [
+    {
+      "name": "ended",
+      "time": 40.8
+    }
+  ],
+  "pictures": [
+    {
+      "requestedTime": 2,
+      "mediaTime": 2,
+      "file": "playback-1-2.00s.png"
+    },
+    {
+      "requestedTime": 8,
+      "mediaTime": 8,
+      "file": "playback-2-8.00s.png"
+    },
+    {
+      "requestedTime": 13.4,
+      "mediaTime": 13.4,
+      "file": "playback-3-13.40s.png"
+    },
+    {
+      "requestedTime": 18,
+      "mediaTime": 18,
+      "file": "playback-4-18.00s.png"
+    },
+    {
+      "requestedTime": 26.7,
+      "mediaTime": 26.7,
+      "file": "playback-5-26.70s.png"
+    },
+    {
+      "requestedTime": 33,
+      "mediaTime": 33,
+      "file": "playback-6-33.00s.png"
+    },
+    {
+      "requestedTime": 39.8,
+      "mediaTime": 39.8,
+      "file": "playback-7-39.80s.png"
+    }
+  ],
+  "browserVersion": "156.0.8078.79",
+  "file": "/workspace/output/aircraft-window-fixed.mp4",
+  "method": "Continuous HTMLVideoElement playback at 1x over a local HTTP server with byte-range support; no seeking.",
+  "reachedEnd": true,
+  "pictureChangedAfter4s": true
+}

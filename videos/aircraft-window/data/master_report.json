@@ -5,5 +5,14 @@
  "max_limiter_reduction_db": -0.0,
  "final_lufs": -14.0,
  "final_lra_lu": 2.1,
- "final_true_peak_db": -3.1
+ "final_true_peak_db": -3.1,
+ "export": {
+  "profile": "Constrained Baseline",
+  "level": "4.0",
+  "b_frames": 0,
+  "reference_frames": 1,
+  "keyframe_interval": 30,
+  "image_side_data": "removed",
+  "video_timescale": 30000
+ }
 }

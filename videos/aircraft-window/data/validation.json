@@ -1,24 +1,24 @@
 {
  "file": {
-  "path": "dist/aircraft-window.mp4",
-  "size_mb": 11.8,
+  "path": "dist/aircraft-window-fixed.mp4",
+  "size_mb": 18.3,
   "container": "QuickTime / MOV",
   "duration_s": 40.8,
-  "overall_bitrate_mbps": 2.32,
+  "overall_bitrate_mbps": 3.59,
   "faststart": true
  },
  "video": {
   "codec": "h264",
-  "profile": "High",
-  "level": 4.2,
+  "profile": "Constrained Baseline",
+  "level": 4.0,
   "width": 1080,
   "height": 1920,
   "aspect": "9:16",
   "pix_fmt": "yuv420p",
   "fps": 30.0,
   "frames": 1224,
-  "bitrate_mbps": 2.06,
-  "color": "bt709/None/None tv"
+  "bitrate_mbps": 3.34,
+  "color": "bt709/bt709/bt709 tv"
  },
  "audio": {
   "codec": "aac",
@@ -53,7 +53,7 @@
   ],
   [
    14.5,
-   15.133333
+   15.0
   ],
   [
    16.0,
@@ -61,19 +61,19 @@
   ],
   [
    18.666667,
-   19.533333
+   19.5
   ],
   [
-   19.533333,
-   19.933333
+   20.6,
+   21.0
   ],
   [
-   20.833333,
+   21.0,
    21.866667
   ],
   [
    22.766667,
-   23.266667
+   23.233333
   ],
   [
    24.3,
@@ -88,12 +88,8 @@
    26.666667
   ],
   [
-   26.666667,
-   27.066667
-  ],
-  [
    27.5,
-   28.0
+   28.1
   ],
   [
    29.0,
@@ -101,28 +97,24 @@
   ],
   [
    29.5,
-   30.0
+   30.066667
   ],
   [
-   32.7,
-   33.466667
+   33.0,
+   33.733333
   ],
   [
-   36.766667,
+   37.0,
    37.666667
   ],
   [
-   37.733333,
-   39.0
-  ],
-  [
-   39.0,
-   40.0
+   38.066667,
+   39.033333
   ]
  ],
  "encode_fidelity": {
-  "ssim_all": 0.995344,
-  "psnr_avg_db": 51.513961
+  "ssim_all": 0.993122,
+  "psnr_avg_db": 50.18398
  },
  "loudness": {
   "integrated_lufs": -14.0,

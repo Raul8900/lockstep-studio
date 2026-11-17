@@ -1,88 +1,57 @@
-# Final aircraft-window verification
+# Final aircraft-window verification — replacement
 
 PR: https://github.com/Raul8900/lockstep-studio/pull/6
 
-The PR was confirmed open at implementation commit c7f6946 before this production began.
-Final render inputs were pushed at `4fafaedffac5d9b0d6fee0ff3afb18a51cc1b3a5` before the full build. Later evidence commits
-contain reports/review images and do not change engine, scenes, style, recording or captions.
+The requester reported that the previous MP4 played for 3–4 seconds and then froze in both the
+chat preview and a downloaded player. The previous verification used FFmpeg decode, timestamp
+checks and seeked story frames, which were insufficient to establish the requester's playback.
 
-## Delivered artifact
+The original `3bd9333de800b0859f32847f1726d3287a66a6a5a4ce5437986f88538b8b815e` could not reproduce the freeze in local Chromium:
+it played continuously to 40.766667 s, with 1224 total frames,
+0 dropped and 0 corrupted frames. Its packet timestamps
+were also continuous. The specific cause on the requester's player remains unconfirmed; the
+replacement addresses encoding compatibility and provides a fresh delivery filename and ZIP.
 
-`aircraft-window.mp4`, 11,822,675 bytes. Delivered to the task requester through the
-workspace file channel, alongside `lockstep-review.zip`. A GitHub release asset upload was
-unavailable (uploads endpoint rejected credentials); large renders remain outside Git history.
-The local download, build commands and checksum provide a reproducible artifact identity.
+## Changed export
 
-SHA256: `3bd9333de800b0859f32847f1726d3287a66a6a5a4ce5437986f88538b8b815e`.
+- Original picture, captions, narration and timing are preserved; cached rendered frames were re-encoded.
+- H.264 Constrained Baseline level 4.0; one reference; no B-frames; one-second keyframes.
+- Explicit 30 fps, constant frame timestamps and a 30,000-unit video timescale.
+- Inherited JPEG side data and H.264 SEI removed; SDR BT.709 tagged explicitly.
+- AAC-LC stereo 48 kHz, MP4 faststart. Export profile is saved in video.json as encode.compatible.
+- Replacement name `aircraft-window-fixed.mp4`; a ZIP contains the same file, README and checksum.
 
-The source render and exact delivery copy match. The delivery copy passed an additional full
-FFmpeg decode with `-xerror`, and its stream facts were read independently with ffprobe. Six PNGs
-were decoded from that same delivery copy, covering all four story beats plus the normal/backup
-load distinction. See `data/delivery.json`, `dist/four-beat-review.jpg` and the review package.
+## Measured replacement
 
-## Measured results
+- 40.8 s, 1080 × 1920, 30 fps, 1224 frames; clean full decode.
+- -14.0 LUFS; -3.1 dBTP; 0.0% final-mix ASR WER.
+- Caption x bounds [193, 887]; shortest phrase 0.42 s; SSIM 0.993122.
+- Exact delivery copy continuously played in Chromium 156.0.8078.79 at 1× over local HTTP, with no seeking.
+- Last presented media time 40.766667 s; ended at 40.8 s; 1224 total frames,
+  1 dropped, 0 corrupted. Largest callback gap 133.3 ms.
+- Chronological picture hashes change throughout the later film. Seven screenshots were captured
+  during playback, including the cutaway, normal load, backup load and final passenger return.
+- SHA256 **`8acd357c0a9f09f1c02a2c32e8c627b8ede6a99e3fa9695beef19621f44e6278`**; 18,315,056 bytes. Delivery copy equals encoded source by SHA256.
+- Export from pushed commit `4b820e553b5d1a007e34a493fcb4e8223b667790` took 98.549 s. Original 3D picture render commit: 4fafaed.
+- Nine focused tests pass, including an actual ICC-JPEG-to-MP4 regression test for frame count,
+  frame rate, profile, image side data and decode. Repository self-test passes; its MP4, word/take
+  data and audio stems remain byte-identical to the baseline. GPU reference scan passes.
 
-- Duration 40.8 s; 1080 × 1920; 30 fps; 1224 frames.
-- H.264 High / AAC-LC stereo 48 kHz; faststart; clean full decode; no black segments.
-- Loudness -14.0 LUFS; true peak -3.1 dBTP.
-- Narration/master correlation lag 0 ms; audio/video duration difference 0.0 s.
-- Final-mix ASR 0.0% WER (0/103); no human listening judgement is claimed.
-- 36 caption phrases, width ≤ 695 px, x [193, 887], y [1260, 1440]; shortest 0.42 s.
-- Encode SSIM 0.995344; reverse-order seeks at 2, 12, 23, 27.5, 33 and 39 s match full-render frame bytes.
-- Independent transducer comparison: 96 matched words, median -125 ms, mean absolute deviation 76 ms, p95 176 ms. This is a recognizer timing cross-check, not a claim of ground-truth word timing accuracy.
+## Reproduce
 
-## Visual and mechanical review
+```bash
+bin/lockstep assemble aircraft-window --preset veryfast --crf 20
+bin/lockstep validate aircraft-window
+LOCKSTEP_CHROMIUM=/usr/bin/chromium bin/lockstep check-playback aircraft-window /workspace/output/aircraft-window-fixed.mp4
+```
 
-Decoded frames and both approximate mobile overlays were inspected. The scratch protector is
-nearest the passenger; only the inner structural pane has the depicted vent. Leaders are projected
-from physical layer coordinates throughout the camera move. The teal airflow terminates at
-z=-0.48, between inner z=0 and outer z=-1.05 in the enlarged view. The normal-load frame keeps
-the outer pane intact and uses a separate amber pressure-load annotation. The backup frame is
-explicitly conditional and transfers that annotation to the inner structural pane. The film then
-returns to the assembled passenger view. Source support is mapped in sources.md.
+`check-playback` tests uninterrupted HTMLVideoElement playback with requestVideoFrameCallback,
+frame-quality counters and chronological screenshots. A clean FFmpeg decode is still required.
+The compatible encoder is optional; legacy projects retain the original profile and sound.
+A compatible export cannot use --remux because replacing audio does not re-encode a video stream.
 
-The first export revealed captions too close to the Shorts button column. The final picture was
-rebuilt with maxW=720 and reviewed after encoding. Font size was retained, allowing line wrapping.
-The cutaway also received a broader smooth orbit/dolly. The freeze detector reports
-22 intervals of low full-frame change; these were reviewed as quiet explanatory
-holds and retained for label reading. All scheduled frames are present; reverse-order seeks reproduce their saved bytes. The warnings
-remain visible in validation.json and endpoint measurements in motion_review.json. The settled
-passenger return can contain identical frames. Technical detection is reported without calling
-every frame visibly animated.
+The source-of-truth delivery facts are data/delivery.json and data/playback.json. No human listening
+judgement or playback verification on the requester's own device is claimed. Quiet explanation
+holds are deliberate, but the encoded story progresses through all four beats.
 
-## Time, dependencies and model usage
-
-Local neural TTS took 23.639 s. The final full build took 579.762 s:
-
-| Stage | Wall seconds |
-|---|---:|
-| direction | 0.112 |
-| captions | 0.022 |
-| meta | 2.483 |
-| scan | 115.078 |
-| audio | 2.488 |
-| render | 302.895 |
-| assemble | 66.615 |
-| srt | 0.047 |
-| validate | 89.937 |
-| docs | 0.027 |
-| report | 0.049 |
-
-The build uses 4 frame workers and Chromium SwiftShader. Stage wall times include command startup;
-scan also renders sampled frames. `assemble` includes local mastering and H.264/AAC encoding.
-See build_cost.json for actual commands. Benchmark/cached-remux evidence for the implementation
-is in the repository's docs/verification.md; its controlled idle benchmark is separate from this
-production build. The optional 3D route has a measured cost beyond catalogue lookup.
-
-Incremental software, assets and rendering API fees are ₹0 on existing hardware. No paid service
-was used. Authoring used the available Codex session; its token counts, billing and active authoring
-time are not exposed by this environment. Preview/frame rendering/rerendering call no authoring
-models. Neural TTS and local ASR are separately installed local inference tools. Three 0.180.0 is
-optional and pinned. Renderer details and loaded assets are recorded in the production report.
-
-## Reproduce and listen
-
-See reproduction.md and sources.md in this folder. The review package includes both level-matched
-17.667-second legacy/directed audio clips, the native beat-clock reel and native/3D growth/biology
-fixture, decoded story PNGs, mobile previews, subtitles, source credits, reports and checksums.
-No claim of human listening approval is made; listening remains a human judgement.
+Mechanical claims, pane order, inner-only vent, gap endpoint and separate pressure-load annotations are unchanged and supported in sources.md. The original full-build performance record is in data/build_cost.json; the replacement encoder timing is in compatible_encode_cost.json. Earlier export measurements are retained in original-export-verification.md and delivery-original.json, explicitly superseded.

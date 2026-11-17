@@ -1,0 +1,4 @@
+usage: assemble.py [-h] [--crf CRF] [--preset PRESET] [--out OUT]
+                   [--audio-only] [--remux] [--compatible]
+                   project
+assemble.py: error: compatible export requires re-encoding the picture: run assemble without --remux

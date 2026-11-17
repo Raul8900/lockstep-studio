@@ -11,3 +11,7 @@ First-export review found that 780-pixel captions could reach the approximate Sh
 
 
 Final technical, visual and mechanical checks are recorded in final_verification.md. All hard build checks pass. Low-motion intervals are intentionally retained for label reading. The exact delivered copy was decoded and matched by SHA256. No human listening was performed.
+
+
+## Playback repair
+The requester reported a freeze in both preview and a downloaded player. The replacement uses an optional Constrained Baseline export and is verified by uninterrupted browser playback through the end, not only decode and still extraction. See playback-fix.md and data/playback.json. The device-specific cause was not reproduced locally. No human listening was performed.

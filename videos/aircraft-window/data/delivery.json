@@ -1,9 +1,11 @@
 {
   "render_input_commit": "4fafaedffac5d9b0d6fee0ff3afb18a51cc1b3a5",
-  "source_sha256": "3bd9333de800b0859f32847f1726d3287a66a6a5a4ce5437986f88538b8b815e",
-  "delivered_sha256": "3bd9333de800b0859f32847f1726d3287a66a6a5a4ce5437986f88538b8b815e",
-  "delivered_file": "/workspace/output/aircraft-window.mp4",
-  "bytes": 11822675,
+  "export_commit": "4b820e553b5d1a007e34a493fcb4e8223b667790",
+  "delivered_file": "/workspace/output/aircraft-window-fixed.mp4",
+  "bytes": 18315056,
+  "source_sha256": "8acd357c0a9f09f1c02a2c32e8c627b8ede6a99e3fa9695beef19621f44e6278",
+  "delivered_sha256": "8acd357c0a9f09f1c02a2c32e8c627b8ede6a99e3fa9695beef19621f44e6278",
+  "replaces_sha256": "3bd9333de800b0859f32847f1726d3287a66a6a5a4ce5437986f88538b8b815e",
   "exact_delivered_copy_full_decode": "pass",
   "stream_metadata": {
     "streams": [
@@ -11,7 +13,7 @@
         "index": 0,
         "codec_name": "h264",
         "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
-        "profile": "High",
+        "profile": "Constrained Baseline",
         "codec_type": "video",
         "codec_tag_string": "avc1",
         "codec_tag": "0x31637661",
@@ -21,13 +23,15 @@
         "coded_height": 1920,
         "closed_captions": 0,
         "film_grain": 0,
-        "has_b_frames": 2,
+        "has_b_frames": 0,
         "sample_aspect_ratio": "1:1",
         "display_aspect_ratio": "9:16",
         "pix_fmt": "yuv420p",
-        "level": 42,
+        "level": 40,
         "color_range": "tv",
         "color_space": "bt709",
+        "color_transfer": "bt709",
+        "color_primaries": "bt709",
         "chroma_location": "center",
         "field_order": "progressive",
         "refs": 1,
@@ -36,15 +40,15 @@
         "id": "0x1",
         "r_frame_rate": "30/1",
         "avg_frame_rate": "30/1",
-        "time_base": "1/15360",
+        "time_base": "1/30000",
         "start_pts": 0,
         "start_time": "0.000000",
-        "duration_ts": 626688,
+        "duration_ts": 1224000,
         "duration": "40.800000",
-        "bit_rate": "2062685",
+        "bit_rate": "3337650",
         "bits_per_raw_sample": "8",
         "nb_frames": "1224",
-        "extradata_size": 50,
+        "extradata_size": 45,
         "disposition": {
           "default": 1,
           "dub": 0,
@@ -71,12 +75,7 @@
           "handler_name": "VideoHandler",
           "vendor_id": "[0][0][0][0]",
           "encoder": "Lavc61.19.101 libx264"
-        },
-        "side_data_list": [
-          {
-            "side_data_type": "ICC Profile"
-          }
-        ]
+        }
       },
       {
         "index": 1,
@@ -132,7 +131,7 @@
       }
     ],
     "format": {
-      "filename": "/workspace/output/aircraft-window.mp4",
+      "filename": "/workspace/output/aircraft-window-fixed.mp4",
       "nb_streams": 2,
       "nb_programs": 0,
       "nb_stream_groups": 0,
@@ -140,8 +139,8 @@
       "format_long_name": "QuickTime / MOV",
       "start_time": "0.000000",
       "duration": "40.800000",
-      "size": "11822675",
-      "bit_rate": "2318171",
+      "size": "18315056",
+      "bit_rate": "3591187",
       "probe_score": 100,
       "tags": {
         "major_brand": "isom",
@@ -153,35 +152,27 @@
       }
     }
   },
-  "decoded_story_frames": {
-    "passenger": 2,
-    "layers": 13.385200000000001,
-    "airflow": 18.073700000000002,
-    "normal-load": 26.7093,
-    "backup-load": 32.956300000000006,
-    "return": 39.8
-  },
   "validation": {
     "file": {
-      "path": "dist/aircraft-window.mp4",
-      "size_mb": 11.8,
+      "path": "dist/aircraft-window-fixed.mp4",
+      "size_mb": 18.3,
       "container": "QuickTime / MOV",
       "duration_s": 40.8,
-      "overall_bitrate_mbps": 2.32,
+      "overall_bitrate_mbps": 3.59,
       "faststart": true
     },
     "video": {
       "codec": "h264",
-      "profile": "High",
-      "level": 4.2,
+      "profile": "Constrained Baseline",
+      "level": 4.0,
       "width": 1080,
       "height": 1920,
       "aspect": "9:16",
       "pix_fmt": "yuv420p",
       "fps": 30.0,
       "frames": 1224,
-      "bitrate_mbps": 2.06,
-      "color": "bt709/None/None tv"
+      "bitrate_mbps": 3.34,
+      "color": "bt709/bt709/bt709 tv"
     },
     "audio": {
       "codec": "aac",
@@ -216,7 +207,7 @@
       ],
       [
         14.5,
-        15.133333
+        15.0
       ],
       [
         16.0,
@@ -224,19 +215,19 @@
       ],
       [
         18.666667,
-        19.533333
+        19.5
       ],
       [
-        19.533333,
-        19.933333
+        20.6,
+        21.0
       ],
       [
-        20.833333,
+        21.0,
         21.866667
       ],
       [
         22.766667,
-        23.266667
+        23.233333
       ],
       [
         24.3,
@@ -251,12 +242,8 @@
         26.666667
       ],
       [
-        26.666667,
-        27.066667
-      ],
-      [
         27.5,
-        28.0
+        28.1
       ],
       [
         29.0,
@@ -264,28 +251,24 @@
       ],
       [
         29.5,
-        30.0
+        30.066667
       ],
       [
-        32.7,
-        33.466667
+        33.0,
+        33.733333
       ],
       [
-        36.766667,
+        37.0,
         37.666667
       ],
       [
-        37.733333,
-        39.0
-      ],
-      [
-        39.0,
-        40.0
+        38.066667,
+        39.033333
       ]
     ],
     "encode_fidelity": {
-      "ssim_all": 0.995344,
-      "psnr_avg_db": 51.513961
+      "ssim_all": 0.993122,
+      "psnr_avg_db": 50.18398
     },
     "loudness": {
       "integrated_lufs": -14.0,
@@ -325,6 +308,274 @@
       "min_on_screen_s": 0.42,
       "max_words": 4
     }
+  },
+  "continuous_browser_playback": {
+    "duration": 40.8,
+    "currentTime": 40.8,
+    "lastPresentedMediaTime": 40.766667,
+    "frameCallbacks": 1219,
+    "maxWallGapMs": 133.29999999999927,
+    "elapsedMs": 40842.09999999404,
+    "quality": {
+      "totalVideoFrames": 1224,
+      "droppedVideoFrames": 1,
+      "corruptedVideoFrames": 0
+    },
+    "samples": [
+      {
+        "mediaTime": 0.033333,
+        "pixelHash": "9bbd15ae",
+        "presentedFrames": 2
+      },
+      {
+        "mediaTime": 1,
+        "pixelHash": "9ae7e4fe",
+        "presentedFrames": 31
+      },
+      {
+        "mediaTime": 2,
+        "pixelHash": "6c7f94eb",
+        "presentedFrames": 61
+      },
+      {
+        "mediaTime": 3,
+        "pixelHash": "bc67c84b",
+        "presentedFrames": 91
+      },
+      {
+        "mediaTime": 4,
+        "pixelHash": "95b30ad2",
+        "presentedFrames": 121
+      },
+      {
+        "mediaTime": 5,
+        "pixelHash": "b282c4a7",
+        "presentedFrames": 151
+      },
+      {
+        "mediaTime": 6,
+        "pixelHash": "977f4e74",
+        "presentedFrames": 181
+      },
+      {
+        "mediaTime": 7,
+        "pixelHash": "b6551691",
+        "presentedFrames": 211
+      },
+      {
+        "mediaTime": 8,
+        "pixelHash": "7eb7d40c",
+        "presentedFrames": 241
+      },
+      {
+        "mediaTime": 9,
+        "pixelHash": "22beca60",
+        "presentedFrames": 271
+      },
+      {
+        "mediaTime": 10,
+        "pixelHash": "2574af4f",
+        "presentedFrames": 301
+      },
+      {
+        "mediaTime": 11,
+        "pixelHash": "9766b854",
+        "presentedFrames": 331
+      },
+      {
+        "mediaTime": 12,
+        "pixelHash": "2ac7eda9",
+        "presentedFrames": 361
+      },
+      {
+        "mediaTime": 13,
+        "pixelHash": "2c93e838",
+        "presentedFrames": 391
+      },
+      {
+        "mediaTime": 14,
+        "pixelHash": "76f93bff",
+        "presentedFrames": 421
+      },
+      {
+        "mediaTime": 15,
+        "pixelHash": "f9989693",
+        "presentedFrames": 451
+      },
+      {
+        "mediaTime": 16,
+        "pixelHash": "1139bd44",
+        "presentedFrames": 481
+      },
+      {
+        "mediaTime": 17,
+        "pixelHash": "592d5b98",
+        "presentedFrames": 511
+      },
+      {
+        "mediaTime": 18,
+        "pixelHash": "518bcadf",
+        "presentedFrames": 541
+      },
+      {
+        "mediaTime": 19,
+        "pixelHash": "b1b6779",
+        "presentedFrames": 571
+      },
+      {
+        "mediaTime": 20,
+        "pixelHash": "be668ad8",
+        "presentedFrames": 601
+      },
+      {
+        "mediaTime": 21,
+        "pixelHash": "5b2952e2",
+        "presentedFrames": 631
+      },
+      {
+        "mediaTime": 22,
+        "pixelHash": "cf140ef4",
+        "presentedFrames": 661
+      },
+      {
+        "mediaTime": 23,
+        "pixelHash": "d191263c",
+        "presentedFrames": 691
+      },
+      {
+        "mediaTime": 24,
+        "pixelHash": "6d922ff3",
+        "presentedFrames": 721
+      },
+      {
+        "mediaTime": 25,
+        "pixelHash": "51e34057",
+        "presentedFrames": 751
+      },
+      {
+        "mediaTime": 26,
+        "pixelHash": "51934910",
+        "presentedFrames": 781
+      },
+      {
+        "mediaTime": 27,
+        "pixelHash": "5862b30",
+        "presentedFrames": 811
+      },
+      {
+        "mediaTime": 28,
+        "pixelHash": "e23f2ca2",
+        "presentedFrames": 841
+      },
+      {
+        "mediaTime": 29,
+        "pixelHash": "b7a85038",
+        "presentedFrames": 871
+      },
+      {
+        "mediaTime": 30,
+        "pixelHash": "390ebf66",
+        "presentedFrames": 901
+      },
+      {
+        "mediaTime": 31,
+        "pixelHash": "eac240d1",
+        "presentedFrames": 931
+      },
+      {
+        "mediaTime": 32,
+        "pixelHash": "9c9e3983",
+        "presentedFrames": 961
+      },
+      {
+        "mediaTime": 33,
+        "pixelHash": "595521f7",
+        "presentedFrames": 991
+      },
+      {
+        "mediaTime": 34,
+        "pixelHash": "a287c9af",
+        "presentedFrames": 1021
+      },
+      {
+        "mediaTime": 35,
+        "pixelHash": "e65a2a9e",
+        "presentedFrames": 1051
+      },
+      {
+        "mediaTime": 36,
+        "pixelHash": "6d776a91",
+        "presentedFrames": 1081
+      },
+      {
+        "mediaTime": 37,
+        "pixelHash": "dc0ac552",
+        "presentedFrames": 1111
+      },
+      {
+        "mediaTime": 38,
+        "pixelHash": "d2e219a3",
+        "presentedFrames": 1141
+      },
+      {
+        "mediaTime": 39,
+        "pixelHash": "c7cfa93b",
+        "presentedFrames": 1171
+      },
+      {
+        "mediaTime": 40,
+        "pixelHash": "d17c4563",
+        "presentedFrames": 1201
+      }
+    ],
+    "events": [
+      {
+        "name": "ended",
+        "time": 40.8
+      }
+    ],
+    "pictures": [
+      {
+        "requestedTime": 2,
+        "mediaTime": 2,
+        "file": "playback-1-2.00s.png"
+      },
+      {
+        "requestedTime": 8,
+        "mediaTime": 8,
+        "file": "playback-2-8.00s.png"
+      },
+      {
+        "requestedTime": 13.4,
+        "mediaTime": 13.4,
+        "file": "playback-3-13.40s.png"
+      },
+      {
+        "requestedTime": 18,
+        "mediaTime": 18,
+        "file": "playback-4-18.00s.png"
+      },
+      {
+        "requestedTime": 26.7,
+        "mediaTime": 26.7,
+        "file": "playback-5-26.70s.png"
+      },
+      {
+        "requestedTime": 33,
+        "mediaTime": 33,
+        "file": "playback-6-33.00s.png"
+      },
+      {
+        "requestedTime": 39.8,
+        "mediaTime": 39.8,
+        "file": "playback-7-39.80s.png"
+      }
+    ],
+    "browserVersion": "156.0.8078.79",
+    "file": "/workspace/output/aircraft-window-fixed.mp4",
+    "method": "Continuous HTMLVideoElement playback at 1x over a local HTTP server with byte-range support; no seeking.",
+    "reachedEnd": true,
+    "pictureChangedAfter4s": true
   },
   "human_listening": false
 }

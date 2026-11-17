@@ -52,3 +52,7 @@ Six PNGs decoded from that delivery copy cover the passenger opening, three labe
 airflow, normal outer load, hypothetical inner backup and passenger return. Their exact word-based
 pick times, full stream metadata and matching source/delivery SHA256 are saved in delivery.json.
 The packaged review artifacts include both approximate mobile interface overlays.
+
+## Replacement MP4
+
+The current output is aircraft-window-fixed.mp4 with encode.compatible=true. After the requester reported the first export freezing, it was re-encoded from cached frames and tested by uninterrupted browser playback. Reproduce with `assemble aircraft-window --preset veryfast --crf 20`, `validate aircraft-window` and `check-playback aircraft-window`. See playback-fix.md for measured results.

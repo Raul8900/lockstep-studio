@@ -111,3 +111,19 @@ film and its inputs are on this same branch. See its [final verification](../vid
 for the final render commit, exact delivered checksum, decoded story review, stage costs and reproduction.
 The requester receives the verified MP4 and a secondary review package containing both A/B listening
 clips, capability fixtures, captions, sources and contact sheets. No human listening judgement is claimed.
+
+## Playback compatibility repair
+
+The requester reported that the first delivery froze after 3–4 seconds in both preview and a
+downloaded player. Although the original file passed local continuous Chromium playback, its
+verification had relied on decode and still extraction rather than an explicit presentation test.
+The replacement uses optional H.264 Constrained Baseline with no B-frames, stripped image/SEI
+metadata, explicit SDR color tags and constant 30 fps. It has a fresh filename and a ZIP containing
+the exact MP4. The device-specific root cause remains unconfirmed.
+
+`bin/lockstep check-playback` now tests the whole file without seeking, recording presented frames,
+per-second picture hashes, decoder counters and chronological screenshots. Nine focused tests pass,
+including an actual ICC-JPEG encode regression check. The full repository self-test passes and its
+final MP4, timings and stems remain byte-identical to the baseline; the GPU scan passes. See the
+[repair report](../videos/aircraft-window/docs/playback-fix.md) for replacement delivery facts and
+continuous playback measurements. Earlier export records are explicitly retained as superseded.

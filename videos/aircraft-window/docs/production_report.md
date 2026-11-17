@@ -168,25 +168,25 @@ Speech and caption metrics are inapplicable when clock.mode=music; its SRT is em
 ```json
 {
   "file": {
-    "path": "dist/aircraft-window.mp4",
-    "size_mb": 11.8,
+    "path": "dist/aircraft-window-fixed.mp4",
+    "size_mb": 18.3,
     "container": "QuickTime / MOV",
     "duration_s": 40.8,
-    "overall_bitrate_mbps": 2.32,
+    "overall_bitrate_mbps": 3.59,
     "faststart": true
   },
   "video": {
     "codec": "h264",
-    "profile": "High",
-    "level": 4.2,
+    "profile": "Constrained Baseline",
+    "level": 4.0,
     "width": 1080,
     "height": 1920,
     "aspect": "9:16",
     "pix_fmt": "yuv420p",
     "fps": 30.0,
     "frames": 1224,
-    "bitrate_mbps": 2.06,
-    "color": "bt709/None/None tv"
+    "bitrate_mbps": 3.34,
+    "color": "bt709/bt709/bt709 tv"
   },
   "audio": {
     "codec": "aac",
@@ -221,7 +221,7 @@ Speech and caption metrics are inapplicable when clock.mode=music; its SRT is em
     ],
     [
       14.5,
-      15.133333
+      15.0
     ],
     [
       16.0,
@@ -229,19 +229,19 @@ Speech and caption metrics are inapplicable when clock.mode=music; its SRT is em
     ],
     [
       18.666667,
-      19.533333
+      19.5
     ],
     [
-      19.533333,
-      19.933333
+      20.6,
+      21.0
     ],
     [
-      20.833333,
+      21.0,
       21.866667
     ],
     [
       22.766667,
-      23.266667
+      23.233333
     ],
     [
       24.3,
@@ -256,12 +256,8 @@ Speech and caption metrics are inapplicable when clock.mode=music; its SRT is em
       26.666667
     ],
     [
-      26.666667,
-      27.066667
-    ],
-    [
       27.5,
-      28.0
+      28.1
     ],
     [
       29.0,
@@ -269,28 +265,24 @@ Speech and caption metrics are inapplicable when clock.mode=music; its SRT is em
     ],
     [
       29.5,
-      30.0
+      30.066667
     ],
     [
-      32.7,
-      33.466667
+      33.0,
+      33.733333
     ],
     [
-      36.766667,
+      37.0,
       37.666667
     ],
     [
-      37.733333,
-      39.0
-    ],
-    [
-      39.0,
-      40.0
+      38.066667,
+      39.033333
     ]
   ],
   "encode_fidelity": {
-    "ssim_all": 0.995344,
-    "psnr_avg_db": 51.513961
+    "ssim_all": 0.993122,
+    "psnr_avg_db": 50.18398
   },
   "loudness": {
     "integrated_lufs": -14.0,
@@ -355,7 +347,16 @@ Speech and caption metrics are inapplicable when clock.mode=music; its SRT is em
     "max_limiter_reduction_db": -0.0,
     "final_lufs": -14.0,
     "final_lra_lu": 2.1,
-    "final_true_peak_db": -3.1
+    "final_true_peak_db": -3.1,
+    "export": {
+      "profile": "Constrained Baseline",
+      "level": "4.0",
+      "b_frames": 0,
+      "reference_frames": 1,
+      "keyframe_interval": 30,
+      "image_side_data": "removed",
+      "video_timescale": 30000
+    }
   }
 }
 ```
@@ -373,6 +374,10 @@ First-export review found that 780-pixel captions could reach the approximate Sh
 
 
 Final technical, visual and mechanical checks are recorded in final_verification.md. All hard build checks pass. Low-motion intervals are intentionally retained for label reading. The exact delivered copy was decoded and matched by SHA256. No human listening was performed.
+
+
+## Playback repair
+The requester reported a freeze in both preview and a downloaded player. The replacement uses an optional Constrained Baseline export and is verified by uninterrupted browser playback through the end, not only decode and still extraction. See playback-fix.md and data/playback.json. The device-specific cause was not reproduced locally. No human listening was performed.
 
 
 ## Reproduction
