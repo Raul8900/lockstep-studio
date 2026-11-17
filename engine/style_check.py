@@ -158,6 +158,8 @@ if not 0.2 <= tr.get("duration", 0.84) <= 1.2:
     row("FAIL", "transition.duration", f"{tr['duration']} s: keep between 0.2 and 1.2")
 if S.get("hud", {}).get("type", "segments") not in ("segments", "line", "none"):
     row("FAIL", "hud.type", "choose segments, line or none")
+if S.get("shape", {}).get("line", "clean") not in ("clean", "rough"):
+    row("FAIL", "shape.line", f"{S['shape']['line']!r}: choose clean or rough (hand-drawn outlines on the blocks)")
 
 # ---- Lottie recolouring
 LO = S.get("lottie")

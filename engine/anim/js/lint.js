@@ -68,14 +68,16 @@ function lintLayout(step) {
     }
     return out;
   }
-  /* share of the label's box where its colour has less than 2:1 contrast with what is behind it */
+  /* share of the label's box where its colour has less than 2:1 contrast with what is behind it.
+     The label is judged in its full colour: text dimmed on purpose (a step not yet reached) is not
+     a label on top of something, and a fade-in is not a collision. */
   function lowContrast(it) {
     const c = rgbOf(it[7]);
     if (!c || it[8] || it[6] < 0.5) return null;
     const bx = Math.max(0, Math.floor(it[1])), by = Math.max(0, Math.floor(it[2]));
     const bw = Math.min(W, Math.ceil(it[3])) - bx, bh = Math.min(H, Math.ceil(it[4])) - by;
     if (bw < 3 || bh < 3) return null;
-    const d = mctx.getImageData(bx, by, bw, bh).data, a = it[6] * c[3];
+    const d = mctx.getImageData(bx, by, bw, bh).data, a = c[3];
     let low = 0, n = 0;
     for (let yy = 0; yy < bh; yy += 2) {
       for (let xx = 0; xx < bw; xx += 2) {

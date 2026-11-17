@@ -139,7 +139,9 @@ videos), `line` (a thin progress line), `none` (narrative videos, 60 s and under
 
 **`shape`** — `radius` (0 sharp … 36 pill-soft), `stroke` and `strokeAlpha` (card outline),
 `panelAlpha` (card opacity), `shadow` `{ "dx": 10, "dy": 10, "color": "ink" }` for a hard offset
-(poster, cut paper) or `{ "dx": 0, "dy": 12, "color": "rgba(…, 0.12)" }` for a soft lift (cards).
+(poster, cut paper) or `{ "dx": 0, "dy": 12, "color": "rgba(…, 0.12)" }` for a soft lift (cards),
+`line` `"clean"` (default) or `"rough"`: hand-drawn outlines on the ready-made blocks' cards, bars,
+axes and connectors (chalk, notebook and marker looks; blocks.md).
 
 **`transition`** — `duration` 0.2–1.2 s and the `default` type for scenes that do not name one:
 `fade`, `slideLeft`, `slideRight`, `zoomIn`, `zoomOut`, `panDown`, `panUp`, `cut`, `flash`.
@@ -175,7 +177,7 @@ look with crisp vector diagrams, or a poster look with thin hairlines, reads as 
 
 | Look | Draw with |
 |---|---|
-| hand-drawn (chalk, notebook, marker) | `roughLine`, `roughRect`, `roughCircle` with boiling seeds; `highlighter`; handwritten labels; no glow |
+| hand-drawn (chalk, notebook, marker) | `roughLine`, `roughRect`, `roughCircle` with boiling seeds; `highlighter`; handwritten labels; no glow; `"shape": { "line": "rough" }` so the blocks are drawn by hand too |
 | poster, bold | `bigWord` kinetic type, thick strokes (6–10 px), flat fills, hard shadows, hard cuts, few elements |
 | editorial, dark stage | one lit subject at a time, generous space, serif headlines, slow push-ins, fades |
 | technical, neon | thin glowing lines, 2.5D slabs, counters, `glow` and bloom |

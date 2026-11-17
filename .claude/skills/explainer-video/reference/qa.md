@@ -60,7 +60,7 @@ a Lottie file is invisible to it. Errors stop `build`:
 | `captions` | caption_phrases.json does not match the narration |
 | `nondeterministic` | `Math.random()`, `Date` or `performance.now()`: frames would differ between renders |
 | `cue` | `at('beat', 'word', n)` names a beat or word that is not there (with the nearest words) |
-| `sound`, `icon`, `lottie` | a sound type, icon name or Lottie file that does not exist, or a Lottie file without credits |
+| `sound`, `icon`, `lottie` | a sound type, icon name (also `{ icon: 'x' }` in a block's options) or Lottie file that does not exist, or a Lottie file without credits |
 
 Warnings hold for at least 0.4 s while the text stays put (text sliding or zooming through a zone
 is animation) and need a decision:
@@ -69,6 +69,7 @@ is animation) and need a decision:
 |---|---|---|
 | `typed-time` | a time in seconds in the code (`prog(t, 24.0, 26.5)`) | anchor it to a word: `at('beat', 'word') - 0.3` |
 | `hex-colour`, `legacy-colour` | a colour typed as a value, or `COL.cyan`-style names | a role: `COL.subject`, `COL.accent`, … |
+| `colour-role` | `{ color: 'acent' }`: an option that is neither a role nor a colour (a block would draw it in whatever colour came before) | the role's name |
 | `top-band`, `bottom-band`, `side-margin`, `right-column` | text under the app's interface | move it inside the safe zone (`still --safe`) |
 | `under-captions` | scene text where the captions are drawn | lay out above y ≈ 1210 |
 | `small-text` | under 20 px on screen | 24 px or more for anything that must be read |

@@ -169,6 +169,18 @@ drawn by hand, change the seed a few times a second: `seed: 7 + Math.floor(t * 6
 Icons are generic pictograms: good for a row of concepts, a status, a small label. The hero
 object of a video deserves to be drawn by hand in the video's `components.js`, in its own style.
 
+### Ready-made blocks (`blocks.js`)
+
+Charts, big numbers, comparisons, lists, timelines, pointers and processes, drawn in the video's
+look and built in with one progress value `o.p`: `barChart`, `rankBars`, `lineChart`, `donutChart`,
+`progressRing`, `gaugeMeter`, `unitChart`, `statTile`, `versusCards`, `splitCompare`, `quoteCard`,
+`stepList`, `checkList`, `timelineAxis`, `flowChain`, `labelPointer`, plus `blockCard`, `numText`
+and `stagger`. `lockstep catalog <slug>` shows them in the look; signatures and options: blocks.md.
+
+```js
+statTile(ctx, 110, 860, 400, 300, 1792, 'GB per second', { p: tw(t, c.fast, c.fast + 0.8, E.lin), icon: 'gauge' });
+```
+
 ### Lottie animations (`lottie.js`)
 
 Designer-made vector animations from the video's `lottie/` folder, played on the narration's clock.
