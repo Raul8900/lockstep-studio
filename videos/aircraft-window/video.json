@@ -71,7 +71,7 @@
         "role": "ambience",
         "file": "assets/production/ambience.wav",
         "loop": true,
-        "gain_db": -32,
+        "gain_db": -23,
         "fade_in": 0.4,
         "fade_out": 0.8
       }

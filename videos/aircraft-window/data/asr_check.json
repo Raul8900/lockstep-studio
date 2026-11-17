@@ -1,10 +1,15 @@
 {
- "wer_percent": 4.76,
- "ref_words": 105,
- "errors": 5,
- "spacing_variants": [],
+ "wer_percent": 0.0,
+ "ref_words": 103,
+ "errors": 0,
+ "spacing_variants": [
+  "windowpane -> window pane",
+  "windowpane -> window pane",
+  "windowpane -> window pane",
+  "windowpane -> window pane"
+ ],
  "timing_matched_words": 96,
- "timing_median_ms": -120.04379053115954,
- "timing_mean_abs_ms": 77.86183623025838,
- "timing_p95_abs_ms": 179.9718344688413
+ "timing_median_ms": -117.51255483627254,
+ "timing_mean_abs_ms": 79.4255000337958,
+ "timing_p95_abs_ms": 182.50307016372778
 }

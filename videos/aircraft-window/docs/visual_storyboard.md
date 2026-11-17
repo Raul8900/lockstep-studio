@@ -1,6 +1,6 @@
 # Visual Storyboard — “The tiny hole in aeroplane windows”
 
-6 sequences · 41.11 s · 1080 × 1920 · 30 fps. The look, story shape and pacing were decided in docs/creative_brief.md. Timestamps are taken from the recorded narration; the animation code reads the same word timings, so picture and voice cannot drift apart.
+6 sequences · 40.78 s · 1080 × 1920 · 30 fps. The look, story shape and pacing were decided in docs/creative_brief.md. Timestamps are taken from the recorded narration; the animation code reads the same word timings, so picture and voice cannot drift apart.
 
 ## Conventions that apply to every sequence
 
@@ -24,7 +24,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 **Type.** Space Grotesk for headlines, DM Sans for glosses and body, IBM Plex Mono for labels and counters. Smallest label 19–22 px; primary labels ≥ 24 px.
 
-**Captions.** Space Grotesk 800, 68 px, centred on y 1350, 1–5 words per phrase (37 phrases, 0 of them two-line); the spoken word takes its role colour and an underline draws in beneath it. Words not yet spoken are dimmed. Position never changes.
+**Captions.** Space Grotesk 800, 68 px, centred on y 1350, 1–5 words per phrase (36 phrases, 0 of them two-line); the spoken word takes its role colour and an underline draws in beneath it. Words not yet spoken are dimmed. Position never changes.
 
 **Scene changes.** 0.6 s, default `fade`; each scene can choose its own arrival (zoom into a point, pull back, pan, slide, cut, flash). The incoming scene is already drawn and moving before the outgoing one has gone.
 
@@ -33,8 +33,8 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 ## 01 · Passenger question
 
 **Time:** 0:00.00 → 0:04.44  (4.44 s)  
-**Narration:** “At thirty-five thousand feet, why put a hole in a pressurised window?”  
-**Caption phrases:** At thirty-five | thousand feet, | why put a hole | in a pressurised | window?
+**Narration:** “At thirty-five thousand feet, why put a hole in a pressurized window?”  
+**Caption phrases:** At thirty-five | thousand feet, | why put a hole | in a pressurized | window?
 
 | | |
 |---|---|
@@ -52,9 +52,9 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 02 · Reveal layers
 
-**Time:** 0:04.44 → 0:15.67  (11.23 s)  
-**Narration:** “In this Airbus design, look through the scratch pane you can touch. Behind it, the inner structural pane has the tiny vent. Then comes the outer structural pane.”  
-**Caption phrases:** In this Airbus design, | look through the | scratch pane you can | touch. | Behind it, | the inner structural | pane has the tiny | vent. | Then comes the outer | structural pane.
+**Time:** 0:04.44 → 0:15.32  (10.88 s)  
+**Narration:** “In this Airbus design, look through the scratch pane you can touch. Behind it, a tiny vent pierces the inner windowpane. Beyond that is the outer windowpane.”  
+**Caption phrases:** In this Airbus design, | look through the | scratch pane you can | touch. | Behind it, | a tiny vent pierces | the inner windowpane. | Beyond that is the | outer windowpane.
 
 | | |
 |---|---|
@@ -72,7 +72,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 03 · Air enters gap
 
-**Time:** 0:15.67 → 0:26.56  (10.89 s)  
+**Time:** 0:15.32 → 0:26.21  (10.89 s)  
 **Narration:** “The vent lets cabin air into the gap between the structural panes. It is not a hole to the outside. That puts cabin pressure on both sides of the inner pane. The outer pane”  
 **Caption phrases:** The vent lets cabin | air into the gap | between the structural | panes. | It is not a | hole to the outside. | That puts cabin | pressure on both sides | of the inner pane. | The outer pane
 
@@ -92,7 +92,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 04 · Normal load
 
-**Time:** 0:26.56 → 0:28.68  (2.12 s)  
+**Time:** 0:26.21 → 0:28.33  (2.12 s)  
 **Narration:** “normally carries the pressure difference.”  
 **Caption phrases:** normally carries the | pressure difference.
 
@@ -112,9 +112,9 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 05 · Backup condition
 
-**Time:** 0:28.68 → 0:34.20  (5.51 s)  
-**Narration:** “If the outer pane fails, the inner structural pane can take the pressure load. The”  
-**Caption phrases:** If the outer pane | fails, | the inner structural | pane can take the | pressure load. | The scratch pane
+**Time:** 0:28.33 → 0:33.87  (5.54 s)  
+**Narration:** “If the outer windowpane fails, the inner windowpane can take the pressure load. The”  
+**Caption phrases:** If the outer | windowpane fails, | the inner windowpane | can take the pressure | load. | The scratch pane
 
 | | |
 |---|---|
@@ -132,7 +132,7 @@ Below y 900, numbers and names stay left of x ≈ 910, where both platforms stac
 
 ## 06 · Return to cabin
 
-**Time:** 0:34.20 → 0:41.11  (6.92 s)  
+**Time:** 0:33.87 → 0:40.78  (6.92 s)  
 **Narration:** “scratch pane protects against passenger contact. Three layers. Different jobs.”  
 **Caption phrases:** protects against | passenger contact. | Three layers. | Different jobs.
 

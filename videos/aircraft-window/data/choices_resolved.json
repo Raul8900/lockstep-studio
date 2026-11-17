@@ -93,8 +93,8 @@
     "resolution_ms": 25,
     "model_sha256": "13ea8cc2a2742b2ee5b6d1407b6aba099b4904478dd9ce9f45b2bebab0bed74f",
     "voices_sha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
-    "script_sha256": "6b46cb9c42d70ae44d572c424cfed24305bab7f4a806e7c0157c7c2622f7c9ac",
-    "render_wav_sha256": "cd3237492ca04b8e5abe6220ad7cb1c901b95523ee4d26f20bbc99782f4e683d"
+    "script_sha256": "7d7512a1bee7c71cb2ae8ea73433169ad3018a57151d180f52e64449ea7a2b53",
+    "render_wav_sha256": "4bc7c83e325f0079380f128cad87f51a23ae63012644b2b3e958b272218d1f7c"
   },
   "audio": {
     "music": {
@@ -113,7 +113,7 @@
           "role": "ambience",
           "file": "assets/production/ambience.wav",
           "loop": true,
-          "gain_db": -32,
+          "gain_db": -23,
           "fade_in": 0.4,
           "fade_out": 0.8
         }
