@@ -211,9 +211,11 @@ and IBM Plex Mono for numbers, channel labels and the board. Shapes: rounded lin
 12), 3 px ink strokes on signs, no shadows (enamel signs are flat). Captions: Work Sans 800, highlight as a
 coloured underline bar (like the line strip under a station name), dark outline-free text on a soft light
 scrim. HUD: a custom strip map — the chapters as stations on a blue line, the current one named (“NOW:
-THE HOP”), drawn in `components.js` instead of the stock bar. Transitions: one family — sideways moves like
-a train leaving (`slideLeft` and a whip-pan), the split-flap board as the transition into the timetable
-(`gl:SplitFlap`), a hard cut for the myth snapping and the clash, zooms for the scale changes. **Rejected:**
+THE HOP”), drawn in `components.js` instead of the stock bar. Transitions: one family — camera moves along the line. Zooms connect
+scales (into your seat, into the band, back out to the carriage at the end), fades join two states of the
+same map (the band becoming the hop map, the hop map gaining your neighbour's line), one hard cut on the
+clash and one whip-pan (`gl:WhipPan`) for the change of place to the café. The split-flap board is the
+in-scene flourish for the timetable rather than a transition. **Rejected:**
 *night-carriage* (deep navy, amber dot-matrix type, glowing line colours) — atmospheric and closer to the
 LED boards, but it reads as the GPU video's dark technical world again, glowing lines on dark look like the
 default “Bluetooth = blue glow” treatment, and amber-on-black type is harder to read at caption size. Also

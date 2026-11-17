@@ -34,7 +34,12 @@
     const hit = pulse(t, snap, 0.03, 0.4);
     /* ---- sequence 1: the wire you imagine ---- */
     withAlpha(ctx, 1 - out, () => {
-      withCam(ctx, { fx: 540, fy: 800, zoom: (1 + 0.04 * prog(t, S0(), c.there)) * (1 + 0.04 * hit), dx: 7 * hit * Math.sin(t * 90) }, () => {
+      withCam(ctx, { fx: 540, fy: 800, zoom: (1 + 0.06 * prog(t, S0(), c.there)) * (1 + 0.04 * hit), dx: 7 * hit * Math.sin(t * 90), dy: 7 * Math.sin(t * 1.7) }, () => {
+        /* both devices keep calling: rings that leave each disk */
+        if (t < snap) for (const [p, ph] of [[PH, 0], [BD, 0.5]]) for (let j = 0; j < 2; j++) {
+          const u = ((t * 0.7 + ph + j * 0.5) % 1);
+          ring(ctx, p[0], p[1], R + 8 + 90 * u, COL.subject, 3, 0.35 * (1 - u));
+        }
         const route = tw(t, c.private - 0.1, c.channel + 0.45, E.io3), solid = tw(t, c.invisible - 0.1, c.wire + 0.25, E.out3);
         const broken = t >= snap, rec = tw(t, snap, snap + 0.6, E.out3);
         if (!broken) {
@@ -56,6 +61,7 @@
         }
         /* plugs where the cable meets the devices */
         if (solid > 0) for (const p of [P0, P3]) withAlpha(ctx, solid, () => { dot(ctx, p[0], p[1], 15, COL.ink); dot(ctx, p[0], p[1], 7, COL.panel); });
+        if (solid > 0.5 && !broken) for (let j = 0; j < 3; j++) { const q = polyAt(CABLE, polyLen(CABLE) * ((t * 0.8 + j / 3) % 1)); dot(ctx, q[0], q[1], 9, COL.panel); ring(ctx, q[0], q[1], 9, COL.subject, 3); }
         pictoDisk(ctx, 'smartphone', PH[0], PH[1], R, COL.subject, { lw: 1.6 });
         pictoDisk(ctx, 'earbuds', BD[0], BD[1], R, COL.subject, { lw: 1.6 });
         text(ctx, 'YOUR PHONE', PH[0], PH[1] + R + 52, { size: 28, weight: 700, family: F.mono, color: COL.ink, align: 'center', ls: 2 });

@@ -25,6 +25,9 @@
     const ry = lerp(RY, MAP.top, mv);
     const dimOthers = 1 - 0.75 * tw(t, c.classic - 0.15, c.classic + 0.35, E.out3);
     const head = 1 - tw(t, move0 - 0.1, move0 + 0.3, E.lin);
+    const T0b = beatOf('band').t0 - 0.5;
+    ctx.save();
+    { const z = 1 + 0.03 * prog(t, T0b, move0) * (1 - mv); ctx.translate(540, 760); ctx.scale(z, z); ctx.translate(-540, -760); }
     /* headline: the band, then the channels */
     withAlpha(ctx, head, () => {
       const hA = 0.55 + 0.45 * tw(t, c.band - 0.1, c.band + 0.3, E.out3);
@@ -40,18 +43,29 @@
       if (cb > 0) pill(ctx, 'CLASSIC BLUETOOTH', 540, 424, { size: 28, bg: COL.subject, alpha: cb });
     });
     /* the neighbours already on the band: Wi-Fi channels 1, 6, 11 and the microwave oven */
-    /* the band itself: a soft slice above the ruler, there from the first frame */
+    /* the band itself: a soft slice above the ruler, there from the first frame, with the carriage's
+       links still hopping along it (each dot is a real hop of one of the crowd's example phones) */
     withAlpha(ctx, 1 - mv, () => {
       const k = 0.6 + 0.4 * tw(t, c.band - 0.1, c.band + 0.4, E.out3);
       fillRR(ctx, fx(2400), RY - 196, fx(2483.5) - fx(2400), 176, 12, rgba(COL.ink, 0.035 * k + 0.02));
       ctx.save(); ctx.setLineDash([8, 8]); strokeRR(ctx, fx(2400), RY - 196, fx(2483.5) - fx(2400), 176, 12, rgba(COL.ink, 0.25 * k), 2); ctx.restore();
+      const crowd = (1 - 0.6 * tw(t, c.shared - 0.2, c.wifi + 0.2, E.io3)) * (1 - tw(t, c.classic - 0.2, c.classic + 0.3, E.io3));
+      if (crowd > 0) {
+        for (let i = 0; i < 40; i++) {
+          const ph = i === CAR.you ? PHONES.you : i === CAR.nb ? PHONES.nb : CROWD_PHONES[i];
+          const slot = Math.floor(t * 3.2 + i * 0.37), ch = btHop(ph.ulap, (ph.clk + 2 * slot) >>> 0);
+          const y = RY - 40 - 136 * hash(i * 1.37 + 0.5);
+          const col = i === CAR.you ? COL.subject : i === CAR.nb ? COL.accent : GREY.link();
+          dot(ctx, chX(ch), y, i === CAR.you || i === CAR.nb ? 8 : 5.5, col, crowd * (i === CAR.you || i === CAR.nb ? 1 : 0.75));
+        }
+      }
     });
     withAlpha(ctx, (1 - 0.85 * (1 - dimOthers) / 0.75) * (1 - mv), () => {
       WIFI.forEach((w, i) => {
         const k = tw(t, c.wifi - 0.1 + i * 0.1, c.wifi + 0.3 + i * 0.1, E.out3);
         if (k <= 0) return;
         const x0 = fx(w.f0), x1 = fx(w.f1), top = RY - 20 - 130 * k;
-        fillRR(ctx, x0, top, x1 - x0, RY - 20 - top, 10, rgba(COL.alert, 0.12));
+        fillRR(ctx, x0, top, x1 - x0, RY - 20 - top, 10, rgba(COL.alert, 0.08 + 0.10 * hash(i * 7 + Math.floor(t * 9))));
         strokeRR(ctx, x0, top, x1 - x0, RY - 20 - top, 10, COL.alert, 3);
         withAlpha(ctx, k, () => {
           icon(ctx, 'wifi', (x0 + x1) / 2, top + 40, 40, COL.alert, { lw: 2.4 });
@@ -61,15 +75,15 @@
       const m = tw(t, c.micro - 0.1, c.micro + 0.4, E.out3);
       if (m > 0) {
         const pts = [];
-        for (let f = 2436; f <= 2474; f += 0.5) { const u = (f - 2455) / 12; pts.push([fx(f), RY - 22 - 200 * Math.exp(-u * u) * m]); }
+        for (let f = 2431; f <= 2469; f += 0.5) { const u = (f - 2450) / 12; pts.push([fx(f), RY - 22 - 200 * Math.exp(-u * u) * m]); }
         polyline(ctx, pts, COL.alert, 4, 1, 0.9, [12, 9]);
-        pictoDisk(ctx, 'microwave', fx(2455), RY - 268 - 24 * (1 - m), 42, COL.alert, { alpha: m, lw: 1.8 });
-        text(ctx, 'MICROWAVE', fx(2455) + 54, RY - 274, { size: 24, weight: 700, family: F.mono, color: COL.alert, align: 'left', alpha: m });
-        text(ctx, 'OVEN', fx(2455) + 54, RY - 246, { size: 24, weight: 700, family: F.mono, color: COL.alert, align: 'left', alpha: m });
+        pictoDisk(ctx, 'microwave', fx(2450), RY - 268 - 24 * (1 - m), 42, COL.alert, { alpha: m, lw: 1.8 });
+        text(ctx, 'MICROWAVE', fx(2450) + 54, RY - 274, { size: 24, weight: 700, family: F.mono, color: COL.alert, align: 'left', alpha: m });
+        text(ctx, 'OVEN', fx(2450) + 54, RY - 246, { size: 24, weight: 700, family: F.mono, color: COL.alert, align: 'left', alpha: m });
       }
     });
     const un = tw(t, c.shared - 0.1, c.shared + 0.3, E.out3) * (1 - tw(t, c.classic - 0.1, c.classic + 0.2, E.lin));
-    if (un > 0) tag(ctx, 'UNLICENSED · ANYONE MAY TRANSMIT HERE', 540, 1066, { align: 'center', size: 26, color: COL.ink, alpha: un });
+    if (un > 0) tag(ctx, 'UNLICENSED · NOBODY OWNS IT', 540, 1066, { align: 'center', size: 26, color: COL.ink, alpha: un });
     /* the map panel arrives behind the ruler as it moves up */
     if (mv > 0) mapPanel(ctx, t, { alpha: mv, tracks: 0, labels: 0, now: 0 });
     /* the ruler, its 79 ticks, and the tracks growing down from them */
@@ -86,5 +100,6 @@
         tag(ctx, '1 MHz EACH · BLUETOOTH LE: 40 × 2 MHz', 540, MAP.y1 - 30, { align: 'center', size: 24, color: COL.dim });
       });
     }
+    ctx.restore();
   }, { type: 'zoomIn', fx: 540, fy: 498, z: 2.2, zb: 0.8, bx: 540, by: 930 });
 });

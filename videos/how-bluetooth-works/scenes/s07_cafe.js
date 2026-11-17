@@ -50,7 +50,7 @@
           if (lb > 0) pill(ctx, 'WI-FI · CHANNEL 6', r.rx - 30, r.ry + 66, { size: 26, bg: COL.alert, alpha: lb, align: 'right' });
           const dh = tw(t, c.doesnt - 0.05, c.hop + 0.2, E.out3);
           if (dh > 0) {
-            ctx.save(); ctx.translate(r.rx - 160, r.ry + 130); ctx.rotate(-0.06);
+            ctx.save(); ctx.translate(r.rx - 524, r.ry + 66); ctx.rotate(-0.06);
             withAlpha(ctx, dh, () => { strokeRR(ctx, -130, -32, 260, 64, 10, COL.alert, 4); text(ctx, "DOESN'T HOP", 0, 12, { size: 34, weight: 800, family: F.disp, color: COL.alert, align: 'center', ls: 2 }); });
             ctx.restore();
           }

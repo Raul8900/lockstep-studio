@@ -58,5 +58,11 @@
         "why": "split-flap cells show the outgoing and incoming digit together for 0.16 s while they flip, by design"
       }
     ]
+  },
+  "mix": {
+    "music_db": 0.0,
+    "sfx_db": 1.0,
+    "duck_music_db": -7.0,
+    "duck_sfx_db": -3.0
   }
 }

@@ -1,0 +1,172 @@
+1
+00:00:00,322 --> 00:00:03,687
+Rush hour: forty people in this carriage
+are streaming music over the same
+
+2
+00:00:03,697 --> 00:00:05,397
+slice of radio.
+
+3
+00:00:05,621 --> 00:00:08,221
+So why don't you ever
+hear your neighbour's?
+
+4
+00:00:08,731 --> 00:00:11,571
+You might think pairing gives
+your earbuds a private channel,
+
+5
+00:00:11,581 --> 00:00:13,556
+like an invisible wire.
+
+6
+00:00:13,660 --> 00:00:14,994
+There's no such thing.
+
+7
+00:00:15,004 --> 00:00:17,980
+Yours share every channel
+with everyone in here.
+
+8
+00:00:18,461 --> 00:00:22,251
+It's one band, at two point four
+gigahertz, shared with café Wi-Fi
+
+9
+00:00:22,261 --> 00:00:24,511
+and even microwave ovens.
+
+10
+00:00:24,660 --> 00:00:28,385
+Classic Bluetooth slices it
+into seventy-nine channels.
+
+11
+00:00:28,848 --> 00:00:30,538
+And it never stays on one.
+
+12
+00:00:30,548 --> 00:00:33,998
+It jumps channel up to sixteen
+hundred times a second.
+
+13
+00:00:34,261 --> 00:00:37,826
+The jumps look random, but they follow
+a timetable your phone works out
+
+14
+00:00:37,836 --> 00:00:39,961
+from its address and its clock.
+
+15
+00:00:40,144 --> 00:00:43,059
+Your earbuds work out the same
+one, so they're always listening
+
+16
+00:00:43,069 --> 00:00:45,444
+in the right place at the right moment.
+
+17
+00:00:45,998 --> 00:00:49,798
+Still, someone else's packet will
+sometimes land on your channel.
+
+18
+00:00:49,948 --> 00:00:53,138
+So every packet starts with
+a name tag: a code made from
+
+19
+00:00:53,148 --> 00:00:54,798
+your phone's address.
+
+20
+00:00:54,928 --> 00:00:57,368
+Your earbuds only open up for that code.
+
+21
+00:00:57,378 --> 00:01:00,078
+Your neighbour's music
+carries a different one.
+
+22
+00:01:00,581 --> 00:01:04,531
+And sometimes two packets hit the
+same channel at the same instant.
+
+23
+00:01:04,609 --> 00:01:08,084
+Bluetooth's own rulebook calls
+that a strong likelihood.
+
+24
+00:01:08,298 --> 00:01:09,688
+They garble each other.
+
+25
+00:01:09,698 --> 00:01:13,188
+Your earbuds don't confirm, so your
+phone sends it again on the next hop,
+
+26
+00:01:13,198 --> 00:01:14,998
+milliseconds later.
+
+27
+00:01:15,141 --> 00:01:18,581
+And a fraction of a second of music
+waits in reserve, so you don't hear
+
+28
+00:01:18,591 --> 00:01:19,766
+the gap.
+
+29
+00:01:20,283 --> 00:01:23,473
+Cafés add a bigger
+problem: Wi-Fi doesn't hop.
+
+30
+00:01:23,483 --> 00:01:26,608
+A network camps on about
+twenty of those channels.
+
+31
+00:01:26,818 --> 00:01:28,533
+So your phone keeps score.
+
+32
+00:01:28,543 --> 00:01:31,008
+Channels that keep failing are
+dropped from the timetable,
+
+33
+00:01:31,018 --> 00:01:33,318
+though it always keeps at least twenty.
+
+34
+00:01:33,905 --> 00:01:36,830
+So your earbuds never had a private line.
+
+35
+00:01:36,884 --> 00:01:40,574
+They have their own timetable,
+a name tag and a second chance,
+
+36
+00:01:40,584 --> 00:01:43,184
+up to sixteen hundred times a second.
+
+37
+00:01:43,482 --> 00:01:45,622
+And if you do want your neighbour's song?
+
+38
+00:01:45,632 --> 00:01:49,357
+Newer Bluetooth can share one
+stream with any number of earbuds.

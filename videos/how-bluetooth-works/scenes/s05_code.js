@@ -63,6 +63,8 @@
     }
     /* ---- 2: the name tag at the front of every packet ---- */
     if (pkA > 0.003) {
+      const zpk = 1 + 0.05 * prog(t, toPacket, toGate);
+      ctx.save(); ctx.translate(540, 760); ctx.scale(zpk, zpk); ctx.translate(-540, -760 + 5 * Math.sin(t * 1.8));
       withAlpha(ctx, pkA, () => {
         const slide = tw(t, toPacket + 0.1, toPacket + 0.7, E.out3);
         const lab = tw(t, c.starts - 0.1, c.starts + 0.3, E.out3);
@@ -82,7 +84,7 @@
             const sz = 40, str = PHONES.you.addr, wAll = measure(ctx, str, sz, 600, F.mono), x0 = 540 - wAll / 2;
             const wHead = measure(ctx, str.slice(0, 9), sz, 600, F.mono);
             fillRR(ctx, x0 - 26, 418, wAll + 52, 96, 14, COL.panel); strokeRR(ctx, x0 - 26, 418, wAll + 52, 96, 14, COL.ink, 3);
-            tag(ctx, "YOUR PHONE'S ADDRESS", 540, 446, { align: 'center', size: 22 });
+            tag(ctx, "YOUR PHONE'S ADDRESS (EXAMPLE)", 540, 446, { align: 'center', size: 22 });
             const hl = tw(t, c.address, c.address + 0.4, E.out3);
             highlighter(ctx, x0 + wHead - 4, 462, wAll - wHead + 8, 44, COL.subject, hl, 0.22);
             text(ctx, str, x0, 498, { size: sz, weight: 600, family: F.mono, color: COL.ink });
@@ -90,9 +92,10 @@
             if (fl > 0) { ctx.save(); ctx.setLineDash([10, 8]); polyline(ctx, [[x0 + (wHead + wAll) / 2, 516], [g.bx, 560], [g.bx, 580]], COL.subject, 4, fl); ctx.restore(); }
           });
         }
-        tag(ctx, '64-BIT ACCESS CODE, MADE FROM THE ADDRESS', 540, 1010, { align: 'center', size: 24, color: COL.subject, alpha: tw(t, c.address + 0.4, c.address + 0.8, E.out3) });
+        tag(ctx, 'ACCESS CODE · MADE FROM THE ADDRESS', 540, 1010, { align: 'center', size: 24, color: COL.subject, alpha: tw(t, c.address + 0.4, c.address + 0.8, E.out3) });
       });
     }
+    if (pkA > 0.003) ctx.restore();
     /* ---- 3: the earbud only opens for that code ---- */
     if (gateA > 0.003) {
       withAlpha(ctx, gateA, () => {

@@ -26,13 +26,16 @@
   const you = (k) => hopAt(PHONES.you, k);
   /* layout switches inside the beat */
   const boardIn = c.but - 0.1, boardOut = c.so - 0.25, dual = c.earbuds - 0.1;
+  /* keep sound off the words the board explains (a click on “clock” made it “clerk” in the mix) */
+  const quiet = ['timetable', 'address', 'clock'].map((w) => [at('hop', w) - 0.15, at('hop', w, 1, 't1') + 0.06]);
+  const inQuiet = (x) => quiet.some(([a, b]) => x > a && x < b);
 
   /* sound: a tick per hop while slowed, a count and an impact for the burst, flaps for the board */
   for (let k = Math.ceil(S(T0)) ; ; k++) {
     const tk = tOf(k - 0.5);
     if (tk > T1 - 0.3) break;
     if (tk > A - 0.05 && tk < D + 0.05) continue;
-    if (tk > boardIn + 0.4 && tk < boardOut) { sfx(tk, 'tick', 0.22, { pitch: 1.5 }); continue; }
+    if (tk > boardIn + 0.4 && tk < boardOut) { if (!inQuiet(tk)) sfx(tk, 'tick', 0.16, { pitch: 1.5 }); continue; }
     if (tk > boardOut + 0.3) { sfx(tk, 'lock', 0.32, { pitch: 1 + 0.03 * ((k % 8)) }); continue; }
     sfx(tk, 'tick', 0.3, { pitch: k % 2 ? 1.0 : 1.25 });
   }
@@ -41,9 +44,9 @@
   sfx(c.hundred, 'impact', 0.65);
   sfx(C + 0.05, 'whoosh', 0.45);
   sfx(boardIn, 'slide', 0.5, { dur: 0.5 });
-  sfx(c.works - 0.05, 'blip', 0.4);
-  sfx(c.address - 0.05, 'blip', 0.5, { pitch: 1.1 });
-  sfx(c.clock - 0.05, 'blip', 0.5, { pitch: 1.25 });
+  sfx(c.timetable + 0.25, 'blip', 0.35);
+  sfx(at('hop', 'address', 1, 't1') + 0.08, 'blip', 0.4, { pitch: 1.1 });
+  sfx(at('hop', 'clock', 1, 't1') + 0.08, 'blip', 0.4, { pitch: 1.25 });
   sfx(dual, 'flip', 0.5);
   sfx(c.same - 0.05, 'chime', 0.4, { pitch: 1.2 });
   sfx(boardOut, 'whoosh', 0.4);
@@ -92,12 +95,14 @@
         withAlpha(ctx, ro * mapA, () => {
           fillRR(ctx, 150, 930, 780, 190, 18, COL.panel); strokeRR(ctx, 150, 930, 780, 190, 18, COL.ink, 4);
           text(ctx, fmt(n), 540, 1052, { size: 120, weight: 800, family: F.disp, color: COL.accent, align: 'center' });
-          tag(ctx, 'HOPS PER SECOND', 540, 1098, { align: 'center', size: 28, color: COL.ink });
+          tag(ctx, 'HOPS PER SECOND · MAXIMUM', 540, 1098, { align: 'center', size: 28, color: COL.ink });
         });
       }
     }
     /* ---- the timetable: worked out from the address and the clock ---- */
     if (boardA > 0.003) {
+      ctx.save();
+      { const z = 1 + 0.045 * prog(t, boardIn, boardOut); ctx.translate(540, 760); ctx.scale(z, z); ctx.translate(-540, -760); }
       const k0 = Math.round(s), du = tw(t, dual, dual + 0.5, E.io3);
       const sAt = (x) => tOf(x);
       const chipIn = (cue) => tw(t, cue - 0.15, cue + 0.3, E.out3);
@@ -108,7 +113,7 @@
         const feed = (cue) => prog(t, cue + 0.1, cue + 0.6);
         if (ca > 0) withAlpha(ctx, ca, () => {
           fillRR(ctx, 70, 404, 450, 106, 14, COL.panel); strokeRR(ctx, 70, 404, 450, 106, 14, COL.subject, 4);
-          tag(ctx, 'ADDRESS', 96, 444, { size: 22, color: COL.subject });
+          tag(ctx, 'ADDRESS · AN EXAMPLE', 96, 444, { size: 22, color: COL.subject });
           text(ctx, PHONES.you.addr, 96, 488, { size: 31, weight: 600, family: F.mono, color: COL.ink });
         });
         if (cc > 0) withAlpha(ctx, cc, () => {
@@ -156,6 +161,7 @@
           });
         }
       });
+      ctx.restore();
     }
   }, { type: 'fade' });
 });

@@ -83,6 +83,8 @@
     }
     /* ---- 3: garbled, no reply, sent again on the next hop ---- */
     if (pA > 0.003) {
+      ctx.save();
+      { const z = 1 + 0.05 * prog(t, toPackets, toBuffer); ctx.translate(540, 760); ctx.scale(z, z); ctx.translate(-540, -760); }
       withAlpha(ctx, pA, () => {
         const gar = tw(t, c.garble - 0.1, c.garble + 0.3, E.out3) * (1 - tw(t, reTx - 0.1, reTx + 0.2, E.io3));
         const fadeO = tw(t, reTx - 0.3, reTx + 0.2, E.lin);
@@ -96,7 +98,7 @@
           withAlpha(ctx, nr, () => {
             ctx.save(); ctx.setLineDash([12, 10]); strokeRR(ctx, 150, 720, 340, 96, 48, COL.alert, 4); ctx.restore();
             text(ctx, 'REPLY: OK?', 320, 780, { size: 32, weight: 700, family: F.mono, color: COL.alert, align: 'center' });
-            pill(ctx, 'NOTHING CAME BACK', 520, 768, { size: 26, bg: COL.alert, align: 'left' });
+            pill(ctx, 'NO CONFIRMATION', 520, 768, { size: 26, bg: COL.alert, align: 'left' });
             icon(ctx, 'earbuds', 98, 768, 64, COL.ink, { lw: 1.8 });
           });
         }
@@ -118,9 +120,11 @@
             const msA = tw(t, c.ms - 0.1, c.ms + 0.3, E.out3);
             if (msA > 0) pill(ctx, '+1.25 ms', (xa + xb) / 2, (ya + yb) / 2, { size: 28, bg: COL.accent, alpha: msA });
             tag(ctx, 'SENT AGAIN · NEXT HOP', 150, y0 - 2, { size: 24, color: COL.subject });
+            if (ld > 0.5) { const route = [[xa, ya], [xa, (ya + yb) / 2], [xb, (ya + yb) / 2], [xb, yb]]; const q = polyAt(route, polyLen(route) * ((t * 0.9) % 1)); packetToken(ctx, q[0], q[1], 0.6, COL.subject); }
           });
         }
       });
+      ctx.restore();
     }
     /* ---- 4: a fraction of a second in reserve ---- */
     if (bA > 0.003) {
@@ -139,7 +143,7 @@
         if (rv > 0) {
           withAlpha(ctx, rv, () => {
             line(ctx, 160, 880, 960, 880, COL.data, 4); line(ctx, 160, 866, 160, 894, COL.data, 4); line(ctx, 960, 866, 960, 894, COL.data, 4);
-            pill(ctx, '≈ 0.15 s OF MUSIC IN RESERVE', 560, 936, { size: 28, bg: COL.data });
+            pill(ctx, 'A FRACTION OF A SECOND IN RESERVE', 560, 936, { size: 28, bg: COL.data });
           });
         }
         const ok = tw(t, c.gap - 0.1, c.gap + 0.3, E.out3);

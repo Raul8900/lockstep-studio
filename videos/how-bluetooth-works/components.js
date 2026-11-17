@@ -378,7 +378,8 @@ function bandRuler(ctx, y, o = {}) {
       const x = fx(f);
       if (x > x1 + 1) continue;
       line(ctx, x, y - 12, x, y + 12, COL.ink, 3);
-      text(ctx, String(f), x, y + 46, { size: 26, weight: 600, family: F.mono, color: COL.dim, align: 'center', alpha: labels });
+      const end = f === 2400 ? 'left' : 'center';
+      text(ctx, String(f), f === 2400 ? x - 6 : x, y + 46, { size: 26, weight: 600, family: F.mono, color: COL.dim, align: end, alpha: labels });
     }
     text(ctx, 'MHz', BAND.x1, y - 22, { size: 24, weight: 600, family: F.mono, color: COL.dim, align: 'right', alpha: labels });
     if (ticks > 0) {
@@ -618,7 +619,7 @@ function packetCapsule(ctx, cx, cy, w, h, o = {}) {
     const n = Math.max(6, Math.floor((px1 - px0) / 18));
     for (let i = 0; i < n; i++) {
       const bx = px0 + i * (px1 - px0) / n;
-      const base = 0.35 + 0.55 * Math.abs(Math.sin(i * 1.7 + 0.6));
+      const base = (0.35 + 0.55 * Math.abs(Math.sin(i * 1.7 + 0.6))) * (0.72 + 0.28 * Math.sin(t * 7.5 + i * 1.3));
       const g = garble > 0 ? hash2(i, Math.floor(t * 18)) : 0;
       const hh = h * 0.56 * lerp(base, g, clamp(garble));
       fillRR(ctx, bx, cy - hh / 2 + (garble > 0 ? (g - 0.5) * 14 * garble : 0), 9, hh, 4.5, garble > 0.5 ? COL.alert : COL.data);
@@ -680,7 +681,7 @@ function earbudGate(ctx, cx, cy, o = {}) {
    --------------------------------------------------------------------- */
 const CAFE = (() => {
   const r = rng(515), T = [];
-  const spots = [[-250, -120], [40, -150], [-210, 150], [90, 120], [300, 40], [-60, 360], [260, 330]];
+  const spots = [[-250, -120], [40, -150], [-210, 150], [90, 120], [300, 40], [-60, 300], [270, 290]];
   for (const [x, y] of spots) {
     const n = 2 + Math.floor(r() * 3), seats = [];
     for (let i = 0; i < n; i++) { const a = r() * TAU * 0 + i * TAU / n + r() * 0.5; seats.push({ a, earbud: r() < 0.7, laptop: r() < 0.3 }); }
@@ -714,11 +715,14 @@ function cafe(ctx, t, o = {}) {
       const tx = cx + tb.x * s, ty = cy + tb.y * s;
       dot(ctx, tx, ty, 52 * s, COL.panel); ring(ctx, tx, ty, 52 * s, rgba(COL.ink, 0.35), 3 * s);
       tb.seats.forEach((st, si) => {
+        const lx = tb.x + Math.cos(st.a) * 96, ly = tb.y + Math.sin(st.a) * 96;
+        if (Math.abs(lx) > 400 || ly > 372 || ly < -300) return;          // keep every chair inside the room
         const px = tx + Math.cos(st.a) * 96 * s, py = ty + Math.sin(st.a) * 96 * s;
         fillRR(ctx, px - 26 * s, py - 26 * s, 52 * s, 52 * s, 12 * s, GREY.seat());
         const ang = st.a - Math.PI / 2;            // facing the table
-        const c = st.earbud ? (budColor ? budColor(ti, si) : GREY.link()) : null;
-        person(ctx, px, py, ang, 0.95 * s, { bud: c, phone: null });
+        const c = st.earbud && budColor ? budColor(ti, si) : null;
+        if (c) { piconet(ctx, px, py, 46 * s, c, t, { lw: 3, fillA: 0.1 }); }
+        person(ctx, px, py, ang, 0.95 * s, { bud: c, white: st.earbud && !c, phone: null });
         if (st.laptop) {
           const lx = tx + Math.cos(st.a) * 30 * s, ly = ty + Math.sin(st.a) * 30 * s;
           ctx.save(); ctx.translate(lx, ly); ctx.rotate(st.a + Math.PI / 2);
