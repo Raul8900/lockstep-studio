@@ -3,15 +3,60 @@
   "tag": "HOW BLUETOOTH WORKS",
   "output": "how_bluetooth_works_vertical",
   "max_seconds": 130,
-  "music": { "bpm": 112, "transpose": 1, "kit": "pulse" },
+  "music": {
+    "bpm": 112,
+    "transpose": 1,
+    "kit": "pulse"
+  },
   "chapters": [
-    { "id": "hook",   "name": "THE QUESTION",    "mood": "drone" },
-    { "id": "myth",   "name": "NO PRIVATE LINE", "mood": "light" },
-    { "id": "band",   "name": "ONE BAND",        "mood": "groove" },
-    { "id": "hop",    "name": "THE HOP",         "mood": "mechanical" },
-    { "id": "code",   "name": "THE CODE",        "mood": "build" },
-    { "id": "clash",  "name": "THE CLASH",       "mood": "tense" },
-    { "id": "cafe",   "name": "THE CAFÉ",        "mood": "drive" },
-    { "id": "payoff", "name": "TERMINUS",        "mood": "finale" }
-  ]
+    {
+      "id": "hook",
+      "name": "THE QUESTION",
+      "mood": "drone"
+    },
+    {
+      "id": "myth",
+      "name": "NO PRIVATE LINE",
+      "mood": "light"
+    },
+    {
+      "id": "band",
+      "name": "ONE BAND",
+      "mood": "groove"
+    },
+    {
+      "id": "hop",
+      "name": "THE HOP",
+      "mood": "mechanical"
+    },
+    {
+      "id": "code",
+      "name": "THE CODE",
+      "mood": "build"
+    },
+    {
+      "id": "clash",
+      "name": "THE CLASH",
+      "mood": "tense"
+    },
+    {
+      "id": "cafe",
+      "name": "THE CAFÉ",
+      "mood": "drive"
+    },
+    {
+      "id": "payoff",
+      "name": "TERMINUS",
+      "mood": "finale"
+    }
+  ],
+  "lint": {
+    "ignore": [
+      {
+        "rule": "text-overlap",
+        "file": "(hop)",
+        "why": "split-flap cells show the outgoing and incoming digit together for 0.16 s while they flip, by design"
+      }
+    ]
+  }
 }
