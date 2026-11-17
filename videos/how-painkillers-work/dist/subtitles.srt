@@ -1,0 +1,131 @@
+1
+00:00:00,308 --> 00:00:02,508
+Your painkiller knows where it hurts.
+
+2
+00:00:02,534 --> 00:00:03,684
+It doesn't.
+
+3
+00:00:04,232 --> 00:00:05,507
+It seems to.
+
+4
+00:00:05,666 --> 00:00:09,791
+You swallow one, the ankle feels better,
+so the pill must have gone there.
+
+5
+00:00:10,347 --> 00:00:13,147
+The pill dissolves and
+passes into your blood.
+
+6
+00:00:13,293 --> 00:00:16,008
+Its level peaks within one to two hours.
+
+7
+00:00:16,018 --> 00:00:20,118
+It sticks to blood proteins, so it
+mostly stays in the bloodstream.
+
+8
+00:00:20,421 --> 00:00:23,921
+Blood reaches every organ,
+and the drug travels with it.
+
+9
+00:00:24,483 --> 00:00:27,398
+Hurt tissue switches on
+an enzyme called COX-2.
+
+10
+00:00:27,408 --> 00:00:29,283
+It makes prostaglandins.
+
+11
+00:00:29,432 --> 00:00:33,382
+They make nerves more sensitive
+to the chemicals injury releases.
+
+12
+00:00:33,692 --> 00:00:37,967
+Ibuprofen blocks both versions of
+that enzyme, everywhere it works.
+
+13
+00:00:38,270 --> 00:00:42,035
+The sore ankle is where that enzyme
+is busiest, so the block removes
+
+14
+00:00:42,045 --> 00:00:43,270
+the most there.
+
+15
+00:00:43,823 --> 00:00:46,038
+The same block runs everywhere.
+
+16
+00:00:46,048 --> 00:00:49,923
+Your stomach makes its own
+prostaglandins to help guard its lining.
+
+17
+00:00:50,123 --> 00:00:52,613
+Block it, and ulcers
+and bleeding can happen.
+
+18
+00:00:52,623 --> 00:00:54,648
+The label calls them serious.
+
+19
+00:00:54,952 --> 00:00:58,216
+Your kidneys use prostaglandins
+to keep blood flowing.
+
+20
+00:00:58,226 --> 00:01:02,351
+In people with kidney problems,
+ibuprofen can cut that flow.
+
+21
+00:01:02,929 --> 00:01:05,429
+Not every painkiller plays this game.
+
+22
+00:01:05,632 --> 00:01:10,707
+Paracetamol, or acetaminophen, has
+almost no anti-inflammatory effect.
+
+23
+00:01:10,857 --> 00:01:13,572
+It works mostly in the
+brain and spinal cord.
+
+24
+00:01:13,582 --> 00:01:16,307
+Scientists still argue about exactly how.
+
+25
+00:01:16,613 --> 00:01:20,263
+Opioids like morphine work largely
+through the nervous system.
+
+26
+00:01:20,860 --> 00:01:22,884
+So it doesn't know where your pain is.
+
+27
+00:01:23,072 --> 00:01:24,412
+It doesn't need to.
+
+28
+00:01:24,422 --> 00:01:28,087
+The sore spot is just the busiest
+factory, and the pill shuts down
+
+29
+00:01:28,097 --> 00:01:29,997
+every factory it reaches.

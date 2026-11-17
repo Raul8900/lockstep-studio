@@ -48,6 +48,7 @@ must argue why that exact look fits.
 | `sunset-synth` | dark | purple-to-orange fields, wide Unbounded caps, glow | music, internet culture, the future |
 | `studio-grid` | light | graph paper, electric blue, Space Grotesk, cards with shadows | process, craft, how things are made |
 | `riso-sticker` | light | cream stock, black + spot inks, Archivo Black, misregistered blue offset shadows, halftone | printed objects, codes and labels, everyday tech (“Why a Torn QR Code Still Scans”) |
+| `transit-map` | light | station signage: off-white enamel, metro line colours, Work Sans, flat signs, plan views and line maps, a split-flap board | networks, routes, schedules, anything shared by many users at once (“How Bluetooth Works”) |
 
 After a successful video, add its look with `bin/lockstep save-style <video> <name>`.
 
@@ -139,10 +140,34 @@ videos), `line` (a thin progress line), `none` (narrative videos, 60 s and under
 
 **`shape`** — `radius` (0 sharp … 36 pill-soft), `stroke` and `strokeAlpha` (card outline),
 `panelAlpha` (card opacity), `shadow` `{ "dx": 10, "dy": 10, "color": "ink" }` for a hard offset
-(poster, cut paper) or `{ "dx": 0, "dy": 12, "color": "rgba(…, 0.12)" }` for a soft lift (cards).
+(poster, cut paper) or `{ "dx": 0, "dy": 12, "color": "rgba(…, 0.12)" }` for a soft lift (cards),
+`line` `"clean"` (default) or `"rough"`: hand-drawn outlines on the ready-made blocks' cards, bars,
+axes and connectors (chalk, notebook and marker looks; blocks.md).
 
 **`transition`** — `duration` 0.2–1.2 s and the `default` type for scenes that do not name one:
-`fade`, `slideLeft`, `slideRight`, `zoomIn`, `zoomOut`, `panDown`, `panUp`, `cut`, `flash`.
+`fade`, `slideLeft`, `slideRight`, `zoomIn`, `zoomOut`, `panDown`, `panUp`, `cut`, `flash`, or a
+shader transition `gl:<Name>` (with optional `params`), chosen from `lockstep transitions`:
+
+| Look | Shader transitions that belong to it |
+|---|---|
+| calm, editorial | `FilmDissolve`, `DefocusBlur`, `Dreamy`, `SimpleZoomOut`, `CircleOpen`, `LightWipe`; `SpotlightWipe` on a dark stage |
+| energetic | `CrossZoom`, `WhipPan`, `WhipSpin`, `StretchSlide`, `PopIn` |
+| poster, print | `ComicPanels`, `ColorPanelWipe`, `GeometricCollage`, `Halftone`, `DuotoneFade` |
+| hand-drawn, paper | `SketchDissolve`, `PaperTear`, `PaperFold`, `Crumple`, `BookFlip`, `BrushWipe`, `InkBleed`, `StopMotion` |
+| technical, neon | `GlitchDisplace`, `Pixelize`, `DitherDissolve`, `LedWall`, `CodeRain`, `WarpSpeed`, `BloomDissolve` |
+| cards, process | `CardDeal`, `LayoutGrid`, `BlockSlide`, `GridFlip`; `Cube` on dark looks |
+| nature, science | `Ripple`, `WaterDrop`, `LiquidFill`, `CellDissolve`, `SmokeDissolve` |
+| film, retro | `FilmBurn`, `TvTurnOff` |
+
+A look has one transition family, plus one stronger move kept for the turn in the story (a
+`PaperTear` between myth and fact, a `WhipSpin` on the twist). A different transition on every
+scene change reads as a demo reel, not a video.
+
+**`lottie`** — how Lottie animations are recoloured to sit in this look, unless a file asks
+otherwise: `{ "recolor": "nearest", "colors": ["ink", "subject", "accent", "panel"], "res": 600 }`.
+`recolor` is `none`, `nearest` (each colour to the closest listed one), `palette` (a dark-to-light
+ramp through 2–3 colours), `tint` (one colour, for line-art animations) or a `{ "#hex": colour }`
+map (lottie.md). Leave it out when the chosen files already fit.
 
 ## Type voices
 
@@ -169,15 +194,17 @@ look with crisp vector diagrams, or a poster look with thin hairlines, reads as 
 
 | Look | Draw with |
 |---|---|
-| hand-drawn (chalk, notebook, marker) | `roughLine`, `roughRect`, `roughCircle` with boiling seeds; `highlighter`; handwritten labels; no glow |
-| poster, bold | `bigWord` kinetic type, thick strokes (6–10 px), flat fills, hard shadows, hard cuts, few elements |
-| editorial, dark stage | one lit subject at a time, generous space, serif headlines, slow push-ins, fades |
+| hand-drawn (chalk, notebook, marker) | `roughLine`, `roughRect`, `roughCircle` with boiling seeds; `highlighter`; handwritten labels; no glow; `"shape": { "line": "rough" }` so the blocks are drawn by hand too; paper transitions (`gl:SketchDissolve`, `gl:PaperTear`) |
+| poster, bold | kinetic type — `bigWord`, `textBlock` with `reveal: 'slam'`, a hook told in its own words with `sayText` + `hideCaptions` — thick strokes (6–10 px), flat fills, hard shadows, hard cuts, few elements |
+| editorial, dark stage | one lit subject at a time, generous space, serif headlines (`textBlock` with `reveal: 'fade'`), slow push-ins, fades |
 | technical, neon | thin glowing lines, 2.5D slabs, counters, `glow` and bloom |
 | cards and process | panels in sequence, slides, icons as small pictograms, a progress line |
 | soft, friendly | round shapes, springy easing (`E.outBack`), big friendly icons, pastel fills |
 
-Icons (2,300 line icons, `bin/lockstep icons <word>`) suit small pictograms and labels. The hero
-object deserves its own drawing in the video's `components.js`.
+Icons (2,300 line icons, `bin/lockstep icons <word>`) suit small pictograms and labels. Lottie
+animations bring characters and effects with real motion — choose files whose drawing style fits the
+look (`lottie-search` previews them in it), keep to one author or one recolour scheme, and recolour
+anything that clashes. The hero object deserves its own drawing in the video's `components.js`.
 
 ## Quality bar for a look
 

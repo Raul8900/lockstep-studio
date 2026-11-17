@@ -1,0 +1,77 @@
+{
+ "file": {
+  "path": "dist/how_bluetooth_works_vertical.mp4",
+  "size_mb": 74.8,
+  "container": "QuickTime / MOV",
+  "duration_s": 112.333,
+  "overall_bitrate_mbps": 5.33,
+  "faststart": true
+ },
+ "video": {
+  "codec": "h264",
+  "profile": "High",
+  "level": 4.2,
+  "width": 1080,
+  "height": 1920,
+  "aspect": "9:16",
+  "pix_fmt": "yuv420p",
+  "fps": 30.0,
+  "frames": 3370,
+  "bitrate_mbps": 5.05,
+  "color": "bt709/bt709/bt709 tv"
+ },
+ "audio": {
+  "codec": "aac",
+  "profile": "LC",
+  "sample_rate": 48000,
+  "channels": 2,
+  "bitrate_kbps": 271,
+  "duration_s": 112.256
+ },
+ "decode_errors": 0,
+ "black_segments": [],
+ "freeze_segments": [],
+ "encode_fidelity": {
+  "ssim_all": 0.996687,
+  "psnr_avg_db": 50.899432
+ },
+ "loudness": {
+  "integrated_lufs": -14.1,
+  "range_lu": 2.5,
+  "true_peak_dbtp": -2.7
+ },
+ "sync": {
+  "narration_lag_ms_in_mp4": 0,
+  "method": "cross-correlation of 10 ms envelopes, MP4 audio vs. original narration"
+ },
+ "final_mix_asr": {
+  "wer_percent": 0.32,
+  "errors": 1,
+  "words": 315,
+  "diffs": [
+   "['a -> and']"
+  ]
+ },
+ "caption_timing_crosscheck": {
+  "matched_words": 273,
+  "median_offset_ms": -95,
+  "mean_abs_dev_ms": 71,
+  "p95_abs_dev_ms": 205,
+  "note": "independent transducer ASR vs. TTS-derived word starts; the median is the recogniser's own emission delay"
+ },
+ "captions": {
+  "phrases": 98,
+  "two_line": 31,
+  "max_width_px": 796,
+  "x_extent": [
+   142,
+   938
+  ],
+  "y_extent": [
+   1260,
+   1440
+  ],
+  "min_on_screen_s": 0.5,
+  "max_words": 5
+ }
+}

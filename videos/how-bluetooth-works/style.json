@@ -1,0 +1,22 @@
+{
+  "name": "transit-map",
+  "about": "Station signage in daylight: off-white enamel and faint wall tiles, line colours (blue, orange, violet, red, green), a neutral grotesque, flat signs without shadows, plan views, line maps and a split-flap board. Networks, routes, schedules, sharing — many things moving through one system without colliding.",
+  "mode": "light",
+  "palette": {
+    "bg": ["#F4F4F0", "#EFEFEA", "#E7E8E2"],
+    "ink": "#15171C",
+    "subject": "#1450D2",
+    "accent": "#D2550A",
+    "data": "#7B3DB5",
+    "alert": "#D21F35",
+    "good": "#13894B",
+    "panel": "#FFFFFF"
+  },
+  "fonts": { "display": "Work Sans", "body": "Work Sans", "mono": "IBM Plex Mono" },
+  "backdrop": { "type": "solid" },
+  "post": { "vignette": 0.1, "scrim": 0.55 },
+  "captions": { "highlight": "underline", "font": "Work Sans", "weight": 800, "size": 76, "strokeW": 12 },
+  "hud": { "type": "line" },
+  "shape": { "radius": 12, "stroke": 3, "strokeAlpha": 1, "panelAlpha": 1 },
+  "transition": { "duration": 0.6, "default": "slideLeft" }
+}

@@ -160,7 +160,7 @@ function applyBloom(ctx, src, strength = 1) {
   ctx.restore();
 }
 function drawPost(ctx, frame) {
-  ctx.drawImage(OVERLAY, 0, 0);
+  if (!window.LOTTIESHEET) ctx.drawImage(OVERLAY, 0, 0);       // preview sheets skip the caption shading
   /* fixed low-amplitude dither (about 1.5 code values): hides 8-bit banding in the dark
      gradients. It is static on purpose - animated grain multiplied the bitrate by ~8. */
   ctx.save();
@@ -171,6 +171,20 @@ function drawPost(ctx, frame) {
 }
 
 /* ---------- captions ---------- */
+/* While a scene's own type says the narration (sayText), the captions step aside:
+   hideCaptions(t0, t1) in a scene's setup code. The range widens to whole caption phrases, so
+   no phrase is cut in half, and fades over 0.15 s at both ends. */
+const CAP_HIDE = [];
+function hideCaptions(t0, t1) {
+  let a = +t0, b = +t1;
+  for (const c of CAPS) if (c.show0 < b && c.show1 > a) { a = Math.min(a, c.show0); b = Math.max(b, c.show1); }
+  CAP_HIDE.push([+a.toFixed(3), +b.toFixed(3)]);
+}
+function captionsShown(t) {
+  let k = 1;
+  for (const [a, b] of CAP_HIDE) k = Math.min(k, 1 - clamp((t - a) / 0.15) * clamp((b - t) / 0.15));
+  return k;
+}
 const CAP = { size: 74, weight: 800, family: F.disp, lineH: 90, maxW: 800, cy: 1350, x: CX };
 const CAP_COL = { k: COL.cyan, n: COL.amber, m: COL.violet, w: COL.coral };
 function initCaptionStyle() {          // after applyStyle
@@ -230,7 +244,8 @@ function drawCaptions(ctx, t) {
   for (const k of CAPS) if (t >= k.show0 && t < k.show1) { c = k; break; }
   if (!c) return;
   const pop = E.outBackSoft(prog(t, c.show0, c.show0 + 0.14));
-  const alpha = prog(t, c.show0, c.show0 + 0.06) * (1 - prog(t, c.show1 - 0.05, c.show1));
+  const alpha = prog(t, c.show0, c.show0 + 0.06) * (1 - prog(t, c.show1 - 0.05, c.show1)) * captionsShown(t);
+  if (alpha <= 0) return;                                        // hidden (drawing at alpha 0 changes no pixel either)
   const sc = c.scale * lerp(0.9, 1, pop);
   const n = c.lines.length;
   ctx.save();
@@ -341,7 +356,7 @@ function chapterName(id) {
 }
 function drawHUD(ctx, t) {
   const HS = STYLE.hud;
-  if (HS.type === 'none') return;
+  if (HS.type === 'none' || window.LOTTIESHEET || window.BLOCKS_MODE || window.TRANS_MODE) return;
   if (HS.type === 'line') {            // one thin progress line, no labels
     fillRR(ctx, SAFE.l, 292, SAFE.r - SAFE.l, 5, 2.5, HS.track);
     fillRR(ctx, SAFE.l, 292, Math.max(5, (SAFE.r - SAFE.l) * clamp(t / DATA.dur)), 5, 2.5, COL.cyan);
@@ -368,7 +383,7 @@ function drawHUD(ctx, t) {
 
 /* ---------- scenes + transitions ---------- */
 let TR = 0.84;       // transition length (s); style.json -> transition.duration
-function addScene(id, draw, trans = { type: STYLE.transition.default }) { SCENES.push({ id, draw, trans }); }
+function addScene(id, draw, trans = { type: STYLE.transition.default, params: STYLE.transition.params }) { SCENES.push({ id, draw, trans }); }
 
 function finalizeScenes() {
   if (!SCENES.length) throw new Error('no scenes registered: every scenes/*.js must call addScene(beatId, draw, transition)');
@@ -413,6 +428,7 @@ function renderScenes(ctx, t) {
 
   drawLayer(actx, A, t); drawLayer(bctx, B, t);
   const tr = B.trans || { type: 'fade' };
+  if (isGL(tr.type)) { drawGLTransition(ctx, LAYER_A, LAYER_B, p, tr); return; }     // shader transitions: gl.js
   const e = E.io3(p), fx = tr.fx == null ? CX : tr.fx, fy = tr.fy == null ? 800 : tr.fy;
   const aOut = 1 - prog(p, 0.08, 0.62), aIn = prog(p, 0.38, 0.92);
   switch (tr.type) {
@@ -503,7 +519,7 @@ async function boot() {
   VIDEO = await get('project/video.json');
   applyStyle(await opt('project/style.json'));
   if (!BACKDROPS[STYLE.backdrop.type] && typeof window.drawBackdrop !== 'function') throw new Error(`style.json: unknown backdrop type "${STYLE.backdrop.type}"; choose from: ${Object.keys(BACKDROPS).join(', ')} (or define window.drawBackdrop in components.js)`);
-  if (!TRANSITIONS.includes(STYLE.transition.default)) throw new Error(`style.json: unknown default transition "${STYLE.transition.default}"`);
+  if (!isGL(STYLE.transition.default) && !TRANSITIONS.includes(STYLE.transition.default)) throw new Error(`style.json: unknown default transition "${STYLE.transition.default}"`);
   TR = STYLE.transition.duration;
   initCaptionStyle();
   await loadFonts(opt);
@@ -511,14 +527,22 @@ async function boot() {
   ICONS = (await opt('assets/icons/lucide.json')) || {};
   if (window.TILE_MODE) {
     setupTile();
+  } else if (window.LOTTIESHEET) {
+    setupLottieSheet(window.LOTTIESHEET);
+  } else if (window.TRANS_MODE) {
+    setupTransitionSheet();
+  } else if (window.BLOCKS_MODE) {
+    setupBlockSheet();
   } else {
     const [words, takes, phrases] = await Promise.all([get('project/data/words.json'), get('project/data/takes.json'), get('project/caption_phrases.json')]);
     DATA.words = words; DATA.takes = takes.takes; DATA.beats = takes.beats; DATA.meta = takes.meta; DATA.dur = takes.meta.duration;
     CAPS = buildCaptions(words, phrases);
     if (window.defineScenes) window.defineScenes();
   }
+  await loadLotties();                  // every file declared with useLottie(), loaded and recoloured once
   finalizeScenes();
-  for (const s of SCENES) if (!TRANSITIONS.includes((s.trans || {}).type)) throw new Error(`scene ${s.id}: unknown transition type "${(s.trans || {}).type}"; choose from: ${TRANSITIONS.join(', ')}`);
+  for (const s of SCENES) if (!isGL((s.trans || {}).type) && !TRANSITIONS.includes((s.trans || {}).type)) throw new Error(`scene ${s.id}: unknown transition type "${(s.trans || {}).type}"; choose from: ${TRANSITIONS.join(', ')}, or a shader transition gl:<Name> (lockstep transitions lists them)`);
+  await prepareGLTransitions();        // shader transitions the scenes use: loaded and compiled now
   SFX.sort((a, b) => a.t - b.t);
   window.TOTAL_FRAMES = Math.round(DATA.dur * FPS);
   window.READY = true;

@@ -15,6 +15,7 @@ and differences that are only spacing ("scratch pad" / "scratchpad") are listed 
 counted as errors.
 """
 import difflib
+import unicodedata
 import json
 import re
 import sys
@@ -52,6 +53,47 @@ whisper = sherpa_onnx.OfflineRecognizer.from_whisper(
     num_threads=2, language="en", task="transcribe")
 
 BIG = ("hundred", "thousand", "million", "billion", "trillion")
+# Spelling that differs from the recogniser's (American) output without being a mishearing.
+UNITS = {"ghz": "gigahertz", "mhz": "megahertz", "khz": "kilohertz", "hz": "hertz"}
+_OUR = re.compile(r"^(\w+?)our(s|ed|ing|ite|ites|ful|less|able|hood|hoods|er|ers|ly)?$")
+_OUR_KEEP = {"fl", "sc", "dev", "cont", "det", "am", "vel", "glam", "troubad", "param"}   # flour, scour, devour, contour...
+_BRITISH = {"centre": "center", "centres": "centers", "metre": "meter", "metres": "meters", "litre": "liter",
+            "litres": "liters", "theatre": "theater", "fibre": "fiber", "grey": "gray", "programme": "program",
+            "programmes": "programs", "travelled": "traveled", "travelling": "traveling", "cancelled": "canceled"}
+_ONES = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7, "eight": 8, "nine": 9}
+_TEENS = {"ten": 10, "eleven": 11, "twelve": 12, "thirteen": 13, "fourteen": 14, "fifteen": 15, "sixteen": 16,
+          "seventeen": 17, "eighteen": 18, "nineteen": 19}
+_TENS = {"twenty": 20, "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90}
+
+
+def _american(w):
+    """neighbour -> neighbor, colours -> colors, centre -> center: the recogniser writes American English."""
+    if w in _BRITISH:
+        return _BRITISH[w]
+    m = _OUR.match(w)
+    if m and len(m.group(1)) >= 2 and m.group(1) not in _OUR_KEEP:
+        return m.group(1) + "or" + (m.group(2) or "")
+    return w
+
+
+def _fold_hundreds(ws):
+    """'sixteen hundred' == 1600 == 'one thousand six hundred': rewrite the first as the last."""
+    out, i = [], 0
+    while i < len(ws):
+        n, k = None, 0
+        if ws[i] in _TEENS and ws[i] != "ten":
+            n, k = _TEENS[ws[i]], 1
+        elif ws[i] in _TENS:
+            n, k = _TENS[ws[i]], 1
+            if i + 1 < len(ws) and ws[i + 1] in _ONES:
+                n, k = n + _ONES[ws[i + 1]], 2
+        if n and i + k < len(ws) and ws[i + k] == "hundred":
+            out += num2words(n * 100).replace("-", " ").replace(",", " ").replace(" and ", " ").split()
+            i += k + 1
+            continue
+        out.append(ws[i])
+        i += 1
+    return out
 
 
 def _spell(m):
@@ -64,13 +106,14 @@ def _spell(m):
 
 def to_words(text):
     """Lower-case word list with numbers spelled out, so digits and words compare equal."""
-    s = text.lower()
+    s = unicodedata.normalize("NFKD", text.lower()).encode("ascii", "ignore").decode()   # café == cafe
     for ch in "—–…":
         s = s.replace(ch, " ")
     s = re.sub(r"(?<=\d),(?=\d{3})", "", s)                                  # 20,000 -> 20000
+    s = re.sub(r"(?<=\d)\s?(ghz|mhz|khz|hz)\b", lambda m: " " + UNITS[m.group(1)], s)   # 2.4GHz == 2.4 gigahertz
     s = re.sub(r"(?<![a-z0-9.])\d+(?:\.\d+)?(?![a-z0-9])", _spell, s)        # standalone numbers only ("4k" stays)
     s = s.replace("-", " ").replace("'", "").replace("’", "")
-    ws = re.sub(r"[^a-z0-9 ]+", " ", s).split()
+    ws = _fold_hundreds([_american(w) for w in re.sub(r"[^a-z0-9 ]+", " ", s).split()])
     out = []
     for i, w in enumerate(ws):
         if w == "a" and i + 1 < len(ws) and ws[i + 1] in BIG:

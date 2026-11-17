@@ -23,7 +23,8 @@ else:
     STYLE_PATH = ROOT / "style.json"
 BACKDROPS = re.findall(r"^  (?:/\*.*?\*/\s*)?(\w+)\s*(?:\(|:)", (REPO / "engine/anim/js/backdrops.js").read_text().split("const BACKDROPS = {")[1], re.M)
 TRANSITIONS = ["fade", "cut", "zoomIn", "zoomOut", "panDown", "panUp", "slideLeft", "slideRight", "flash"]
-KEYS = {"name", "about", "first_used_in", "mode", "palette", "fonts", "backdrop", "post", "captions", "hud", "shape", "transition"}
+GL_NAMES = {t["name"].lower(): t["name"] for t in json.load(open(REPO / "engine/anim/vendor/gl-transitions/transitions.json"))["transitions"]}
+KEYS = {"name", "about", "first_used_in", "mode", "palette", "fonts", "backdrop", "post", "captions", "hud", "shape", "transition", "lottie"}
 DEFAULT = {"bg": ["#05080D", "#090E17", "#04060A"], "ink": "#F3F8FF", "subject": "#27E1FF", "accent": "#FFA91E", "data": "#A073FF",
            "alert": "#FF5F70", "good": "#4DFFB5"}
 rows, failed = [], 0
@@ -152,12 +153,62 @@ elif bd in BACKDROPS:
 else:
     row("FAIL", "backdrop", f"unknown type {bd!r}; library: {', '.join(BACKDROPS)} — or draw your own in components.js")
 tr = S.get("transition", {})
-if tr.get("default", "fade") not in TRANSITIONS:
-    row("FAIL", "transition.default", f"{tr['default']!r}; choose from {', '.join(TRANSITIONS)}")
+default = str(tr.get("default", "fade"))
+if default.startswith("gl:"):
+    if default[3:].lower() not in GL_NAMES:
+        near = __import__("difflib").get_close_matches(default[3:], list(GL_NAMES.values()), n=3, cutoff=0.6)
+        row("FAIL", "transition.default", f"{default!r} is not a shader transition" + (f" (near: {', '.join('gl:' + n for n in near)})" if near else "") + " — lockstep transitions --all shows them")
+    else:
+        row("PASS", "transition.default", f"gl:{GL_NAMES[default[3:].lower()]} (a shader transition)")
+elif default not in TRANSITIONS:
+    row("FAIL", "transition.default", f"{default!r}; choose from {', '.join(TRANSITIONS)}, or gl:<Name> (lockstep transitions)")
 if not 0.2 <= tr.get("duration", 0.84) <= 1.2:
     row("FAIL", "transition.duration", f"{tr['duration']} s: keep between 0.2 and 1.2")
 if S.get("hud", {}).get("type", "segments") not in ("segments", "line", "none"):
     row("FAIL", "hud.type", "choose segments, line or none")
+if S.get("shape", {}).get("line", "clean") not in ("clean", "rough"):
+    row("FAIL", "shape.line", f"{S['shape']['line']!r}: choose clean or rough (hand-drawn outlines on the blocks)")
+
+# ---- Lottie recolouring
+LO = S.get("lottie")
+if LO is not None:
+    def mix(h1, h2, k):
+        a, b2 = rgb(h1), rgb(h2)
+        return "#" + "".join(f"{round(x + (y - x) * k):02X}" for x, y in zip(a, b2))
+
+    def role_hex(v):
+        """a palette role or COL name (including the ones the engine derives), or #hex -> hex"""
+        if isinstance(v, str) and re.fullmatch(r"#[0-9A-Fa-f]{6}", v):
+            return v
+        bgl = P["bg"] if isinstance(P["bg"], list) else [P["bg"]]
+        mid, ink = bgl[min(1, len(bgl) - 1)], P["ink"]
+        is_light = S.get("mode", "light" if lum(mid) > 0.4 else "dark") == "light"
+        pal = dict(P, bgTop=bgl[0], bgMid=mid, bgBot=bgl[-1], white=ink,
+                   panel=given.get("panel") or mix(mid, ink, 0.0 if is_light else 0.05),
+                   panelHi=given.get("panelHi") or mix(mid, ink, 0.1), line=given.get("line") or mix(mid, ink, 0.18),
+                   lineHi=given.get("lineHi") or mix(mid, ink, 0.32), text=given.get("text") or mix(ink, mid, 0.1),
+                   dim=given.get("dim") or mix(ink, mid, 0.45), faint=given.get("faint") or mix(ink, mid, 0.7))
+        for r_ in ("subject", "accent", "data", "alert", "good"):
+            pal.setdefault(r_, P[r_])
+        return pal.get(v)
+    rc, cols, bad = LO.get("recolor", "none"), LO.get("colors") or [], []
+    if isinstance(rc, dict):
+        bad += [f"recolor map key {k!r} is not #hex" for k in rc if not re.fullmatch(r"#[0-9A-Fa-f]{6}", k)]
+        bad += [f"recolor map value {v!r} is not a palette role or #hex" for v in rc.values() if not role_hex(v)]
+    elif rc not in ("none", "tint", "palette", "nearest"):
+        bad.append(f"recolor {rc!r}: none, tint, palette, nearest, or a {{\"#hex\": colour}} map")
+    elif rc in ("palette", "nearest") and len(cols) < 2:
+        bad.append(f"recolor {rc!r} needs two or more colors")
+    bad += [f"colour {c!r} is not a palette role or #hex" for c in cols if not role_hex(c)]
+    if not 200 <= LO.get("res", 600) <= 2000:
+        bad.append("res 200-2000")
+    if bad:
+        row("FAIL", "lottie", "; ".join(bad))
+    else:
+        bgl = P["bg"] if isinstance(P["bg"], list) else [P["bg"]]
+        close = [c for c in (cols[:1] if rc == "tint" else []) if role_hex(c) and contrast(role_hex(c), bgl[min(1, len(bgl) - 1)]) < 1.4]
+        desc = f"recolor {rc}" + (f" {cols}" if cols else "")
+        row("warn" if close else "PASS", "lottie", desc + (f" — {close} is close to the background: tinted animations will vanish" if close else ""))
 
 # ---- is this just an example, unchanged?
 core = lambda d: json.dumps({k: d.get(k) for k in ("palette", "fonts", "backdrop")}, sort_keys=True)

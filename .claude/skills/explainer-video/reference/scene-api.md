@@ -169,6 +169,76 @@ drawn by hand, change the seed a few times a second: `seed: 7 + Math.floor(t * 6
 Icons are generic pictograms: good for a row of concepts, a status, a small label. The hero
 object of a video deserves to be drawn by hand in the video's `components.js`, in its own style.
 
+### Ready-made blocks (`blocks.js`)
+
+Charts, big numbers, comparisons, lists, timelines, pointers and processes, drawn in the video's
+look and built in with one progress value `o.p`: `barChart`, `rankBars`, `lineChart`, `donutChart`,
+`progressRing`, `gaugeMeter`, `unitChart`, `statTile`, `versusCards`, `splitCompare`, `quoteCard`,
+`stepList`, `checkList`, `timelineAxis`, `flowChain`, `labelPointer`, plus `blockCard`, `numText`
+and `stagger`. `lockstep blocks <slug>` shows them in the look; signatures and options: blocks.md.
+
+```js
+statTile(ctx, 110, 860, 400, 300, 1792, 'GB per second', { p: tw(t, c.fast, c.fast + 0.8, E.lin), icon: 'gauge' });
+```
+
+### Type that moves (`text.js`)
+
+Type the engine lays out — wrapped, aligned, fitted to a box, with inline emphasis — and builds in
+word by word or letter by letter. Emphasis is marked the way the look marks its captions (a box,
+an underline, or colour).
+
+```js
+textBlock(ctx, 'Painkillers do not *find* the pain. They [block](alert) the signal.', 110, 480, 860,
+  { size: 78, p: tw(t, c.find - 0.3, c.signal + 0.2, E.lin) });           // wrapped to 860 px, word by word
+textBlock(ctx, 'Nobody *reads* the label', 110, 470, 860,
+  { size: 230, fit: true, h: 660, upper: true, reveal: 'slam', p });      // as large as fits 860 × 660
+sayText(ctx, t, 'hook', 110, 470, 860,                                     // the narration's own words, each on its word
+  { em: ['impossible'], current: 'accent', reveal: 'slam', upper: true, size: 150, fit: true, h: 700 });
+hideCaptions(at('hook', 'what') - 0.2, at('hook', 'past', 1, 't1'));      // setup code: the captions step aside
+```
+
+| Function | |
+|---|---|
+| `textBlock(ctx, str, x, y, w, o)` | `y` is the block's top; `x` its left edge, centre or right edge (`align`). `o`: `size` (64), `weight`, `family` (display face), `color`, `emColor` (roles), `mark` (`color`, `box`, `underline`, `highlight`; default: the look's caption highlight), `lineH` (1.16), `ls`, `upper`, `fit` + `h` (shrink to the box), `minSize` (24), `p`, `reveal` (`rise`, `fade`, `pop`, `slam`, `type`, `none`), `spread` (how much words overlap, 0.7), `t` (the typing caret blinks) |
+| `sayText(ctx, t, beat, x, y, w, o)` | the words of a beat (or `from`/`to` cue words, `fromN`/`toN`) each appearing as it is spoken: `lead` (0.05 s early), `dur` (0.22 s), `em` (words to emphasise), `roles` (`{ word: role }`), `current` (a role lights the word being spoken), plus textBlock's options; `reveal` defaults to `pop`. Laid out with every word from the start: nothing reflows |
+| `hideCaptions(t0, t1)` | in setup code: the burned-in captions step aside (widened to whole phrases, 0.15 s fades). The SRT keeps every phrase; lint stops checking the caption zone there |
+| `parseMarkup(str)` · `fitWords(ctx, words, x, y, w, o)` | the layout alone (each word's box), to draw words your own way |
+
+Markup: `*a phrase*` is emphasis; `[a phrase](role)` colours a phrase. Both return the layout —
+every word's `x`, `y` (baseline), `top`, `wd`, `h` and `line` — for a pointer, a highlighter or a
+camera move onto a word. When the words on screen are the narration itself, hide the captions for
+that stretch: two copies of the same sentence compete for the eye.
+
+### Lottie animations (`lottie.js`)
+
+Designer-made vector animations from the video's `lottie/` folder, played on the narration's clock.
+Full guide (finding, licence, timing, recolouring): lottie.md.
+
+```js
+const bee = useLottie('bee', { crop: true });                              // setup code: declare
+drawLottie(ctx, bee, t, x, y, 260, { at: c.bee, loop: true, flipX });      // draw function: note the t
+drawLottie(ctx, hive, t, 540, 980, 520, { at: c.lands, peak: 100 });      // frame 100 lands on "lands"
+```
+
+| Helper | |
+|---|---|
+| `useLottie(name, { recolor, colors, crop, res, dir })` | declare; defaults from `style.json` → `lottie` |
+| `drawLottie(ctx, h, t, x, y, size, { at, peak, speed, loop, segment, from, to, frame, before, after, p, alpha, rot, flipX, squash, dy, anchor })` | draw the frame for time `t` |
+| `lottieInfo(h)` · `lottieFrameAt(h, t, opts)` | timing facts; the frame shown at a moment (to freeze it) |
+
+### Character motion and bubbles
+
+Pure functions of time for anything that acts — a Lottie, an icon, a shape:
+
+| Helper | Returns | |
+|---|---|---|
+| `bob(t, { speed, amp, phase })` | y offset ≤ 0 | walking, flying bounce |
+| `sway(t, { speed, amp, phase })` | rotation | idle lean |
+| `breathe(t, { speed, amp })` | scale ≈ 1 | standing still but alive |
+| `wiggle(t, { from, until, amp, speed })` | rotation | excitement, alarm |
+| `hop(t, t0, { height, dur })` | `{ dy, squash }` | a jump on a word: crouch, stretch, land |
+| `bubble(ctx, x, y, w, h, tx, ty, { p, text, think })` | — | speech or thought bubble pointing at a speaker at (tx, ty) |
+
 **2.5D** — `const P = new Proj({ cx, cy, scale, yaw, pitch })`: world x/y in a tilted plane, z up.
 `P.pt(x, y, z)` → `[screenX, screenY, scale]`; `P.quad(ctx, x0, y0, x1, y1, z)` builds a path;
 `P.slab(ctx, x0, y0, x1, y1, z0, z1, topFill, sideFill, edge)` draws an extruded box. Call
@@ -195,6 +265,45 @@ through scales zooms. Mix types deliberately — a different one marks a change 
 
 Use the zooms to connect scales (into a part → the part becomes the next scene; back out to the
 whole). Aim `fx, fy` at the object the viewer is looking at. The first scene's transition is unused.
+
+### Shader transitions (`gl.js`)
+
+223 more transitions written as GPU shaders (gl-transitions, MIT): zoom blurs, whip pans, torn
+and folded paper, ink, brush strokes, comic panels, halftone and duotone print, glitches, LED
+walls, ripples, liquid, film burns, 3D cards and cubes. Name one as `gl:<Name>`:
+
+```js
+addScene('factory', draw, { type: 'gl:PaperTear' });
+addScene('verdict', draw, { type: 'gl:ColorPanelWipe', params: { panels: 4, stagger: 0.5 } });
+addScene('deeper', draw, { type: 'gl:CrossZoom', params: { strength: 0.3 }, ease: 'io2' });
+```
+
+```bash
+bin/lockstep transitions <slug>                   # built-ins + ~45 recommended ones, mid-way, in the look
+bin/lockstep transitions <slug> PaperTear WhipPan  # step by step
+bin/lockstep transitions <slug> --all             # every one of the 223
+```
+
+The shortlist in a light and a dark look: [studio-grid](transitions/studio-grid.jpg),
+[neon-blueprint](transitions/neon-blueprint.jpg).
+
+- They work on whole frames: the backdrop and the scene move together; captions, the progress
+  bar and the finish (bloom, vignette, grain, the caption scrim) are drawn on top, untouched.
+- `params` override the shader's own settings (`--all` and the gallery list them by name in each
+  file's description; vendor/gl-transitions/transitions.json holds the defaults). Colour
+  parameters with unambiguous names follow the look — paper and background take the backdrop's
+  colour, ink and borders the ink, `color1`–`color3` and `accent` the accent, subject and data
+  colours — and any colour parameter can be given as a role: `{ params: { glow: 'accent' } }`.
+  `look: false` keeps the author's colours.
+- `ease` names an easing from `E` (default linear: the shaders ease themselves).
+- A misspelt name stops `lint` and the boot with the nearest names; every shader the video uses is
+  compiled at boot.
+- In software (no GPU, as in the renderer) a light shader costs ~0.1 s a frame and a heavy one —
+  blurs, glows, many samples — up to ~0.5 s; a transition is about 25 frames. Frames are identical
+  between renders on the same machine; on a machine with a GPU, shader transitions can differ from
+  this container's by a hair.
+- Restraint: one family per video (see "Transitions" in art-direction.md), and keep novelty
+  transitions (hearts, stars, TV static) for videos whose brief asks for them.
 
 ## Backdrop
 

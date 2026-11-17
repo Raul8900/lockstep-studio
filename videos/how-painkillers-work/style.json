@@ -1,0 +1,46 @@
+{
+  "name": "anatomy-plate",
+  "about": "Warm paper, ink-blue and vermilion, serif headlines, line-drawn anatomy: body chemistry told like an old field guide. Medicine, the body, how a drug moves through it.",
+  "mode": "light",
+  "palette": {
+    "bg": [
+      "#F7F1E5",
+      "#F3EBDB",
+      "#EDE3CF"
+    ],
+    "ink": "#1F1B16",
+    "subject": "#1F5FBF",
+    "accent": "#D9480F",
+    "data": "#6B4EA0",
+    "alert": "#B3261E",
+    "good": "#2B8A3E"
+  },
+  "fonts": {
+    "display": "Fraunces",
+    "body": "Lora",
+    "mono": "Courier Prime"
+  },
+  "backdrop": {
+    "type": "paper",
+    "lines": 0,
+    "wash": "subject"
+  },
+  "captions": {
+    "highlight": "underline",
+    "weight": 800,
+    "strokeW": 12
+  },
+  "hud": {
+    "type": "line"
+  },
+  "shape": {
+    "radius": 10,
+    "stroke": 3,
+    "strokeAlpha": 0.9,
+    "panelAlpha": 0.55
+  },
+  "transition": {
+    "duration": 0.7,
+    "default": "slideLeft"
+  }
+}

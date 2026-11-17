@@ -1,0 +1,230 @@
+{
+ "meta": {
+  "voice": "bf_emma",
+  "speed": 1.06,
+  "sample_rate": 24000,
+  "duration": 112.347,
+  "speech_end": 109.057,
+  "word_count": 308
+ },
+ "beats": [
+  {
+   "id": "hook",
+   "title": "The question",
+   "t0": 0.3721,
+   "t1": 7.9208
+  },
+  {
+   "id": "myth",
+   "title": "No private line",
+   "t0": 8.7811,
+   "t1": 17.6795
+  },
+  {
+   "id": "band",
+   "title": "One band",
+   "t0": 18.5108,
+   "t1": 28.0848
+  },
+  {
+   "id": "hop",
+   "title": "The hop",
+   "t0": 28.8978,
+   "t1": 45.1437
+  },
+  {
+   "id": "code",
+   "title": "The code",
+   "t0": 46.0482,
+   "t1": 59.7783
+  },
+  {
+   "id": "clash",
+   "title": "The clash",
+   "t0": 60.6313,
+   "t1": 79.4661
+  },
+  {
+   "id": "cafe",
+   "title": "The café",
+   "t0": 80.333,
+   "t1": 93.0184
+  },
+  {
+   "id": "payoff",
+   "title": "Terminus",
+   "t0": 93.9548,
+   "t1": 109.057
+  }
+ ],
+ "takes": [
+  {
+   "take": 0,
+   "beat": "hook",
+   "text": "Rush hour: forty people in this carriage are streaming music over the same slice of radio.",
+   "t0": 0.3721,
+   "t1": 5.0971,
+   "pause_after": 0.36
+  },
+  {
+   "take": 1,
+   "beat": "hook",
+   "text": "So why don't you ever hear your neighbour's?",
+   "t0": 5.6708,
+   "t1": 7.9208,
+   "pause_after": 0.7
+  },
+  {
+   "take": 2,
+   "beat": "myth",
+   "text": "You might think pairing gives your earbuds a private channel, like an invisible wire.",
+   "t0": 8.7811,
+   "t1": 13.2561,
+   "pause_after": 0.3
+  },
+  {
+   "take": 3,
+   "beat": "myth",
+   "text": "There's no such thing. Yours share every channel with everyone in here.",
+   "t0": 13.7095,
+   "t1": 17.6795,
+   "pause_after": 0.68
+  },
+  {
+   "take": 4,
+   "beat": "band",
+   "text": "It's one band, at two point four gigahertz, shared with café Wi-Fi and even microwave ovens.",
+   "t0": 18.5108,
+   "t1": 24.2108,
+   "pause_after": 0.34
+  },
+  {
+   "take": 5,
+   "beat": "band",
+   "text": "Classic Bluetooth slices it into seventy-nine channels.",
+   "t0": 24.7098,
+   "t1": 28.0848,
+   "pause_after": 0.66
+  },
+  {
+   "take": 6,
+   "beat": "hop",
+   "text": "And it never stays on one. It jumps channel up to sixteen hundred times a second.",
+   "t0": 28.8978,
+   "t1": 33.6978,
+   "pause_after": 0.45
+  },
+  {
+   "take": 7,
+   "beat": "hop",
+   "text": "The jumps look random, but they follow a timetable your phone works out from its address and its clock.",
+   "t0": 34.3114,
+   "t1": 39.6614,
+   "pause_after": 0.36
+  },
+  {
+   "take": 8,
+   "beat": "hop",
+   "text": "Your earbuds work out the same one, so they're always listening in the right place at the right moment.",
+   "t0": 40.1937,
+   "t1": 45.1437,
+   "pause_after": 0.7
+  },
+  {
+   "take": 9,
+   "beat": "code",
+   "text": "Still, someone else's packet will sometimes land on your channel.",
+   "t0": 46.0482,
+   "t1": 49.4982,
+   "pause_after": 0.3
+  },
+  {
+   "take": 10,
+   "beat": "code",
+   "text": "So every packet starts with a name tag: a code made from your phone's address.",
+   "t0": 49.9984,
+   "t1": 54.4984,
+   "pause_after": 0.32
+  },
+  {
+   "take": 11,
+   "beat": "code",
+   "text": "Your earbuds only open up for that code. Your neighbour's music carries a different one.",
+   "t0": 54.9783,
+   "t1": 59.7783,
+   "pause_after": 0.7
+  },
+  {
+   "take": 12,
+   "beat": "clash",
+   "text": "And sometimes two packets hit the same channel at the same instant.",
+   "t0": 60.6313,
+   "t1": 64.2313,
+   "pause_after": 0.28
+  },
+  {
+   "take": 13,
+   "beat": "clash",
+   "text": "Bluetooth's own rulebook calls that a strong likelihood.",
+   "t0": 64.659,
+   "t1": 67.784,
+   "pause_after": 0.42
+  },
+  {
+   "take": 14,
+   "beat": "clash",
+   "text": "They garble each other. Your earbuds don't confirm, so your phone sends it again on the next hop, milliseconds later.",
+   "t0": 68.348,
+   "t1": 74.698,
+   "pause_after": 0.34
+  },
+  {
+   "take": 15,
+   "beat": "clash",
+   "text": "And a fraction of a second of music waits in reserve, so you don't hear the gap.",
+   "t0": 75.1911,
+   "t1": 79.4661,
+   "pause_after": 0.7
+  },
+  {
+   "take": 16,
+   "beat": "cafe",
+   "text": "Cafés add a bigger problem: Wi-Fi doesn't hop. A network camps on about twenty of those channels.",
+   "t0": 80.333,
+   "t1": 86.308,
+   "pause_after": 0.36
+  },
+  {
+   "take": 17,
+   "beat": "cafe",
+   "text": "So your phone keeps score. Channels that keep failing are dropped from the timetable, though it always keeps at least twenty.",
+   "t0": 86.8684,
+   "t1": 93.0184,
+   "pause_after": 0.72
+  },
+  {
+   "take": 18,
+   "beat": "payoff",
+   "text": "So your earbuds never had a private line.",
+   "t0": 93.9548,
+   "t1": 96.5298,
+   "pause_after": 0.26
+  },
+  {
+   "take": 19,
+   "beat": "payoff",
+   "text": "They have their own timetable, a name tag and a second chance, up to sixteen hundred times a second.",
+   "t0": 96.934,
+   "t1": 102.884,
+   "pause_after": 0.5
+  },
+  {
+   "take": 20,
+   "beat": "payoff",
+   "text": "And if you do want your neighbour's song? Newer Bluetooth can share one stream with any number of earbuds.",
+   "t0": 103.532,
+   "t1": 109.057,
+   "pause_after": 0.4
+  }
+ ]
+}

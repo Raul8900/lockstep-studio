@@ -1,0 +1,51 @@
+{
+  "name": "chalk-sketch",
+  "about": "Green board, chalk colours, hand-lettered labels and wobbly hand-drawn diagrams. A teacher drawing the body on the board: 'let me show you what really happens'.",
+  "palette": {
+    "bg": ["#20403A", "#1C3933", "#17302B"],
+    "ink": "#F4F2E6",
+    "subject": "#FFE28A",
+    "accent": "#FFA07A",
+    "data": "#9AD4FF",
+    "alert": "#FF8585",
+    "good": "#B6F2A6"
+  },
+  "fonts": {
+    "display": "Caveat",
+    "body": "Patrick Hand",
+    "mono": "Courier Prime"
+  },
+  "backdrop": {
+    "type": "paper",
+    "grain": 0.9,
+    "wash": "ink"
+  },
+  "post": {
+    "bloom": 0,
+    "vignette": 0.8
+  },
+  "captions": {
+    "weight": 700,
+    "size": 92,
+    "strokeW": 12,
+    "glow": false
+  },
+  "hud": {
+    "type": "none"
+  },
+  "shape": {
+    "radius": 8,
+    "stroke": 4,
+    "strokeAlpha": 0.85,
+    "panelAlpha": 0.25
+  },
+  "transition": {
+    "duration": 0.7,
+    "default": "slideLeft"
+  },
+  "illustrations": {
+    "set": "line",
+    "treat": "tint",
+    "colors": ["ink"]
+  }
+}

@@ -24,6 +24,12 @@ lockstep <command> [<video>] [options]
   icons <word>                  search the 2,300 bundled icons
   save-style <video> [name]     add this video's look to the library, so later videos can build on it
 
+ lottie animations — designer-made vector motion, played on the narration's clock
+  lottie-search <video> <words> [--n 8]   search LottieFiles' free animations; filmstrips in this look -> out/lottie_search.jpg
+  lottie-get <video> <id> [name]          take one: lottie/<name>.json + its credit and licence
+  lottie-sheet <video> [names...]         this video's Lottie files as filmstrips, recoloured as the look draws them
+  lottie-info <video>                     duration, frame rate, markers, warnings and credits of each file
+
  narration
   voice <video> [voice] [speed] record the narration from script.py -> audio/narration_24k.wav, data/words.json
                                 ("voice <video> list" prints the available voices)
@@ -32,6 +38,19 @@ lockstep <command> [<video>] [options]
   words <video> [beat]          print every spoken word with its start time (for choosing cues)
 
  pictures
+  preview <video> [--port 4173] [--host 0.0.0.0]
+                                play and scrub the video in a browser, with audio; reloads itself when files change
+  lint <video> [--static]       check the scenes before rendering: cues, sounds, icons, Lottie files, determinism,
+                                colours, typed-in times; where text lands (interface, captions, size, contrast,
+                                overlaps). Errors stop the build. --static: the code only, no frames drawn
+  blocks [<video>] [block...] [--style f.json]
+                                the ready-made blocks (charts, stat tiles, comparisons, lists, timelines, flows,
+                                pointers) drawn in the video's look -> out/blocks.jpg; name blocks to see their
+                                build-in as strips. Without a video: in the default look, or --style's
+  transitions [<video>] [name...] [--all] [--style f.json]
+                                the scene transitions drawn in the video's look -> out/transitions.jpg: the built-in
+                                ones and the recommended shader ones (--all: every one of the 223); naming some
+                                shows each step by step
   meta <video>                  export data/timeline.json (scenes, captions, sound cues); also proves the scenes load
   still <video> [--safe] T...   render single frames, e.g. 3.2s 12s 450   -> out/stills/
   sheet <video> [--cols N] T... render frames and tile them into out/sheet.jpg for review
@@ -93,7 +112,8 @@ case "$cmd" in
       node "$E/render.js" "$E/tile" tile --style "$f" --out "$REPO/styles/previews/$n.jpg" >/dev/null
       printf '  %-20s %s\n' "$n" "$(json_field "$f" about)"
     done
-    python3 "$E/sheet.py" "$REPO/styles/previews/[!_]*.jpg" "$REPO/styles/previews/_all.jpg" 8 300 >/dev/null
+    n=$(ls "$REPO"/styles/*.json | wc -l); [ "$n" -le 12 ] || n=8
+    python3 "$E/sheet.py" "$REPO/styles/previews/[!_]*.jpg" "$REPO/styles/previews/_all.jpg" "$n" 300 >/dev/null
     echo "previews: styles/previews/<name>.jpg; all side by side: styles/previews/_all.jpg"
     echo "looks used by videos in this repo:"
     for d in "$REPO"/videos/*/; do
@@ -123,6 +143,16 @@ case "$cmd" in
     n=$(grep -ci -- "$q" "$REPO/assets/icons/names.txt" || true)
     echo "$n icons match '$q':"
     grep -i -- "$q" "$REPO/assets/icons/names.txt" | head -120 | paste -sd ' ' | fold -s -w 110 | sed 's/^/  /' ;;
+  lottie-search) V=$(resolve "${1:-}"); shift; python3 "$E/lottie_tool.py" search "$V" "$@" ;;
+  lottie-get)    V=$(resolve "${1:-}"); shift; python3 "$E/lottie_tool.py" get "$V" "$@" ;;
+  lottie-info)   V=$(resolve "${1:-}"); python3 "$E/lottie_tool.py" info "$V" ;;
+  lottie-sheet)
+    V=$(resolve "${1:-}"); shift
+    if [ $# -gt 0 ]; then NAMES=$(IFS=,; echo "$*"); else
+      NAMES=$(ls "$V"/lottie/*.json 2>/dev/null | xargs -n1 basename 2>/dev/null | sed 's/\.json$//' | grep -v '^credits$' | paste -sd, -)
+    fi
+    [ -n "$NAMES" ] || { echo "no Lottie files in $(basename "$V")/lottie/ — find some with: lockstep lottie-search $(basename "$V") <words>" >&2; exit 1; }
+    node "$E/render.js" "$V" lottiesheet --names "$NAMES" --out "$V/out/lottie_sheet.jpg" ;;
   save-style)
     V=$(resolve "${1:-}"); N="${2:-}"
     [ -f "$V/style.json" ] || { echo "no style.json in $V" >&2; exit 1; }
@@ -151,6 +181,34 @@ PY
   captions)     V=$(resolve "${1:-}"); shift; python3 "$E/make_captions.py" "$V" "$@" ;;
   words)        V=$(resolve "${1:-}"); shift; python3 "$E/words.py" "$V" "$@" ;;
   meta)         V=$(resolve "${1:-}"); node "$E/render.js" "$V" meta ;;
+  lint)         V=$(resolve "${1:-}"); shift; exec python3 "$E/lint.py" "$V" "$@" ;;
+  transitions)
+    V="$E/tile"; OUTF=""; EXTRA=(); NAMES=()
+    if [ $# -gt 0 ] && { [ -f "$1/video.json" ] || [ -f "$REPO/videos/$1/video.json" ]; }; then V=$(resolve "$1"); shift; fi
+    while [ $# -gt 0 ]; do
+      case "$1" in --style) EXTRA+=(--style "$2"); shift 2 ;; --out) OUTF="$2"; shift 2 ;; --all) EXTRA+=(--all); shift ;; *) NAMES+=("$1"); shift ;; esac
+    done
+    if [ -z "$OUTF" ]; then
+      if [ "$V" = "$E/tile" ]; then OUTF="${TMPDIR:-/tmp}/lockstep-transitions/transitions${NAMES[0]+_strips}.jpg"; else OUTF="$V/out/transitions${NAMES[0]+_strips}.jpg"; fi
+    fi
+    ARGS=("$V" transitions --out "$OUTF")
+    [ ${#EXTRA[@]} -gt 0 ] && ARGS+=("${EXTRA[@]}")
+    [ ${#NAMES[@]} -gt 0 ] && ARGS+=(--names "$(IFS=,; echo "${NAMES[*]}")")
+    node "$E/render.js" "${ARGS[@]}" ;;
+  blocks)
+    V="$E/tile"; OUTF=""; STYLE_ARG=(); NAMES=()
+    if [ $# -gt 0 ] && { [ -f "$1/video.json" ] || [ -f "$REPO/videos/$1/video.json" ]; }; then V=$(resolve "$1"); shift; fi
+    while [ $# -gt 0 ]; do
+      case "$1" in --style) STYLE_ARG=(--style "$2"); shift 2 ;; --out) OUTF="$2"; shift 2 ;; *) NAMES+=("$1"); shift ;; esac
+    done
+    if [ -z "$OUTF" ]; then
+      if [ "$V" = "$E/tile" ]; then OUTF="${TMPDIR:-/tmp}/lockstep-blocks/blocks${NAMES[0]+_strips}.jpg"; else OUTF="$V/out/blocks${NAMES[0]+_strips}.jpg"; fi
+    fi
+    ARGS=("$V" blocks --out "$OUTF")
+    [ ${#STYLE_ARG[@]} -gt 0 ] && ARGS+=("${STYLE_ARG[@]}")
+    [ ${#NAMES[@]} -gt 0 ] && ARGS+=(--names "$(IFS=,; echo "${NAMES[*]}")")
+    node "$E/render.js" "${ARGS[@]}" ;;
+  preview)      V=$(resolve "${1:-}"); shift; exec node "$E/render.js" "$V" preview "$@" ;;
   still)        V=$(resolve "${1:-}"); shift; node "$E/render.js" "$V" still "$@" ;;
   scan)         V=$(resolve "${1:-}"); node "$E/render.js" "$V" scan ;;
   sheet)
@@ -169,13 +227,11 @@ PY
   report)       V=$(resolve "${1:-}"); python3 "$E/make_report.py" "$V" ;;
   build)
     V=$(resolve "${1:-}"); shift
-    echo "== direction"; python3 "$E/check_brief.py" "$V"; style_gate "$V"
+    echo "== direction"; python3 "$E/check_brief.py" "$V"; style_gate "$V"; python3 "$E/lottie_tool.py" check "$V"
     [ -f "$V/data/words.json" ] || { echo "no narration yet: run 'lockstep voice $(basename "$V")' first" >&2; exit 1; }
-    if [ "$V/script.py" -nt "$V/data/words.json" ]; then
-      echo "script.py is newer than the recorded narration: run 'lockstep voice $(basename "$V")' first (or touch data/words.json if only notes changed)" >&2; exit 1
-    fi
     mkdir -p "$V/out"
     echo "== captions"; python3 "$E/make_captions.py" "$V"
+    echo "== lint";     python3 "$E/lint.py" "$V"
     echo "== meta";     node "$E/render.js" "$V" meta
     echo "== scan";     node "$E/render.js" "$V" scan
     echo "== audio";    python3 "$E/audio/make_audio.py" "$V" | tail -4

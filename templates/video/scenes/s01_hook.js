@@ -24,6 +24,11 @@
   const PITCH = CARD.h + CARD.gap, HERO = 9;        // card 9 is the one that ends up centred
   const TOP = 560, BOT = 1200, MID = 880;           // window of the feed inside the diagram zone
 
+  /* a Lottie animation (lottie/swipe-up.json, credited in lottie/credits.json): the viewer's finger flicks
+     the feed, lifts off, and the feed glides on to its stop. useLottie() here in the setup; drawLottie()
+     in the draw function. crop: true trims the empty canvas the artist left around the hand. */
+  const swipe = useLottie('swipe-up', { crop: true });
+
   sfx(0.05, 'whoosh', 0.7);
   for (let k = 0; k < 5; k++) sfx(0.2 + k * (stop - 0.3) / 5, 'tick', 0.6, { pitch: 1 - k * 0.06 });
   sfx(stop - 0.02, 'lock', 0.9);
@@ -63,6 +68,9 @@
       });
     }
     ctx.restore();
+
+    /* the flick: already under way on frame 0, finished before the feed comes to rest */
+    drawLottie(ctx, swipe, t, 790, 990, 250, { at: -0.3, speed: 1.5, after: 'hide' });
 
     /* shock ring when the feed stops */
     const rp = prog(t, stop, stop + 0.8);

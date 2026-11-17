@@ -54,6 +54,8 @@ const STYLE = {
   hud: { type: 'segments', track: 'rgba(210,228,250,0.16)', done: 'rgba(220,235,255,0.6)' },
   shape: { radius: 22, stroke: 2, panelAlpha: 0.9, strokeAlpha: 0.55, shadow: null },
   transition: { duration: 0.84, default: 'fade' },
+  /* defaults for useLottie(): how Lottie animations are recoloured to sit in this look (see lottie.js) */
+  lottie: { recolor: 'none', colors: null, res: 600 },
 };
 const _h2 = (n) => Math.round(clamp(n, 0, 255)).toString(16).padStart(2, '0');
 function mixToHex(h1, h2, t) { const A = hexRGB(h1), B = hexRGB(h2); return '#' + _h2(lerp(A[0], B[0], t)) + _h2(lerp(A[1], B[1], t)) + _h2(lerp(A[2], B[2], t)); }
@@ -98,7 +100,7 @@ function applyStyle(s) {
     STYLE.captions.glow = !light;
     STYLE.hud.track = rgba(COL.white, 0.16); STYLE.hud.done = rgba(COL.white, 0.6);
   }
-  for (const k of ['backdrop', 'post', 'captions', 'hud', 'shape', 'transition']) if (s[k]) Object.assign(STYLE[k], s[k]);
+  for (const k of ['backdrop', 'post', 'captions', 'hud', 'shape', 'transition', 'lottie']) if (s[k]) Object.assign(STYLE[k], s[k]);
   const f = s.fonts || {};
   if (f.display) F.disp = f.display; if (f.body) F.ui = f.body; if (f.mono) F.mono = f.mono;
 }

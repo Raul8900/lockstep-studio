@@ -13,5 +13,12 @@
     { "id": "workloads",    "name": "PIXELS & AI",     "mood": "bright" },
     { "id": "limits",       "name": "THE LIMITS",      "mood": "tense" },
     { "id": "payoff",       "name": "THE TAKEAWAY",    "mood": "finale" }
-  ]
+  ],
+  "lint": {
+    "ignore": [
+      { "rule": "legacy-colour", "why": "written before colour roles; kept unchanged as the engine's reference render" },
+      { "rule": "hex-colour", "why": "written before colour roles; kept unchanged as the engine's reference render" },
+      { "rule": "typed-time", "why": "the hook's drift spans the opening seconds on purpose; kept unchanged as the reference render" }
+    ]
+  }
 }

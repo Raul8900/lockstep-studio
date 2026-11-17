@@ -38,6 +38,14 @@ darker, slower style", "chapter 4 is too dense".
 The finished files land in `videos/<slug>/dist/` and `videos/<slug>/docs/`; the decisions are in
 `videos/<slug>/docs/creative_brief.md`.
 
+To watch it take shape, open the live preview: `bin/lockstep preview <slug>` serves the video at
+http://localhost:4173 — play it with the narration, scrub through scenes, words and sound cues,
+step frame by frame — and the page reloads itself, at the same moment, every time a scene, the
+look or a Lottie file is saved. Keys: Space play, ← → one frame, Shift+← → one second, [ ] previous
+and next scene, 1–4 speed, s safe zones, l loop the scene, m sound. `--host 0.0.0.0` opens it to
+your phone on the same network. In Claude Code on the web, the session reports the port so the
+app can show the page.
+
 ## Setup
 
 Needs Python 3.10+, Node 18+ with Playwright and Chromium, FFmpeg, and network access to PyPI and
@@ -84,13 +92,18 @@ script.py ──► voice ──► words.json (every word, to 25 ms) ──┬�
 | Stage | How |
 |---|---|
 | Direction | A creative brief per video (audience, angle, three directions, hooks, story shape, pacing, visual world, look, sound, risks), gated by `lockstep brief`. Story formats and art direction guides in the skill. |
-| Look | `style.json` per video: palette roles, fonts, backdrop, caption treatment, progress bar, card shapes, transition grammar. Legibility checked by `lockstep style-check`, previewed by `lockstep tile`. |
+| Look | `style.json` per video: palette roles, fonts, backdrop, caption treatment, progress bar, card shapes, transition grammar, Lottie recolouring. Legibility checked by `lockstep style-check`, previewed by `lockstep tile`. |
+| Lottie animations | Designer-made vector animations from LottieFiles' free library (or your own), searched and previewed in the video's look, recoloured to its palette, and played frame-accurately by lottie-web with key frames pinned to spoken words. Each file credited in the video's `lottie/credits.json`. |
 | Voice | Kokoro-82M text-to-speech, run locally. The ONNX graph is patched to output its phoneme durations, so word timings are exact rather than estimated. |
 | Animation | HTML Canvas 2D. Each scene is a JavaScript function of time; cues are `at('beat', 'word')`. |
+| Type | Text laid out by the engine — wrapped, fitted to a box, emphasis marked the way the look marks captions — built in word by word (rise, pop, slam) or typed letter by letter; or the narration's own words landing as they are spoken, with the captions stepping aside. |
+| Ready-made blocks | Bar, rank, line, donut and unit charts, rings, gauges, stat tiles, versus and before/after cards, quotes, step and check lists, timelines, flows and pointers that take on the video's look (palette, fonts, card shapes, hand-drawn outlines) and build in on a word. `lockstep blocks` shows them in any look. |
 | Rendering | Headless Chromium draws every frame deterministically across four workers (≈ 40 fps). |
+| Transitions | Built-in zooms, pans, slides, cuts and flashes, plus 223 GPU shader transitions (gl-transitions) — paper tears, ink, comic panels, halftone, glitches, whip pans — run on whole frames under the captions, their colours following the look. |
 | Music and sound | Synthesised in NumPy: pads, bass, arpeggio and drums arranged per chapter, with tempo, key and one of five instrument kits chosen per video; 24 sound-effect types triggered by the scenes at the same cues as the picture. |
 | Mix and master | Voice processing, ducking under speech, look-ahead limiter, −14 LUFS. |
 | Encode | FFmpeg libx264 (CRF 16, BT.709), AAC 256 kbps, streamable MP4. |
+| Checks before rendering | `lockstep lint`: misspelt cue words, unknown sounds, icons and Lottie files, non-deterministic code, typed-in times and colours; and, drawing a frame every 0.2 s, text under the platform's interface or the captions, too small, cut off, overlapping, or drawn over something in its own colour. Errors stop the build. |
 | QA | Stream facts, full decode, black-frame and freeze detection, SSIM against the rendered frames, loudness, audio/picture sync, speech recognition on the final mix, caption geometry, contact sheet and phone-size previews. |
 
 ## Commands
@@ -100,6 +113,9 @@ bin/lockstep new <slug> ["Title"]     scaffold videos/<slug>/ from the template
 bin/lockstep styles                   preview the library of looks
 bin/lockstep tile <video> [a.json…]   preview a look, or candidate looks side by side
 bin/lockstep palettes|fonts|icons     browse the open-licence asset library
+bin/lockstep lottie-search <video> …  find Lottie animations; filmstrips in the video's look
+bin/lockstep lottie-get <video> <id>  take one, with its credit and licence
+bin/lockstep lottie-sheet <video>     the video's Lottie files as it will draw them
 bin/lockstep style-check <video>      legibility of a look
 bin/lockstep brief <video>            is the creative direction complete? (voice and build need it)
 bin/lockstep save-style <video> name  add a video's look to the library
@@ -107,7 +123,11 @@ bin/lockstep voice <video>            record the narration, extract word timings
 bin/lockstep check-voice <video>      transcribe it back and compare with the script
 bin/lockstep words <video> [beat]     list every spoken word with its time
 bin/lockstep captions <video>         check (or --draft) the caption chunking
+bin/lockstep blocks <video>           the ready-made blocks (charts, stats, lists, timelines…) in the video's look
+bin/lockstep transitions <video>      scene transitions in the video's look: built-ins and 223 GPU shaders
+bin/lockstep lint <video>             check the scenes before rendering: code mistakes, where text lands
 bin/lockstep still|sheet|scan <video> review frames while designing
+bin/lockstep preview <video>          play and scrub in a browser with sound; reloads on every save
 bin/lockstep build <video>            everything from scenes to validated MP4, docs and verdict
 bin/lockstep help                     the full list
 ```
@@ -121,7 +141,7 @@ templates/video/             starter project copied by `lockstep new` (light "st
 templates/creative_brief.md  the blank brief every new video starts from
 styles/                      the library of looks, with previews
 assets/                      open-licence fonts (33 families), icons (2,359) and palettes (1,000+)
-videos/<slug>/               one folder per video (brief, style, sources, data, docs, dist)
+videos/<slug>/               one folder per video (brief, style, sources, scenes, lottie, data, docs, dist)
 .claude/skills/explainer-video/   the production process Claude follows
 scripts/setup.sh  selftest.sh
 ```
@@ -149,8 +169,8 @@ give byte-identical frames.
 ## Limits
 
 - English narration only, with the voices that ship with the model.
-- Visuals are drawn by code: vector shapes, type, line icons, hand-drawn strokes, 2.5D, particles.
-  No photographs, footage, 3D models or talking characters; the creative brief has to direct within
+- Visuals are drawn by code — vector shapes, type, line icons, hand-drawn strokes, 2.5D, particles —
+  plus Lottie animations. No photographs, footage, 3D models or talking characters; the creative brief has to direct within
   that.
 - Taste is checked by the agent looking at its own frames, not by an audience. Watch each video and,
   once published, feed back what performed — the briefs' retrospectives are where that goes.
@@ -164,6 +184,10 @@ give byte-identical frames.
 Stored in `assets/` (see `assets/README.md`): 33 type families from Google Fonts via Fontsource
 (SIL Open Font License, two under Apache 2.0), Lucide icons (ISC), nice-color-palettes and Open
 Color (MIT); each with its licence file.
+
+In `engine/anim/vendor/`: lottie-web (MIT), the Lottie player; gl-transitions (MIT), 223 shader
+transitions, each with its author in `gl-transitions/transitions.json`. Lottie animations from LottieFiles are
+downloaded per video under the Lottie Simple License and credited in that video's `lottie/credits.json`.
 
 Downloaded at setup, not stored here: Kokoro-82M voice model and `kokoro-onnx` (Apache-2.0 / MIT),
 `misaki` (Apache-2.0), sherpa-onnx with Whisper small.en and a Zipformer model (optional QA),

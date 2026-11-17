@@ -11,6 +11,6 @@
   "post": { "bloom": 0, "vignette": 0.8 },
   "captions": { "weight": 700, "size": 92, "strokeW": 12, "glow": false },
   "hud": { "type": "none" },
-  "shape": { "radius": 8, "stroke": 4, "strokeAlpha": 0.85, "panelAlpha": 0.25 },
+  "shape": { "radius": 8, "stroke": 4, "strokeAlpha": 0.85, "panelAlpha": 0.25, "line": "rough" },
   "transition": { "duration": 0.7, "default": "slideLeft" }
 }
