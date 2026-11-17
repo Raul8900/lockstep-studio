@@ -27,8 +27,8 @@ window.makeWindowFilm = function () {
       panes[0].position.z=lerp(.2,1.05,k);panes[1].position.z=0;panes[2].position.z=lerp(-.13,-1.05,k);
       const failure=tw(t,cue.fails,cue.fails+.5)*(1-tw(t,cue.scratch-.2,cue.scratch+.4));
       panes[2].material.opacity=.26*(1-.92*failure);edges[2].material.opacity=.85*(1-.75*failure);
-      const angle=lerp(.035,1.20,k)+.045*Math.sin(t*.34),dist=lerp(6.9,7.8,k)-.6*prog(t,0,cue.look)*(1-spread);
-      s.camera.position.set(Math.sin(angle)*dist,.22,Math.cos(angle)*dist);s.camera.lookAt(0,-.02-.35*prog(t,0,cue.look)*(1-spread),0);
+      const angle=lerp(.035,1.20,k)+k*.14*Math.sin((t-cue.look)*.38),dist=lerp(6.9,7.8,k)-.6*prog(t,0,cue.look)*(1-spread)-k*.32*Math.sin((t-cue.look)*.31);
+      s.camera.position.set(Math.sin(angle)*dist,.22+k*.22*Math.sin((t-cue.look)*.41),Math.cos(angle)*dist);s.camera.lookAt(0,-.02-.35*prog(t,0,cue.look)*(1-spread),0);
       surround.material.opacity=1-k;surround.visible=k<.99;sky.visible=k<.99;sky.material.opacity=1-k;
       const air=tw(t,cue.air-.1,cue.gap+.7)*(1-tw(t,cue.normal-.3,cue.normal+.3));
       flow.visible=air>.001;arrow.visible=air>.001;flow.material.opacity=air;

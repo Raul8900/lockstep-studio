@@ -44,7 +44,7 @@
       "backend": "audio",
       "inputs": {
         "voice": "af_heart",
-        "speed": 1
+        "speed": 1.0
       },
       "source": "Original Lockstep recipes and assets",
       "license": "CC0-1.0 (new example assets); repository code terms"
