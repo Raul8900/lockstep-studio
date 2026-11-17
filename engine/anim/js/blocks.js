@@ -3,8 +3,8 @@
    blocks.js — ready-made explainer blocks that take on the video's look:
    charts, numbers, comparisons, lists, timelines, quotes, pointers, flows.
 
-   `lockstep catalog <video>` draws every block in the video's look
-   (out/catalog.jpg); `lockstep catalog <video> barChart …` draws a block's
+   `lockstep blocks <video>` draws every block in the video's look
+   (out/blocks.jpg); `lockstep blocks <video> barChart …` draws a block's
    build-in as a strip. reference/blocks.md lists them with examples.
 
    Every block
@@ -607,10 +607,10 @@ function labelPointer(ctx, tx, ty, lx, ly, label, o = {}) {
   return { x: right ? lx : lx - pw, y: ly - ph / 2, w: pw, h: ph };
 }
 
-/* ---------- the catalog: one demo per block, drawn by `lockstep catalog` ----------
+/* ---------- one demo per block, drawn by `lockstep blocks` ----------
    Demos are illustrations with made-up numbers, laid out in the content zone
    (x 70–1010, y 372–1210). Each demo is a usage example as well.                     */
-const BLOCK_CATALOG = {
+const BLOCK_DEMOS = {
   barChart: { about: 'compare a few amounts; bars grow in turn, values count up, one can be singled out',
     demo: (ctx, p) => barChart(ctx, 120, 420, 840, 700, [{ label: 'Mon', value: 32 }, { label: 'Tue', value: 45 }, { label: 'Wed', value: 28 }, { label: 'Thu', value: 61 }, { label: 'Fri', value: 40 }], { p, hi: 3, suffix: ' min' }) },
   rankBars: { about: 'a ranking or top-N list: one row per item, label above its bar, value at the end',
@@ -657,13 +657,13 @@ const BLOCK_CATALOG = {
     } },
 };
 
-/* `render.js <video> catalog` boots the page in this mode: one scene that draws whichever demo
-   window.CATALOG_NOW = { name, p, t } names, with no captions and no progress bar */
-function setupCatalog() {
-  DATA.words = []; DATA.takes = []; DATA.beats = [{ id: 'catalog', title: 'Catalog', t0: 0, t1: 4 }];
+/* `render.js <video> blocks` boots the page in this mode: one scene that draws whichever demo
+   window.BLOCK_NOW = { name, p, t } names, with no captions and no progress bar */
+function setupBlockSheet() {
+  DATA.words = []; DATA.takes = []; DATA.beats = [{ id: 'blocks', title: 'Blocks', t0: 0, t1: 4 }];
   DATA.meta = { duration: 4 }; DATA.dur = 4; CAPS = [];
-  addScene('catalog', function (ctx, t) {
-    const c = window.CATALOG_NOW, b = c && BLOCK_CATALOG[c.name];
+  addScene('blocks', function (ctx, t) {
+    const c = window.BLOCK_NOW, b = c && BLOCK_DEMOS[c.name];
     if (b) b.demo(ctx, c.p == null ? 1 : c.p, c.t == null ? t : c.t);
   });
 }

@@ -15,9 +15,9 @@ frame.
 ## See them in the video's look
 
 ```bash
-bin/lockstep catalog <slug>                       # every block, finished -> out/catalog.jpg
-bin/lockstep catalog <slug> barChart stepList     # their build-in as strips -> out/catalog_strips.jpg
-bin/lockstep catalog --style styles/poster-pop.json   # any look, before a video exists
+bin/lockstep blocks <slug>                        # every block, finished -> out/blocks.jpg
+bin/lockstep blocks <slug> barChart stepList      # their build-in as strips -> out/blocks_strips.jpg
+bin/lockstep blocks --style styles/poster-pop.json    # any look, before a video exists
 ```
 
 Gallery in three looks — light ([studio-grid](blocks/studio-grid.jpg)), dark
@@ -90,4 +90,4 @@ and `stagger(p, i, n, spread)`.
 | `mode: "light"` | glows become tints; fills under lines lighten |
 
 Charts carry numbers: every value on screen still needs its source in `docs/sources.md`, and the
-demo numbers in the catalog are made up.
+demo numbers in the gallery are made up.

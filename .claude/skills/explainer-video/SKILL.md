@@ -79,7 +79,7 @@ Work in this order. Each step has a reference file — read it when you reach th
 | 5 | Captions | `caption_phrases.json` | `lockstep captions <slug> --draft`, then edit |
 | 6 | Chapters and music | `video.json` (names, moods, `music`) | → reference/audio.md |
 | 7 | Storyboard | `storyboard.py` | plan every sequence before drawing |
-| 8 | Scenes | `scenes/sNN_<beat>.js`, `components.js`, `lottie/` | `catalog`, `lint`, `still`, `sheet`, `scan`, `lottie-get`, `lottie-sheet`, `preview` → reference/scene-api.md, blocks.md, lottie.md, design.md |
+| 8 | Scenes | `scenes/sNN_<beat>.js`, `components.js`, `lottie/` | `blocks`, `lint`, `still`, `sheet`, `scan`, `lottie-get`, `lottie-sheet`, `preview` → reference/scene-api.md, blocks.md, lottie.md, design.md |
 | 9 | Build | MP4 + SRT + QA data + docs | `lockstep build <slug>` |
 | 10 | Review and fix | a video you would publish | → reference/qa.md |
 | 11 | Report, deliver, learn | report, retrospective, library | `lockstep report`, `save-style` |
@@ -155,7 +155,7 @@ of its own, the script has a sentence that should be cut.
 One file per beat, drawn in the brief's visual world and the style's language (hand-drawn looks get
 rough lines, poster looks get kinetic type and hard shadows — see "Make the scenes match the look"
 in art-direction.md). Charts, big numbers, comparisons, lists, timelines, pointers and processes
-have ready-made blocks that take on the look and build in on a word: `lockstep catalog <slug>`
+have ready-made blocks that take on the look and build in on a word: `lockstep blocks <slug>`
 shows them all in the video's look (reference/blocks.md). Characters, gestures and effects with
 real motion can come from Lottie animations: find them with `lockstep lottie-search <slug> <words>`,
 take one with `lottie-get`, and pin its key frames to words (reference/lottie.md). Write a scene,

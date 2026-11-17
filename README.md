@@ -96,7 +96,7 @@ script.py ──► voice ──► words.json (every word, to 25 ms) ──┬�
 | Lottie animations | Designer-made vector animations from LottieFiles' free library (or your own), searched and previewed in the video's look, recoloured to its palette, and played frame-accurately by lottie-web with key frames pinned to spoken words. Each file credited in the video's `lottie/credits.json`. |
 | Voice | Kokoro-82M text-to-speech, run locally. The ONNX graph is patched to output its phoneme durations, so word timings are exact rather than estimated. |
 | Animation | HTML Canvas 2D. Each scene is a JavaScript function of time; cues are `at('beat', 'word')`. |
-| Ready-made blocks | Bar, rank, line, donut and unit charts, rings, gauges, stat tiles, versus and before/after cards, quotes, step and check lists, timelines, flows and pointers that take on the video's look (palette, fonts, card shapes, hand-drawn outlines) and build in on a word. `lockstep catalog` shows them in any look. |
+| Ready-made blocks | Bar, rank, line, donut and unit charts, rings, gauges, stat tiles, versus and before/after cards, quotes, step and check lists, timelines, flows and pointers that take on the video's look (palette, fonts, card shapes, hand-drawn outlines) and build in on a word. `lockstep blocks` shows them in any look. |
 | Rendering | Headless Chromium draws every frame deterministically across four workers (≈ 40 fps). |
 | Music and sound | Synthesised in NumPy: pads, bass, arpeggio and drums arranged per chapter, with tempo, key and one of five instrument kits chosen per video; 24 sound-effect types triggered by the scenes at the same cues as the picture. |
 | Mix and master | Voice processing, ducking under speech, look-ahead limiter, −14 LUFS. |
@@ -121,7 +121,7 @@ bin/lockstep voice <video>            record the narration, extract word timings
 bin/lockstep check-voice <video>      transcribe it back and compare with the script
 bin/lockstep words <video> [beat]     list every spoken word with its time
 bin/lockstep captions <video>         check (or --draft) the caption chunking
-bin/lockstep catalog <video>          the ready-made blocks (charts, stats, lists, timelines…) in the video's look
+bin/lockstep blocks <video>           the ready-made blocks (charts, stats, lists, timelines…) in the video's look
 bin/lockstep lint <video>             check the scenes before rendering: code mistakes, where text lands
 bin/lockstep still|sheet|scan <video> review frames while designing
 bin/lockstep preview <video>          play and scrub in a browser with sound; reloads on every save

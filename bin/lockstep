@@ -43,9 +43,9 @@ lockstep <command> [<video>] [options]
   lint <video> [--static]       check the scenes before rendering: cues, sounds, icons, Lottie files, determinism,
                                 colours, typed-in times; where text lands (interface, captions, size, contrast,
                                 overlaps). Errors stop the build. --static: the code only, no frames drawn
-  catalog [<video>] [block...] [--style f.json]
+  blocks [<video>] [block...] [--style f.json]
                                 the ready-made blocks (charts, stat tiles, comparisons, lists, timelines, flows,
-                                pointers) drawn in the video's look -> out/catalog.jpg; name blocks to see their
+                                pointers) drawn in the video's look -> out/blocks.jpg; name blocks to see their
                                 build-in as strips. Without a video: in the default look, or --style's
   meta <video>                  export data/timeline.json (scenes, captions, sound cues); also proves the scenes load
   still <video> [--safe] T...   render single frames, e.g. 3.2s 12s 450   -> out/stills/
@@ -178,16 +178,16 @@ PY
   words)        V=$(resolve "${1:-}"); shift; python3 "$E/words.py" "$V" "$@" ;;
   meta)         V=$(resolve "${1:-}"); node "$E/render.js" "$V" meta ;;
   lint)         V=$(resolve "${1:-}"); shift; exec python3 "$E/lint.py" "$V" "$@" ;;
-  catalog)
+  blocks)
     V="$E/tile"; OUTF=""; STYLE_ARG=(); NAMES=()
     if [ $# -gt 0 ] && { [ -f "$1/video.json" ] || [ -f "$REPO/videos/$1/video.json" ]; }; then V=$(resolve "$1"); shift; fi
     while [ $# -gt 0 ]; do
       case "$1" in --style) STYLE_ARG=(--style "$2"); shift 2 ;; --out) OUTF="$2"; shift 2 ;; *) NAMES+=("$1"); shift ;; esac
     done
     if [ -z "$OUTF" ]; then
-      if [ "$V" = "$E/tile" ]; then OUTF="${TMPDIR:-/tmp}/lockstep-catalog/catalog${NAMES[0]+_strips}.jpg"; else OUTF="$V/out/catalog${NAMES[0]+_strips}.jpg"; fi
+      if [ "$V" = "$E/tile" ]; then OUTF="${TMPDIR:-/tmp}/lockstep-blocks/blocks${NAMES[0]+_strips}.jpg"; else OUTF="$V/out/blocks${NAMES[0]+_strips}.jpg"; fi
     fi
-    ARGS=("$V" catalog --out "$OUTF")
+    ARGS=("$V" blocks --out "$OUTF")
     [ ${#STYLE_ARG[@]} -gt 0 ] && ARGS+=("${STYLE_ARG[@]}")
     [ ${#NAMES[@]} -gt 0 ] && ARGS+=(--names "$(IFS=,; echo "${NAMES[*]}")")
     node "$E/render.js" "${ARGS[@]}" ;;

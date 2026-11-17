@@ -6,7 +6,7 @@
      node engine/render.js <video-dir> still [--safe] [--out dir] <frame|12.5s> ...
      node engine/render.js <video-dir> scan
      node engine/render.js <video-dir> lint [--step N]
-     node engine/render.js <video-dir> catalog [--style f.json] [--names a,b] [--stages 0.3,1] [--out f.jpg]
+     node engine/render.js <video-dir> blocks [--style f.json] [--names a,b] [--stages 0.3,1] [--out f.jpg]
      node engine/render.js <video-dir> bench <frame|time> ...
      node engine/render.js <video-dir> video [--workers N] [--from s] [--to s]
 
@@ -18,8 +18,8 @@
             and near-black frames
      lint   draws every Nth frame (6) and prints, as one JSON line, where every
             piece of scene text lands; engine/lint.py turns it into findings
-     catalog  draws the ready-made blocks (js/blocks.js) in the video's look and
-            tiles them with engine/catalog.py: every block finished, or with
+     blocks draws the ready-made blocks (js/blocks.js) in the video's look and
+            tiles them with engine/blocks_sheet.py: every block finished, or with
             --names, each named block's build-in as a strip
      video  each frame leaves the page as a JPEG (q 0.97) and is written to
             out/frames/fNNNNN.jpg; work is handed out in 5-second chunks, so a
@@ -52,7 +52,7 @@ if (!projArg || !mode) {
 const PROJECT = path.resolve(projArg);
 if (!fs.existsSync(path.join(PROJECT, 'video.json'))) { console.error(`no video.json in ${PROJECT}`); process.exit(1); }
 const DATA = path.join(PROJECT, 'data');
-const NEEDS_NARRATION = mode !== 'tile' && mode !== 'lottiesheet' && mode !== 'catalog';
+const NEEDS_NARRATION = mode !== 'tile' && mode !== 'lottiesheet' && mode !== 'blocks';
 if (NEEDS_NARRATION && !fs.existsSync(path.join(DATA, 'words.json'))) {
   console.error(`no narration recorded yet for ${path.basename(PROJECT)}: run  bin/lockstep voice ${path.basename(PROJECT)}  first`);
   process.exit(1);
@@ -119,7 +119,7 @@ async function openPage(browser, port, debugSafe, special) {
   if (debugSafe) await page.addInitScript(() => { window.DEBUG_SAFE = true; });
   if (special && special.tile) await page.addInitScript(() => { window.TILE_MODE = true; });
   if (special && special.lottiesheet) await page.addInitScript((o) => { window.LOTTIESHEET = o; }, special.lottiesheet);
-  if (special && special.catalog) await page.addInitScript(() => { window.CATALOG_MODE = true; });
+  if (special && special.blocks) await page.addInitScript(() => { window.BLOCKS_MODE = true; });
   await page.goto(`http://127.0.0.1:${port}/index.html`);
   await page.waitForFunction(() => window.READY || window.BOOT_ERROR, null, { timeout: 60000 });
   const err = await page.evaluate(() => window.BOOT_ERROR);
@@ -312,22 +312,22 @@ async function lint(args) {
   process.stdout.write(JSON.stringify(out) + '\n');
 }
 
-/* catalog: every block of js/blocks.js drawn in the video's look (or --style file's), cropped to
-   the content zone and tiled by engine/catalog.py — finished, or with --names as build-in strips */
-async function catalog(args) {
-  let names = null, stages = null, out = path.join(OUT, 'catalog.jpg');
+/* blocks: every block of js/blocks.js drawn in the video's look (or --style file's), cropped to
+   the content zone and tiled by engine/blocks_sheet.py — finished, or with --names as build-in strips */
+async function blockSheet(args) {
+  let names = null, stages = null, out = path.join(OUT, 'blocks.jpg');
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--style') STYLE_OVERRIDE = path.resolve(args[++i]);
     else if (args[i] === '--names') names = args[++i].split(',').filter(Boolean);
     else if (args[i] === '--stages') stages = args[++i].split(',').map(Number);
     else if (args[i] === '--out') out = path.resolve(args[++i]);
   }
-  const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'lockstep-catalog-'));   // frames only live until tiled
+  const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'lockstep-blocks-'));   // frames only live until tiled
   fs.mkdirSync(path.dirname(out), { recursive: true });
   const rows = [];
   let styleName = '';
   await withPage(false, async (page) => {
-    const all = await page.evaluate(() => Object.keys(BLOCK_CATALOG).map((k) => [k, BLOCK_CATALOG[k].about]));
+    const all = await page.evaluate(() => Object.keys(BLOCK_DEMOS).map((k) => [k, BLOCK_DEMOS[k].about]));
     styleName = await page.evaluate(() => STYLE.name);
     const about = new Map(all), want = names || all.map((a) => a[0]);
     const bad = want.filter((n) => !about.has(n));
@@ -336,16 +336,16 @@ async function catalog(args) {
     for (const n of want) {
       const images = [];
       for (let k = 0; k < st.length; k++) {
-        const b64 = await page.evaluate(({ n, p }) => { window.CATALOG_NOW = { name: n, p, t: 2 }; renderFrame(60); return document.getElementById('c').toDataURL('image/jpeg', 0.92).split(',')[1]; }, { n, p: st[k] });
+        const b64 = await page.evaluate(({ n, p }) => { window.BLOCK_NOW = { name: n, p, t: 2 }; renderFrame(60); return document.getElementById('c').toDataURL('image/jpeg', 0.92).split(',')[1]; }, { n, p: st[k] });
         const f = path.join(dir, `${n}_${k}.jpg`);
         fs.writeFileSync(f, Buffer.from(b64, 'base64')); images.push(f);
       }
       rows.push({ name: n, about: about.get(n), images, stages: st });
     }
-  }, { catalog: true });
+  }, { blocks: true });
   const man = path.join(dir, 'manifest.json');
   fs.writeFileSync(man, JSON.stringify({ style: styleName, rows, crop: [0, 360, 1080, 1240] }));
-  const r = require('child_process').spawnSync('python3', [path.join(ENGINE, 'catalog.py'), man, out], { stdio: 'inherit' });
+  const r = require('child_process').spawnSync('python3', [path.join(ENGINE, 'blocks_sheet.py'), man, out], { stdio: 'inherit' });
   fs.rmSync(dir, { recursive: true, force: true });
   if (r.status) process.exit(r.status);
 }
@@ -410,7 +410,7 @@ async function video(args) {
   else if (mode === 'lottiesheet') await lottiesheet(rest);
   else if (mode === 'scan') await scan();
   else if (mode === 'lint') await lint(rest);
-  else if (mode === 'catalog') await catalog(rest);
+  else if (mode === 'blocks') await blockSheet(rest);
   else if (mode === 'bench') await bench(rest);
   else if (mode === 'video') await video(rest);
   else { console.error('unknown mode: ' + mode); process.exit(1); }

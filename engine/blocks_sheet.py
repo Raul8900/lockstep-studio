@@ -1,9 +1,9 @@
-"""Tile the frames that `render.js <video> catalog` drew into one sheet.
+"""Tile the frames that `render.js <video> blocks` drew into one sheet.
 
-  python3 engine/catalog.py <video>/out/catalog/manifest.json <out.jpg>
+  python3 engine/blocks_sheet.py <manifest.json> <out.jpg>
 
 One frame per block: a grid, three to a row, each cell labelled with the block's name and what
-it is for. Several frames per block (`lockstep catalog <video> barChart …`): one row per block,
+it is for. Several frames per block (`lockstep blocks <video> barChart …`): one row per block,
 its build-in from left to right, with the build-in progress under each frame.
 """
 import json

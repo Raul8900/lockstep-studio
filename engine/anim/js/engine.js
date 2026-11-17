@@ -341,7 +341,7 @@ function chapterName(id) {
 }
 function drawHUD(ctx, t) {
   const HS = STYLE.hud;
-  if (HS.type === 'none' || window.LOTTIESHEET || window.CATALOG_MODE) return;
+  if (HS.type === 'none' || window.LOTTIESHEET || window.BLOCKS_MODE) return;
   if (HS.type === 'line') {            // one thin progress line, no labels
     fillRR(ctx, SAFE.l, 292, SAFE.r - SAFE.l, 5, 2.5, HS.track);
     fillRR(ctx, SAFE.l, 292, Math.max(5, (SAFE.r - SAFE.l) * clamp(t / DATA.dur)), 5, 2.5, COL.cyan);
@@ -513,8 +513,8 @@ async function boot() {
     setupTile();
   } else if (window.LOTTIESHEET) {
     setupLottieSheet(window.LOTTIESHEET);
-  } else if (window.CATALOG_MODE) {
-    setupCatalog();
+  } else if (window.BLOCKS_MODE) {
+    setupBlockSheet();
   } else {
     const [words, takes, phrases] = await Promise.all([get('project/data/words.json'), get('project/data/takes.json'), get('project/caption_phrases.json')]);
     DATA.words = words; DATA.takes = takes.takes; DATA.beats = takes.beats; DATA.meta = takes.meta; DATA.dur = takes.meta.duration;

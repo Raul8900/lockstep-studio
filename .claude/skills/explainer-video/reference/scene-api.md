@@ -175,7 +175,7 @@ Charts, big numbers, comparisons, lists, timelines, pointers and processes, draw
 look and built in with one progress value `o.p`: `barChart`, `rankBars`, `lineChart`, `donutChart`,
 `progressRing`, `gaugeMeter`, `unitChart`, `statTile`, `versusCards`, `splitCompare`, `quoteCard`,
 `stepList`, `checkList`, `timelineAxis`, `flowChain`, `labelPointer`, plus `blockCard`, `numText`
-and `stagger`. `lockstep catalog <slug>` shows them in the look; signatures and options: blocks.md.
+and `stagger`. `lockstep blocks <slug>` shows them in the look; signatures and options: blocks.md.
 
 ```js
 statTile(ctx, 110, 860, 400, 300, 1792, 'GB per second', { p: tw(t, c.fast, c.fast + 0.8, E.lin), icon: 'gauge' });
