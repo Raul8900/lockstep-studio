@@ -52,7 +52,8 @@ async function lintLayout(step) {
     }
     if (chrome) return;
     const sc = Math.sqrt(Math.abs(m.a * m.d - m.b * m.c));
-    const outline = isStroke && ctx.lineWidth * sc >= 2;
+    /* an outline, or a strong dark shadow round the glyphs (the overlays' own way of reading on any picture) */
+    const outline = (isStroke && ctx.lineWidth * sc >= 2) || (ctx.shadowBlur * sc >= 12 && !/,\s*0(\.0+)?\)$/.test(ctx.shadowColor));
     rec.push([str, +x0.toFixed(1), +y0.toFixed(1), +x1.toFixed(1), +y1.toFixed(1), +(fontPx(ctx.font) * sc).toFixed(1),
       +ctx.globalAlpha.toFixed(2), isStroke ? null : ctx.fillStyle, outline ? 1 : 0, null]);
   }

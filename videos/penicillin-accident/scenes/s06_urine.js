@@ -14,7 +14,7 @@
 
   addScene('urine', function (ctx, t) {
     const pic = photoPath(ctx, flasks, t, [[at('urine', 'they') - 0.5, { z: 1.15, x: 0.42, y: 0.25 }], [c.urine + 0.2, { z: 1.7, x: 0.45, y: 0.45 }], [c.end + 1, { z: 2.1, x: 0.48, y: 0.5 }]]);
-    if (pic) pointer(ctx, ...pic.at(0.47, 0.55), 640, 520, 'RECOVERED, REUSED', { p: tw(t, c.urine - 0.1, c.urine + 0.5, E.lin) * (1 - tw(t, c.enough - 0.3, c.enough)), color: 'accent', size: 40, t });
+    if (pic) pointer(ctx, ...pic.at(0.47, 0.55), 540, 520, 'RECOVERED, REUSED', { p: tw(t, c.urine - 0.1, c.urine + 0.5, E.lin) * (1 - tw(t, c.enough - 0.3, c.enough)), color: 'accent', size: 40, t });
     spotlight(ctx, CX, 860, 420, { p: tw(t, c.enough - 0.2, c.enough + 0.4, E.lin), dark: 0.7 });
     const k = tw(t, c.died - 0.1, c.end + 0.5, E.io2);                           // the frame goes dark
     if (k > 0) { ctx.save(); ctx.globalAlpha = 0.85 * k; ctx.fillStyle = '#000000'; ctx.fillRect(0, 0, W, H); ctx.restore(); }

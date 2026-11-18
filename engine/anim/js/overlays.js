@@ -171,14 +171,17 @@ function spotlight(ctx, x, y, r, o = {}) {
   ctx.save(); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); ctx.restore();
 }
 
-/* A word stamped onto the frame at an angle — DENIED, 1928, FREE — slamming down as p starts.
-   o: color ('alert'), size (120), angle (−0.14 rad), t + hit (a shake when it lands). */
+/* A word stamped onto the frame at an angle — DENIED, 1928, FREE — slamming down as p starts, on a
+   dark see-through plate so it reads on any picture. o: color ('alert'), size (120), angle
+   (−0.14 rad), plate (0.5: the plate's darkness; 0 for none). */
 function stamp(ctx, str, x, y, o = {}) {
   const p = _op(o);
   if (p <= 0) return;
   const col = _oc(o.color, COL.alert), size = o.size || 120, k = clamp(p / 0.18), s = lerp(2.4, 1, E.out3(k));
   const tw0 = measure(ctx, str, size, 900, F.disp, size * 0.04), bw = tw0 + size * 0.7, bh = size * 1.32;
   ctx.save(); ctx.translate(x, y); ctx.rotate(o.angle == null ? -0.14 : o.angle); ctx.scale(s, s); ctx.globalAlpha *= clamp(k * 1.6) * 0.94;
+  const plate = o.plate == null ? 0.5 : o.plate;
+  if (plate > 0) fillRR(ctx, -bw / 2, -bh / 2, bw, bh, size * 0.12, `rgba(0,0,0,${plate})`);
   _shadow(ctx, 0.7, () => { strokeRR(ctx, -bw / 2, -bh / 2, bw, bh, size * 0.12, col, size * 0.085); }, 18);
   strokeRR(ctx, -bw / 2 + size * 0.13, -bh / 2 + size * 0.13, bw - size * 0.26, bh - size * 0.26, size * 0.07, col, size * 0.03);
   _shadow(ctx, 0.7, () => text(ctx, str, 0, size * 0.36, { size, weight: 900, family: F.disp, color: col, align: 'center', ls: size * 0.04 }), 18);

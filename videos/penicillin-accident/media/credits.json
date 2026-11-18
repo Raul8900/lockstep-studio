@@ -23,7 +23,7 @@
   "source": "wikimedia",
   "id": "33168424",
   "title": "Alexander Fleming2.jpg",
-  "author": "Unknown authorUnknown author",
+  "author": "Unknown author",
   "licence": "CC BY 4.0",
   "licence_url": "https://creativecommons.org/licenses/by/4.0",
   "page": "https://commons.wikimedia.org/wiki/File:Alexander_Fleming2.jpg",
@@ -70,24 +70,6 @@
   "size": [
    1280,
    1834
-  ]
- },
- "culture-pot": {
-  "file": "culture-pot.jpg",
-  "kind": "photo",
-  "source": "openverse",
-  "id": "7ebde1d4-50f1-4fb4-bf31-e0199933b11c",
-  "title": "Penicillin Culturing Pot - Howard Florey, Oxford, England, circa 1940",
-  "author": "Photographer: Jon Augier",
-  "licence": "CC BY 4.0",
-  "licence_url": "https://creativecommons.org/licenses/by/4.0/",
-  "page": "https://collections.museumsvictoria.com.au/items/245069",
-  "download": "https://collections.museumsvictoria.com.au/content/media/13/1930513-large.jpg",
-  "credit_required": true,
-  "taken": "2026-11-18",
-  "size": [
-   2600,
-   1733
   ]
  },
  "extraction": {
@@ -168,7 +150,7 @@
   "source": "wikimedia",
   "id": "35938200",
   "title": "First page of Alexander Fleming's paper on penicillin Wellcome L0007150.jpg",
-  "author": "https://wellcomeimages.org/indexplus/obf_images/8c/c4/5da30d7ae1777720190fcb18c3d3.jpg Gallery: https://wellcomeimages.org/indexplus/image/L0007150.html Wellcome Collection gallery (2018-03-29): https://wellcomecollection.org/works/ucsc46fn CC-BY-4.0",
+  "author": "Wellcome Collection",
   "licence": "CC BY 4.0",
   "licence_url": "https://creativecommons.org/licenses/by/4.0",
   "page": "https://commons.wikimedia.org/wiki/File:First_page_of_Alexander_Fleming%27s_paper_on_penicillin_Wellcome_L0007150.jpg",

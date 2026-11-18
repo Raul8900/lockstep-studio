@@ -1,0 +1,1087 @@
+{
+ "total": 2040,
+ "dur": 67.989,
+ "fps": 30,
+ "width": 1080,
+ "height": 1920,
+ "style": {
+  "name": "penicillin-archive",
+  "mode": "dark",
+  "fonts": {
+   "disp": "Poppins",
+   "ui": "Inter",
+   "mono": "JetBrains Mono"
+  },
+  "grade": {
+   "contrast": 1.12,
+   "saturate": 0.82,
+   "brightness": 1,
+   "sepia": 0.16,
+   "tint": null,
+   "tintAmount": 0
+  },
+  "post": {
+   "bloom": 0.25,
+   "vignette": 0.75,
+   "scrim": 0.3,
+   "scrimColor": "#000000",
+   "dither": 0.01
+  },
+  "palette": {
+   "bg": "#0B0D12",
+   "ink": "#F3F8FF",
+   "subject": "#6FD3FF",
+   "accent": "#FFD23F",
+   "data": "#A073FF",
+   "alert": "#FF4D4D",
+   "good": "#7CFFB2"
+  },
+  "captions": {
+   "size": 72,
+   "weight": 800,
+   "family": "Poppins",
+   "y": 1265,
+   "lineH": 80,
+   "maxW": 820,
+   "highlight": "color",
+   "case": "none",
+   "key": "#FFD23F"
+  },
+  "transition": {
+   "duration": 0.3,
+   "default": "cut"
+  }
+ },
+ "scenes": [
+  {
+   "id": "hook",
+   "name": "DIRTY DISHES",
+   "t0": 0,
+   "t1": 7.416,
+   "trans": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "plate",
+   "name": "THE PLATE",
+   "t0": 7.416,
+   "t1": 12.43,
+   "trans": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "burst",
+   "name": "WHY THEY DIE",
+   "t0": 12.43,
+   "t1": 22.53,
+   "trans": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "shelf",
+   "name": "IGNORED",
+   "t0": 22.53,
+   "t1": 29.138,
+   "trans": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "oxford",
+   "name": "THE FIRST PATIENT",
+   "t0": 29.138,
+   "t1": 39.233,
+   "trans": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "urine",
+   "name": "DESPERATE",
+   "t0": 39.233,
+   "t1": 45.483,
+   "trans": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "melon",
+   "name": "THE MELON",
+   "t0": 45.483,
+   "t1": 53.218,
+   "trans": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "dday",
+   "name": "D-DAY",
+   "t0": 53.218,
+   "t1": 55.919,
+   "trans": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "warning",
+   "name": "THE WARNING",
+   "t0": 55.919,
+   "t1": 67.989,
+   "trans": {
+    "type": "cut"
+   }
+  }
+ ],
+ "media": [
+  {
+   "name": "fleming-colour",
+   "kind": "image",
+   "cutout": false
+  },
+  {
+   "name": "fleming-dish",
+   "kind": "image",
+   "cutout": false
+  },
+  {
+   "name": "mould-plate",
+   "kind": "image",
+   "cutout": false
+  },
+  {
+   "name": "paper-1929",
+   "kind": "image",
+   "cutout": false
+  },
+  {
+   "name": "fleming-dish",
+   "kind": "image",
+   "cutout": true
+  },
+  {
+   "name": "florey",
+   "kind": "image",
+   "cutout": false
+  },
+  {
+   "name": "oxford-racks",
+   "kind": "image",
+   "cutout": false
+  },
+  {
+   "name": "extraction",
+   "kind": "image",
+   "cutout": false
+  },
+  {
+   "name": "cantaloupe",
+   "kind": "image",
+   "cutout": false
+  },
+  {
+   "name": "dday",
+   "kind": "image",
+   "cutout": false
+  },
+  {
+   "name": "fleming-painting",
+   "kind": "image",
+   "cutout": false
+  },
+  {
+   "name": "mrsa",
+   "kind": "image",
+   "cutout": false
+  }
+ ],
+ "worlds": 2,
+ "sfx": [
+  {
+   "t": 0,
+   "type": "swell",
+   "gain": 0.6
+  },
+  {
+   "t": 1.032,
+   "type": "thump",
+   "gain": 0.6
+  },
+  {
+   "t": 3.407,
+   "type": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 5.209,
+   "type": "blip",
+   "gain": 0.5
+  },
+  {
+   "t": 6.934,
+   "type": "impact",
+   "gain": 0.7
+  },
+  {
+   "t": 7.916,
+   "type": "whoosh",
+   "gain": 0.4
+  },
+  {
+   "t": 9.935,
+   "type": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 11.33,
+   "type": "tick",
+   "gain": 0.3,
+   "pitch": 1.2
+  },
+  {
+   "t": 11.41,
+   "type": "tick",
+   "gain": 0.3,
+   "pitch": 1.14
+  },
+  {
+   "t": 11.49,
+   "type": "tick",
+   "gain": 0.3,
+   "pitch": 1.08
+  },
+  {
+   "t": 11.57,
+   "type": "tick",
+   "gain": 0.3,
+   "pitch": 1.02
+  },
+  {
+   "t": 11.65,
+   "type": "tick",
+   "gain": 0.3,
+   "pitch": 0.96
+  },
+  {
+   "t": 11.73,
+   "type": "tick",
+   "gain": 0.3,
+   "pitch": 0.8999999999999999
+  },
+  {
+   "t": 11.91,
+   "type": "thump",
+   "gain": 0.7
+  },
+  {
+   "t": 13.155,
+   "type": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 15.586,
+   "type": "tick",
+   "gain": 0.35,
+   "pitch": 1
+  },
+  {
+   "t": 15.866,
+   "type": "tick",
+   "gain": 0.35,
+   "pitch": 1.05
+  },
+  {
+   "t": 16.146,
+   "type": "tick",
+   "gain": 0.35,
+   "pitch": 1.1
+  },
+  {
+   "t": 16.426,
+   "type": "tick",
+   "gain": 0.35,
+   "pitch": 1.15
+  },
+  {
+   "t": 16.706,
+   "type": "tick",
+   "gain": 0.35,
+   "pitch": 1.2
+  },
+  {
+   "t": 18.314,
+   "type": "zip",
+   "gain": 0.5
+  },
+  {
+   "t": 18.889,
+   "type": "lock",
+   "gain": 0.6
+  },
+  {
+   "t": 20.542,
+   "type": "rip",
+   "gain": 0.6
+  },
+  {
+   "t": 21.267,
+   "type": "riser",
+   "gain": 0.5
+  },
+  {
+   "t": 21.867,
+   "type": "impact",
+   "gain": 1
+  },
+  {
+   "t": 21.887,
+   "type": "splash",
+   "gain": 0.6
+  },
+  {
+   "t": 22.73,
+   "type": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 23.805,
+   "type": "chime",
+   "gain": 0.45
+  },
+  {
+   "t": 26.64,
+   "type": "count",
+   "gain": 0.5
+  },
+  {
+   "t": 27.865,
+   "type": "stamp",
+   "gain": 0.9
+  },
+  {
+   "t": 29.888,
+   "type": "whoosh",
+   "gain": 0.4
+  },
+  {
+   "t": 31.263,
+   "type": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 33.483,
+   "type": "lock",
+   "gain": 0.4
+  },
+  {
+   "t": 36.9,
+   "type": "chime",
+   "gain": 0.45
+  },
+  {
+   "t": 38.898,
+   "type": "deny",
+   "gain": 0.7
+  },
+  {
+   "t": 41.158,
+   "type": "slide",
+   "gain": 0.4
+  },
+  {
+   "t": 42.158,
+   "type": "blip",
+   "gain": 0.35
+  },
+  {
+   "t": 44.845,
+   "type": "thump",
+   "gain": 0.45
+  },
+  {
+   "t": 46.008,
+   "type": "whoosh",
+   "gain": 0.55
+  },
+  {
+   "t": 46.907,
+   "type": "blip",
+   "gain": 0.5
+  },
+  {
+   "t": 47.733,
+   "type": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 51.083,
+   "type": "splash",
+   "gain": 0.35
+  },
+  {
+   "t": 52.608,
+   "type": "chime",
+   "gain": 0.5
+  },
+  {
+   "t": 53.617,
+   "type": "whoosh",
+   "gain": 0.6
+  },
+  {
+   "t": 54.742,
+   "type": "stamp",
+   "gain": 0.9
+  },
+  {
+   "t": 56.519,
+   "type": "whoosh",
+   "gain": 0.45
+  },
+  {
+   "t": 58.169,
+   "type": "whoosh",
+   "gain": 0.5
+  },
+  {
+   "t": 59.644,
+   "type": "stamp",
+   "gain": 0.8
+  },
+  {
+   "t": 61.674,
+   "type": "riser",
+   "gain": 0.45
+  },
+  {
+   "t": 64.949,
+   "type": "chime",
+   "gain": 0.6
+  }
+ ],
+ "caps": [
+  {
+   "text": "In 1928,",
+   "show0": 0.2469,
+   "show1": 1.6219,
+   "t0": 0.3069,
+   "t1": 1.5569,
+   "lines": 1,
+   "width": 251.67609405517578
+  },
+  {
+   "text": "a scientist",
+   "show0": 1.6219,
+   "show1": 2.2218999999999998,
+   "t0": 1.6819,
+   "t1": 2.2319,
+   "lines": 1,
+   "width": 393.8041458129883
+  },
+  {
+   "text": "came back from holiday",
+   "show0": 2.2218999999999998,
+   "show1": 3.3969,
+   "t0": 2.2819,
+   "t1": 3.3819,
+   "lines": 2,
+   "width": 486.90018463134766
+  },
+  {
+   "text": "to a pile",
+   "show0": 3.3969,
+   "show1": 3.8969,
+   "t0": 3.4569,
+   "t1": 3.9319,
+   "lines": 1,
+   "width": 303.98411560058594
+  },
+  {
+   "text": "of dirty dishes.",
+   "show0": 3.8969,
+   "show1": 5.2490000000000006,
+   "t0": 3.9569,
+   "t1": 4.9569,
+   "lines": 1,
+   "width": 541.3681793212891
+  },
+  {
+   "text": "One of them",
+   "show0": 5.2490000000000006,
+   "show1": 5.899,
+   "t0": 5.309,
+   "t1": 5.909,
+   "lines": 1,
+   "width": 465.19215393066406
+  },
+  {
+   "text": "was about to",
+   "show0": 5.899,
+   "show1": 6.474,
+   "t0": 5.959,
+   "t1": 6.484,
+   "lines": 1,
+   "width": 494.3521728515625
+  },
+  {
+   "text": "change the world.",
+   "show0": 6.474,
+   "show1": 7.855700000000001,
+   "t0": 6.534,
+   "t1": 7.459,
+   "lines": 1,
+   "width": 662.9042205810547
+  },
+  {
+   "text": "A fuzzy mould",
+   "show0": 7.855700000000001,
+   "show1": 8.6557,
+   "t0": 7.9157,
+   "t1": 8.6907,
+   "lines": 1,
+   "width": 535.1761779785156
+  },
+  {
+   "text": "had landed on it.",
+   "show0": 8.6557,
+   "show1": 9.875,
+   "t0": 8.7157,
+   "t1": 9.6407,
+   "lines": 1,
+   "width": 619.6682205200195
+  },
+  {
+   "text": "And all around",
+   "show0": 9.875,
+   "show1": 10.424999999999999,
+   "t0": 9.935,
+   "t1": 10.46,
+   "lines": 1,
+   "width": 561.960205078125
+  },
+  {
+   "text": "the mould,",
+   "show0": 10.424999999999999,
+   "show1": 11.075,
+   "t0": 10.485,
+   "t1": 11.035,
+   "lines": 1,
+   "width": 387.8281478881836
+  },
+  {
+   "text": "the bacteria",
+   "show0": 11.075,
+   "show1": 11.725,
+   "t0": 11.135,
+   "t1": 11.76,
+   "lines": 1,
+   "width": 464.2921676635742
+  },
+  {
+   "text": "were dead.",
+   "show0": 11.725,
+   "show1": 12.8703,
+   "t0": 11.785,
+   "t1": 12.41,
+   "lines": 1,
+   "width": 396.46814727783203
+  },
+  {
+   "text": "Here's why.",
+   "show0": 12.8703,
+   "show1": 13.925699999999999,
+   "t0": 12.9303,
+   "t1": 13.7303,
+   "lines": 1,
+   "width": 413.6761245727539
+  },
+  {
+   "text": "A bacterium lives",
+   "show0": 13.925699999999999,
+   "show1": 14.900699999999999,
+   "t0": 13.9857,
+   "t1": 14.9357,
+   "lines": 1,
+   "width": 668.8082122802734
+  },
+  {
+   "text": "inside a wall",
+   "show0": 14.900699999999999,
+   "show1": 15.7257,
+   "t0": 14.9607,
+   "t1": 15.7357,
+   "lines": 1,
+   "width": 475.2001647949219
+  },
+  {
+   "text": "it keeps rebuilding",
+   "show0": 15.7257,
+   "show1": 16.6507,
+   "t0": 15.7857,
+   "t1": 16.6607,
+   "lines": 1,
+   "width": 707.6162567138672
+  },
+  {
+   "text": "as it grows.",
+   "show0": 16.6507,
+   "show1": 17.754,
+   "t0": 16.7107,
+   "t1": 17.5107,
+   "lines": 1,
+   "width": 415.1521301269531
+  },
+  {
+   "text": "The mould's chemical",
+   "show0": 17.754,
+   "show1": 18.829,
+   "t0": 17.814,
+   "t1": 18.789,
+   "lines": 2,
+   "width": 459.3961868286133
+  },
+  {
+   "text": "jams the builders.",
+   "show0": 18.829,
+   "show1": 20.157300000000003,
+   "t0": 18.889,
+   "t1": 19.914,
+   "lines": 1,
+   "width": 663.1922454833984
+  },
+  {
+   "text": "The wall cracks,",
+   "show0": 20.157300000000003,
+   "show1": 21.0573,
+   "t0": 20.2173,
+   "t1": 20.9673,
+   "lines": 1,
+   "width": 591.5521850585938
+  },
+  {
+   "text": "and the bacterium",
+   "show0": 21.0573,
+   "show1": 21.8073,
+   "t0": 21.1173,
+   "t1": 21.8173,
+   "lines": 1,
+   "width": 709.4882354736328
+  },
+  {
+   "text": "bursts.",
+   "show0": 21.8073,
+   "show1": 22.9697,
+   "t0": 21.8673,
+   "t1": 22.4423,
+   "lines": 1,
+   "width": 242.64007568359375
+  },
+  {
+   "text": "Fleming called it",
+   "show0": 22.9697,
+   "show1": 23.7447,
+   "t0": 23.0297,
+   "t1": 23.7547,
+   "lines": 1,
+   "width": 628.34423828125
+  },
+  {
+   "text": "penicillin.",
+   "show0": 23.7447,
+   "show1": 24.8047,
+   "t0": 23.8047,
+   "t1": 24.5797,
+   "lines": 1,
+   "width": 346.68011474609375
+  },
+  {
+   "text": "But he could barely",
+   "show0": 24.8047,
+   "show1": 25.5547,
+   "t0": 24.8647,
+   "t1": 25.5647,
+   "lines": 1,
+   "width": 737.4602432250977
+  },
+  {
+   "text": "make any,",
+   "show0": 25.5547,
+   "show1": 26.329700000000003,
+   "t0": 25.6147,
+   "t1": 26.2647,
+   "lines": 1,
+   "width": 382.86014556884766
+  },
+  {
+   "text": "and for ten years,",
+   "show0": 26.329700000000003,
+   "show1": 27.404700000000002,
+   "t0": 26.3897,
+   "t1": 27.3397,
+   "lines": 1,
+   "width": 651.6362075805664
+  },
+  {
+   "text": "almost nobody",
+   "show0": 27.404700000000002,
+   "show1": 28.154700000000002,
+   "t0": 27.4647,
+   "t1": 28.1647,
+   "lines": 1,
+   "width": 571.6442337036133
+  },
+  {
+   "text": "paid attention.",
+   "show0": 28.154700000000002,
+   "show1": 29.5778,
+   "t0": 28.2147,
+   "t1": 29.1397,
+   "lines": 1,
+   "width": 540.684196472168
+  },
+  {
+   "text": "Then, in Oxford,",
+   "show0": 29.5778,
+   "show1": 30.7028,
+   "t0": 29.6378,
+   "t1": 30.6378,
+   "lines": 1,
+   "width": 555.1201782226562
+  },
+  {
+   "text": "a team finally",
+   "show0": 30.7028,
+   "show1": 31.5028,
+   "t0": 30.7628,
+   "t1": 31.5128,
+   "lines": 1,
+   "width": 529.5601959228516
+  },
+  {
+   "text": "purified it.",
+   "show0": 31.5028,
+   "show1": 32.6727,
+   "t0": 31.5628,
+   "t1": 32.4378,
+   "lines": 1,
+   "width": 368.17211151123047
+  },
+  {
+   "text": "Their first",
+   "show0": 32.6727,
+   "show1": 33.1477,
+   "t0": 32.7327,
+   "t1": 33.1577,
+   "lines": 1,
+   "width": 364.6441116333008
+  },
+  {
+   "text": "real test",
+   "show0": 33.1477,
+   "show1": 33.8977,
+   "t0": 33.2077,
+   "t1": 33.9077,
+   "lines": 1,
+   "width": 314.17211151123047
+  },
+  {
+   "text": "was a dying policeman.",
+   "show0": 33.8977,
+   "show1": 35.4645,
+   "t0": 33.9577,
+   "t1": 35.2327,
+   "lines": 2,
+   "width": 460.4401550292969
+  },
+  {
+   "text": "Within days,",
+   "show0": 35.4645,
+   "show1": 36.314499999999995,
+   "t0": 35.5245,
+   "t1": 36.2745,
+   "lines": 1,
+   "width": 457.52416229248047
+  },
+  {
+   "text": "he was getting better.",
+   "show0": 36.314499999999995,
+   "show1": 37.7125,
+   "t0": 36.3745,
+   "t1": 37.4745,
+   "lines": 1,
+   "width": 814.1402816772461
+  },
+  {
+   "text": "Then the penicillin",
+   "show0": 37.7125,
+   "show1": 38.5875,
+   "t0": 37.7725,
+   "t1": 38.5975,
+   "lines": 1,
+   "width": 698.6162261962891
+  },
+  {
+   "text": "ran out.",
+   "show0": 38.5875,
+   "show1": 39.672999999999995,
+   "t0": 38.6475,
+   "t1": 39.2975,
+   "lines": 1,
+   "width": 276.6600875854492
+  },
+  {
+   "text": "They were so desperate,",
+   "show0": 39.672999999999995,
+   "show1": 41.047999999999995,
+   "t0": 39.733,
+   "t1": 40.983,
+   "lines": 2,
+   "width": 490.6441879272461
+  },
+  {
+   "text": "they pulled it back",
+   "show0": 41.047999999999995,
+   "show1": 41.723,
+   "t0": 41.108,
+   "t1": 41.758,
+   "lines": 1,
+   "width": 709.8122482299805
+  },
+  {
+   "text": "out of his urine",
+   "show0": 41.723,
+   "show1": 42.448,
+   "t0": 41.783,
+   "t1": 42.458,
+   "lines": 1,
+   "width": 569.988166809082
+  },
+  {
+   "text": "to use it again.",
+   "show0": 42.448,
+   "show1": 43.7102,
+   "t0": 42.508,
+   "t1": 43.433,
+   "lines": 1,
+   "width": 543.5641860961914
+  },
+  {
+   "text": "It wasn't enough.",
+   "show0": 43.7102,
+   "show1": 44.6353,
+   "t0": 43.7702,
+   "t1": 44.4952,
+   "lines": 1,
+   "width": 631.8001861572266
+  },
+  {
+   "text": "He died.",
+   "show0": 44.6353,
+   "show1": 45.685300000000005,
+   "t0": 44.6953,
+   "t1": 45.3453,
+   "lines": 1,
+   "width": 282.92411041259766
+  },
+  {
+   "text": "So the hunt",
+   "show0": 45.9225,
+   "show1": 46.4225,
+   "t0": 45.9825,
+   "t1": 46.4325,
+   "lines": 1,
+   "width": 434.2321319580078
+  },
+  {
+   "text": "moved to America,",
+   "show0": 46.4225,
+   "show1": 47.747499999999995,
+   "t0": 46.4825,
+   "t1": 47.6575,
+   "lines": 1,
+   "width": 702.5762786865234
+  },
+  {
+   "text": "where the best",
+   "show0": 47.747499999999995,
+   "show1": 48.2975,
+   "t0": 47.8075,
+   "t1": 48.3075,
+   "lines": 1,
+   "width": 563.8321838378906
+  },
+  {
+   "text": "penicillin mould",
+   "show0": 48.2975,
+   "show1": 49.2725,
+   "t0": 48.3575,
+   "t1": 49.2825,
+   "lines": 1,
+   "width": 610.4522171020508
+  },
+  {
+   "text": "they ever found",
+   "show0": 49.2725,
+   "show1": 50.3975,
+   "t0": 49.3325,
+   "t1": 50.3575,
+   "lines": 1,
+   "width": 600.4801940917969
+  },
+  {
+   "text": "turned up on",
+   "show0": 50.3975,
+   "show1": 50.9225,
+   "t0": 50.4575,
+   "t1": 50.9575,
+   "lines": 1,
+   "width": 489.3841552734375
+  },
+  {
+   "text": "a rotten cantaloupe",
+   "show0": 50.9225,
+   "show1": 51.8975,
+   "t0": 50.9825,
+   "t1": 51.9075,
+   "lines": 1,
+   "width": 754.5602874755859
+  },
+  {
+   "text": "from a market",
+   "show0": 51.8975,
+   "show1": 52.4725,
+   "t0": 51.9575,
+   "t1": 52.4825,
+   "lines": 1,
+   "width": 551.0882110595703
+  },
+  {
+   "text": "in Illinois.",
+   "show0": 52.4725,
+   "show1": 53.6575,
+   "t0": 52.5325,
+   "t1": 53.2825,
+   "lines": 1,
+   "width": 339.15612030029297
+  },
+  {
+   "text": "By D-Day,",
+   "show0": 53.6575,
+   "show1": 54.4075,
+   "t0": 53.7175,
+   "t1": 54.3425,
+   "lines": 1,
+   "width": 359.67610931396484
+  },
+  {
+   "text": "there were millions",
+   "show0": 54.4075,
+   "show1": 55.0575,
+   "t0": 54.4675,
+   "t1": 55.0925,
+   "lines": 1,
+   "width": 728.0642547607422
+  },
+  {
+   "text": "of doses.",
+   "show0": 55.0575,
+   "show1": 56.3585,
+   "t0": 55.1175,
+   "t1": 55.8925,
+   "lines": 1,
+   "width": 314.17211151123047
+  },
+  {
+   "text": "Fleming warned",
+   "show0": 56.3585,
+   "show1": 57.1085,
+   "t0": 56.4185,
+   "t1": 57.1185,
+   "lines": 1,
+   "width": 612.4682388305664
+  },
+  {
+   "text": "that if we misused it,",
+   "show0": 57.1085,
+   "show1": 58.4085,
+   "t0": 57.1685,
+   "t1": 58.3435,
+   "lines": 1,
+   "width": 774.5762481689453
+  },
+  {
+   "text": "bacteria would learn",
+   "show0": 58.4085,
+   "show1": 59.5085,
+   "t0": 58.4685,
+   "t1": 59.5185,
+   "lines": 1,
+   "width": 787.9682769775391
+  },
+  {
+   "text": "to resist it.",
+   "show0": 59.5085,
+   "show1": 60.6611,
+   "t0": 59.5685,
+   "t1": 60.4185,
+   "lines": 1,
+   "width": 380.66412353515625
+  },
+  {
+   "text": "He was right.",
+   "show0": 60.6611,
+   "show1": 61.9144,
+   "t0": 60.7211,
+   "t1": 61.5211,
+   "lines": 1,
+   "width": 475.7041473388672
+  },
+  {
+   "text": "The next miracle",
+   "show0": 61.9144,
+   "show1": 62.9394,
+   "t0": 61.9744,
+   "t1": 62.8994,
+   "lines": 1,
+   "width": 638.1362152099609
+  },
+  {
+   "text": "might already",
+   "show0": 62.9394,
+   "show1": 63.489399999999996,
+   "t0": 62.9994,
+   "t1": 63.5244,
+   "lines": 1,
+   "width": 541.0442276000977
+  },
+  {
+   "text": "be growing",
+   "show0": 63.489399999999996,
+   "show1": 64.06439999999999,
+   "t0": 63.5494,
+   "t1": 64.0744,
+   "lines": 1,
+   "width": 425.12415313720703
+  },
+  {
+   "text": "in someone's",
+   "show0": 64.06439999999999,
+   "show1": 64.5394,
+   "t0": 64.1244,
+   "t1": 64.5494,
+   "lines": 1,
+   "width": 497.98819732666016
+  },
+  {
+   "text": "dirty dishes.",
+   "show0": 64.5394,
+   "show1": 65.8394,
+   "t0": 64.5994,
+   "t1": 65.4994,
+   "lines": 1,
+   "width": 448.09215545654297
+  }
+ ]
+}

@@ -70,20 +70,20 @@
         let s = 1, off = 0, drop = 0, spin = 0;
         if (b.late) s = E.outBack(clamp((t - (c.wall + b.h * (c.grows - c.wall) * 3)) / 0.25));
         if (b.fall != null && t > b.fall) { const k = t - b.fall; off = 0.25 * k; drop = 1.6 * k * k; spin = 3 * k; s *= 1 - clamp(k / 1.4); }
-        if (boom > 0) { const v = 2.5 + 4 * b.h; off += v * boom; drop += 0.6 * boom * boom; spin += (4 + 6 * b.h) * boom; }
+        if (boom > 0) { const v = (1.1 + 2.2 * b.h) * Math.exp(-boom * 0.8); off += v * boom; drop += 0.35 * boom * boom; spin += (4 + 6 * b.h) * boom; }   // debris drifts, slowing
         nv.set(b.n[0], b.n[1], b.n[2]);
         pos.set(b.p[0] + b.n[0] * off, b.p[1] * grow + b.n[1] * off - drop, b.p[2] + b.n[2] * off);
         q.setFromUnitVectors(Z, nv);
         if (spin) q.multiply(new T.Quaternion().setFromEuler(e.set(spin, spin * 0.7, 0)));
-        sc.setScalar(Math.max(0.0001, s * (boom > 0 ? 1 - clamp(boom / 1.2) : 1)));
+        sc.setScalar(Math.max(0.0001, s * (boom > 0 ? 1 - 0.6 * clamp(boom / 1.5) : 1)));
         m.compose(pos, q, sc);
         wall.setMatrixAt(i, m);
       });
       wall.instanceMatrix.needsUpdate = true;
       jelly.scale.set(1, grow, 1);
       const swell = tw(t, c.cracks, c.bursts, E.in3);                          // the inside pushes out through the gaps
-      jelly.scale.multiplyScalar(1 + 0.12 * swell + (boom > 0 ? 0.45 * E.out3(clamp(boom / 0.2)) : 0));
-      jelly.material.opacity = 0.92 * (boom > 0 ? 1 - clamp(boom / 0.3) : 1);
+      jelly.scale.multiplyScalar(1 + 0.12 * swell + (boom > 0 ? 0.7 * E.out3(clamp(boom / 0.4)) : 0));
+      jelly.material.opacity = 0.92 * (boom > 0 ? 1 - 0.75 * clamp(boom / 0.5) : 1);   // the insides spill out as a fading cloud
       jelly.rotation.y = 0.15 * t;
       hits.forEach((h, k) => {
         const u = E.out3(clamp((t - h.t0) / 0.7)), mesh = pen[k];
@@ -105,7 +105,8 @@
 
   addScene('burst', function (ctx, t) {
     const v = view3d(ctx, cell, t, camPath(t, [
-      [c.why - 0.6, { from: [0.4, 1.0, 9.0], to: [0, -0.45, 0], fov: 40 }],
+      [c.why - 1.1, { from: [0.9, 1.2, 9.8], to: [0, -0.45, 0], fov: 40 }],
+      [c.why - 0.3, { from: [0.5, 1.05, 9.1], to: [0, -0.45, 0], fov: 40, ease: E.lin }],
       [c.grows, { from: [-1.6, 1.3, 7.2], to: [0, -0.4, 0], fov: 40 }],
       [c.cracks, { from: [2.0, 0.7, 5.6], to: [0.3, -0.3, 0.3], fov: 38 }],
       [c.bursts + 0.15, { from: [1.6, 0.5, 5.0], to: [0.2, -0.3, 0.3], fov: 38 }],
@@ -115,7 +116,7 @@
       const [wx, wy] = v.project([R, 0.55, 0.25]);
       pointer(ctx, wx, wy, 760, 470, 'WALL', { p: tw(t, c.wall, c.wall + 0.6, E.lin) * (1 - tw(t, c.chemical - 0.3, c.chemical)), color: 'subject', size: 46, t });
       const h = hits[2], [px, py] = v.project([h.p[0], h.p[1], h.p[2]]);
-      pointer(ctx, px, py, 300, 430, 'PENICILLIN', { p: tw(t, c.jams - 0.1, c.jams + 0.5, E.lin) * (1 - tw(t, c.cracks + 0.4, c.cracks + 0.8)), color: 'accent', size: 46, t });
+      pointer(ctx, px, py, Math.max(430, px - 120), 430, 'PENICILLIN', { p: tw(t, c.jams - 0.1, c.jams + 0.5, E.lin) * (1 - tw(t, c.cracks + 0.4, c.cracks + 0.8)), color: 'accent', size: 46, t });
     }
     const f = t - c.bursts;                                                    // the flash of the burst
     if (f > 0 && f < 0.25) { ctx.save(); ctx.globalAlpha = 0.45 * (1 - f / 0.25); ctx.fillStyle = COL.ink; ctx.fillRect(0, 0, W, H); ctx.restore(); }

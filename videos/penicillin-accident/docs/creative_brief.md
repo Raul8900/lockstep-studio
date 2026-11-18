@@ -80,3 +80,21 @@ a riser into the warning.
 Archive photos held still would feel like a slideshow — every shot moves and cuts on its word.
 The mechanism could turn into a lecture — it is nine seconds of one physical event. The death
 could feel exploitative — it is told plainly, on a photograph of the hospital, not of a body.
+
+## Retrospective
+
+What worked: the archive carried the story — a colour photograph of Fleming at his bench opens and
+closes it, and every beat has a real picture of the real thing (the 1929 paper, Florey, the 1943
+Oxford production, the D-Day landing, resistant bacteria). The camera never stops, and the one
+abstract idea (how penicillin kills) became one physical event in 3D. The callback to the dirty
+dishes lands on the same photograph as the hook.
+
+What did not: there is no free photograph of Fleming's own plate, so the plate shot is a Penicillium
+culture with the bacteria drawn on; the patient beat shows 1943 production rather than the 1941
+ward; Wikimedia rate-limited original downloads, so a few pictures are its 1920 px copies.
+Several pictures were close calls the person would normally choose (rule 3): the plate, the
+cantaloupe, which D-Day photograph.
+
+Next time: ask for the close calls before scenes are written; look for public-domain film (the
+Internet Archive has 1940s newsreels on penicillin) to open on moving pictures; budget a minute
+for the 3D shot's lighting, which took two passes.

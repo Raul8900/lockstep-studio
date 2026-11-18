@@ -83,6 +83,19 @@ def key(name):
     return None
 
 
+def clean_author(s):
+    """A credit-line author from a source's free-text field: no URLs, no doubled text, not a paragraph."""
+    s = re.sub(r"https?://\S+", "", s or "")
+    s = re.sub(r"\b(Gallery|Wellcome Collection gallery \([^)]*\)):?", "", s)
+    s = re.sub(r"\s+", " ", s).strip(" ,;:-")
+    h = len(s) // 2
+    if len(s) % 2 == 0 and s[:h] == s[h:]:
+        s = s[:h]
+    if re.fullmatch(r"(?i)(cc[- ]?(by|0)[\w.\- ]*|public domain|unknown)", s):
+        return ""                                   # a licence where a name should be
+    return s[:120]
+
+
 def strip_html(s):
     return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", s or ""))).strip()
 
@@ -661,7 +674,7 @@ def take(video, search, number, as_name=None):
     lic, _, credit, _ = licence_info(c["licence"], c.get("licence_url", ""))
     cr = load_credits(video)
     cr[name] = {"file": str(f.relative_to(media)), "kind": c["kind"], "source": c["source"], "id": c["id"], "title": c["title"],
-                "author": c.get("author", ""), "licence": lic, "licence_url": c.get("licence_url", ""), "page": c.get("page", ""),
+                "author": clean_author(c.get("author", "")), "licence": lic, "licence_url": c.get("licence_url", ""), "page": c.get("page", ""),
                 "download": c.get("download"), "credit_required": credit, "taken": datetime.date.today().isoformat(), **info}
     json.dump(cr, open(credits_path(video), "w"), indent=1, ensure_ascii=False)
     print(f"media/{cr[name]['file']}  ({c['source']} · {lic}{' · credit required' if credit else ''})  {info.get('size') or ''}"

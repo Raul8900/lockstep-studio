@@ -59,7 +59,12 @@ _OUR = re.compile(r"^(\w+?)our(s|ed|ing|ite|ites|ful|less|able|hood|hoods|er|ers
 _OUR_KEEP = {"fl", "sc", "dev", "cont", "det", "am", "vel", "glam", "troubad", "param"}   # flour, scour, devour, contour...
 _BRITISH = {"centre": "center", "centres": "centers", "metre": "meter", "metres": "meters", "litre": "liter",
             "litres": "liters", "theatre": "theater", "fibre": "fiber", "grey": "gray", "programme": "program",
-            "programmes": "programs", "travelled": "traveled", "travelling": "traveling", "cancelled": "canceled"}
+            "programmes": "programs", "travelled": "traveled", "travelling": "traveling", "cancelled": "canceled",
+            "centimetre": "centimeter", "centimetres": "centimeters", "millimetre": "millimeter", "millimetres": "millimeters",
+            "kilometre": "kilometer", "kilometres": "kilometers", "nanometre": "nanometer", "nanometres": "nanometers",
+            "mould": "mold", "moulds": "molds", "mouldy": "moldy", "moult": "molt", "smoulder": "smolder", "plough": "plow",
+            "ageing": "aging", "aluminium": "aluminum", "tyre": "tire", "tyres": "tires", "sulphur": "sulfur", "haemoglobin": "hemoglobin",
+            "oesophagus": "esophagus", "foetus": "fetus", "anaemia": "anemia", "diarrhoea": "diarrhea", "paediatric": "pediatric"}
 _ONES = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7, "eight": 8, "nine": 9}
 _TEENS = {"ten": 10, "eleven": 11, "twelve": 12, "thirteen": 13, "fourteen": 14, "fifteen": 15, "sixteen": 16,
           "seventeen": 17, "eighteen": 18, "nineteen": 19}

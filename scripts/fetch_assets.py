@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 """Rebuild assets/ from their open-licence sources (the results are committed; run this only to add or update).
 
-  python3 scripts/fetch_assets.py [fonts] [icons] [palettes]        (no argument = all three)
+  python3 scripts/fetch_assets.py [fonts] [icons]        (no argument = both)
 
   fonts     Open Font License families from the Fontsource npm packages (Latin subset, WOFF2)
             -> assets/fonts/<id>/*.woff2 + LICENSE, assets/fonts/index.json
   icons     Lucide (ISC licence) -> assets/icons/lucide.json (name -> SVG path data), names.txt
-  palettes  nice-color-palettes (MIT; 1000 five-colour palettes) and Open Color (MIT; 13 hues x 10 shades)
-            -> assets/palettes/
 
 Needs npm and network access to the npm registry. To add a font: add its Fontsource id to FONTS and run
 `python3 scripts/fetch_assets.py fonts`. Only add families whose licence allows redistribution (OFL, Apache).
@@ -181,31 +179,9 @@ def icons():
     print(f"  lucide {ver}: {len(data)} icons")
 
 
-def palettes():
-    out = ASSETS / "palettes"
-    out.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory() as tmp:
-        pkg = npm_pack("nice-color-palettes", tmp)
-        shutil.copy(pkg / "1000.json", out / "nice-1000.json")
-        lic = next((pkg / n for n in ("LICENSE.md", "LICENSE") if (pkg / n).exists()), None)
-        if lic:
-            shutil.copy(lic, out / "LICENSE-nice-color-palettes")
-        pkg = npm_pack("open-color", tmp)
-        oc = json.load(open(pkg / "open-color.json"))
-        json.dump(oc, open(out / "open-color.json", "w"), indent=1)
-        shutil.copy(pkg / "LICENSE", out / "LICENSE-open-color")
-    (out / "README.md").write_text(
-        "# Palettes\n\nRaw material for designing a style's palette — not ready-made styles.\n\n"
-        "- `nice-1000.json` — 1000 five-colour palettes (nice-color-palettes, MIT): good for finding a colour mood.\n"
-        "- `open-color.json` — 13 hues × 10 shades (Open Color, MIT): good for picking a readable shade of a hue.\n\n"
-        "`bin/lockstep palettes warm` / `dark` / `pastel` / `vivid` / `#E63946` renders matching palettes to an image you can look at.\n"
-        "A palette from here still has to be assigned to roles (background, ink, subject, accent, data, alert, good) and pass\n"
-        "`bin/lockstep style-check <video>`.\n")
-    print("  palettes: nice-1000, open-color")
-
 
 if __name__ == "__main__":
-    todo = sys.argv[1:] or ["fonts", "icons", "palettes"]
+    todo = sys.argv[1:] or ["fonts", "icons"]
     for name in todo:
         print(name)
-        {"fonts": fonts, "icons": icons, "palettes": palettes}[name]()
+        {"fonts": fonts, "icons": icons}[name]()

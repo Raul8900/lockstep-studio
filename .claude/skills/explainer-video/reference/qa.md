@@ -134,12 +134,13 @@ it is acceptable.
 - [ ] First frame: lit, composed, hook visible. Last 2.5 s: takeaway on screen, still moving.
 - [ ] Every number on screen and in the narration is in `docs/sources.md`; product-specific
       numbers carry the product's name.
-- [ ] No third-party logos, footage, images, fonts outside the bundled ones, or music.
+- [ ] Every picture, clip and model is in `media/credits.json` with a licence a video can use;
+      `docs/credits.md` written (`lockstep media <slug> credits`) and handed over for the description.
+- [ ] No music, fonts or footage from anywhere else; no logos beyond what the factual story needs.
 - [ ] `docs/report_notes.md` filled in honestly, including what could not be verified (you
       cannot listen to the mix or watch it play inside the apps — say so).
 - [ ] `bin/lockstep report <slug>` re-run after the last build.
 - [ ] A `## Retrospective` section appended to `docs/creative_brief.md`: what worked, what did not.
-      If the look could serve other topics, `bin/lockstep save-style <slug> <name>`.
 - [ ] The user gets the MP4 itself, not only a path in a container that will be discarded.
 
 ## Pitfalls already paid for

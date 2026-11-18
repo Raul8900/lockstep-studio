@@ -36,7 +36,7 @@
     const pin = (ll0) => { const m = w.add(new T.Mesh(new T.SphereGeometry(0.03, 16, 12), w.glow('accent', 2.5))); m.position.set(...ll(ll0[0], ll0[1], 1.005)); return m; };
     const a = pin(OXFORD), b = pin(PEORIA);
     return (t) => {
-      const k = tw(t, c.hunt - 0.1, c.america + 0.3, E.io2);
+      const k = tw(t, c.hunt - 0.1, c.america + 0.3, E.io2);          // the arc lands on "America"; the camera keeps turning to the cut
       arc.geometry.setDrawRange(0, Math.round(160 * k) * perSeg);
       a.scale.setScalar(t > c.hunt - 0.2 ? 1 + 0.3 * Math.sin(t * 8) : 0.0001);
       b.scale.setScalar(k > 0.98 ? 1 + 0.3 * Math.sin(t * 8) : 0.0001);
@@ -53,7 +53,7 @@
     shots(ctx, t, [
       { at: 0, draw: (ctx, t) => {
         /* the camera swings from above Britain to above the Atlantic, looking down at both ends of the arc */
-        const u = tw(t, at('melon', 'so') - 0.5, c.america + 0.4, E.ioSine), lon = lerp(-20, -46, u), lat = lerp(40, 36, u);
+        const u = tw(t, at('melon', 'so') - 0.5, c.best - 0.2, E.ioSine), lon = lerp(-20, -48, u), lat = lerp(40, 35, u);
         view3d(ctx, globe, t, { from: ll(lat, lon, 4.6 - 0.5 * u), to: [0, 0.05, 0], fov: 40 });
       } },
       { at: c.best - 0.25, cut: 'flash', draw: (ctx, t) => {

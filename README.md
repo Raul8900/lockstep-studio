@@ -1,55 +1,58 @@
 # lockstep-studio
 
-Turn a topic into a finished vertical explainer video — voiceover, animation, original music,
-sound design and word-synced captions — rendered entirely by code, on one machine, with no paid
-services.
+Turn a topic into a finished vertical short — a story told over real photographs, archive film and
+3D, with a voiceover, original music, sound design and word-synced captions — on one machine,
+with no paid services.
 
-- **Output:** 1080 × 1920 (9:16), 30 fps, H.264 + AAC MP4, −14 LUFS, ready for Instagram Reels
-  and YouTube Shorts, plus an SRT file, a storyboard, a sourced script and a QA report.
-- **Method:** the narration is recorded first. The voice model reports when each word is spoken,
-  and every animation, sound effect and caption looks its time up by spoken word. Picture and
-  voice stay in lockstep because there is only one clock.
-- **Directed, not templated:** every video gets its own story shape, pacing, visual world and
-  look, decided from the topic in a written creative brief that compares several directions. The
-  tools refuse to record narration or build until that brief and the video's `style.json` exist.
+- **Output:** 1080 × 1920 (9:16), 30 fps, H.264 + AAC MP4, −14 LUFS, ready for Instagram Reels and
+  YouTube Shorts, plus subtitles, sources, media credits and a QA report.
+- **Real pictures, free and licensed:** `lockstep find` searches Wikimedia Commons, NASA, the Art
+  Institute of Chicago, the Cleveland Museum of Art, Openverse, the Internet Archive, Poly Haven,
+  Khronos and ambientCG at once (Pexels and Pixabay too, with free keys) and tiles the candidates
+  into one numbered sheet. Every file taken is credited with its source and licence; non-commercial
+  and no-derivatives licences are refused. When two pictures are equally right, the agent asks you
+  to choose.
+- **Shots, not slides:** every frame is filled by a photograph, a film clip or a 3D world
+  (three.js, with CC0 models, skies and an animated character), and the camera keeps moving —
+  push-ins, pull-backs, pans, orbits, cut-outs with parallax. Overlays are few: a number that
+  counts, a ring, a pointer, a circle, a stamp, a name.
+- **Story first:** scripts follow what was learned from a frame-by-frame study of five successful
+  science and history shorts — a mystery in the first line, a protagonist, escalation, a payoff that
+  calls back to the start, about 200 words a minute.
+- **The narration is the clock:** the voice is recorded first (Kokoro, only its two best-graded
+  voices); every cut, camera move, overlay, sound and caption is timed from the moment a word is
+  spoken.
 - **Made to be driven by Claude Code:** the repository carries a skill that holds the whole
-  production process. You ask for a video; it researches, directs, writes, records, animates,
-  mixes, renders and checks it.
+  production process. You ask for a video; it researches, writes the story, finds the pictures,
+  records, animates, mixes, renders and checks it.
 
-![The library of looks so far](styles/previews/_all.jpg)
-
-The reference production, [`videos/how-a-gpu-works/`](videos/how-a-gpu-works/), is a 162-second
-video: 390 spoken words, 10 chapters, 235 sound cues. It predates creative direction — one fixed
-look, one default arc — and its brief records what a directed version would change.
+The test production, [`videos/penicillin-accident/`](videos/penicillin-accident/), is a 68-second
+story of penicillin's discovery: archive photographs from Wikimedia and the Imperial War Museum,
+Fleming cut out of his photograph, a 3D bacterium whose brick wall cracks and bursts, a globe with
+the route from Oxford to Peoria, and a callback to the dirty dishes of the first line.
 
 ## Make a video
 
 Open the repository in Claude Code (terminal, desktop, or claude.ai/code) and ask:
 
-> Make an explainer video about how mRNA vaccines work.
+> Make a short about how the Titanic's sister ship survived a torpedo.
 
-The `explainer-video` skill takes it from there: research, then creative direction (angle, three
-competing directions, hooks, story shape, pacing, visual world, a look designed and previewed
-against an alternative), then script, voice, scenes, sound, render and QA. Useful things to add to
-the request: length, audience, tone, a look you have in mind ("chalkboard", "loud poster"),
-anything that must or must not be covered. To revise: "make the hook punchier", "try it in a
-darker, slower style", "chapter 4 is too dense".
+The `explainer-video` skill takes it from there: research, the story and a shot plan in a creative
+brief, the media for every shot (asking you when the choice is close), the look, script, voice,
+scenes, sound, render and QA. Useful things to add: length, audience, tone, pictures you want
+used. To revise: "make the hook punchier", "use a different photo for the lab", "less 3D".
 
-The finished files land in `videos/<slug>/dist/` and `videos/<slug>/docs/`; the decisions are in
-`videos/<slug>/docs/creative_brief.md`.
+The finished files land in `videos/<slug>/dist/` and `videos/<slug>/docs/` — including
+`docs/credits.md`, the credit lines to paste into the video's description.
 
-To watch it take shape, open the live preview: `bin/lockstep preview <slug>` serves the video at
-http://localhost:4173 — play it with the narration, scrub through scenes, words and sound cues,
-step frame by frame — and the page reloads itself, at the same moment, every time a scene, the
-look or a Lottie file is saved. Keys: Space play, ← → one frame, Shift+← → one second, [ ] previous
-and next scene, 1–4 speed, s safe zones, l loop the scene, m sound. `--host 0.0.0.0` opens it to
-your phone on the same network. In Claude Code on the web, the session reports the port so the
-app can show the page.
+To watch it take shape: `bin/lockstep preview <slug>` serves the video at http://localhost:4173
+with the narration — scrub through scenes, words and sound cues, step frame by frame — and reloads
+itself whenever a scene or the look is saved.
 
 ## Setup
 
-Needs Python 3.10+, Node 18+ with Playwright and Chromium, FFmpeg, and network access to PyPI and
-GitHub release downloads.
+Needs Python 3.10+, Node 18+ with Playwright and Chromium, FFmpeg, and network access to PyPI,
+GitHub release downloads and the media sources.
 
 ```bash
 bin/lockstep setup --with-asr
@@ -59,137 +62,88 @@ bin/lockstep setup --with-asr
 bin/lockstep doctor
 ```
 
-```bash
-scripts/selftest.sh
-```
-
-`setup` installs the Python packages, downloads the voice model (≈ 350 MB) into `models/`, and
-installs the fonts if they are missing. `--with-asr` adds speech-recognition models (≈ 450 MB
-kept) used to check that the voice says what the script says. `selftest.sh` builds the bundled
-template video end to end in about two minutes.
-
-**Claude Code on the web:** a cloud session starts from a fresh container, so the models are not
-there until `setup` runs. Either let the skill run it at the start of a session (3–5 minutes), or
-put this in your cloud environment's setup script so every session starts ready:
-
-```bash
-if [ -d lockstep-studio ]; then (cd lockstep-studio && bash scripts/setup.sh --with-asr) || true; fi
-```
-
-## How it works
-
-```
-topic ─► research ─► creative brief + style.json ─► script.py ─► …
-```
-
-```
-script.py ──► voice ──► words.json (every word, to 25 ms) ──┬─► scenes/*.js ──► frames ──┐
-                │                                           ├─► captions                 ├─► MP4
-                │                                           └─► sound cues ─► score+mix ─┘
-                └─► narration.wav ───────────────────────────────────────────────┘
-```
-
-| Stage | How |
-|---|---|
-| Direction | A creative brief per video (audience, angle, three directions, hooks, story shape, pacing, visual world, look, sound, risks), gated by `lockstep brief`. Story formats and art direction guides in the skill. |
-| Look | `style.json` per video: palette roles, fonts, backdrop, caption treatment, progress bar, card shapes, transition grammar, Lottie recolouring. Legibility checked by `lockstep style-check`, previewed by `lockstep tile`. |
-| Lottie animations | Designer-made vector animations from LottieFiles' free library (or your own), searched and previewed in the video's look, recoloured to its palette, and played frame-accurately by lottie-web with key frames pinned to spoken words. Each file credited in the video's `lottie/credits.json`. |
-| Voice | Kokoro-82M text-to-speech, run locally. The ONNX graph is patched to output its phoneme durations, so word timings are exact rather than estimated. |
-| Animation | HTML Canvas 2D. Each scene is a JavaScript function of time; cues are `at('beat', 'word')`. |
-| Type | Text laid out by the engine — wrapped, fitted to a box, emphasis marked the way the look marks captions — built in word by word (rise, pop, slam) or typed letter by letter; or the narration's own words landing as they are spoken, with the captions stepping aside. |
-| Ready-made blocks | Bar, rank, line, donut and unit charts, rings, gauges, stat tiles, versus and before/after cards, quotes, step and check lists, timelines, flows and pointers that take on the video's look (palette, fonts, card shapes, hand-drawn outlines) and build in on a word. `lockstep blocks` shows them in any look. |
-| Rendering | Headless Chromium draws every frame deterministically across four workers (≈ 40 fps). |
-| Transitions | Built-in zooms, pans, slides, cuts and flashes, plus 223 GPU shader transitions (gl-transitions) — paper tears, ink, comic panels, halftone, glitches, whip pans — run on whole frames under the captions, their colours following the look. |
-| Music and sound | Synthesised in NumPy: pads, bass, arpeggio and drums arranged per chapter, with tempo, key and one of five instrument kits chosen per video; 24 sound-effect types triggered by the scenes at the same cues as the picture. |
-| Mix and master | Voice processing, ducking under speech, look-ahead limiter, −14 LUFS. |
-| Encode | FFmpeg libx264 (CRF 16, BT.709), AAC 256 kbps, streamable MP4. |
-| Checks before rendering | `lockstep lint`: misspelt cue words, unknown sounds, icons and Lottie files, non-deterministic code, typed-in times and colours; and, drawing a frame every 0.2 s, text under the platform's interface or the captions, too small, cut off, overlapping, or drawn over something in its own colour. Errors stop the build. |
-| QA | Stream facts, full decode, black-frame and freeze detection, SSIM against the rendered frames, loudness, audio/picture sync, speech recognition on the final mix, caption geometry, contact sheet and phone-size previews. |
+Optional free keys for modern stock photos and footage: `PEXELS_API_KEY` (pexels.com/api) and
+`PIXABAY_API_KEY` (pixabay.com/api/docs), in the environment or in `~/.config/lockstep/keys.json`.
 
 ## Commands
 
 ```
-bin/lockstep new <slug> ["Title"]     scaffold videos/<slug>/ from the template
-bin/lockstep styles                   preview the library of looks
-bin/lockstep tile <video> [a.json…]   preview a look, or candidate looks side by side
-bin/lockstep palettes|fonts|icons     browse the open-licence asset library
-bin/lockstep lottie-search <video> …  find Lottie animations; filmstrips in the video's look
-bin/lockstep lottie-get <video> <id>  take one, with its credit and licence
-bin/lockstep lottie-sheet <video>     the video's Lottie files as it will draw them
-bin/lockstep style-check <video>      legibility of a look
-bin/lockstep brief <video>            is the creative direction complete? (voice and build need it)
-bin/lockstep save-style <video> name  add a video's look to the library
-bin/lockstep voice <video>            record the narration, extract word timings
-bin/lockstep check-voice <video>      transcribe it back and compare with the script
-bin/lockstep words <video> [beat]     list every spoken word with its time
-bin/lockstep captions <video>         check (or --draft) the caption chunking
-bin/lockstep blocks <video>           the ready-made blocks (charts, stats, lists, timelines…) in the video's look
-bin/lockstep transitions <video>      scene transitions in the video's look: built-ins and 223 GPU shaders
-bin/lockstep lint <video>             check the scenes before rendering: code mistakes, where text lands
-bin/lockstep still|sheet|scan <video> review frames while designing
-bin/lockstep preview <video>          play and scrub in a browser with sound; reloads on every save
-bin/lockstep build <video>            everything from scenes to validated MP4, docs and verdict
-bin/lockstep help                     the full list
+bin/lockstep new <slug> ["Title"]           scaffold videos/<slug>/ from the template
+bin/lockstep brief <video>                  is the story, world and shot plan written? (voice and build need it)
+bin/lockstep sources                        the media sources and which need a key
+bin/lockstep find <video> <kind> "<query>"  search them all: photo, video, model, hdri, texture -> numbered sheet
+bin/lockstep take <video> last <n> --as x   download candidate n into media/, with its credit and licence
+bin/lockstep media <video> [restore|credits|add …]   list, re-download, write credits, add your own file
+bin/lockstep cutout <video> <name>          cut the subject of a photo out of its background
+bin/lockstep look <video>                   every picture through the video's grade, with captions
+bin/lockstep voice <video>                  record the narration, extract word timings
+bin/lockstep check-voice <video>            transcribe it back and compare with the script
+bin/lockstep words <video> [beat]           every spoken word with its time
+bin/lockstep captions <video>               check (or --draft) the caption chunking
+bin/lockstep lint <video>                   check the scenes: cues, media and licences, where text lands
+bin/lockstep still|sheet|scan <video>       review frames while designing
+bin/lockstep preview <video>                play and scrub in a browser with sound; reloads on every save
+bin/lockstep transitions <video>            scene transitions: built-ins and 223 GPU shaders
+bin/lockstep build <video>                  everything from scenes to validated MP4, docs, credits and verdict
+bin/lockstep help                           the full list
 ```
 
 ## Layout
 
 ```
 bin/lockstep                 command-line entry point
-engine/                      renderer, voice, score and mix, encode, QA — shared by all videos
-templates/video/             starter project copied by `lockstep new` (light "studio-grid" look)
+engine/                      renderer (media, 3D, overlays), voice, score and mix, encode, media sourcing, QA
+templates/video/             starter project copied by `lockstep new` (a 15-second NASA example)
 templates/creative_brief.md  the blank brief every new video starts from
-styles/                      the library of looks, with previews
-assets/                      open-licence fonts (33 families), icons (2,359) and palettes (1,000+)
-videos/<slug>/               one folder per video (brief, style, sources, scenes, lottie, data, docs, dist)
+assets/                      open-licence fonts (33 families) and icons (2,359)
+videos/<slug>/               one folder per video (brief, script, scenes, media credits, data, docs)
 .claude/skills/explainer-video/   the production process Claude follows
 scripts/setup.sh  selftest.sh
 ```
 
-A video's own files are small and readable: `docs/creative_brief.md` (the direction), `style.json`
-(the look), `script.py` (narration), `scenes/*.js` (one per chapter), `video.json` (chapters,
-music), `caption_phrases.json`, `storyboard.py`, `docs/sources.md`.
-
 ## What is and is not in git
 
-Models, rendered frames, audio stems and finished MP4s are ignored (an MP4 of this quality is over
-GitHub's 100 MB file limit). Everything needed to rebuild a video is committed:
+Models, media files, rendered frames, audio stems and finished MP4s are ignored. Everything needed
+to rebuild a video is committed — including `media/credits.json`, which says exactly where every
+picture, clip and model came from:
 
 ```bash
-bin/lockstep voice how-a-gpu-works
+bin/lockstep media penicillin-accident restore
 ```
 
 ```bash
-bin/lockstep build how-a-gpu-works
+bin/lockstep voice penicillin-accident
+```
+
+```bash
+bin/lockstep build penicillin-accident
 ```
 
 Rebuilds are deterministic: the same script gives the same audio and timings, and the same scenes
-give byte-identical frames.
+and media give the same frames.
 
 ## Limits
 
-- English narration only, with the voices that ship with the model.
-- Visuals are drawn by code — vector shapes, type, line icons, hand-drawn strokes, 2.5D, particles —
-  plus Lottie animations. No photographs, footage, 3D models or talking characters; the creative brief has to direct within
-  that.
-- Taste is checked by the agent looking at its own frames, not by an audience. Watch each video and,
-  once published, feed back what performed — the briefs' retrospectives are where that goes.
-- The agent cannot listen to the mix or watch playback inside the apps. Audio is verified by
-  measurement and speech recognition; watch each video once yourself before publishing.
-- Facts are only as good as the research step. Read `docs/sources.md` and the accuracy review in
-  the production report.
+- English narration only, with Kokoro's two best voices (`af_heart`, `af_bella`).
+- Pictures are only as good as the free archives. Old history is rich (public-domain photographs,
+  paintings, film); modern subjects need Pexels and Pixabay keys; some exact pictures (a famous
+  photograph still in copyright) do not exist under a usable licence — the agent says so and asks.
+- 3D is rendered in software: about 0.2 s a frame with shadows.
+- Taste is checked by the agent looking at its own frames, not by an audience. Watch each video
+  yourself before publishing; the brief's retrospective is where feedback goes.
+- Facts are only as good as the research step. Read `docs/sources.md`.
 
 ## Third-party components
 
 Stored in `assets/` (see `assets/README.md`): 33 type families from Google Fonts via Fontsource
-(SIL Open Font License, two under Apache 2.0), Lucide icons (ISC), nice-color-palettes and Open
-Color (MIT); each with its licence file.
+(SIL Open Font License, two under Apache 2.0) and Lucide icons (ISC), each with its licence file.
 
-In `engine/anim/vendor/`: lottie-web (MIT), the Lottie player; gl-transitions (MIT), 223 shader
-transitions, each with its author in `gl-transitions/transitions.json`. Lottie animations from LottieFiles are
-downloaded per video under the Lottie Simple License and credited in that video's `lottie/credits.json`.
+In `engine/anim/vendor/`: three.js r187 (MIT) with its glTF and HDR loaders; gl-transitions (MIT),
+223 shader transitions, each with its author in `gl-transitions/transitions.json`.
 
-Downloaded at setup, not stored here: Kokoro-82M voice model and `kokoro-onnx` (Apache-2.0 / MIT),
-`misaki` (Apache-2.0), sherpa-onnx with Whisper small.en and a Zipformer model (optional QA),
-Inter and JetBrains Mono typefaces (SIL Open Font License). FFmpeg, Chromium and Playwright are
-used as installed tools. Music and sound effects are generated by this code and are original.
+Downloaded when first needed, not stored here: Kokoro-82M and `kokoro-onnx` (Apache-2.0 / MIT),
+`misaki` (Apache-2.0), sherpa-onnx with Whisper small.en and a Zipformer model (optional QA), the
+IS-Net background-removal model (`lockstep cutout`, via rembg's release, Apache-2.0). Media are
+downloaded per video from their sources under their own licences and credited in that video's
+`media/credits.json`. FFmpeg, Chromium and Playwright are used as installed tools. Music and sound
+effects are generated by this code and are original.
