@@ -1,263 +1,219 @@
 ---
 name: explainer-video
-description: Produce a finished vertical explainer video (9:16, 1080x1920, 30 fps MP4 with voiceover, original music, sound design and word-synced burned-in captions) for Instagram Reels / YouTube Shorts on any topic, using this repository's lockstep engine. Each video gets its own story shape, pacing and visual style, decided from the topic in a creative brief before anything is recorded. Use when asked to make, create or produce an explainer video, short or reel about a topic ("make a video like the GPU one, about X"), or to revise or re-render a video under videos/.
+description: Produce a finished vertical explainer video (9:16, 1080x1920, 30 fps MP4 with voiceover, original music, sound design and word-synced burned-in captions) for Instagram Reels / YouTube Shorts on any topic, using this repository's lockstep engine. Each video tells a story in one world — real photographs, archive film and 3D from free, licensed sources — with a camera that never stops, planned in a creative brief before anything is recorded. Use when asked to make, create or produce an explainer video, short or reel about a topic ("make a video about X"), or to revise or re-render a video under videos/.
 ---
 
 # Explainer video
 
-You are the whole production team: researcher, creative director, scriptwriter, art director,
-storyboard artist, motion designer, sound designer, editor and QA. The deliverable is a finished,
-playable MP4 in `videos/<slug>/dist/`, plus its brief, script, storyboard, subtitles, sources and
-production report — not a plan, not a script on its own.
+You are the whole production team: researcher, writer, director, picture researcher, editor,
+motion designer, sound designer and QA. The deliverable is a finished, playable MP4 in
+`videos/<slug>/dist/` with its brief, script, sources, media credits and production report — not a
+plan, not a script on its own.
 
-Two ideas run the system:
+What makes a short worth watching was learned from five successful science and history shorts,
+frame by frame (reference/story.md, reference/shots.md):
 
-- **Every video is directed.** How a topic is told — its story shape, pacing, visual world and
-  look — is decided from the topic, the audience and the angle, by comparing real alternatives,
-  before a word is recorded. Nothing about the presentation is a default. The decisions are
-  written in `docs/creative_brief.md` and `style.json`, and the tools refuse to record or build
-  until they exist.
-- **The narration is the clock.** The voice is recorded first; the voice model reports when every
-  word is spoken; every animation, sound and caption looks its time up by spoken word. Nothing is
-  timed by hand, so nothing can drift.
-
-`videos/how-a-gpu-works/` is a complete 162-second production: study its scenes for technique
-(timing, transitions, sound cues, 2.5D). It is **not** a model for presentation — it was made
-before creative direction existed, in the engine's only look at the time, and was judged accurate
-but robotic, too long and too slow. Its brief (written afterwards) says what it should have done.
+- **A story, not a lecture.** A protagonist (a person, an object, or "you"), a mystery in the
+  first line, an escalation, a twist or payoff that calls back to the first line. 190–210 spoken
+  words a minute, no dead air.
+- **One world, one hero.** The whole video lives in one world — the real photographs and film of
+  the place and the people, a 3D world, a map, space — and a recurring hero acts out each line.
+  Abstract ideas become physical things (a dose is a stack of glowing blocks; a delay is a ring
+  that counts).
+- **Real pictures, full frame, a camera that never stops.** Every shot fills the frame and moves:
+  push-ins, pull-backs, pans across photographs, fly-throughs and orbits in 3D, film that plays.
+  There are no title cards, chapter bars, panels or diagrams on flat colour.
+- **The narration is the clock.** The voice is recorded first; every cut, move, overlay, sound
+  and caption is looked up from the moment a word is spoken. Nothing is timed by hand.
 
 ## Rules that do not bend
 
 1. **Decide before you make.** No narration and no scene before `bin/lockstep brief <video>`
-   passes. The brief compares at least three genuinely different directions; the look is derived
-   from the topic and previewed against an alternative — never inherited from the last video or
-   the engine's default.
-2. **Finished or honestly unfinished.** `bin/lockstep build` ends with a verdict table. Any
+   passes: the story, the hook, the world and hero, and a shot plan that names the media for
+   every shot.
+2. **Only free, properly licensed media, always credited.** Pictures, film and models come from
+   the free sources `lockstep find` searches (public domain, CC0, CC BY, the Pexels and Pixabay
+   licences) or from files the person gives you with their licence (`lockstep media <v> add`).
+   Never non-commercial or no-derivatives; share-alike only if the person accepts it for the whole
+   video. Never paid services, never anything bought, never footage ripped from a platform, never
+   AI-generated imagery passed off as real. Every file is in `media/credits.json`.
+3. **When you cannot tell which picture is right, ask.** If two or three candidates are equally
+   good, or none is clearly good enough, show the person the contact sheet
+   (`out/find/<search>.jpg`, numbered) and ask them to choose — with the AskUserQuestion tool,
+   naming the numbers and what each shows. Never fill a shot with a picture that does not show
+   what the line says; say what is missing instead.
+4. **Finished or honestly unfinished.** `bin/lockstep build` ends with a verdict table. Any
    `FAIL` means there is no finished video; say so and fix it. Never describe a video you have
    not rendered and looked at.
-3. **Accuracy before polish.** Research first. Every number and strong claim, spoken or on
-   screen, traces to `docs/sources.md`. Name the product next to a product-specific number. Never
-   invent a figure to fill a label; use a qualitative label instead. A metaphor must be true to
-   the mechanism, and the video says where it breaks.
-4. **No typed timestamps.** Animation times come from `at(beat, 'word')`, offsets from those, and
-   nothing else. If you are writing `t > 12.4`, stop.
-5. **Frames are pure functions of time.** No `Math.random()`, no `Date`, no state kept between
+5. **Accuracy before polish.** Every number and strong claim, spoken or on screen, traces to
+   `docs/sources.md`. A picture must show what the narration says it shows: check the file's
+   description, date and place before using it as evidence. Never invent a figure.
+6. **No typed timestamps.** Times come from `at(beat, 'word')` and offsets from it.
+7. **Frames are pure functions of time.** No `Math.random()`, no `Date`, no state kept between
    frames: frames render out of order on several workers. Use `hash(n)` and `rng(seed)`.
-6. **Colours by role, never by value.** Scenes use `COL.subject`, `COL.accent`, `COL.data`,
-   `COL.alert`, `COL.good`, `COL.ink`; the style decides what they look like.
-7. **Stay inside the safe zones** (reference/design.md). Diagrams in y 372–1210, x 70–1010;
-   captions own the band around y 1350; platform buttons cover the right edge below y ≈ 900.
-8. **Look at your own frames.** Render stills, open the image, and judge it as a viewer on a
-   phone would. Most defects (collisions, empty frames, unreadable labels, a look that does not
-   fit) are only visible there.
-9. **Free and local only.** Voice, music and sound are generated on this machine; fonts, icons and
-   palettes come from the open-licence library in `assets/`; Lottie animations come from LottieFiles'
-   free library (or your own), one file at a time, each credited in `lottie/credits.json`. Do not call
-   paid APIs, buy anything, or pull in third-party footage, music, images or a creator's signature style.
+8. **Look at your own frames.** Render stills and open them. Judge them as a viewer on a phone
+   would: is the subject of the line on screen, big, and moving?
 
 ## Setup (once per machine or cloud session)
 
 ```bash
 bin/lockstep doctor              # what is installed
 bin/lockstep setup --with-asr    # install whatever is MISSING (3–5 min; needs PyPI and github.com)
+bin/lockstep sources             # the media sources; Pexels and Pixabay need a free key each
 ```
 
-`--with-asr` adds the speech-recognition models used to check the voice. Without them the
-build still works but the intelligibility checks are reported as "not measured".
+Pexels and Pixabay hold most modern stock photos and footage. Their keys are free (pexels.com/api,
+pixabay.com/api/docs) but belong to the person: if a topic needs modern footage and no key is set,
+tell them how to add one (`PEXELS_API_KEY` / `PIXABAY_API_KEY` in the environment, or
+`~/.config/lockstep/keys.json`) and carry on with the keyless sources.
 
 ## Workflow
 
-Work in this order. Each step has a reference file — read it when you reach the step.
-
 | # | Step | You produce | Commands / reference |
 |---|---|---|---|
-| 0 | Scaffold | `videos/<slug>/` | `bin/lockstep new <slug> "Title"` |
+| 0 | Scaffold | `videos/<slug>/` | `lockstep new <slug> "Title"` |
 | 1 | Research | `docs/sources.md` | web search; primary sources first |
-| 2 | **Creative direction** | `docs/creative_brief.md`, `style.json` | `lockstep styles · tile · palettes · fonts · icons · lottie-search · brief` → reference/creative-direction.md, story-formats.md, art-direction.md |
-| 3 | Script | `script.py` in the chosen shape and pacing | → reference/script.md |
-| 4 | Voice | narration + word timings | `lockstep voice`, `check-voice`, `words` |
-| 5 | Captions | `caption_phrases.json` | `lockstep captions <slug> --draft`, then edit |
-| 6 | Chapters and music | `video.json` (names, moods, `music`) | → reference/audio.md |
-| 7 | Storyboard | `storyboard.py` | plan every sequence before drawing |
-| 8 | Scenes | `scenes/sNN_<beat>.js`, `components.js`, `lottie/` | `blocks`, `transitions`, `lint`, `still`, `sheet`, `scan`, `lottie-get`, `lottie-sheet`, `preview` → reference/scene-api.md, blocks.md, lottie.md, design.md |
-| 9 | Build | MP4 + SRT + QA data + docs | `lockstep build <slug>` |
-| 10 | Review and fix | a video you would publish | → reference/qa.md |
-| 11 | Report, deliver, learn | report, retrospective, library | `lockstep report`, `save-style` |
+| 2 | **Story and shots** | `docs/creative_brief.md` | reference/story.md, reference/shots.md |
+| 3 | **Media** | `media/` + `media/credits.json` | `find`, `take`, `cutout`, `look` → reference/media.md |
+| 4 | Look | `style.json` | `look`, `style-check`, `brief` → reference/shots.md "The look" |
+| 5 | Script | `script.py` | reference/story.md |
+| 6 | Voice and captions | narration, word timings, `caption_phrases.json` | `voice`, `check-voice`, `words`, `captions` |
+| 7 | Music | moods in `video.json` | reference/audio.md |
+| 8 | Scenes | `scenes/sNN_<beat>.js` | `lint`, `still`, `sheet`, `preview` → reference/scene-api.md |
+| 9 | Build | MP4 + SRT + QA + docs + credits | `lockstep build <slug>` |
+| 10 | Review and fix | a video you would publish | reference/qa.md |
+| 11 | Deliver | report, credits, retrospective | `lockstep report`, `lockstep media <slug> credits` |
 
 ### 0. Scaffold
-`bin/lockstep new <slug> "Title"` copies the starter project. Its script, scenes and storyboard are
-a runnable example to replace; its brief is blank and it has no `style.json` yet.
+`bin/lockstep new <slug> "Title"` copies the starter project: a runnable 15-second example (a NASA
+photograph, a 3D Earth and Moon, Apollo film) whose script, scenes and media are there to be
+replaced. Its brief is blank and it has no `style.json`.
 
 ### 1. Research
-Search before deciding anything. Prefer the organisation that owns the fact (vendor documentation,
-standards bodies, papers, official statistics). Record each source and the exact claim it supports
-in `docs/sources.md`, including what you checked and rejected. Also find out **how this topic is
-usually explained** in short videos (titles, descriptions, write-ups — no downloading), so the
-direction can avoid or subvert the default treatment.
+Search before deciding anything. Prefer the organisation that owns the fact. Record each source
+and the exact claim it supports in `docs/sources.md`. While researching, collect the **story**:
+the people, the dates, the place, the accident, the number that sounds wrong — and note what
+pictures of them exist (an archive photograph of the lab, film of the launch). The best angle is
+often the one with the best pictures.
 
-### 2. Creative direction
-The step that decides whether the video is memorable. Give it as much time as the script. Follow
-reference/creative-direction.md and write each decision into `docs/creative_brief.md`:
-audience and promise, angle (from five candidates), **three genuinely different directions**,
-the choice, three hooks, the story shape and beat map (reference/story-formats.md), pacing, the
-visual world, the look, the sound, and what would make it fail.
+### 2. Story and shots — the brief
+Write `docs/creative_brief.md` (reference/story.md, then reference/shots.md): audience and promise,
+five candidate angles and the one kept, the story with its beats, three hooks, the world and the
+hero, the shot plan (one line per beat: what fills the frame, the camera move, the overlay, and
+the media search that will fill it), the look, the sound, and what would make it fail.
 
-Design the look from the topic (reference/art-direction.md): start from the topic's world and
-medium, find the palette in it, choose a type voice, then preview two candidates side by side and
-choose with your eyes:
-
+### 3. Media
+For every shot in the plan (reference/media.md):
 ```bash
-bin/lockstep styles                                          # the library of looks so far, with previews
-bin/lockstep palettes <slug> warm muted                      # palette ideas -> out/palettes.jpg
-bin/lockstep fonts                                           # bundled typefaces and their character
-bin/lockstep tile <slug> candidates/a.json candidates/b.json # -> out/style_tiles.jpg — open it
-bin/lockstep style-check --style candidates/a.json           # legibility
-bin/lockstep brief <slug>                                    # must pass before voice and build
+bin/lockstep find <slug> photo "Alexander Fleming laboratory"     # every source at once -> out/find/<search>.jpg
+bin/lockstep take <slug> last 3 --as fleming-lab                   # candidate 3 -> media/fleming-lab.jpg + credit
+bin/lockstep find <slug> video "petri dish bacteria"               # film: wikimedia, nasa, archive (+ pexels, pixabay with keys)
+bin/lockstep find <slug> model "robot"                             # 3D: poly haven, khronos, catalog
+bin/lockstep cutout <slug> fleming-lab                             # the person without the room -> media/fleming-lab.cut.png
+bin/lockstep look <slug>                                           # everything taken, through the grade -> out/look.jpg
 ```
+Open every contact sheet. Read the titles and licences on it. Take the picture that shows what
+the line says, at the size the shot needs (a full-frame push-in wants at least 1500 px on the
+short side). When candidates are close or all weak, **ask the person** (rule 3). Record in the
+brief which shots you asked about and any gap no free source could fill.
 
-`lockstep list` shows the looks of earlier videos: do not repeat the previous one unless the brief
-argues for a series identity.
+### 4. Look
+`style.json` decides what is not the picture: the colour grade every photograph, clip and render
+gets (so archive photos, stock film and 3D read as one film), the captions, the overlay colours and
+fonts, the default cut. Small is fine — `{"name": "…", "grade": {…}}` — but it must be decided:
+check it on the real media with `lockstep look <slug>`, then `lockstep brief <slug>` must pass.
 
-### 3. Script
-Write the beats from the brief's beat map, in its pacing (reference/script.md for length tables,
-markers, highlight words and caption chunking). Check the script against the beat map before
-recording: drifting back to a generic "hook → contrast → mechanism → limits → payoff" arc is the
-commonest way to lose the direction.
+### 5. Script
+Write `script.py` from the brief's story (reference/story.md): short sentences, one idea each, the
+hook in the first line, 190–210 words a minute (`SPEED` 1.1–1.2), short pauses. Read it aloud in
+your head against the shot plan: every line must have a picture.
 
-### 4. Voice
+### 6. Voice and captions
 ```bash
-bin/lockstep voice <slug>          # records; prints the length of every beat
-bin/lockstep check-voice <slug>    # transcribes it back; lists every word heard differently
-bin/lockstep words <slug>          # every word with its start time and its cue key
+bin/lockstep voice <slug>             # records with af_heart (or af_bella): the two best-graded voices
+bin/lockstep check-voice <slug>       # transcribes it back; lists every word heard differently
+bin/lockstep words <slug>             # every word with its start time — your cue sheet
+bin/lockstep captions <slug> --draft  # then edit: 2–4 words a phrase, a number with its unit
 ```
-Fix mispronunciations with a phoneme override and re-record. Check the total length now: it is set
-by the narration and nothing later can change it. Re-recording is deterministic — unchanged text
-gives identical audio and timings.
+Only the best voices are offered (`lockstep voice <slug> list`); the others sound synthetic.
+Fix mispronunciations with a phoneme override and re-record.
 
-### 5. Captions
-`lockstep captions <slug> --draft` writes a first chunking; edit it by hand so each phrase is a
-unit of meaning (1–4 words, number with its unit, no orphaned one-syllable word). The phrases must
-spell the narration exactly; `lockstep captions <slug>` checks.
-
-### 6. Chapters and music
-In `video.json`, give every beat a short chapter name (shown only if the style's progress bar has
-labels), a mood per chapter tracing the brief's arc, and the `music` settings the brief chose
-(tempo, key, instrument kit).
-
-### 7. Storyboard
-Before any drawing code, fill `storyboard.py`: split every beat into sequences of 3–8 seconds, each
-with one visual idea, anchored to the spoken words that start and end it. For each: what is on
-screen and where, how it moves, the camera, the colour roles, on-screen text, the transition out,
-the sound, and why it exists. A 90 s video has 15–22 sequences. If a sequence has no visual idea
-of its own, the script has a sentence that should be cut.
+### 7. Music
+In `video.json`, a mood per beat tracing the story's arc (reference/audio.md).
 
 ### 8. Scenes
-One file per beat, drawn in the brief's visual world and the style's language (hand-drawn looks get
-rough lines, poster looks get kinetic type and hard shadows — see "Make the scenes match the look"
-in art-direction.md). Charts, big numbers, comparisons, lists, timelines, pointers and processes
-have ready-made blocks that take on the look and build in on a word: `lockstep blocks <slug>`
-shows them all in the video's look (reference/blocks.md). Type that matters is laid out by
-`textBlock` (wrapped, fitted, emphasis marked in the look's way, built in word by word); a line
-told in its own words — a hook, a verdict — by `sayText`, each word landing as it is spoken, with
-`hideCaptions` for that stretch (scene-api.md, "Type that moves"). Characters, gestures and effects with
-real motion can come from Lottie animations: find them with `lockstep lottie-search <slug> <words>`,
-take one with `lottie-get`, and pin its key frames to words (reference/lottie.md). Write a scene,
-then look at it immediately:
-```bash
-bin/lockstep lint <slug>                              # cues, sounds, icons, colours, typed-in times; where text lands
-bin/lockstep meta <slug>                              # loads every scene; reports cue or syntax errors
-bin/lockstep sheet <slug> 12s 13.5s 15s 17s 19s       # stills tiled into out/sheet.jpg — open it
-bin/lockstep still <slug> --safe 15s                  # one full-size frame with the keep-out zones shaded
-bin/lockstep scan <slug>                              # draws the whole timeline; reports errors and empty frames
+One file per beat, drawing the shot plan (reference/scene-api.md has the whole API):
+```js
+const lab = useImage('fleming-lab');                    // setup: declare the media
+addScene('discovery', (ctx, t) => {
+  const pic = photo(ctx, lab, tw(t, c.start, c.end), { move: 'in', focus: [0.6, 0.45] });   // full frame, moving
+  circleIt(ctx, ...pic.at(0.62, 0.58), 120, 90, { p: tw(t, c.mould, c.mould + 0.6) });       // pinned to the picture
+});
 ```
-Review a still every 1–2 seconds of each scene plus the moments just before and after each cue,
-at full size where there is small text.
-
-Run `lint` after every scene, not only at the end: it reads the code for mistakes that otherwise
-surface minutes into a build (a misspelt cue word, a sound or icon that does not exist,
-`Math.random()`, a time typed in seconds) and draws a frame every 0.2 s to find text under the
-platform's buttons or the captions, text too small for a phone, labels drawn over something in
-their own colour, and labels on top of each other — each with its time and scene. Errors stop the
-build. Fix every warning or, if it is intended, mark it (reference/qa.md, "Reading lint"). Lint
-does not judge taste: still look at the frames.
-
-Let the person watch the video take shape: once the first scene draws, start
-`bin/lockstep preview <slug>` in the background (it keeps running) and tell them the address it
-prints (http://localhost:4173). The page plays the video with the narration (the full mix once
-`audio` has run), scrubs on a timeline of scenes, spoken words and sound cues, and reloads itself
-at the same moment whenever a scene, `style.json` or Lottie file is saved; a scene that throws
-shows its error there. In a cloud session, also report the port with the `report_preview_port`
-tool when you have it, so their app can show the page. The preview is for the person — you still
-judge frames with `sheet`, `still` and `scan`.
+Pictures (`photo`), film (`film`), cut-outs with parallax (`cutout`), 3D worlds with CC0 models,
+skies and animated characters (`world3d`, `view3d`, `camPath`), several shots inside one beat
+(`shots`), and overlays that read on any picture (`bigNumber`, `ringGauge`, `pointer`, `circleIt`,
+`arrowTo`, `spotlight`, `stamp`, `nameTag`). Look at every scene as soon as it draws:
+```bash
+bin/lockstep lint <slug>                          # cues, sounds, media names and licences, determinism; where text lands
+bin/lockstep sheet <slug> 1s 2.5s 4s 6s 8s        # stills tiled into out/sheet.jpg — open it
+bin/lockstep still <slug> --safe 6s               # one full frame with the platform's keep-out zones shaded
+```
+Let the person watch it take shape: start `bin/lockstep preview <slug>` in the background and
+tell them the address it prints (and report the port with `report_preview_port` in a cloud
+session). It plays with the narration, scrubs, and reloads when a file is saved.
 
 ### 9. Build
 ```bash
 bin/lockstep build <slug>
 ```
-direction check → captions → lint → meta → scan → audio → render → assemble → srt → validate →
-docs → report, then the verdict. A 160 s video takes about 17 minutes (scan and audio ≈ 3, render ≈ 2, encode ≈ 6,
-validation ≈ 6); a 90 s one about half that. Run it in the background and keep working.
+direction → captions → lint → meta → scan → audio → render → assemble → srt → validate → docs →
+credits → report, then the verdict. Run it in the background and keep working.
 
 ### 10. Review and fix
-Open `dist/contact_sheet.jpg` and both `dist/mobile_preview_*.jpg`. Work through
-**reference/qa.md**, including whether the finished video still matches its brief. After a fix,
-re-run only what changed:
+Open `dist/contact_sheet.jpg` and both `dist/mobile_preview_*.jpg` and work through
+reference/qa.md. After a fix, re-run only what changed:
 
 | You changed | Re-run |
 |---|---|
 | Drawing code in one scene | `render <slug> --from A --to B` → `assemble` → `validate` |
-| `style.json` | full `render` (every frame changes) → `assemble` → `validate` |
-| A sound cue (`sfx(...)`), a mood or the `music` settings | `meta` → `audio` → `assemble <slug> --remux` → `validate` |
-| Caption chunking | `meta` → `render` (captions are burned in) → `assemble` → `validate` |
-| The script | `voice` → `captions` → check every cue still exists (`meta`) → full `build` |
+| `style.json` | full `render` → `assemble` → `validate` |
+| A sound cue, a mood | `meta` → `audio` → `assemble <slug> --remux` → `validate` |
+| Caption chunking | `meta` → `render` → `assemble` → `validate` |
+| The script | `voice` → `captions` → `meta` (every cue must still exist) → full `build` |
 
-### 11. Report, deliver, learn
-Fill `docs/report_notes.md` truthfully (accuracy review, defects found and fixed, an honest
-self-assessment, what could not be verified), run `bin/lockstep report <slug>`, and give the user:
-the MP4, `dist/subtitles.srt`, the contact sheet, the creative brief, `docs/narration_script.md`,
-`docs/visual_storyboard.md`, `docs/sources.md`, `docs/production_report.md`. State the measured
-facts (length, resolution, loudness, sync) and anything you could not check.
+### 11. Deliver
+Fill `docs/report_notes.md` truthfully, run `bin/lockstep report <slug>`, and give the person the
+MP4, `dist/subtitles.srt`, the contact sheet, the brief, `docs/sources.md` and **`docs/credits.md`
+— the credit lines the licences require, to paste into the video's description.** State the
+measured facts and anything you could not check. Append a `## Retrospective` to the brief.
 
-Then let the system learn from the video: append a `## Retrospective` to the brief (what worked,
-what did not, what to change next time), and if the look could serve other topics, add it to the
-library with `bin/lockstep save-style <slug> <name>`. Later videos read both.
+Media files and MP4s are not committed (`media/credits.json` is, so `lockstep media <slug>
+restore` downloads everything again). Commit the project folder and hand the MP4 over directly.
 
-MP4s are not committed (GitHub rejects files over 100 MB; `dist/*.mp4` is git-ignored). Commit
-the project folder so the video can be rebuilt, and hand the MP4 to the user directly.
+## When the person does not say
 
-## When the user does not say
+- **Length:** the shortest that tells the story, usually 45–90 s. Hard maximum 180 s.
+- **Topic angle, world, look, voice, music:** decided in the brief, from the topic.
+- **Language:** English narration.
 
-- **Length:** decided in the brief — the shortest that delivers the angle, usually 60–100 s.
-  Hard maximum 180 s (set `max_seconds` in `video.json` for another limit).
-- **Pacing:** decided in the brief; *brisk* is the usual choice (story-formats.md).
-- **Look, story shape, voice and music:** decided in the brief, from the topic. Never a default.
-- **Language:** English narration; the voice model is English-only as installed.
-
-What the user does say overrides all of this — a length, a look they name, a tone, an audience.
-Record it in the brief. Ask a question only if the topic itself is ambiguous; otherwise decide,
-proceed, and note the decision.
+What the person does say overrides all of this. Ask a question only when the topic is ambiguous
+or when choosing between pictures (rule 3); otherwise decide, proceed and note the decision.
 
 ## Files in a video project
 
 ```
 videos/<slug>/
-  docs/creative_brief.md the creative direction (written before anything is recorded)
-  style.json             this video's look: palette, fonts, backdrop, captions, progress bar, shapes, transitions
-  video.json             title, tag, output name, chapters (name + mood), music settings, optional mix levels
-  script.py              narration: BEATS -> takes; HIGHLIGHT; optional delivery/pronunciation notes
+  docs/creative_brief.md the story, the world, the shot plan (written before anything is recorded)
+  media/                 photographs, film, models, skies (git-ignored) + credits.json (committed)
+  style.json             the grade, captions, overlay colours and fonts, default cut
+  video.json             title, output name, a mood per beat, music settings
+  script.py              narration: BEATS -> takes; HIGHLIGHT key words
   caption_phrases.json   caption chunking
   scenes/sNN_<beat>.js   one scene per beat (the beat id is the scene id)
-  components.js          drawing code shared by this video's scenes; optional custom backdrop
-  storyboard.py          sequences for docs/visual_storyboard.md
-  lottie/                Lottie animations (JSON), credits.json with source and licence of each
-  candidates/            optional: style candidates compared during creative direction
-  docs/                  sources.md, report_notes.md (written by you); the rest is generated
-  data/                  generated: words.json, takes.json, timeline.json, validation.json, ...
-  audio/  out/           generated, git-ignored
+  components.js          optional: drawing code shared by this video's scenes
+  storyboard.py          optional: sequences for docs/visual_storyboard.md
+  docs/                  sources.md, report_notes.md (yours); credits.md and the rest generated
+  data/ audio/ out/      generated
   dist/                  the MP4, subtitles.srt, contact sheet, mobile previews
 ```
-
-Shared by every video: `engine/` (change it only for something every video should get), `styles/`
-(the library of looks), `assets/` (open-licence fonts, icons and palettes; `scripts/fetch_assets.py`
-rebuilds or extends it). A look or drawing that belongs to one topic goes in that video's
-`style.json` and `components.js`; its Lottie animations go in its `lottie/` with `credits.json`.

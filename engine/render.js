@@ -6,25 +6,30 @@
      node engine/render.js <video-dir> still [--safe] [--out dir] <frame|12.5s> ...
      node engine/render.js <video-dir> scan
      node engine/render.js <video-dir> lint [--step N]
-     node engine/render.js <video-dir> blocks [--style f.json] [--names a,b] [--stages 0.3,1] [--out f.jpg]
+     node engine/render.js <video-dir> look [--out f.jpg]
      node engine/render.js <video-dir> transitions [--style f.json] [--names a,b] [--all] [--stages 0.3,0.7] [--out f.jpg]
      node engine/render.js <video-dir> bench <frame|time> ...
      node engine/render.js <video-dir> video [--workers N] [--from s] [--to s]
+     node engine/render.js <video-dir> preview [--port 4173] [--host 0.0.0.0]
 
    Serves engine/anim plus the video's own files over HTTP and opens the page
    in headless Chromium.
-     meta   exports data/timeline.json (scene boundaries, captions, sound cues)
+     meta   exports data/timeline.json (scene boundaries, captions, sound cues, media)
      still  writes single frames as JPEG for review
      scan   draws every 2nd frame without saving and reports script errors
-            and near-black frames
+            and blank frames (dark and flat)
      lint   draws every Nth frame (6) and prints, as one JSON line, where every
             piece of scene text lands; engine/lint.py turns it into findings
-     blocks draws the ready-made blocks (js/blocks.js) in the video's look and
-            tiles them with engine/gallery.py: every block finished, or with
-            --names, each named block's build-in as a strip
+     look   every picture and film clip the video has taken, through its colour
+            grade, with a line of captions on it -> out/look.jpg (works before
+            any narration exists)
      video  each frame leaves the page as a JPEG (q 0.97) and is written to
             out/frames/fNNNNN.jpg; work is handed out in 5-second chunks, so a
             changed scene can be re-rendered on its own with --from/--to
+
+   Film clips (useVideo in a scene) are cut into JPEG frames once, by ffmpeg, into
+   out/media/<name>/ when the page asks for them (POST /prepare-media); a render
+   waits for the frames it needs (renderFrameReady), so output never depends on timing.
    ===================================================================== */
 const http = require('http');
 const fs = require('fs');
@@ -41,19 +46,20 @@ try { ({ chromium } = require('playwright')); } catch (e1) {
 const ENGINE = __dirname;
 const ANIM = path.join(ENGINE, 'anim');
 const ASSETS = path.join(ENGINE, '..', 'assets');
-let STYLE_OVERRIDE = null;      // tile --style file.json: preview a style other than the video's own
+let STYLE_OVERRIDE = null;      // transitions --style file.json: preview a style other than the video's own
 const W = 1080, H = 1920, FPS = 30, CHUNK = 150;
-const MIME = { '.wav': 'audio/wav', '.mp3': 'audio/mpeg', '.m4a': 'audio/mp4', '.woff2': 'font/woff2', '.ttf': 'font/ttf', '.otf': 'font/otf', '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.css': 'text/css', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml' };
+const CLIP_W = 1440;            // film frames are cut to at most this width (room for a pan) at the frame's height
+const MIME = { '.wav': 'audio/wav', '.mp3': 'audio/mpeg', '.m4a': 'audio/mp4', '.woff2': 'font/woff2', '.ttf': 'font/ttf', '.otf': 'font/otf', '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.css': 'text/css', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.glb': 'model/gltf-binary', '.gltf': 'model/gltf+json', '.bin': 'application/octet-stream', '.hdr': 'application/octet-stream', '.mp4': 'video/mp4' };
 
 const [projArg, mode, ...rest] = process.argv.slice(2);
 if (!projArg || !mode) {
-  console.log('usage: node engine/render.js <video-dir> meta | still [--safe] [--out dir] <frame|12.5s>... | scan | bench <frame>... | video [--workers N] [--from s] [--to s]');
+  console.log('usage: node engine/render.js <video-dir> meta | still [--safe] [--out dir] <frame|12.5s>... | scan | lint | look | transitions | bench <frame>... | video [--workers N] [--from s] [--to s] | preview');
   process.exit(1);
 }
 const PROJECT = path.resolve(projArg);
 if (!fs.existsSync(path.join(PROJECT, 'video.json'))) { console.error(`no video.json in ${PROJECT}`); process.exit(1); }
 const DATA = path.join(PROJECT, 'data');
-const NEEDS_NARRATION = mode !== 'tile' && mode !== 'lottiesheet' && mode !== 'blocks' && mode !== 'transitions';
+const NEEDS_NARRATION = mode !== 'look' && mode !== 'transitions';
 if (NEEDS_NARRATION && !fs.existsSync(path.join(DATA, 'words.json'))) {
   console.error(`no narration recorded yet for ${path.basename(PROJECT)}: run  bin/lockstep voice ${path.basename(PROJECT)}  first`);
   process.exit(1);
@@ -74,11 +80,61 @@ function manifest() {
   return { scripts };
 }
 
+/* ---------- film clips -> frames ----------
+   One ffmpeg run per clip and setting, shared by every page this server serves (the render
+   workers ask at the same moment); kept in out/media/<name>/ until the clip or its settings change. */
+const { spawn, spawnSync } = require('child_process');
+const PREP = new Map();
+function prepareClip(spec) {
+  const name = String(spec.name || '').replace(/[^\w.-]/g, '_'), file = String(spec.file || '');
+  const src = path.resolve(PROJECT, 'media', file);
+  if (!name || !src.startsWith(path.join(PROJECT, 'media') + path.sep)) return Promise.resolve({ error: 'bad clip name or file' });
+  if (!fs.existsSync(src)) return Promise.resolve({ error: `no film media/${file} — take one with: lockstep take, or lockstep media ${path.basename(PROJECT)} restore` });
+  const st = fs.statSync(src), from = Math.max(0, +spec.from || 0), to = spec.to == null ? null : +spec.to, fx = spec.focus ? clampN(+spec.focus[0], 0, 1) : 0.5;
+  const stamp = require('crypto').createHash('sha1').update(JSON.stringify([file, st.size, Math.round(st.mtimeMs), from, to, fx, FPS, H, CLIP_W])).digest('hex').slice(0, 16);
+  const key = name + ':' + stamp;
+  if (PREP.has(key)) return PREP.get(key);
+  const dir = path.join(OUT, 'media', name), infoFile = path.join(dir, 'clip.json');
+  const job = (async () => {
+    try { const j = JSON.parse(fs.readFileSync(infoFile, 'utf8')); if (j.stamp === stamp && j.frames > 0) return j; } catch (e) { /* not cut yet */ }
+    fs.rmSync(dir, { recursive: true, force: true }); fs.mkdirSync(dir, { recursive: true });
+    const args = ['-v', 'error', '-y'];
+    if (from > 0) args.push('-ss', from.toFixed(3));
+    if (to != null) args.push('-t', Math.max(0.1, to - from).toFixed(3));
+    args.push('-i', src, '-an', '-vf', `fps=${FPS},scale=-2:${H}:flags=lanczos,crop='min(iw,${CLIP_W})':${H}:'(iw-min(iw,${CLIP_W}))*${fx}':0`, '-q:v', '3', path.join(dir, '%05d.jpg'));
+    const err = await new Promise((res) => { const p = spawn('ffmpeg', args); let e = ''; p.stderr.on('data', (d) => { e += d; }); p.on('close', (code) => res(code ? e || 'ffmpeg failed' : null)); p.on('error', (x) => res(String(x))); });
+    if (err) return { error: String(err).trim().split('\n').slice(-2).join(' ') };
+    const frames = fs.readdirSync(dir).filter((f) => /^\d{5}\.jpg$/.test(f)).length;
+    if (!frames) return { error: 'no frames came out of ffmpeg (is the clip shorter than from?)' };
+    const pr = spawnSync('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height', '-of', 'csv=p=0', path.join(dir, '00001.jpg')], { encoding: 'utf8' });
+    const [w, h] = String(pr.stdout || '').trim().split(',').map(Number);
+    const info = { name, file, stamp, frames, w, h, from, to };
+    fs.writeFileSync(infoFile, JSON.stringify(info));
+    return info;
+  })();
+  PREP.set(key, job);
+  return job;
+}
+const clampN = (x, a, b) => (x < a ? a : x > b ? b : (x === x ? x : a));
+
 function startServer(opts = {}) {
   return new Promise((resolve, reject) => {
     const server = http.createServer((req, res) => {
       const url = new URL(req.url, 'http://localhost');
       if (opts.extra && opts.extra(req, res, url, decodeURIComponent(url.pathname))) return;
+      if (req.method === 'POST' && url.pathname === '/prepare-media') {
+        const chunks = [];
+        req.on('data', (c) => chunks.push(c));
+        req.on('end', async () => {
+          try {
+            const list = JSON.parse(Buffer.concat(chunks).toString('utf8') || '[]'), out = {};
+            const res2 = await Promise.all(list.map((sp) => prepareClip(sp)));
+            list.forEach((sp, k) => { out[sp.name] = res2[k]; });
+            res.writeHead(200, { 'Content-Type': 'application/json' }); res.end(JSON.stringify(out));
+          } catch (e) { res.writeHead(500); res.end(String((e && e.message) || e)); }
+        });
+        return;
+      }
       if (req.method === 'POST' && url.pathname === '/frame') {
         const i = parseInt(url.searchParams.get('i'), 10);
         const chunks = [];
@@ -118,12 +174,10 @@ async function openPage(browser, port, debugSafe, special) {
   page.on('pageerror', (e) => console.error('[pageerror]', e.message));
   page.on('console', (m) => { if (m.type() === 'error' && !/404/.test(m.text())) console.error('[console]', m.text()); });
   if (debugSafe) await page.addInitScript(() => { window.DEBUG_SAFE = true; });
-  if (special && special.tile) await page.addInitScript(() => { window.TILE_MODE = true; });
-  if (special && special.lottiesheet) await page.addInitScript((o) => { window.LOTTIESHEET = o; }, special.lottiesheet);
-  if (special && special.blocks) await page.addInitScript(() => { window.BLOCKS_MODE = true; });
+  if (special && special.look) await page.addInitScript(() => { window.LOOK_MODE = true; });
   if (special && special.transitions) await page.addInitScript(() => { window.TRANS_MODE = true; });
   await page.goto(`http://127.0.0.1:${port}/index.html`);
-  await page.waitForFunction(() => window.READY || window.BOOT_ERROR, null, { timeout: 60000 });
+  await page.waitForFunction(() => window.READY || window.BOOT_ERROR, null, { timeout: 600000 });   // the first boot cuts film clips
   const err = await page.evaluate(() => window.BOOT_ERROR);
   if (err) throw new Error('boot failed: ' + err);
   return page;
@@ -158,7 +212,7 @@ async function still(args) {
     const t0 = Date.now();
     for (const spec of specs) {
       const i = parseFrame(spec);
-      const b64 = await page.evaluate((f) => { renderFrame(f); return document.getElementById('c').toDataURL('image/jpeg', 0.93).split(',')[1]; }, i);
+      const b64 = await page.evaluate(async (f) => { await renderFrameReady(f); return document.getElementById('c').toDataURL('image/jpeg', 0.93).split(',')[1]; }, i);
       fs.writeFileSync(path.join(outDir, `f${String(i).padStart(5, '0')}_${(i / FPS).toFixed(2)}s.jpg`), Buffer.from(b64, 'base64'));
     }
     console.log(`${specs.length} stills in ${((Date.now() - t0) / 1000).toFixed(1)}s -> ${outDir}`);
@@ -170,11 +224,12 @@ async function meta() {
   await withPage(false, async (page) => {
     const info = await page.evaluate(() => ({
       total: window.TOTAL_FRAMES, dur: DATA.dur, fps: FPS, width: W, height: H,
-      style: { name: STYLE.name, mode: STYLE.mode, backdrop: typeof window.drawBackdrop === 'function' ? 'custom' : STYLE.backdrop.type, fonts: F,
-        palette: { bg: [COL.bgTop, COL.bgMid, COL.bgBot], ink: COL.white, subject: COL.subject, accent: COL.accent, data: COL.data, alert: COL.alert, good: COL.good },
-        captions: { size: CAP.size, weight: CAP.weight, family: CAP.family, y: CAP.cy, lineH: CAP.lineH, maxW: CAP.maxW, highlight: STYLE.captions.highlight, case: STYLE.captions.case }, hud: STYLE.hud.type, transition: STYLE.transition },
+      style: { name: STYLE.name, mode: STYLE.mode, fonts: F, grade: STYLE.grade, post: STYLE.post,
+        palette: { bg: STYLE.bg, ink: COL.ink, subject: COL.subject, accent: COL.accent, data: COL.data, alert: COL.alert, good: COL.good },
+        captions: { size: CAP.size, weight: CAP.weight, family: CAP.family, y: CAP.cy, lineH: CAP.lineH, maxW: CAP.maxW, highlight: STYLE.captions.highlight, case: STYLE.captions.case, key: STYLE.captions.key }, transition: STYLE.transition },
       scenes: SCENES.map((s) => ({ id: s.id, name: chapterName(s.id), t0: s.t0, t1: s.t1, trans: s.trans })),
-      lottie: [...LOT_SPECS.values()].map((s) => ({ name: s.name, dir: s.dir, recolor: s.recolor })),
+      media: [...MEDIA.values()].map((m) => ({ name: m.name, kind: m.kind.toLowerCase(), cutout: !!m.o.cutout, ...(m.kind === 'Video' ? { frames: m.frames } : {}) })),
+      worlds: WORLDS.length,
       sfx: SFX,
       caps: CAPS.map((c) => ({ text: c.text, show0: c.show0, show1: c.show1, t0: c.t0, t1: c.t1, lines: c.lines.length, width: Math.max(...c.lines.map((l) => l.w)) * c.scale })),
       ...(CAP_HIDE.length ? { caption_hidden: CAP_HIDE } : {}),          // stretches where the scene's own type says the words
@@ -184,44 +239,32 @@ async function meta() {
   });
 }
 
-/* tile [--style file.json] [--out file.jpg]: one frame showing the style (works before any narration exists) */
-async function tile(args) {
-  let out = path.join(OUT, 'style_tile.jpg');
-  for (let i = 0; i < args.length; i++) {
-    if (args[i] === '--style') STYLE_OVERRIDE = path.resolve(args[++i]);
-    else if (args[i] === '--out') out = path.resolve(args[++i]);
-  }
-  if (STYLE_OVERRIDE && !fs.existsSync(STYLE_OVERRIDE)) { console.error('no such style file: ' + STYLE_OVERRIDE); process.exit(1); }
+/* look [--out f.jpg]: every picture and film clip in media/ through the video's grade, each with a
+   line of captions, tiled by engine/gallery.py — to judge the grade and the captions before any
+   narration exists. Cut-outs are drawn over a mid grey. */
+async function look(args) {
+  let out = path.join(OUT, 'look.jpg');
+  for (let i = 0; i < args.length; i++) if (args[i] === '--out') out = path.resolve(args[++i]);
+  const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'lockstep-look-'));
   fs.mkdirSync(path.dirname(out), { recursive: true });
-  await withPage(args.includes('--safe'), async (page) => {
-    const b64 = await page.evaluate(() => { renderFrame(66); return document.getElementById('c').toDataURL('image/jpeg', 0.92).split(',')[1]; });
-    fs.writeFileSync(out, Buffer.from(b64, 'base64'));
-    console.log('style tile -> ' + out);
-  }, { tile: true });
-}
-
-/* lottiesheet --names a,b [--dir lottie] [--labels "x|y"] [--frames 6] [--crop] [--style f.json] [--out f.jpg]:
-   each Lottie file as a filmstrip, recoloured and drawn as this video's look will draw it */
-async function lottiesheet(args) {
-  let out = path.join(OUT, 'lottie_sheet.jpg');
-  const o = { names: [], dir: null, frames: 6, labels: null };
-  for (let i = 0; i < args.length; i++) {
-    if (args[i] === '--names') o.names = args[++i].split(',').filter(Boolean);
-    else if (args[i] === '--dir') o.dir = args[++i];
-    else if (args[i] === '--labels') o.labels = args[++i].split('|');
-    else if (args[i] === '--frames') o.frames = parseInt(args[++i], 10);
-    else if (args[i] === '--crop') o.crop = true;
-    else if (args[i] === '--style') STYLE_OVERRIDE = path.resolve(args[++i]);
-    else if (args[i] === '--out') out = path.resolve(args[++i]);
-  }
-  if (!o.names.length) { console.error('lottiesheet: --names a,b,c'); process.exit(1); }
-  o.names = o.names.slice(0, 10);
-  fs.mkdirSync(path.dirname(out), { recursive: true });
+  const rows = [];
+  let styleName = '';
   await withPage(false, async (page) => {
-    const b64 = await page.evaluate(() => { renderFrame(30); return document.getElementById('c').toDataURL('image/jpeg', 0.9).split(',')[1]; });
-    fs.writeFileSync(out, Buffer.from(b64, 'base64'));
-    console.log(`${o.names.length} Lottie file(s) -> ${out}`);
-  }, { lottiesheet: o });
+    const items = await page.evaluate(() => LOOK_ITEMS.map((x) => [x.name, x.about]));
+    styleName = await page.evaluate(() => STYLE.name);
+    if (!items.length) throw new Error('no pictures or film in media/ yet: lockstep find <video> photo "…", then lockstep take');
+    for (let k = 0; k < items.length; k++) {
+      const b64 = await page.evaluate(async (f) => { await renderFrameReady(f); return document.getElementById('c').toDataURL('image/jpeg', 0.9).split(',')[1]; }, Math.round((k * 2 + 1.2) * FPS));
+      const f = path.join(dir, `${k}.jpg`);
+      fs.writeFileSync(f, Buffer.from(b64, 'base64'));
+      rows.push({ name: items[k][0], about: items[k][1], images: [f], stages: [1] });
+    }
+  }, { look: true });
+  const man = path.join(dir, 'manifest.json');
+  fs.writeFileSync(man, JSON.stringify({ title: 'lockstep look', style: styleName, rows, crop: null, grid: [Math.min(4, rows.length), 300], unit: 'picture' }));
+  const r = spawnSync('python3', [path.join(ENGINE, 'gallery.py'), man, out], { stdio: 'inherit' });
+  fs.rmSync(dir, { recursive: true, force: true });
+  if (r.status) process.exit(r.status);
 }
 
 /* preview [--port 4173] [--host 0.0.0.0]: serve preview.html, and tell open pages to reload whenever a
@@ -281,20 +324,19 @@ async function preview(args) {
 
 async function scan() {
   await withPage(false, async (page) => {
-    const r = await page.evaluate(() => {
+    const r = await page.evaluate(async () => {
       const errs = [], dark = [], lum = [];
       for (let i = 0; i < window.TOTAL_FRAMES; i += 2) {
-        try { renderFrame(i); } catch (e) { errs.push({ frame: i, t: +(i / FPS).toFixed(2), error: String(e.message || e) }); if (errs.length > 12) break; continue; }
-        if (i % 6 === 0) {            // mean brightness of the diagram zone
-          const d = mctx.getImageData(70, 372, 940, 838).data; let s = 0, n = 0;
-          for (let k = 0; k < d.length; k += 4 * 97) { s += d[k] * 0.3 + d[k + 1] * 0.59 + d[k + 2] * 0.11; n++; }
-          const m = s / n; lum.push([i, m]); if (m < 9) dark.push({ t: +(i / FPS).toFixed(2), mean: +m.toFixed(1) });
+        try { await renderFrameReady(i); } catch (e) { errs.push({ frame: i, t: +(i / FPS).toFixed(2), error: String(e.message || e) }); if (errs.length > 12) break; continue; }
+        if (i % 6 === 0) {            // a blank frame: dark AND flat (night skies and space are dark, not flat)
+          const d = mctx.getImageData(0, 200, W, 1000).data; let s = 0, s2 = 0, n = 0;
+          for (let k = 0; k < d.length; k += 4 * 97) { const v = d[k] * 0.3 + d[k + 1] * 0.59 + d[k + 2] * 0.11; s += v; s2 += v * v; n++; }
+          const m = s / n, sd = Math.sqrt(Math.max(0, s2 / n - m * m)); lum.push([i, m]);
+          if (m < 9 && sd < 6) dark.push({ t: +(i / FPS).toFixed(2), mean: +m.toFixed(1), spread: +sd.toFixed(1) });
         }
       }
       const min = lum.reduce((a, x) => (x[1] < a[1] ? x : a), [0, 999]);
-      /* Lottie animations drawn more than 12 % wider than their off-screen canvas: soft edges — give them a larger res */
-      const soft = [...LOT.values()].filter((L) => L.maxDrawn > L.canvas.width * 1.12).map((L) => ({ name: L.spec.name, res: L.spec.res, drawn_px: Math.round(L.maxDrawn) }));
-      return { errors: errs, dark_frames: dark, darkest: { t: +(min[0] / FPS).toFixed(2), mean: +min[1].toFixed(1) }, sampled: lum.length, soft_lottie: soft };
+      return { errors: errs, dark_frames: dark, darkest: { t: +(min[0] / FPS).toFixed(2), mean: +min[1].toFixed(1) }, sampled: lum.length };
     });
     console.log(JSON.stringify(r, null, 1));
     if (r.errors.length || r.dark_frames.length) process.exitCode = 2;
@@ -318,44 +360,6 @@ async function lint(args) {
     }
   } finally { await browser.close(); server.close(); }
   process.stdout.write(JSON.stringify(out) + '\n');
-}
-
-/* blocks: every block of js/blocks.js drawn in the video's look (or --style file's), cropped to
-   the content zone and tiled by engine/gallery.py — finished, or with --names as build-in strips */
-async function blockSheet(args) {
-  let names = null, stages = null, out = path.join(OUT, 'blocks.jpg');
-  for (let i = 0; i < args.length; i++) {
-    if (args[i] === '--style') STYLE_OVERRIDE = path.resolve(args[++i]);
-    else if (args[i] === '--names') names = args[++i].split(',').filter(Boolean);
-    else if (args[i] === '--stages') stages = args[++i].split(',').map(Number);
-    else if (args[i] === '--out') out = path.resolve(args[++i]);
-  }
-  const dir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'lockstep-blocks-'));   // frames only live until tiled
-  fs.mkdirSync(path.dirname(out), { recursive: true });
-  const rows = [];
-  let styleName = '';
-  await withPage(false, async (page) => {
-    const all = await page.evaluate(() => Object.keys(BLOCK_DEMOS).map((k) => [k, BLOCK_DEMOS[k].about]));
-    styleName = await page.evaluate(() => STYLE.name);
-    const about = new Map(all), want = names || all.map((a) => a[0]);
-    const bad = want.filter((n) => !about.has(n));
-    if (bad.length) throw new Error(`no block ${bad.join(', ')}; the blocks are: ${all.map((a) => a[0]).join(', ')}`);
-    const st = stages || (names ? [0.12, 0.3, 0.5, 0.72, 1] : [1]);
-    for (const n of want) {
-      const images = [];
-      for (let k = 0; k < st.length; k++) {
-        const b64 = await page.evaluate(({ n, p }) => { window.BLOCK_NOW = { name: n, p, t: 2 }; renderFrame(60); return document.getElementById('c').toDataURL('image/jpeg', 0.92).split(',')[1]; }, { n, p: st[k] });
-        const f = path.join(dir, `${n}_${k}.jpg`);
-        fs.writeFileSync(f, Buffer.from(b64, 'base64')); images.push(f);
-      }
-      rows.push({ name: n, about: about.get(n), images, stages: st });
-    }
-  }, { blocks: true });
-  const man = path.join(dir, 'manifest.json');
-  fs.writeFileSync(man, JSON.stringify({ title: 'lockstep blocks', style: styleName, rows, crop: [0, 360, 1080, 1240] }));
-  const r = require('child_process').spawnSync('python3', [path.join(ENGINE, 'gallery.py'), man, out], { stdio: 'inherit' });
-  fs.rmSync(dir, { recursive: true, force: true });
-  if (r.status) process.exit(r.status);
 }
 
 /* transitions: the scene transitions in the video's look (or --style file's), each between the
@@ -398,10 +402,10 @@ async function transitionSheet(args) {
     for (const n of want) {
       const k = find(n), images = [];
       for (let s = 0; s < st.length; s++) {
-        const b64 = await page.evaluate(({ type, p }) => {
+        const b64 = await page.evaluate(async ({ type, p }) => {
           SCENES[1].trans = { type };
           if (isGL(type)) glProgram(glFind(type));
-          renderFrame((SCENES[1].t0 - TR / 2 + p * TR) * FPS);
+          await renderFrameReady((SCENES[1].t0 - TR / 2 + p * TR) * FPS);
           return document.getElementById('c').toDataURL('image/jpeg', 0.9).split(',')[1];
         }, { type: k.type, p: st[s] });
         const f = path.join(dir, `${rows.length}_${s}.jpg`);
@@ -413,7 +417,7 @@ async function transitionSheet(args) {
   }, { transitions: true });
   const man = path.join(dir, 'manifest.json');
   fs.writeFileSync(man, JSON.stringify({ title: 'lockstep transitions', style: styleName, rows, crop: null }));
-  const r = require('child_process').spawnSync('python3', [path.join(ENGINE, 'gallery.py'), man, out], { stdio: 'inherit' });
+  const r = spawnSync('python3', [path.join(ENGINE, 'gallery.py'), man, out], { stdio: 'inherit' });
   fs.rmSync(dir, { recursive: true, force: true });
   if (r.status) process.exit(r.status);
 }
@@ -422,7 +426,10 @@ async function bench(specs) {
   await withPage(false, async (page) => {
     for (const spec of specs) {
       const i = parseFrame(spec);
-      const ms = await page.evaluate((f) => { const t = performance.now(); for (let k = 0; k < 10; k++) { renderFrame(f + k); mctx.getImageData(0, 0, 4, 4); } return (performance.now() - t) / 10; }, i);
+      const ms = await page.evaluate(async (f) => {
+        for (let k = 0; k < 10; k++) await renderFrameReady(f + k);          // film frames loaded first: the time is drawing only
+        const t = performance.now(); for (let k = 0; k < 10; k++) { renderFrame(f + k); mctx.getImageData(0, 0, 4, 4); } return (performance.now() - t) / 10;
+      }, i);
       console.log(`frame ${i} (${(i / FPS).toFixed(1)}s): ${ms.toFixed(1)} ms/frame`);
     }
   });
@@ -473,12 +480,10 @@ async function video(args) {
 (async () => {
   if (mode === 'still') await still(rest);
   else if (mode === 'meta') await meta();
-  else if (mode === 'tile') await tile(rest);
+  else if (mode === 'look') await look(rest);
   else if (mode === 'preview') await preview(rest);
-  else if (mode === 'lottiesheet') await lottiesheet(rest);
   else if (mode === 'scan') await scan();
   else if (mode === 'lint') await lint(rest);
-  else if (mode === 'blocks') await blockSheet(rest);
   else if (mode === 'transitions') await transitionSheet(rest);
   else if (mode === 'bench') await bench(rest);
   else if (mode === 'video') await video(rest);

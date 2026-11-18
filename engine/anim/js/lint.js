@@ -9,14 +9,14 @@
    has little contrast with the picture behind it (a label on top of a figure, a line or a
    glow in its own colour).
 
-   Text the engine draws itself is kept apart: the progress bar is ignored and the captions
-   only mark out the caption zone. Frames inside a transition are drawn (a frame that throws
-   there is still an error) but their text is not recorded, since the scenes are composited
-   there with zooms and slides.
+   The captions the engine draws are kept apart: they only mark out the caption zone. Frames
+   inside a transition are drawn (a frame that throws there is still an error) but their text is
+   not recorded, since the scenes are composited there with zooms and slides. Every sampled frame
+   is first drawn with its film frames loaded (renderFrameReady), then drawn again to record.
    ===================================================================== */
-function lintLayout(step) {
+async function lintLayout(step) {
   const P = CanvasRenderingContext2D.prototype, fill0 = P.fillText, stroke0 = P.strokeText;
-  const hud0 = window.drawHUD, cap0 = window.drawCaptions;
+  const cap0 = window.drawCaptions;
   let rec = null, chrome = null, capSeen = false, mute = false;
   const cap = { x0: 1e9, y0: 1e9, x1: -1e9, y1: -1e9 };
   const fontPx = (f) => { const m = /([\d.]+)px/.exec(f); return m ? +m[1] : 10; };
@@ -94,7 +94,6 @@ function lintLayout(step) {
 
   P.fillText = function (s, x, y, mw) { if (mute) return; note(this, s, x, y, mw, false); return fill0.apply(this, arguments); };
   P.strokeText = function (s, x, y, mw) { if (mute) return; note(this, s, x, y, mw, true); return stroke0.apply(this, arguments); };
-  window.drawHUD = function () { chrome = 'hud'; try { return hud0.apply(this, arguments); } finally { chrome = null; } };
   window.drawCaptions = function () { chrome = 'cap'; try { return cap0.apply(this, arguments); } finally { chrome = null; } };
 
   const samples = [], errors = [], half = TR / 2 + 1 / FPS;
@@ -102,8 +101,8 @@ function lintLayout(step) {
   try {
     for (let i = 0; i < window.TOTAL_FRAMES; i += step) {
       const t = i / FPS;
-      rec = inTransition(t) ? null : [];
-      try { renderFrame(i); } catch (e) {
+      try { mute = true; await renderFrameReady(i); mute = false; rec = inTransition(t) ? null : []; renderFrame(i); } catch (e) {
+        mute = false; rec = null;
         errors.push({ t: +t.toFixed(2), error: String((e && e.message) || e) });
         if (errors.length > 60) break;
         continue;
@@ -121,7 +120,7 @@ function lintLayout(step) {
     }
   } finally {
     rec = null; mute = false;
-    P.fillText = fill0; P.strokeText = stroke0; window.drawHUD = hud0; window.drawCaptions = cap0;
+    P.fillText = fill0; P.strokeText = stroke0; window.drawCaptions = cap0;
   }
   return {
     step, fps: FPS, dur: DATA.dur, W, H, safe: SAFE, right: { x: RIGHT_COL + 60, y: RIGHT_COL_Y },

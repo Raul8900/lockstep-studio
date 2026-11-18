@@ -191,7 +191,15 @@
       const f = Math.min(window.TOTAL_FRAMES - 1, Math.floor(S.t * FPS + 1e-6));
       if (f !== S.frame || S.dirty) {
         const t0 = performance.now();
-        try { renderFrame(f); } catch (e) { showError(`at ${fmtT(f / FPS)} (frame ${f}):\n${e.stack || e}`); }
+        try {
+          CUR_FRAME = f; VMISS = [];
+          renderFrame(f);
+          /* film frames not loaded yet: fetch them (and the next few), then draw this frame again */
+          const miss = VMISS.slice(), ahead = [];
+          for (const m of MEDIA.values()) if (m.kind === 'Video' && m.lastFrameAt === f) for (let k = 1; k <= 8; k++) if (m.last + k < m.frames) ahead.push([m, m.last + k]);
+          if (miss.length) _loadFrames(miss).then(() => { S.dirty = true; }).catch(() => {});
+          if (ahead.length) _loadFrames(ahead).catch(() => {});
+        } catch (e) { showError(`at ${fmtT(f / FPS)} (frame ${f}):\n${e.stack || e}`); }
         S.ms = S.ms ? S.ms * 0.8 + (performance.now() - t0) * 0.2 : performance.now() - t0;
         S.frame = f; S.dirty = false; S.ui = true;
       }

@@ -1,7 +1,12 @@
 'use strict';
 /* =====================================================================
-   engine.js — data + cues, background, bloom, captions, HUD, scene
-   scheduling with layer-composited transitions, frame entry point.
+   engine.js — data + cues, captions, the finish (bloom, vignette, dither),
+   scene scheduling with transitions, frame entry point, boot.
+
+   A video is a list of scenes, one per beat of the narration (addScene); each
+   draws its frame as a pure function of time. What a scene draws is the video's
+   own: real pictures and film (media.js), 3D worlds (world3d.js), overlays
+   (overlays.js), type (text.js) — there is no fixed layout, header or chapter bar.
    ===================================================================== */
 
 const DATA = { words: null, takes: null, beats: null, meta: null, dur: 0 };
@@ -59,83 +64,11 @@ function initCanvases() {
 }
 
 /* ---------- background ----------
-   The backdrop is chosen by the style (style.json -> backdrop.type, see backdrops.js).
-   A video can also draw its own: define window.drawBackdrop(ctx, t) in its components.js. */
+   Seen only where no picture covers the frame: the style's background colour, or a video's
+   own window.drawBackdrop(ctx, t) from its components.js. */
 function drawBackground(ctx, t) {
   if (typeof window.drawBackdrop === 'function') { window.drawBackdrop(ctx, t); return; }
-  BACKDROPS[STYLE.backdrop.type](ctx, t, STYLE.backdrop);
-}
-/* fills the frame with the style's vertical gradient, drawn small and scaled up (it is smooth) */
-function backdropBase(ctx) {
-  const q = bgq, QW = W / 4, QH = H / 4;
-  const g = q.createLinearGradient(0, 0, 0, QH);
-  g.addColorStop(0, COL.bgTop); g.addColorStop(0.45, COL.bgMid); g.addColorStop(1, COL.bgBot);
-  q.globalCompositeOperation = 'source-over'; q.globalAlpha = 1;
-  q.fillStyle = g; q.fillRect(0, 0, QW, QH);
-  return q;
-}
-function backdropFlush(ctx) { ctx.imageSmoothingQuality = 'medium'; ctx.drawImage(BGQ, 0, 0, W, H); }
-
-function backdropCircuit(ctx, t) {
-  /* gradient + slow colour fog are smooth, so they are drawn at quarter size */
-  const q = bgq, QW = W / 4, QH = H / 4;
-  const g = q.createLinearGradient(0, 0, 0, QH);
-  g.addColorStop(0, COL.bgTop); g.addColorStop(0.45, COL.bgMid); g.addColorStop(1, COL.bgBot);
-  q.globalCompositeOperation = 'source-over'; q.globalAlpha = 1;
-  q.fillStyle = g; q.fillRect(0, 0, QW, QH);
-  const fog = [
-    [COL.cyan, 160 + 90 * Math.sin(t * 0.11), 420 + 120 * Math.cos(t * 0.07), 760, 0.11],
-    [COL.violet, 930 + 80 * Math.cos(t * 0.09 + 1), 1180 + 160 * Math.sin(t * 0.06 + 2), 880, 0.12],
-    [COL.cyanDeep, 540 + 200 * Math.sin(t * 0.05 + 4), 1760 + 60 * Math.sin(t * 0.08), 700, 0.16],
-  ];
-  for (const f of fog) glow(q, f[1] / 4, f[2] / 4, f[3] / 4, f[0], f[4]);
-  ctx.imageSmoothingQuality = 'medium';
-  ctx.drawImage(BGQ, 0, 0, W, H);
-
-  /* dot lattice drifting upward (parallax floor) */
-  const sp = 60, drift = (t * 7) % sp;
-  ctx.fillStyle = rgba('#9FC4EA', 1);
-  for (let y = -sp; y < H + sp; y += sp) {
-    const yy = y - drift;
-    const fade = clamp(Math.min(yy, H - yy) / 380) * 0.11;
-    if (fade <= 0.004) continue;
-    ctx.globalAlpha = fade;
-    for (let x = 30; x < W; x += sp) ctx.fillRect(x - 1.25, yy - 1.25, 2.5, 2.5);
-  }
-  ctx.globalAlpha = 1;
-
-  /* perspective floor grid in the lower band (sits under platform UI): depth without distraction */
-  {
-    const hz = 1500, vx = 540;
-    ctx.save();
-    ctx.lineWidth = 1.5;
-    for (let i = -12; i <= 12; i++) {
-      const xb = vx + i * 150;
-      const gr = ctx.createLinearGradient(0, hz, 0, H);
-      gr.addColorStop(0, rgba(COL.cyan, 0)); gr.addColorStop(0.35, rgba(COL.cyan, 0.07)); gr.addColorStop(1, rgba(COL.cyan, 0.17));
-      ctx.strokeStyle = gr; ctx.beginPath(); ctx.moveTo(vx + i * 14, hz); ctx.lineTo(xb + i * 60, H + 40); ctx.stroke();
-    }
-    for (let k = 0; k < 9; k++) {
-      const u = ((k + (t * 0.22) % 1) / 9);
-      const y = hz + (H + 40 - hz) * u * u;
-      ctx.strokeStyle = rgba(COL.cyan, 0.02 + 0.15 * u);
-      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
-    }
-    ctx.restore();
-  }
-
-  /* faint vertical traces with pulses travelling top -> bottom */
-  const xs = [96, 228, 384, 696, 852, 984];
-  for (let i = 0; i < xs.length; i++) {
-    ctx.fillStyle = rgba('#7FB0E0', 0.045); ctx.fillRect(xs[i], 0, 1.5, H);
-    for (let k = 0; k < 2; k++) {
-      const speed = 150 + 70 * hash(i * 7 + k), ph = hash(i * 13 + k * 5) * 2600;
-      const y = ((t * speed + ph) % 2600) - 300;
-      const gr = ctx.createLinearGradient(0, y - 150, 0, y);
-      gr.addColorStop(0, rgba(COL.cyan, 0)); gr.addColorStop(1, rgba(COL.cyan, 0.24));
-      ctx.fillStyle = gr; ctx.fillRect(xs[i] - 0.75, y - 150, 3, 150);
-    }
-  }
+  ctx.fillStyle = STYLE.bg; ctx.fillRect(0, 0, W, H);
 }
 
 /* ---------- post ---------- */
@@ -160,7 +93,7 @@ function applyBloom(ctx, src, strength = 1) {
   ctx.restore();
 }
 function drawPost(ctx, frame) {
-  if (!window.LOTTIESHEET) ctx.drawImage(OVERLAY, 0, 0);       // preview sheets skip the caption shading
+  ctx.drawImage(OVERLAY, 0, 0);                                // vignette + a soft band behind the captions
   /* fixed low-amplitude dither (about 1.5 code values): hides 8-bit banding in the dark
      gradients. It is static on purpose - animated grain multiplied the bitrate by ~8. */
   ctx.save();
@@ -190,7 +123,7 @@ const CAP_COL = { k: COL.cyan, n: COL.amber, m: COL.violet, w: COL.coral };
 function initCaptionStyle() {          // after applyStyle
   const C = STYLE.captions;
   Object.assign(CAP, { size: C.size, weight: C.weight, family: F[C.font] || C.font, lineH: C.lineH || Math.round(C.size * 1.22), maxW: C.maxW, cy: C.y });
-  Object.assign(CAP_COL, { k: COL.cyan, n: COL.amber, m: COL.violet, w: COL.coral });
+  Object.assign(CAP_COL, { k: C.key ? COL[C.key] || C.key : COL.amber, n: COL.amber, m: COL.violet, w: COL.coral });
 }
 const capColor = (v, fallback) => (v ? (COL[v] || v) : fallback);
 
@@ -271,7 +204,9 @@ function drawCaptions(ctx, t) {
       ctx.scale(s, s);
       ctx.font = fontCSS(CAP.weight, CAP.size, CAP.family);
       ctx.globalAlpha = a;
+      if (C.shadow > 0) { ctx.shadowColor = `rgba(0,0,0,${C.shadow})`; ctx.shadowBlur = 22; ctx.shadowOffsetY = 5; }
       if (C.strokeW > 0) { ctx.strokeStyle = C.stroke; ctx.lineWidth = C.strokeW; ctx.strokeText(w.disp, -w.wdt / 2, 0); }
+      if (C.shadow > 0 && C.strokeW > 0) { ctx.shadowColor = 'rgba(0,0,0,0)'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0; }
       if (C.glow && state !== 0 && w.cls) {                                 // soft halo on key terms
         ctx.shadowColor = rgba(colr, 0.75 * (0.35 + 0.65 * k)); ctx.shadowBlur = 26;
       }
@@ -347,38 +282,12 @@ function drawCaptionMarker(ctx, t, c, alpha) {
   ctx.globalAlpha = 1;
 }
 
-/* ---------- HUD: chapter progress ---------- */
+/* a scene's name: video.json chapters may name a beat, else the beat's title in script.py */
 function chapterName(id) {
   const c = (VIDEO.chapters || []).find((x) => x.id === id);
   if (c && c.name) return c.name;
   const b = DATA.beats.find((x) => x.id === id);
   return (b ? b.title : id).toUpperCase();
-}
-function drawHUD(ctx, t) {
-  const HS = STYLE.hud;
-  if (HS.type === 'none' || window.LOTTIESHEET || window.BLOCKS_MODE || window.TRANS_MODE) return;
-  if (HS.type === 'line') {            // one thin progress line, no labels
-    fillRR(ctx, SAFE.l, 292, SAFE.r - SAFE.l, 5, 2.5, HS.track);
-    fillRR(ctx, SAFE.l, 292, Math.max(5, (SAFE.r - SAFE.l) * clamp(t / DATA.dur)), 5, 2.5, COL.cyan);
-    return;
-  }
-  const x0 = SAFE.l, x1 = SAFE.r, y = 292, gap = 8, n = SCENES.length;
-  const total = DATA.dur, usable = x1 - x0 - gap * (n - 1);
-  let x = x0, cur = 0;
-  for (let i = 0; i < n; i++) {
-    const s = SCENES[i], wdt = usable * (s.t1 - s.t0) / total;
-    const p = prog(t, s.t0, s.t1);
-    if (t >= s.t0) cur = i;
-    fillRR(ctx, x, y, wdt, 5, 2.5, HS.track);
-    if (p > 0) fillRR(ctx, x, y, Math.max(5, wdt * p), 5, 2.5, p >= 1 ? HS.done : COL.cyan);
-    x += wdt + gap;
-  }
-  const s = SCENES[cur];
-  const a = (cur === 0 ? 1 : clamp((t - s.t0) / 0.35)) * (cur < n - 1 ? clamp((s.t1 - t) / 0.25) : 1);
-  const num = String(cur + 1).padStart(2, '0');
-  const wn = text(ctx, num, x0, 334, { size: 25, weight: 800, family: F.mono, color: COL.cyan, alpha: a, ls: 1 });
-  text(ctx, chapterName(s.id), x0 + wn + 14, 334, { size: 25, weight: 700, family: F.mono, color: COL.text, alpha: a * 0.82, ls: 3 });
-  if (VIDEO.tag) text(ctx, VIDEO.tag, x1, 334, { size: 22, weight: 600, family: F.mono, color: COL.dim, alpha: 0.6, ls: 3, align: 'right' });
 }
 
 /* ---------- scenes + transitions ---------- */
@@ -479,7 +388,7 @@ function renderFrame(i) {
   renderScenes(mctx, t);
   if (STYLE.post.bloom > 0) applyBloom(mctx, MAIN, STYLE.post.bloom);
   drawPost(mctx, i);
-  drawHUD(mctx, t);
+  if (typeof drawOverlayLayer === 'function') drawOverlayLayer(mctx, t);   // a video's screen-space overlays, above the finish
   drawCaptions(mctx, t);
   if (window.DEBUG_SAFE) drawSafeGuides(mctx);
 }
@@ -518,28 +427,23 @@ async function boot() {
   const opt = (u) => fetch(u).then((r) => (r.ok ? r.json() : null)).catch(() => null);
   VIDEO = await get('project/video.json');
   applyStyle(await opt('project/style.json'));
-  if (!BACKDROPS[STYLE.backdrop.type] && typeof window.drawBackdrop !== 'function') throw new Error(`style.json: unknown backdrop type "${STYLE.backdrop.type}"; choose from: ${Object.keys(BACKDROPS).join(', ')} (or define window.drawBackdrop in components.js)`);
   if (!isGL(STYLE.transition.default) && !TRANSITIONS.includes(STYLE.transition.default)) throw new Error(`style.json: unknown default transition "${STYLE.transition.default}"`);
   TR = STYLE.transition.duration;
   initCaptionStyle();
   await loadFonts(opt);
   initCanvases();
   ICONS = (await opt('assets/icons/lucide.json')) || {};
-  if (window.TILE_MODE) {
-    setupTile();
-  } else if (window.LOTTIESHEET) {
-    setupLottieSheet(window.LOTTIESHEET);
-  } else if (window.TRANS_MODE) {
+  if (window.TRANS_MODE) {
     setupTransitionSheet();
-  } else if (window.BLOCKS_MODE) {
-    setupBlockSheet();
+  } else if (window.LOOK_MODE) {
+    await setupLook();
   } else {
     const [words, takes, phrases] = await Promise.all([get('project/data/words.json'), get('project/data/takes.json'), get('project/caption_phrases.json')]);
     DATA.words = words; DATA.takes = takes.takes; DATA.beats = takes.beats; DATA.meta = takes.meta; DATA.dur = takes.meta.duration;
     CAPS = buildCaptions(words, phrases);
     if (window.defineScenes) window.defineScenes();
   }
-  await loadLotties();                  // every file declared with useLottie(), loaded and recoloured once
+  await loadMedia();                    // every picture, film clip and 3D model the scenes declared (media.js)
   finalizeScenes();
   for (const s of SCENES) if (!isGL((s.trans || {}).type) && !TRANSITIONS.includes((s.trans || {}).type)) throw new Error(`scene ${s.id}: unknown transition type "${(s.trans || {}).type}"; choose from: ${TRANSITIONS.join(', ')}, or a shader transition gl:<Name> (lockstep transitions lists them)`);
   await prepareGLTransitions();        // shader transitions the scenes use: loaded and compiled now
@@ -552,7 +456,7 @@ async function boot() {
    (uploading raw pixel buffers from the page proved ~8x slower than drawing) */
 async function renderRange(a, b, quality = 0.97) {
   for (let i = a; i < b; i++) {
-    renderFrame(i);
+    await renderFrameReady(i);
     const blob = await new Promise((res) => MAIN.toBlob(res, 'image/jpeg', quality));
     const r = await fetch(`/frame?i=${i}`, { method: 'POST', body: blob });
     if (!r.ok) throw new Error('frame post failed ' + r.status);

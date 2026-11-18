@@ -1,0 +1,16 @@
+{
+  "title": "The Accident That Saved Millions",
+  "output": "penicillin_accident_vertical",
+  "max_seconds": 90,
+  "chapters": [
+    { "id": "hook",    "mood": "drone" },
+    { "id": "plate",   "mood": "tense" },
+    { "id": "burst",   "mood": "mechanical" },
+    { "id": "shelf",   "mood": "dark" },
+    { "id": "oxford",  "mood": "build" },
+    { "id": "urine",   "mood": "tense" },
+    { "id": "melon",   "mood": "drive" },
+    { "id": "dday",    "mood": "bright" },
+    { "id": "warning", "mood": "finale" }
+  ]
+}

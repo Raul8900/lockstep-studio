@@ -1,0 +1,237 @@
+{
+ "fleming-colour": {
+  "file": "fleming-colour.jpg",
+  "kind": "photo",
+  "source": "wikimedia",
+  "id": "24436974",
+  "title": "Synthetic Production of Penicillin TR1468.jpg",
+  "author": "Official photographer",
+  "licence": "Public domain",
+  "licence_url": "",
+  "page": "https://commons.wikimedia.org/wiki/File:Synthetic_Production_of_Penicillin_TR1468.jpg",
+  "download": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Synthetic_Production_of_Penicillin_TR1468.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "credit_required": false,
+  "taken": "2026-11-18",
+  "size": [
+   1831,
+   2600
+  ]
+ },
+ "fleming-dish": {
+  "file": "fleming-dish.jpg",
+  "kind": "photo",
+  "source": "wikimedia",
+  "id": "33168424",
+  "title": "Alexander Fleming2.jpg",
+  "author": "Unknown authorUnknown author",
+  "licence": "CC BY 4.0",
+  "licence_url": "https://creativecommons.org/licenses/by/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Alexander_Fleming2.jpg",
+  "download": "https://upload.wikimedia.org/wikipedia/commons/7/7b/Alexander_Fleming2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "credit_required": true,
+  "taken": "2026-11-18",
+  "size": [
+   1226,
+   1496
+  ],
+  "cutout": "fleming-dish.cut.png"
+ },
+ "mrsa": {
+  "file": "mrsa.jpg",
+  "kind": "photo",
+  "source": "wikimedia",
+  "id": "158430136",
+  "title": "Methicillin-Resistant Staphylococcus Aureus (MRSA) Bacteria colorized scanning electron micrograph - 33.jpg",
+  "author": "NIAID",
+  "licence": "CC BY 2.0",
+  "licence_url": "https://creativecommons.org/licenses/by/2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Methicillin-Resistant_Staphylococcus_Aureus_(MRSA)_Bacteria_colorized_scanning_electron_micrograph_-_33.jpg",
+  "download": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Methicillin-Resistant_Staphylococcus_Aureus_%28MRSA%29_Bacteria_colorized_scanning_electron_micrograph_-_33.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "credit_required": true,
+  "taken": "2026-11-18",
+  "size": [
+   1920,
+   1655
+  ]
+ },
+ "florey": {
+  "file": "florey.jpg",
+  "kind": "photo",
+  "source": "wikimedia",
+  "id": "119635410",
+  "title": "Sir Howard Florey.jpg",
+  "author": "Julian Smith",
+  "licence": "Public domain",
+  "licence_url": "",
+  "page": "https://commons.wikimedia.org/wiki/File:Sir_Howard_Florey.jpg",
+  "download": "https://upload.wikimedia.org/wikipedia/commons/0/0d/Sir_Howard_Florey.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "credit_required": false,
+  "taken": "2026-11-18",
+  "size": [
+   1280,
+   1834
+  ]
+ },
+ "culture-pot": {
+  "file": "culture-pot.jpg",
+  "kind": "photo",
+  "source": "openverse",
+  "id": "7ebde1d4-50f1-4fb4-bf31-e0199933b11c",
+  "title": "Penicillin Culturing Pot - Howard Florey, Oxford, England, circa 1940",
+  "author": "Photographer: Jon Augier",
+  "licence": "CC BY 4.0",
+  "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+  "page": "https://collections.museumsvictoria.com.au/items/245069",
+  "download": "https://collections.museumsvictoria.com.au/content/media/13/1930513-large.jpg",
+  "credit_required": true,
+  "taken": "2026-11-18",
+  "size": [
+   2600,
+   1733
+  ]
+ },
+ "extraction": {
+  "file": "extraction.jpg",
+  "kind": "photo",
+  "source": "wikimedia",
+  "id": "24365203",
+  "title": "Penicillin Past, Present and Future- the Development and Production of Penicillin, England, 1943 D16959.jpg",
+  "author": "Richard Stone",
+  "licence": "Public domain",
+  "licence_url": "",
+  "page": "https://commons.wikimedia.org/wiki/File:Penicillin_Past,_Present_and_Future-_the_Development_and_Production_of_Penicillin,_England,_1943_D16959.jpg",
+  "download": "https://upload.wikimedia.org/wikipedia/commons/8/86/Penicillin_Past%2C_Present_and_Future-_the_Development_and_Production_of_Penicillin%2C_England%2C_1943_D16959.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "credit_required": false,
+  "taken": "2026-11-18",
+  "size": [
+   1251,
+   1300
+  ]
+ },
+ "oxford-racks": {
+  "file": "oxford-racks.jpg",
+  "kind": "photo",
+  "source": "wikimedia",
+  "id": "24365171",
+  "title": "Penicillin Past, Present and Future- the Development and Production of Penicillin, England, 1943 D16965.jpg",
+  "author": "Richard Stone",
+  "licence": "Public domain",
+  "licence_url": "",
+  "page": "https://commons.wikimedia.org/wiki/File:Penicillin_Past,_Present_and_Future-_the_Development_and_Production_of_Penicillin,_England,_1943_D16965.jpg",
+  "download": "https://upload.wikimedia.org/wikipedia/commons/7/78/Penicillin_Past%2C_Present_and_Future-_the_Development_and_Production_of_Penicillin%2C_England%2C_1943_D16965.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "credit_required": false,
+  "taken": "2026-11-18",
+  "size": [
+   960,
+   1018
+  ]
+ },
+ "dday": {
+  "file": "dday.jpg",
+  "kind": "photo",
+  "source": "wikimedia",
+  "id": "8024249",
+  "title": "Omaha Beach Landing Craft.jpg",
+  "author": "U.S. Army Signal Corps",
+  "licence": "Public domain",
+  "licence_url": "",
+  "page": "https://commons.wikimedia.org/wiki/File:Omaha_Beach_Landing_Craft.jpg",
+  "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/Omaha_Beach_Landing_Craft.jpg/3840px-Omaha_Beach_Landing_Craft.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credit_required": false,
+  "taken": "2026-11-18",
+  "size": [
+   2600,
+   1722
+  ]
+ },
+ "cantaloupe": {
+  "file": "cantaloupe.jpg",
+  "kind": "photo",
+  "source": "wikimedia",
+  "id": "320487",
+  "title": "Cucumis melo var. reticulatus (photo by Scott Bauer).jpg",
+  "author": "USDA photo by Scott Bauer. Image Number K7355-11.",
+  "licence": "Public domain",
+  "licence_url": "",
+  "page": "https://commons.wikimedia.org/wiki/File:Cucumis_melo_var._reticulatus_(photo_by_Scott_Bauer).jpg",
+  "download": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Cucumis_melo_var._reticulatus_%28photo_by_Scott_Bauer%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "credit_required": false,
+  "taken": "2026-11-18",
+  "size": [
+   2600,
+   1742
+  ]
+ },
+ "paper-1929": {
+  "file": "paper-1929.jpg",
+  "kind": "photo",
+  "source": "wikimedia",
+  "id": "35938200",
+  "title": "First page of Alexander Fleming's paper on penicillin Wellcome L0007150.jpg",
+  "author": "https://wellcomeimages.org/indexplus/obf_images/8c/c4/5da30d7ae1777720190fcb18c3d3.jpg Gallery: https://wellcomeimages.org/indexplus/image/L0007150.html Wellcome Collection gallery (2018-03-29): https://wellcomecollection.org/works/ucsc46fn CC-BY-4.0",
+  "licence": "CC BY 4.0",
+  "licence_url": "https://creativecommons.org/licenses/by/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:First_page_of_Alexander_Fleming%27s_paper_on_penicillin_Wellcome_L0007150.jpg",
+  "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/16/First_page_of_Alexander_Fleming%27s_paper_on_penicillin_Wellcome_L0007150.jpg/3840px-First_page_of_Alexander_Fleming%27s_paper_on_penicillin_Wellcome_L0007150.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credit_required": true,
+  "taken": "2026-11-18",
+  "size": [
+   1971,
+   2600
+  ]
+ },
+ "fleming-painting": {
+  "file": "fleming-painting.jpg",
+  "kind": "photo",
+  "source": "wikimedia",
+  "id": "36002699",
+  "title": "Sir Alexander Fleming, Frs, the Discoverer of Penicillin Art.IWMARTLD4217.jpg",
+  "author": "Ethel Léontine Gabain",
+  "licence": "Public domain",
+  "licence_url": "",
+  "page": "https://commons.wikimedia.org/wiki/File:Sir_Alexander_Fleming,_Frs,_the_Discoverer_of_Penicillin_Art.IWMARTLD4217.jpg",
+  "download": "https://upload.wikimedia.org/wikipedia/commons/5/55/Sir_Alexander_Fleming%2C_Frs%2C_the_Discoverer_of_Penicillin_Art.IWMARTLD4217.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "credit_required": false,
+  "taken": "2026-11-18",
+  "size": [
+   2600,
+   2171
+  ]
+ },
+ "mould-plate": {
+  "file": "mould-plate.jpg",
+  "kind": "photo",
+  "source": "wikimedia",
+  "id": "180413169",
+  "title": "P.polonicum.jpg",
+  "author": "Atalyssa",
+  "licence": "CC BY 4.0",
+  "licence_url": "https://creativecommons.org/licenses/by/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:P.polonicum.jpg",
+  "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/P.polonicum.jpg/3840px-P.polonicum.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "credit_required": true,
+  "taken": "2026-11-18",
+  "size": [
+   2600,
+   2179
+  ]
+ },
+ "earth-map": {
+  "file": "earth-map.jpg",
+  "kind": "photo",
+  "source": "wikimedia",
+  "id": "84107736",
+  "title": "Blue Marble Next Generation + topography + bathymetry.jpg",
+  "author": "Reto Stöckli, NASA Earth Observatory, modified by NordNordWest",
+  "licence": "Public domain",
+  "licence_url": "",
+  "page": "https://commons.wikimedia.org/wiki/File:Blue_Marble_Next_Generation_%2B_topography_%2B_bathymetry.jpg",
+  "download": "https://upload.wikimedia.org/wikipedia/commons/5/56/Blue_Marble_Next_Generation_%2B_topography_%2B_bathymetry.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "credit_required": false,
+  "taken": "2026-11-18",
+  "size": [
+   1920,
+   960
+  ]
+ }
+}

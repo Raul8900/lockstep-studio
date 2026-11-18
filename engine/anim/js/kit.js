@@ -1,8 +1,8 @@
 'use strict';
 /* =====================================================================
-   kit.js — optional drawing vocabulary beyond boxes and lines:
-   icons, hand-drawn shapes, marker highlights, type that fits, and the
-   style tile used to judge a look before any scene exists.
+   kit.js — drawing vocabulary beyond boxes and lines: icons, hand-drawn
+   shapes, marker highlights, type that fits, motion for characters and
+   speech bubbles.
    ===================================================================== */
 
 /* ---------- icons (Lucide, ISC licence; names in assets/icons/names.txt) ----------
@@ -99,7 +99,7 @@ function bigWord(ctx, str, cx, cy, p, o = {}) {
 }
 
 /* ---------- motion for characters and objects (pure functions of time) ----------
-   Use with anything drawn as a character: a Lottie, an icon, a shape from components.js. */
+   Use with anything that acts: a cut-out person (cutout()), an icon, a shape from components.js. */
 /* walking / trotting bounce: a y offset (≤ 0); speed = steps per second */
 const bob = (t, o = {}) => -(o.amp == null ? 12 : o.amp) * Math.abs(Math.sin(Math.PI * (o.speed == null ? 2 : o.speed) * t + (o.phase || 0)));
 /* gentle side-to-side lean: rotation in radians */
@@ -115,7 +115,7 @@ function wiggle(t, o = {}) {
 }
 /* a jump starting at t0: crouch, stretch in the air, squash on landing. Returns { dy, squash }:
    offset y by dy, and scale x by (1 + 0.25 * squash), y by (1 - 0.25 * squash) about the feet
-   (drawLottie takes both directly: { dy: j.dy, squash: j.squash, anchor: 'bottom' }) */
+    */
 function hop(t, t0, o = {}) {
   const { height = 140, dur = 0.42 } = o;
   if (t < t0 - 0.08) return { dy: 0, squash: 0 };
@@ -167,40 +167,4 @@ function bubble(ctx, x, y, w, h, tx, ty, o = {}) {
     text(ctx, str, x, y + sz * 0.35, { size: sz, weight, family, color, align: 'center' });
     ctx.restore();
   }
-}
-
-/* ---------- style tile ----------
-   `lockstep tile <video>` renders this: palette roles, type, panel, icons, a caption
-   and the backdrop, as they will look in the video.                                   */
-function setupTile() {
-  const ws = ['Captions', 'look', 'like', 'this,', 'word', 'by', 'word'], cls = [null, null, null, null, 'k', null, 'n'];
-  DATA.words = ws.map((w, i) => ({ w, t0: 0.6 + i * 0.3, t1: 0.86 + i * 0.3, beat: 'tile', take: 0, cls: cls[i] }));
-  DATA.takes = [{ take: 0, beat: 'tile', text: ws.join(' '), t0: 0.6, t1: 2.7, pause_after: 0.5 }];
-  DATA.beats = [{ id: 'tile', title: 'Style tile', t0: 0.6, t1: 2.7 }];
-  DATA.meta = { duration: 4 }; DATA.dur = 4;
-  CAPS = buildCaptions(DATA.words, ['Captions look', 'like this,', 'word by word']);
-  addScene('tile', drawTile);
-}
-function drawTile(ctx, t) {
-  const roles = ['subject', 'accent', 'data', 'alert', 'good'];
-  tag(ctx, 'STYLE · ' + STYLE.name.toUpperCase() + (STYLE.mode === 'light' ? ' · LIGHT' : ''), CX, 420, { align: 'center' });
-  const title = VIDEO.title && !/__/.test(VIDEO.title) && VIDEO.title !== 'Style preview' ? VIDEO.title : 'Headline';
-  bigWord(ctx, title, CX, 505, 1, { maxW: 880, max: 150 });
-  text(ctx, 'Body text explains one thing in a short line.', CX, 640, { size: 38, weight: 500, color: COL.text, align: 'center' });
-  for (let i = 0; i < roles.length; i++) {
-    const x = CX + (i - 2) * 178, c = COL[roles[i]];
-    glow(ctx, x, 760, 120, c, 0.3); dot(ctx, x, 760, 54, c);
-    tag(ctx, roles[i].toUpperCase(), x, 850, { align: 'center', size: 21 });
-  }
-  panel(ctx, 110, 900, 860, 290, { accent: COL.subject, accentA: 0.8 });
-  pill(ctx, 'LABEL', 220, 962, { bg: COL.subject });
-  pill(ctx, '21,760', 400, 962, { bg: COL.accent });
-  text(ctx, 'Panel title', 150, 1050, { size: 54, weight: 800, family: F.disp });
-  text(ctx, 'secondary text · dim', 150, 1100, { size: 30, weight: 500, color: COL.dim });
-  tag(ctx, 'MONO TAG 0123', 150, 1150);
-  const pts = []; for (let i = 0; i <= 20; i++) pts.push([560 + i * 18, 1070 - 46 * Math.sin(i * 0.6 + t * 2) * (0.5 + 0.5 * hash(i))]);
-  polyline(ctx, pts, COL.subject, 5);
-  roughCircle(ctx, 880, 965, 34, COL.alert, 5, { seed: 3 });
-  const names = ['lightbulb', 'heart', 'zap', 'globe'].filter((n) => ICONS[n]);
-  names.forEach((n, i) => icon(ctx, n, 590 + i * 92, 1150, 60, [COL.accent, COL.alert, COL.good, COL.data][i]));
 }

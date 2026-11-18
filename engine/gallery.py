@@ -1,8 +1,9 @@
-"""Tile the frames that `render.js <video> blocks` or `… transitions` drew into one sheet.
+"""Tile the frames that `render.js <video> look` or `… transitions` drew into one sheet.
 
   python3 engine/gallery.py <manifest.json> <out.jpg>
 
-manifest: { "title", "style", "crop": [x0, y0, x1, y1] or null (whole frame), "rows": [{ "name",
+manifest: { "title", "style", "crop": [x0, y0, x1, y1] or null (whole frame), "grid": [columns,
+cell width] (optional), "rows": [{ "name",
 "about", "images": [jpg…], "stages": [p…] }] }. One frame per row: a grid, each cell labelled with
 its name and what it is for. Several frames per row: one strip per row, left to right, with the
 progress under each frame.
@@ -55,7 +56,7 @@ pad, head = 24, 76
 probe = ImageDraw.Draw(Image.new("RGB", (8, 8)))
 
 if not strips:                                     # one frame per row: a labelled grid
-    cols, cw = (3, 400) if (y1 - y0) < 1200 else (6, 200)
+    cols, cw = man.get("grid") or ((3, 400) if (y1 - y0) < 1200 else (6, 200))
     if cw < 300:
         f_name, f_about = font(19, True), font(15)
     ch = round(cw * (y1 - y0) / (x1 - x0))

@@ -4,88 +4,70 @@
 Written after the research and before a single line of narration. `lockstep voice` and
 `lockstep build` refuse to run until every section below is filled in and style.json exists.
 
-Spend real time here. Everything after this step is execution; this is where the video becomes
-good or forgettable. Write reasoning, not labels: "warm because…", "fast because…".
-Process and examples: .claude/skills/explainer-video/reference/creative-direction.md
-Story shapes: reference/story-formats.md · Looks: reference/art-direction.md
-Delete these comments as you go (the checker ignores them).
+This is where the video becomes worth watching. Write reasoning, not labels.
+How: .claude/skills/explainer-video/reference/story.md (scripts that hold attention) and
+reference/shots.md (what fills the frame). Delete these comments as you go (the checker ignores them).
 -->
 
 ## Audience and promise
 
-<!-- Who is watching, what do they already believe about this topic, and what will they be able
-to say or see differently after 60–90 seconds? Why would they stop scrolling for it? -->
+<!-- Who is scrolling past, what they already believe about this, and what they will be able to
+say or picture after 45–90 seconds. Why would they stop for it? -->
 TODO
 
 ## Angle
 
-<!-- The one take this video is built around: true, surprising, and drawable. Write five candidate
-angles in one sentence each, then keep the strongest and say why the others lost. -->
+<!-- Five candidate angles, one sentence each — a person, a mystery, a number, a disaster, a "you".
+Keep the strongest: true, surprising, and something you can SHOW. Say why the others lost. -->
 TODO
 
-## Directions considered
+## Story
 
-<!-- At least three genuinely different treatments, each under its own ### heading. They must differ
-in at least two of: story shape, visual world/metaphor, tone, look. For each: a one-paragraph pitch
-(what the viewer sees and hears in the first ten seconds and how it ends), why it suits this topic,
-and its biggest risk. Not three colour variations of one idea. -->
-
-### TODO direction A
-
-### TODO direction B
-
-### TODO direction C
-
-## Chosen direction
-
-<!-- Which one (or which combination) and why it beats the others for THIS topic and audience.
-If you combined them, say exactly what came from where. -->
+<!-- The narrative, not a list of facts. Who or what is the protagonist ("you", a person, an
+object)? What is the mystery or stake in the first line? Where does it escalate ("and it gets
+stranger…")? What is the twist or payoff, and how does the last line call back to the first?
+Then the beats: id, job, rough seconds. Target 190–210 spoken words a minute. -->
 TODO
 
 ## Hook
 
-<!-- The first three seconds decide everything. Write three candidate openings — each is a picture
-AND a line, both landing within 3 s — then pick one and say why. Name the open loop the hook creates
-and where in the video it is closed. -->
+<!-- Three candidate openings, each a picture AND a line that both land inside 2 seconds. Pick one
+and say why. Name the question the hook opens and the beat that answers it. -->
 TODO
 
-## Story shape
+## World and hero
 
-<!-- The format (from story-formats.md, a combination, or your own) and the beat map: every beat
-with its job, its rough length in seconds, and the turn that moves the viewer to the next one.
-Mark the pattern interrupts and the payoff. Say how the end connects back to the start. -->
+<!-- The ONE world the video lives in, start to finish: archive photographs and film of the real
+place and people; a 3D world; a map; space imagery; or a deliberate mix with a reason. The
+recurring hero who acts out each line (a person in the photos, a cut-out, a 3D character, an
+object). Every abstract idea turned into something physical (memory → a warehouse, a dose → a
+stack of glowing blocks, delay → a ring that counts). What is deliberately left out. -->
 TODO
 
-## Pacing
+## Shot plan
 
-<!-- Target length, voice speed, pause lengths, where it accelerates and where it breathes, how often
-the picture changes. Fast is not the same as rushed: say what the viewer needs time to read. -->
+<!-- One line per beat: what fills the frame (photo / film / 3D / type), the camera move (push in,
+pan, orbit, dolly, whip), the overlay if any (number, pointer, circle, stamp), and the media it needs
+as a search: `find photo "Alexander Fleming laboratory"` -> taken as fleming-lab (wikimedia, public
+domain). The camera never stops; a hard cut is a choice, not a default. Mark the shots where you
+asked the person to choose between candidates, and any gap no free source could fill. -->
 TODO
 
-## Visual world
+## Look
 
-<!-- The world the video takes place in and why it fits the topic: the central metaphor, the recurring
-hero object or character, what is drawn as diagram vs. object vs. type, how scale or time is shown,
-the camera's personality, what is deliberately left out. Describe reference looks in words; never
-copy a specific creator's signature style. -->
+<!-- style.json: its name, the colour grade every picture gets (one film, not a collage), the
+caption treatment and key-word colour, fonts for overlays, the default cut. Why this look suits
+this story. Check it on the real media with `lockstep look <video>`. -->
 TODO
 
-## Style
+## Sound and voice
 
-<!-- The look in style.json and the reasoning for each choice: name, light or dark, palette (which
-colour plays subject / accent / data / alert / good and why), display / body / mono fonts and their
-voice, backdrop, caption treatment, transition grammar, shape language. Name at least one look you
-rejected. Render it with `lockstep tile <video>` and look at it before moving on. -->
-TODO
-
-## Sound
-
-<!-- Music (video.json "music": bpm, key via transpose, kit) and the mood arc per chapter; the voice
-(which one, what speed) and why; the character of the sound effects. -->
+<!-- The voice and its speed (and why), the music's mood arc, the character of the effects
+(whooshes on camera moves, hits on reveals, risers into the twist). -->
 TODO
 
 ## What would make this fail
 
-<!-- The three most likely ways this video ends up boring, confusing, wrong or cringe — and what
-in the plan prevents each. -->
+<!-- The three likeliest ways this ends up boring, confusing, wrong or cringe — and what in the
+plan prevents each. -->
 TODO

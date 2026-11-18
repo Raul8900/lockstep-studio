@@ -1,0 +1,236 @@
+{
+ "meta": {
+  "voice": "af_heart",
+  "speed": 1.15,
+  "sample_rate": 24000,
+  "duration": 67.989,
+  "speech_end": 65.4994,
+  "word_count": 191
+ },
+ "beats": [
+  {
+   "id": "hook",
+   "title": "Dirty dishes",
+   "t0": 0.3069,
+   "t1": 7.459
+  },
+  {
+   "id": "plate",
+   "title": "The plate",
+   "t0": 7.9157,
+   "t1": 12.41
+  },
+  {
+   "id": "burst",
+   "title": "Why they die",
+   "t0": 12.9303,
+   "t1": 22.4423
+  },
+  {
+   "id": "shelf",
+   "title": "Ignored",
+   "t0": 23.0297,
+   "t1": 29.1397
+  },
+  {
+   "id": "oxford",
+   "title": "The first patient",
+   "t0": 29.6378,
+   "t1": 39.2975
+  },
+  {
+   "id": "urine",
+   "title": "Desperate",
+   "t0": 39.733,
+   "t1": 45.3453
+  },
+  {
+   "id": "melon",
+   "title": "The melon",
+   "t0": 45.9825,
+   "t1": 53.2825
+  },
+  {
+   "id": "dday",
+   "title": "D-Day",
+   "t0": 53.7175,
+   "t1": 55.8925
+  },
+  {
+   "id": "warning",
+   "title": "The warning",
+   "t0": 56.4185,
+   "t1": 65.4994
+  }
+ ],
+ "takes": [
+  {
+   "take": 0,
+   "beat": "hook",
+   "text": "In 1928, a scientist came back from holiday to a pile of dirty dishes.",
+   "t0": 0.3069,
+   "t1": 4.9569,
+   "pause_after": 0.2
+  },
+  {
+   "take": 1,
+   "beat": "hook",
+   "text": "One of them was about to change the world.",
+   "t0": 5.309,
+   "t1": 7.459,
+   "pause_after": 0.3
+  },
+  {
+   "take": 2,
+   "beat": "plate",
+   "text": "A fuzzy mould had landed on it.",
+   "t0": 7.9157,
+   "t1": 9.6407,
+   "pause_after": 0.15
+  },
+  {
+   "take": 3,
+   "beat": "plate",
+   "text": "And all around the mould, the bacteria were dead.",
+   "t0": 9.935,
+   "t1": 12.41,
+   "pause_after": 0.35
+  },
+  {
+   "take": 4,
+   "beat": "burst",
+   "text": "Here's why.",
+   "t0": 12.9303,
+   "t1": 13.7303,
+   "pause_after": 0.1
+  },
+  {
+   "take": 5,
+   "beat": "burst",
+   "text": "A bacterium lives inside a wall it keeps rebuilding as it grows.",
+   "t0": 13.9857,
+   "t1": 17.5107,
+   "pause_after": 0.15
+  },
+  {
+   "take": 6,
+   "beat": "burst",
+   "text": "The mould's chemical jams the builders.",
+   "t0": 17.814,
+   "t1": 19.914,
+   "pause_after": 0.15
+  },
+  {
+   "take": 7,
+   "beat": "burst",
+   "text": "The wall cracks, and the bacterium bursts.",
+   "t0": 20.2173,
+   "t1": 22.4423,
+   "pause_after": 0.4
+  },
+  {
+   "take": 8,
+   "beat": "shelf",
+   "text": "Fleming called it penicillin.",
+   "t0": 23.0297,
+   "t1": 24.5797,
+   "pause_after": 0.15
+  },
+  {
+   "take": 9,
+   "beat": "shelf",
+   "text": "But he could barely make any, and for ten years, almost nobody paid attention.",
+   "t0": 24.8647,
+   "t1": 29.1397,
+   "pause_after": 0.35
+  },
+  {
+   "take": 10,
+   "beat": "oxford",
+   "text": "Then, in Oxford, a team finally purified it.",
+   "t0": 29.6378,
+   "t1": 32.4378,
+   "pause_after": 0.15
+  },
+  {
+   "take": 11,
+   "beat": "oxford",
+   "text": "Their first real test was a dying policeman.",
+   "t0": 32.7327,
+   "t1": 35.2327,
+   "pause_after": 0.15
+  },
+  {
+   "take": 12,
+   "beat": "oxford",
+   "text": "Within days, he was getting better.",
+   "t0": 35.5245,
+   "t1": 37.4745,
+   "pause_after": 0.15
+  },
+  {
+   "take": 13,
+   "beat": "oxford",
+   "text": "Then the penicillin ran out.",
+   "t0": 37.7725,
+   "t1": 39.2975,
+   "pause_after": 0.3
+  },
+  {
+   "take": 14,
+   "beat": "urine",
+   "text": "They were so desperate, they pulled it back out of his urine to use it again.",
+   "t0": 39.733,
+   "t1": 43.433,
+   "pause_after": 0.2
+  },
+  {
+   "take": 15,
+   "beat": "urine",
+   "text": "It wasn't enough. He died.",
+   "t0": 43.7702,
+   "t1": 45.3453,
+   "pause_after": 0.45
+  },
+  {
+   "take": 16,
+   "beat": "melon",
+   "text": "So the hunt moved to America, where the best penicillin mould they ever found turned up on a rotten cantaloupe from a market in Illinois.",
+   "t0": 45.9825,
+   "t1": 53.2825,
+   "pause_after": 0.3
+  },
+  {
+   "take": 17,
+   "beat": "dday",
+   "text": "By D-Day, there were millions of doses.",
+   "t0": 53.7175,
+   "t1": 55.8925,
+   "pause_after": 0.35
+  },
+  {
+   "take": 18,
+   "beat": "warning",
+   "text": "Fleming warned that if we misused it, bacteria would learn to resist it.",
+   "t0": 56.4185,
+   "t1": 60.4185,
+   "pause_after": 0.15
+  },
+  {
+   "take": 19,
+   "beat": "warning",
+   "text": "He was right.",
+   "t0": 60.7211,
+   "t1": 61.5211,
+   "pause_after": 0.3
+  },
+  {
+   "take": 20,
+   "beat": "warning",
+   "text": "The next miracle might already be growing in someone's dirty dishes.",
+   "t0": 61.9744,
+   "t1": 65.4994,
+   "pause_after": 0.6
+  }
+ ]
+}

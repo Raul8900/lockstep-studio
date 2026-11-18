@@ -37,70 +37,56 @@ const ROLE_ALIAS = { ink: 'white', subject: 'cyan', accent: 'amber', data: 'viol
 function syncRoles() { for (const r in ROLE_ALIAS) COL[r] = COL[ROLE_ALIAS[r]]; if (!COL.onAccent) COL.onAccent = COL.bg0; }
 syncRoles();
 
-const F = { disp: 'Inter Display', ui: 'Inter', mono: 'JetBrains Mono' };
+const F = { disp: 'Poppins', ui: 'Inter', mono: 'JetBrains Mono' };
 /* CSS font shorthand with fallbacks, so a missing family degrades instead of dropping to a serif */
 const fontCSS = (weight, size, family) => `${weight} ${size}px "${family}", ${family === F.mono ? '"DejaVu Sans Mono", monospace' : '"Inter", "DejaVu Sans", sans-serif'}`;
 
 /* ---------- style ----------
-   Everything about the look that is not a scene's own drawing lives here and is
-   overridden per video by its style.json (see applyStyle). The defaults reproduce
-   the engine's original look exactly.                                              */
+   A video's style.json decides what is not the picture itself: the captions, the type of
+   overlays, the colour grade of the real imagery, the finish and the transitions. The
+   defaults are the short-form look the references share: big white bold captions, two or
+   three words at a time, low in the frame, one key word in colour.                      */
 const STYLE = {
-  name: 'neon-blueprint', mode: 'dark',
-  backdrop: { type: 'circuit' },
-  post: { bloom: 1, vignette: 1, scrim: 0.6, scrimColor: '#030509', dither: 0.014 },
-  captions: { font: 'disp', weight: 800, size: 74, lineH: 90, maxW: 800, y: 1350, case: 'none', highlight: 'color',
-    future: 0.44, fill: null, stroke: 'rgba(3,5,9,0.94)', strokeW: 15, glow: true, boxText: null, boxRadius: 14 },
-  hud: { type: 'segments', track: 'rgba(210,228,250,0.16)', done: 'rgba(220,235,255,0.6)' },
-  shape: { radius: 22, stroke: 2, panelAlpha: 0.9, strokeAlpha: 0.55, shadow: null },
-  transition: { duration: 0.84, default: 'fade' },
-  /* defaults for useLottie(): how Lottie animations are recoloured to sit in this look (see lottie.js) */
-  lottie: { recolor: 'none', colors: null, res: 600 },
+  name: 'default', mode: 'dark',
+  bg: '#0B0D12',                                            // seen only where no picture covers the frame
+  post: { bloom: 0.35, vignette: 0.55, scrim: 0.3, scrimColor: '#000000', dither: 0.01 },
+  /* the grade every photograph and film clip gets: CSS filter values, plus an optional tint */
+  grade: { contrast: 1.06, saturate: 1.08, brightness: 1.0, sepia: 0, tint: null, tintAmount: 0 },
+  captions: { font: 'disp', weight: 800, size: 70, lineH: 80, maxW: 820, y: 1265, case: 'none', highlight: 'color',
+    future: 1, fill: '#FFFFFF', stroke: 'rgba(0,0,0,0.88)', strokeW: 9, shadow: 0.85, glow: false,
+    key: '#FFD23F', boxText: null, boxRadius: 14 },
+  shape: { radius: 18, stroke: 2.5, panelAlpha: 0.85, strokeAlpha: 0.5, shadow: null, line: 'clean' },
+  transition: { duration: 0.35, default: 'cut' },
 };
 const _h2 = (n) => Math.round(clamp(n, 0, 255)).toString(16).padStart(2, '0');
 function mixToHex(h1, h2, t) { const A = hexRGB(h1), B = hexRGB(h2); return '#' + _h2(lerp(A[0], B[0], t)) + _h2(lerp(A[1], B[1], t)) + _h2(lerp(A[2], B[2], t)); }
 function luminance(hex) { const c = hexRGB(hex).map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; }
 
-/* Merge a video's style.json into STYLE / COL / F. Anything not given is derived from
-   what is given (a palette needs only bg, ink and the five roles), or keeps its default. */
+/* Merge a video's style.json. palette: the colour roles overlays use (subject, accent, data,
+   alert, good, ink) and the background; anything not given keeps its default. */
 function applyStyle(s) {
   if (!s) return;
   const P = s.palette || {};
-  const has = Object.keys(P).length > 0;
   if (s.name) STYLE.name = s.name;
-  if (has) {
-    const bg = Array.isArray(P.bg) ? P.bg : [P.bg || COL.bgTop];
-    COL.bgTop = bg[0]; COL.bgMid = bg[1] || bg[0]; COL.bgBot = bg[2] || bg[bg.length - 1];
-    const ink = P.ink || COL.white, base = COL.bgMid;
-    STYLE.mode = s.mode || (luminance(base) > 0.4 ? 'light' : 'dark');
-    COL.bg0 = P.bg0 || COL.bgBot; COL.bg1 = P.bg1 || COL.bgMid; COL.bg2 = P.bg2 || mixToHex(base, ink, 0.04);
-    COL.white = ink;
-    COL.text = P.text || mixToHex(ink, base, 0.1);
-    COL.dim = P.dim || mixToHex(ink, base, 0.45);
-    COL.faint = P.faint || mixToHex(ink, base, 0.7);
-    COL.panel = P.panel || mixToHex(base, ink, STYLE.mode === 'light' ? 0.0 : 0.05);
-    COL.panelHi = P.panelHi || mixToHex(base, ink, 0.1);
-    COL.line = P.line || mixToHex(base, ink, 0.18);
-    COL.lineHi = P.lineHi || mixToHex(base, ink, 0.32);
-    COL.cyan = P.subject || COL.cyan; COL.amber = P.accent || COL.amber; COL.violet = P.data || COL.violet;
-    COL.coral = P.alert || COL.coral; COL.mint = P.good || COL.mint;
-    COL.cyanDeep = P.subjectDeep || mixToHex(COL.cyan, base, 0.6);
-    COL.violetDeep = P.dataDeep || mixToHex(COL.violet, base, 0.6);
-    COL.amberDeep = P.accentDeep || mixToHex(COL.amber, base, 0.6);
-    COL.chip = P.chip || mixToHex(COL.panel, COL.bgBot, 0.3); COL.cell = P.cell || mixToHex(COL.panel, COL.cyan, 0.12);
-    COL.well = P.well || mixToHex(COL.panel, COL.cyan, 0.08); COL.token = P.token || COL.panelHi;
-    COL.onAccent = P.onAccent || (luminance(COL.cyan) > 0.35 ? (STYLE.mode === 'light' ? ink : COL.bgBot) : (STYLE.mode === 'light' ? COL.bgMid : ink));
-  } else if (s.mode) STYLE.mode = s.mode;
+  if (s.mode) STYLE.mode = s.mode;
+  if (P.bg) STYLE.bg = Array.isArray(P.bg) ? P.bg[0] : P.bg;
+  const ink = P.ink || COL.white, base = STYLE.bg;
+  COL.bgTop = COL.bgMid = COL.bgBot = COL.bg0 = COL.bg1 = base;
+  COL.bg2 = mixToHex(base, ink, 0.04);
+  COL.white = ink;
+  COL.text = P.text || mixToHex(ink, base, 0.1);
+  COL.dim = P.dim || mixToHex(ink, base, 0.4);
+  COL.faint = P.faint || mixToHex(ink, base, 0.65);
+  COL.panel = P.panel || mixToHex(base, ink, 0.06);
+  COL.panelHi = P.panelHi || mixToHex(base, ink, 0.12);
+  COL.line = P.line || mixToHex(base, ink, 0.2);
+  COL.lineHi = P.lineHi || mixToHex(base, ink, 0.35);
+  COL.cyan = P.subject || COL.cyan; COL.amber = P.accent || COL.amber; COL.violet = P.data || COL.violet;
+  COL.coral = P.alert || COL.coral; COL.mint = P.good || COL.mint;
+  COL.cyanDeep = mixToHex(COL.cyan, base, 0.6); COL.violetDeep = mixToHex(COL.violet, base, 0.6); COL.amberDeep = mixToHex(COL.amber, base, 0.6);
+  COL.onAccent = P.onAccent || (luminance(COL.amber) > 0.35 ? '#111111' : '#FFFFFF');
   syncRoles();
-  const light = STYLE.mode === 'light';
-  if (has) {                                   // defaults that follow the palette unless the style says otherwise
-    STYLE.post.scrimColor = COL.bgBot;
-    STYLE.post.bloom = light ? 0 : 1; STYLE.post.vignette = light ? 0.3 : 1; STYLE.post.scrim = light ? 0.75 : 0.6;
-    STYLE.captions.stroke = rgba(COL.bgBot, 0.94);
-    STYLE.captions.glow = !light;
-    STYLE.hud.track = rgba(COL.white, 0.16); STYLE.hud.done = rgba(COL.white, 0.6);
-  }
-  for (const k of ['backdrop', 'post', 'captions', 'hud', 'shape', 'transition', 'lottie']) if (s[k]) Object.assign(STYLE[k], s[k]);
+  for (const k of ['post', 'grade', 'captions', 'shape', 'transition']) if (s[k]) Object.assign(STYLE[k], s[k]);
   const f = s.fonts || {};
   if (f.display) F.disp = f.display; if (f.body) F.ui = f.body; if (f.mono) F.mono = f.mono;
 }

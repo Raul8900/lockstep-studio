@@ -188,13 +188,3 @@ function sayText(ctx, t, beat, x, y, w, o = {}) {
   _drawWords(ctx, L, (i, d) => (t - (d.t0 - lead)) / dur, Object.assign(opt, { t }));
   return L;
 }
-
-/* demos for `lockstep blocks` (a gallery of the type styles, in the look) */
-Object.assign(BLOCK_DEMOS, {
-  textBlock: { about: 'type that wraps and builds in word by word; *emphasis* marked the way the look marks its captions',
-    demo: (ctx, p) => textBlock(ctx, 'Painkillers do not *find* the pain. They [block](alert) the signal that carries it.', 110, 480, 860, { p, size: 78 }) },
-  'textBlock.slam': { about: 'a statement slammed onto the frame word by word, fitted to its box: poster looks',
-    demo: (ctx, p) => textBlock(ctx, 'Nobody *reads* the label', 110, 470, 860, { p, size: 230, fit: true, h: 660, reveal: 'slam', upper: true, lineH: 0.98, weight: 900 }) },
-  'textBlock.type': { about: 'typed out letter by letter with a blinking caret: code, messages, notes',
-    demo: (ctx, p, t) => textBlock(ctx, 'git commit -m "say it in one line"', 110, 640, 860, { p, size: 54, family: F.mono, weight: 700, reveal: 'type', t }) },
-});

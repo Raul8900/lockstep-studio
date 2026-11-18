@@ -5,7 +5,9 @@
 
 | On screen / spoken | Status |
 |---|---|
-| _claim_ | _how it was checked; which source; any labelled simplification_ |
+| “almost four centimetres” / 3.8 cm a year | Eos and JPL (docs/sources.md): 3.8 and 3.7 cm |
+| “pushed by the tides it raises on Earth” | NASA tides page; a simplification of the angular-momentum exchange |
+| Apollo mirrors, lasers still fired at them | NASA GSFC; Eos |
 
 ## Defects found during QA and fixed
 
@@ -15,8 +17,8 @@
 
 ## Creative self-assessment
 
-_What works, what is weakest, what a second pass would change. Be specific and honest._
+_What works, what is weakest, what a second pass would change._
 
 ## What was not verified
 
-_Anything that could not be measured or checked here (for example: playback inside the platform apps, real-device loudness)._
+_Playback inside the platform apps; loudness on real devices._

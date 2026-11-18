@@ -12,23 +12,29 @@ lockstep <command> [<video>] [options]
   setup [--with-asr]            install dependencies and models (scripts/setup.sh)
   doctor                        report what is installed, change nothing
   new <slug> ["Title"]          scaffold videos/<slug>/ (blank creative brief, no style yet)
-  list                          list video projects and the look each one uses
+  list                          list video projects
 
- creative direction — decided before any narration or scene; voice and build refuse until it is done
+ direction — decided before any narration or scene; voice and build refuse until it is done
   brief <video>                 check docs/creative_brief.md and style.json are complete
-  styles                        preview every look in the library (styles/) -> styles/previews/
-  tile <video> [style.json...]  preview this video's look, or candidate style files side by side -> out/style_tile(s).jpg
-  style-check <video>           legibility and validity of style.json    (style-check --style file.json for any file)
-  palettes <video> [words]      browse 1000 palettes (dark light pastel vivid muted warm cool #hex) -> out/palettes.jpg
+  style-check <video>           validity and legibility of style.json (grade, captions, fonts)
   fonts                         the bundled font families and their character
   icons <word>                  search the 2,300 bundled icons
-  save-style <video> [name]     add this video's look to the library, so later videos can build on it
 
- lottie animations — designer-made vector motion, played on the narration's clock
-  lottie-search <video> <words> [--n 8]   search LottieFiles' free animations; filmstrips in this look -> out/lottie_search.jpg
-  lottie-get <video> <id> [name]          take one: lottie/<name>.json + its credit and licence
-  lottie-sheet <video> [names...]         this video's Lottie files as filmstrips, recoloured as the look draws them
-  lottie-info <video>                     duration, frame rate, markers, warnings and credits of each file
+ media — real photographs, paintings, maps, film and 3D from free, licensed sources
+  sources                       the sources, what each holds, which need a free key (Pexels, Pixabay)
+  find <video> <kind> "<query>" [--sources a,b] [--n 24] [--allow-sa]
+                                search every source of that kind at once (photo, video, model, hdri, texture)
+                                -> a numbered contact sheet out/find/<search>.jpg with source, licence, size
+  take <video> <search|last> <n> [--as name]
+                                download candidate n into media/<name> and record its credit and licence
+  media <video> [list]          what has been taken, with licences
+  media <video> restore         download every credited file again (media files are not committed)
+  media <video> credits         docs/credits.md: the credit lines for the video's description
+  media <video> add <file|url> --as name --licence "CC0" [--author ..] [--page url] [--title ..]
+                                bring in a file obtained another way (a Kenney or Quaternius pack, your own photo)
+  cutout <video> <name>         cut the subject of a photo out of its background -> media/<name>.cut.png
+  look <video>                  every picture and clip through the video's grade with a line of captions
+                                -> out/look.jpg (works before any narration exists)
 
  narration
   voice <video> [voice] [speed] record the narration from script.py -> audio/narration_24k.wav, data/words.json
@@ -40,13 +46,9 @@ lockstep <command> [<video>] [options]
  pictures
   preview <video> [--port 4173] [--host 0.0.0.0]
                                 play and scrub the video in a browser, with audio; reloads itself when files change
-  lint <video> [--static]       check the scenes before rendering: cues, sounds, icons, Lottie files, determinism,
-                                colours, typed-in times; where text lands (interface, captions, size, contrast,
-                                overlaps). Errors stop the build. --static: the code only, no frames drawn
-  blocks [<video>] [block...] [--style f.json]
-                                the ready-made blocks (charts, stat tiles, comparisons, lists, timelines, flows,
-                                pointers) drawn in the video's look -> out/blocks.jpg; name blocks to see their
-                                build-in as strips. Without a video: in the default look, or --style's
+  lint <video> [--static]       check the scenes before rendering: cues, sounds, media names and licences,
+                                determinism, colours, typed-in times; where text lands (interface, captions,
+                                size, contrast, overlaps). Errors stop the build. --static: the code only
   transitions [<video>] [name...] [--all] [--style f.json]
                                 the scene transitions drawn in the video's look -> out/transitions.jpg: the built-in
                                 ones and the recommended shader ones (--all: every one of the 223); naming some
@@ -66,7 +68,8 @@ lockstep <command> [<video>] [options]
   docs <video>                  docs/narration_script.md and docs/visual_storyboard.md
   report <video>                docs/production_report.md
 
-  build <video>                 brief + style check -> meta -> scan -> audio -> render -> assemble -> srt -> validate -> docs -> report
+  build <video>                 brief + style check -> lint -> meta -> scan -> audio -> render -> assemble -> srt -> validate
+                                -> docs -> credits -> report
   selftest                      scaffold a throw-away video and run the whole pipeline on it
 EOF
 }
@@ -97,44 +100,14 @@ case "$cmd" in
     for d in "$REPO"/videos/*/; do
       [ -f "$d/video.json" ] || continue
       s="(no style.json yet)"; [ -f "$d/style.json" ] && s=$(json_field "$d/style.json" name)
-      printf '  %-28s %s\n' "$(basename "$d")" "$s"
+      m=0; [ -f "$d/media/credits.json" ] && m=$(python3 -c 'import json,sys; print(len(json.load(open(sys.argv[1]))))' "$d/media/credits.json")
+      printf '  %-28s %-24s %s media\n' "$(basename "$d")" "$s" "$m"
     done ;;
 
   brief)        V=$(resolve "${1:-}"); python3 "$E/check_brief.py" "$V" ;;
   style-check)
     if [ "${1:-}" = "--style" ]; then python3 "$E/style_check.py" --style "${2:?style file}"
     else V=$(resolve "${1:-}"); python3 "$E/style_check.py" "$V"; fi ;;
-  styles)
-    mkdir -p "$REPO/styles/previews"
-    echo "library (styles/):"
-    for f in "$REPO"/styles/*.json; do
-      n=$(basename "$f" .json)
-      node "$E/render.js" "$E/tile" tile --style "$f" --out "$REPO/styles/previews/$n.jpg" >/dev/null
-      printf '  %-20s %s\n' "$n" "$(json_field "$f" about)"
-    done
-    n=$(ls "$REPO"/styles/*.json | wc -l); [ "$n" -le 12 ] || n=8
-    python3 "$E/sheet.py" "$REPO/styles/previews/[!_]*.jpg" "$REPO/styles/previews/_all.jpg" "$n" 300 >/dev/null
-    echo "previews: styles/previews/<name>.jpg; all side by side: styles/previews/_all.jpg"
-    echo "looks used by videos in this repo:"
-    for d in "$REPO"/videos/*/; do
-      [ -f "$d/style.json" ] && printf '  %-28s %s\n' "$(basename "$d")" "$(json_field "$d/style.json" name)"
-    done; true ;;
-  tile)
-    V=$(resolve "${1:-}"); shift
-    if [ $# -eq 0 ]; then
-      node "$E/render.js" "$V" tile --out "$V/out/style_tile.jpg"
-    else
-      rm -rf "$V/out/tiles"; mkdir -p "$V/out/tiles"; i=0
-      for f in "$@"; do
-        [ -f "$f" ] || f="$V/$f"
-        [ -f "$f" ] || { echo "no such style file: $f" >&2; exit 1; }
-        i=$((i + 1))
-        node "$E/render.js" "$V" tile --style "$f" --out "$V/out/tiles/$(printf %02d $i)_$(basename "$f" .json).jpg" >/dev/null
-      done
-      python3 "$E/sheet.py" "$V/out/tiles/*.jpg" "$V/out/style_tiles.jpg" "$i" 432 >/dev/null
-      echo "$i candidate looks side by side -> $V/out/style_tiles.jpg"
-    fi ;;
-  palettes)     V=$(resolve "${1:-}"); shift; python3 "$E/palettes.py" "$V" "$@" ;;
   fonts)
     sed -n '/^| Family/,/^$/p' "$REPO/assets/fonts/README.md"
     echo "Also installed system-wide by setup: Inter, Inter Display, JetBrains Mono." ;;
@@ -143,35 +116,19 @@ case "$cmd" in
     n=$(grep -ci -- "$q" "$REPO/assets/icons/names.txt" || true)
     echo "$n icons match '$q':"
     grep -i -- "$q" "$REPO/assets/icons/names.txt" | head -120 | paste -sd ' ' | fold -s -w 110 | sed 's/^/  /' ;;
-  lottie-search) V=$(resolve "${1:-}"); shift; python3 "$E/lottie_tool.py" search "$V" "$@" ;;
-  lottie-get)    V=$(resolve "${1:-}"); shift; python3 "$E/lottie_tool.py" get "$V" "$@" ;;
-  lottie-info)   V=$(resolve "${1:-}"); python3 "$E/lottie_tool.py" info "$V" ;;
-  lottie-sheet)
+  sources)      python3 "$E/media.py" sources ;;
+  find)         V=$(resolve "${1:-}"); shift; python3 "$E/media.py" find "$V" "$@" ;;
+  take)         V=$(resolve "${1:-}"); shift; python3 "$E/media.py" take "$V" "$@" ;;
+  cutout)       V=$(resolve "${1:-}"); shift; python3 "$E/media.py" cutout "$V" "$@" ;;
+  media)
     V=$(resolve "${1:-}"); shift
-    if [ $# -gt 0 ]; then NAMES=$(IFS=,; echo "$*"); else
-      NAMES=$(ls "$V"/lottie/*.json 2>/dev/null | xargs -n1 basename 2>/dev/null | sed 's/\.json$//' | grep -v '^credits$' | paste -sd, -)
-    fi
-    [ -n "$NAMES" ] || { echo "no Lottie files in $(basename "$V")/lottie/ — find some with: lockstep lottie-search $(basename "$V") <words>" >&2; exit 1; }
-    node "$E/render.js" "$V" lottiesheet --names "$NAMES" --out "$V/out/lottie_sheet.jpg" ;;
-  save-style)
-    V=$(resolve "${1:-}"); N="${2:-}"
-    [ -f "$V/style.json" ] || { echo "no style.json in $V" >&2; exit 1; }
-    [ -n "$N" ] || N=$(json_field "$V/style.json" name)
-    [[ "$N" =~ ^[a-z0-9][a-z0-9-]+$ ]] || { echo "style name must be lower-case letters, digits and hyphens: '$N'" >&2; exit 1; }
-    [ ! -f "$REPO/styles/$N.json" ] || { echo "styles/$N.json already exists: give another name (lockstep save-style <video> <name>)" >&2; exit 1; }
-    [ -n "$(json_field "$V/style.json" about)" ] || { echo "add an \"about\" line to style.json first: what this look is and which topics it suits" >&2; exit 1; }
-    python3 "$E/style_check.py" --style "$V/style.json" >/dev/null || { python3 "$E/style_check.py" --style "$V/style.json"; exit 1; }
-    if grep -q "window.drawBackdrop" "$V/components.js" 2>/dev/null; then
-      echo "note: this video draws its own backdrop in components.js; the library copy uses backdrop.type instead" >&2
-    fi
-    python3 - "$V/style.json" "$REPO/styles/$N.json" "$N" "$(basename "$V")" <<'PY'
-import json, sys
-d = json.load(open(sys.argv[1]))
-d["name"], d["first_used_in"] = sys.argv[3], sys.argv[4]
-open(sys.argv[2], "w").write(json.dumps(d, indent=2, ensure_ascii=False) + "\n")
-PY
-    node "$E/render.js" "$E/tile" tile --style "$REPO/styles/$N.json" --out "$REPO/styles/previews/$N.jpg" >/dev/null
-    echo "saved styles/$N.json (preview: styles/previews/$N.jpg)" ;;
+    sub="${1:-list}"; [ $# -gt 0 ] && shift
+    case "$sub" in
+      list|restore|credits) python3 "$E/media.py" "$sub" "$V" ;;
+      add) python3 "$E/media.py" add "$V" "$@" ;;
+      *) echo "lockstep media <video> [list|restore|credits|add <file|url> --as name --licence ...]" >&2; exit 1 ;;
+    esac ;;
+  look)         V=$(resolve "${1:-}"); shift; node "$E/render.js" "$V" look "$@" ;;
 
   voice)
     V=$(resolve "${1:-}"); shift
@@ -183,29 +140,16 @@ PY
   meta)         V=$(resolve "${1:-}"); node "$E/render.js" "$V" meta ;;
   lint)         V=$(resolve "${1:-}"); shift; exec python3 "$E/lint.py" "$V" "$@" ;;
   transitions)
-    V="$E/tile"; OUTF=""; EXTRA=(); NAMES=()
+    V="$REPO/templates/video"; OUTF=""; EXTRA=(); NAMES=()
     if [ $# -gt 0 ] && { [ -f "$1/video.json" ] || [ -f "$REPO/videos/$1/video.json" ]; }; then V=$(resolve "$1"); shift; fi
     while [ $# -gt 0 ]; do
       case "$1" in --style) EXTRA+=(--style "$2"); shift 2 ;; --out) OUTF="$2"; shift 2 ;; --all) EXTRA+=(--all); shift ;; *) NAMES+=("$1"); shift ;; esac
     done
     if [ -z "$OUTF" ]; then
-      if [ "$V" = "$E/tile" ]; then OUTF="${TMPDIR:-/tmp}/lockstep-transitions/transitions${NAMES[0]+_strips}.jpg"; else OUTF="$V/out/transitions${NAMES[0]+_strips}.jpg"; fi
+      if [ "$V" = "$REPO/templates/video" ]; then OUTF="${TMPDIR:-/tmp}/lockstep-transitions/transitions${NAMES[0]+_strips}.jpg"; else OUTF="$V/out/transitions${NAMES[0]+_strips}.jpg"; fi
     fi
     ARGS=("$V" transitions --out "$OUTF")
     [ ${#EXTRA[@]} -gt 0 ] && ARGS+=("${EXTRA[@]}")
-    [ ${#NAMES[@]} -gt 0 ] && ARGS+=(--names "$(IFS=,; echo "${NAMES[*]}")")
-    node "$E/render.js" "${ARGS[@]}" ;;
-  blocks)
-    V="$E/tile"; OUTF=""; STYLE_ARG=(); NAMES=()
-    if [ $# -gt 0 ] && { [ -f "$1/video.json" ] || [ -f "$REPO/videos/$1/video.json" ]; }; then V=$(resolve "$1"); shift; fi
-    while [ $# -gt 0 ]; do
-      case "$1" in --style) STYLE_ARG=(--style "$2"); shift 2 ;; --out) OUTF="$2"; shift 2 ;; *) NAMES+=("$1"); shift ;; esac
-    done
-    if [ -z "$OUTF" ]; then
-      if [ "$V" = "$E/tile" ]; then OUTF="${TMPDIR:-/tmp}/lockstep-blocks/blocks${NAMES[0]+_strips}.jpg"; else OUTF="$V/out/blocks${NAMES[0]+_strips}.jpg"; fi
-    fi
-    ARGS=("$V" blocks --out "$OUTF")
-    [ ${#STYLE_ARG[@]} -gt 0 ] && ARGS+=("${STYLE_ARG[@]}")
     [ ${#NAMES[@]} -gt 0 ] && ARGS+=(--names "$(IFS=,; echo "${NAMES[*]}")")
     node "$E/render.js" "${ARGS[@]}" ;;
   preview)      V=$(resolve "${1:-}"); shift; exec node "$E/render.js" "$V" preview "$@" ;;
@@ -227,7 +171,7 @@ PY
   report)       V=$(resolve "${1:-}"); python3 "$E/make_report.py" "$V" ;;
   build)
     V=$(resolve "${1:-}"); shift
-    echo "== direction"; python3 "$E/check_brief.py" "$V"; style_gate "$V"; python3 "$E/lottie_tool.py" check "$V"
+    echo "== direction"; python3 "$E/check_brief.py" "$V"; style_gate "$V"
     [ -f "$V/data/words.json" ] || { echo "no narration yet: run 'lockstep voice $(basename "$V")' first" >&2; exit 1; }
     mkdir -p "$V/out"
     echo "== captions"; python3 "$E/make_captions.py" "$V"
@@ -240,6 +184,7 @@ PY
     echo "== srt";      python3 "$E/make_srt.py" "$V" | head -1
     echo "== validate"; python3 "$E/validate.py" "$V" > "$V/out/validate.log" 2>&1 && echo "data/validation.json written" || { tail -5 "$V/out/validate.log"; exit 1; }
     echo "== docs";     python3 "$E/make_docs.py" "$V"
+    echo "== credits";  python3 "$E/media.py" credits "$V"
     echo "== report";   python3 "$E/make_report.py" "$V"
     python3 "$E/summary.py" "$V" ;;
   selftest) exec bash "$REPO/scripts/selftest.sh" "$@" ;;

@@ -2,8 +2,9 @@
 
   python3 engine/new_video.py <slug> ["Title"] [--into DIR] [--example]
 
-Creates videos/<slug>/ (or DIR/<slug>/) from templates/video: a complete, runnable 18-second
-video whose script, scenes and storyboard are examples to replace.
+Creates videos/<slug>/ (or DIR/<slug>/) from templates/video: a complete, runnable 15-second
+video (a NASA photograph, a 3D Earth and Moon, Apollo film) whose script, scenes, media and
+storyboard are examples to replace.
 
 The new video starts with a blank docs/creative_brief.md and no style.json: its creative
 direction has to be decided before `lockstep voice` and `lockstep build` will run.
@@ -36,31 +37,29 @@ dest = into / slug
 if dest.exists():
     sys.exit(f"{dest} already exists")
 
-# short label for the top-right of the chapter bar (about 18 characters fit beside the chapter name)
-tag = re.sub(r"[^A-Z0-9 ]+", "", slug.replace("-", " ").upper()).strip()
-if len(tag) > 18:
-    tag = tag[:18].rsplit(" ", 1)[0]
-
-shutil.copytree(REPO / "templates/video", dest)
+shutil.copytree(REPO / "templates/video", dest, ignore=shutil.ignore_patterns("out", "audio", "data"))
 if not example:
     shutil.copy(REPO / "templates/creative_brief.md", dest / "docs/creative_brief.md")
     (dest / "style.json").unlink()
 for p in dest.rglob("*"):
     if p.is_file() and p.suffix in (".json", ".py", ".md", ".js"):
         s = p.read_text(encoding="utf-8")
-        s2 = s.replace("__TITLE__", title.replace('"', '\\"')).replace("__TAG__", tag).replace("__OUTPUT__", slug.replace("-", "_") + "_vertical")
+        s2 = s.replace("__TITLE__", title.replace('"', '\\"')).replace("__OUTPUT__", slug.replace("-", "_") + "_vertical")
         if s2 != s:
             p.write_text(s2, encoding="utf-8")
 
 rel = dest.relative_to(REPO) if dest.is_relative_to(REPO) else dest
 print(f"""created {rel}/
 
-First decide how this topic should be told and how it should look; nothing is recorded until then.
-  1. research the topic             -> docs/sources.md
-  2. creative direction             -> docs/creative_brief.md (blank, every section to fill)
-                                       style.json (lockstep styles · tile · palettes · fonts · icons)
-  3. lockstep brief {slug}  -> confirms both are complete; voice and build refuse until it passes
+Decide the story and the world before anything is recorded:
+  1. research the topic                -> docs/sources.md
+  2. story, hook, world, shot plan     -> docs/creative_brief.md (blank: every section to fill)
+  3. the media for every shot          -> lockstep find {slug} photo "…"  ·  lockstep take {slug} last <n> --as <name>
+                                          (when two candidates are equally good, show the sheet and ask)
+  4. the look                          -> style.json  ·  lockstep look {slug}
+  5. lockstep brief {slug}             -> confirms; voice and build refuse until it passes
 
-The script, scenes, storyboard and captions in the folder belong to the template's example video
-(about the timing rule this engine is built on): replace them once the brief is written.
+The script, scenes, media and captions in the folder belong to the template's example video (the Moon
+drifting away): replace them once the brief is written. Remove the example's files from media/ and its
+entries from media/credits.json when they are no longer used (lockstep lint flags media without credits).
 """)

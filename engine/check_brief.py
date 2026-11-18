@@ -2,11 +2,10 @@
 
   python3 engine/check_brief.py <video-dir>
 
-Requires docs/creative_brief.md with every section written (no TODO left, no stubs), at least three
-genuinely different directions compared, and a style.json designed for this video whose name the
-brief's Style section uses. The point is the order of work: decide how this topic should be told
-and how it should look before writing narration or drawing a frame.
-See .claude/skills/explainer-video/reference/creative-direction.md.
+Requires docs/creative_brief.md with every section written (no TODO left, no stubs) and a
+style.json whose name the brief's Look section uses. The point is the order of work: decide the
+story, the world it happens in and what fills every shot before writing narration or drawing a frame.
+See .claude/skills/explainer-video/reference/story.md and reference/shots.md.
 """
 import json
 import re
@@ -21,14 +20,12 @@ ROOT = project_dir()
 SECTIONS = {
     "Audience and promise": 25,
     "Angle": 25,
-    "Directions considered": 90,
-    "Chosen direction": 40,
+    "Story": 60,
     "Hook": 40,
-    "Story shape": 50,
-    "Pacing": 25,
-    "Visual world": 50,
-    "Style": 40,
-    "Sound": 25,
+    "World and hero": 40,
+    "Shot plan": 80,
+    "Look": 25,
+    "Sound and voice": 20,
     "What would make this fail": 30,
 }
 problems = []
@@ -65,33 +62,24 @@ else:
         n = len(re.findall(r"[A-Za-z0-9']+", body))
         if n < min_words:
             problems.append(f"section '{name}' is a stub ({n} words; write at least {min_words} words of actual reasoning)")
-    body = find(secs, "Directions considered")
-    if body is not None:
-        subs = re.split(r"^###\s+(.+?)\s*$", body, flags=re.M)
-        dirs = [(subs[i].strip(), len(re.findall(r"[A-Za-z0-9']+", subs[i + 1]))) for i in range(1, len(subs) - 1, 2)]
-        if len(dirs) < 3:
-            problems.append(f"'Directions considered' has {len(dirs)} direction(s): compare at least three genuinely different ones, each under its own ### heading")
-        thin = [h for h, n in dirs if n < 30]
-        if thin:
-            problems.append(f"directions too thin to compare (under 30 words): {thin}")
     if style.exists():
         try:
             name = json.load(open(style, encoding="utf-8")).get("name", "")
         except json.JSONDecodeError as e:
             name = ""
             problems.append(f"style.json is not valid JSON: {e}")
-        sbody = find(secs, "Style") or ""
+        sbody = find(secs, "Look") or ""
         if name and name.lower() not in sbody.lower():
-            problems.append(f"the brief's Style section does not mention the style it chose: style.json is named '{name}'")
+            problems.append(f"the brief's Look section does not name the look it chose: style.json is named '{name}'")
         if not name:
             problems.append("style.json has no \"name\"")
 if not style.exists():
-    problems.append("style.json is missing: design this video's look (lockstep styles shows the library; lockstep tile previews a candidate)")
+    problems.append("style.json is missing: decide this video's grade and captions (reference/look.md; lockstep look previews them on the media)")
 
 if problems:
     print("creative direction is not done yet:")
     for p in problems:
         print("  -", p)
-    print("see .claude/skills/explainer-video/reference/creative-direction.md")
+    print("see .claude/skills/explainer-video/reference/story.md and reference/shots.md")
     sys.exit(1)
 print("creative brief and style.json are complete")

@@ -4,17 +4,19 @@ A build that passes its technical checks is not yet a good video. Review in four
 look before any scene exists, while drawing each scene, after the first full build, and before
 delivery.
 
-## Pass 0 — the look, before drawing
+## Pass 0 — the media and the look, before drawing
 
 ```bash
 bin/lockstep brief <slug>          # brief complete, style.json present
-bin/lockstep style-check <slug>    # legibility: contrast, distinct roles, fonts, caption size and position
-bin/lockstep tile <slug>           # -> out/style_tile.jpg — open it at full size
+bin/lockstep media <slug>          # every file taken, with its licence; MISSING ones: lockstep media <slug> restore
+bin/lockstep look <slug>           # every picture and clip through the grade, with captions -> out/look.jpg
+bin/lockstep style-check <slug>    # grade ranges, caption size and position, fonts
 ```
 
-Check the tile against the quality bar in art-direction.md, and against the brief: does it look
-like the world the brief describes? Would someone who saw the previous video in this repo
-recognise this as a different video?
+Open `out/look.jpg` at full size. Do the pictures read as one film (one grade, similar contrast),
+or does one photo look like it came from somewhere else? Is every picture sharp enough to fill a
+phone screen? Does each one show what its line will say — the right person, place, object, era?
+Would the captions read on the brightest of them?
 
 ## Pass 1 — while drawing (per scene)
 
@@ -28,20 +30,20 @@ bin/lockstep preview <slug>                       # for the person: plays in a b
 
 Open the image and check, for every still:
 
-- Is it obvious within one second what to look at? One bright thing, the rest dim.
-- Can every label be read at phone size (the sheet is about phone scale; if a label is unreadable
-  on the sheet it is unreadable on a phone)?
-- Do any two texts touch or overlap? Does anything touch the edge of the safe rectangle?
-- Is anything essential under the caption, in the top or bottom band, or — below y ≈ 900 — right
-  of x ≈ 910?
-- Does the picture show what the caption on that frame says?
-- Lottie animations: one author or one recolour scheme; readable on this background; key frames on
-  their words; nothing left frozen mid-move by accident.
-- Is it drawn in the video's world? Crisp vector diagrams in a hand-drawn look, or hairlines in a
-  poster look, break the style; see "Make the scenes match the look" in art-direction.md.
-- Are colours used by role (`COL.subject`, `COL.accent`, …), never as hex values or as the
-  legacy hue names?
-- At the first and last still of the scene: is the frame already (still) full and alive?
+- Does the picture show what the caption on that frame says? This is the test that matters most.
+- Is the subject of the line big? A face, an object, a place filling the frame — not a small
+  thing in a wide shot.
+- Is the camera moving? Compare two stills 0.5 s apart: if nothing changed, the shot is dead.
+- Is it obvious within one second what to look at?
+- Can every overlay be read at phone size, on this picture? White text on a bright sky or paper
+  needs its shadow, a plate, or a different spot.
+- Is anything essential under the caption, in the top or bottom band, or — below y ≈ 1000 —
+  right of x ≈ 950?
+- Does the shot belong to the video's world, in its grade? A stock photo in a run of archive
+  photographs, or a glossy render in a grainy film, breaks it.
+- Is every picture sharp at the size it is shown? A 640 px photo pushed in to fill 1920 px is mush:
+  find a larger one.
+- At the first and last still of the scene: is the frame already (still) full and moving?
 
 Sample densely around cues — the frame 0.1 s before, on, and 0.3 s after each reveal — and at
 least every 1–2 seconds elsewhere. View small text at full size, not only on the sheet.
@@ -50,8 +52,8 @@ least every 1–2 seconds elsewhere. View small text at full size, not only on t
 
 `bin/lockstep lint <slug>` answers several of the questions above mechanically, for every 0.2 s of
 the video; `--static` reads the code only (a second, instead of about half a minute). It sees text
-drawn with `text()`/`fillText` on the scene itself; text drawn into an off-screen canvas, an icon or
-a Lottie file is invisible to it. Errors stop `build`:
+drawn with `text()`/`fillText` on the scene itself; text inside a picture or a 3D world is
+invisible to it. Errors stop `build`:
 
 | Error | Means |
 |---|---|
@@ -60,7 +62,8 @@ a Lottie file is invisible to it. Errors stop `build`:
 | `captions` | caption_phrases.json does not match the narration |
 | `nondeterministic` | `Math.random()`, `Date` or `performance.now()`: frames would differ between renders |
 | `cue` | `at('beat', 'word', n)` names a beat or word that is not there (with the nearest words) |
-| `sound`, `icon`, `lottie` | a sound type, icon name (also `{ icon: 'x' }` in a block's options) or Lottie file that does not exist, or a Lottie file without credits |
+| `sound`, `icon` | a sound type or icon name that does not exist |
+| `media` | `useImage` / `useVideo` / `w.model` / `w.sky` / `w.texture` naming something never taken; a cut-out not made; a file in `media/` without a credit; a licence a video cannot use (NC, ND); files missing from disk |
 
 Warnings hold for at least 0.4 s while the text stays put (text sliding or zooming through a zone
 is animation) and need a decision:
@@ -69,7 +72,7 @@ is animation) and need a decision:
 |---|---|---|
 | `typed-time` | a time in seconds in the code (`prog(t, 24.0, 26.5)`) | anchor it to a word: `at('beat', 'word') - 0.3` |
 | `hex-colour`, `legacy-colour` | a colour typed as a value, or `COL.cyan`-style names | a role: `COL.subject`, `COL.accent`, … |
-| `colour-role` | `{ color: 'acent' }`: an option that is neither a role nor a colour (a block would draw it in whatever colour came before) | the role's name |
+| `colour-role` | `{ color: 'acent' }`: an option that is neither a role nor a colour | the role's name |
 | `top-band`, `bottom-band`, `side-margin`, `right-column` | text under the app's interface | move it inside the safe zone (`still --safe`) |
 | `under-captions` | scene text where the captions are drawn | lay out above y ≈ 1210 |
 | `small-text` | under 20 px on screen | 24 px or more for anything that must be read |
@@ -88,8 +91,9 @@ it in `video.json` with the reason, narrowed to a text or a file when you can:
 
 `bin/lockstep build <slug>` prints the verdict. Then:
 
-1. **`dist/contact_sheet.jpg`** — frames from the finished MP4, a few per chapter. Does the video
-   read as one design? Is any chapter visibly thinner than the others?
+1. **`dist/contact_sheet.jpg`** — frames from the finished MP4, a few per beat. Does the video
+   read as one world, one film? Is any beat visibly thinner than the others (a held photo where
+   the rest moves)?
 2. **`dist/mobile_preview_reels_style.jpg`, `…_shorts_style.jpg`** — phone-size frames under
    generic interface overlays (approximations: neither platform publishes exact pixels). Nothing
    essential under a shaded area.
@@ -115,7 +119,7 @@ it in `video.json` with the reason, narrowed to a text or a file when you can:
 | captions readable (*check*) | a phrase is on screen under 0.35 s or has more than 5 words — merge or split |
 | encode fidelity | SSIM under 0.98: lower `--crf`, or look for full-frame flicker in a scene |
 | voice intelligible in the mix | see audio.md: a cue or a busy mood is masking a word. *check* (not FAIL) when it is 1–2 words of a short script — read which words |
-| continuous motion (*check*) | listed time ranges barely change for ≥ 0.4 s — add large-area idle motion there |
+| continuous motion (*check*) | listed time ranges barely change for ≥ 0.4 s — the camera stopped: give the shot a move |
 | "not measured" | speech-recognition models missing: `bin/lockstep setup --with-asr` |
 
 `check` rows do not fail the build, but each needs a decision: fix it, or note in the report why
@@ -157,16 +161,18 @@ it is acceptable.
 | `cue not found` after a script edit | The cue word was removed or moved to another beat | `lockstep lint <slug>` names every broken cue with the nearest words; re-anchor to a word that exists |
 | Frames differ between runs | `Math.random()`, `Date`, or state kept across frames | Use `hash`/`rng`; compute everything from `t` (`lint` finds the first two) |
 | Lint or build refuses: "script.py has changed since the narration was recorded" | The spoken text, a beat or a pause in the script differs from the recording | `lockstep voice <slug>` (identical text re-records identically); notes and comments in script.py do not count |
-| Voice or build refuses: "creative direction is not done yet" | Brief incomplete or no style.json | Do the creative-direction step (creative-direction.md); the message lists what is missing |
+| Voice or build refuses: "creative direction is not done yet" | Brief incomplete or no style.json | Write the brief (story.md, shots.md); the message lists what is missing |
 | Text in an unexpected font | Family name misspelt in style.json | `lockstep style-check <slug>` names it; `lockstep fonts` lists what exists |
-| Words vanish against a light background | Legacy colour names (`COL.white` is dark ink on paper styles, `COL.bg0` light) or hard-coded hex | Use roles: `COL.ink`, `COL.onAccent` |
-| Muddy blotches on a light style | Large or strong `glow()` (it becomes a tint on light backgrounds) | Smaller radius, lower alpha, or emphasise with a fill or `highlighter` |
-| `no Lottie file lottie/x.json` at boot | Name misspelt or never taken | `lockstep lottie-info <slug>` lists the files; `lottie-get` takes one |
-| `useLottie(…) called after loading` | `useLottie()` inside the draw function | Declare every animation in the scene's setup code |
-| A Lottie is tiny in its box | The artist left empty canvas around the drawing | `useLottie(name, { crop: true })` |
-| A Lottie is blurry | Drawn larger than its off-screen canvas | `scan` lists `soft_lottie`; raise `res` |
-| A Lottie vanishes on the background | White artwork on a light look (or dark on dark) | `recolor` (lottie.md) or another file |
-| Build refuses: "Lottie files without a source and licence" | A file in `lottie/` has no entry in `credits.json` | `lottie-get` writes it; add your own files' entries by hand |
+| `no picture media/x.jpg` at boot | Never taken, or the files were not restored after a fresh clone | `lockstep media <slug>`; `lockstep media <slug> restore` |
+| `use…() called after loading` / `world3d() called after loading` | declared inside a draw function | Declare media and worlds in the scene's setup code |
+| A photo looks soft | It is smaller than the shot shows it (a push-in on a 900 px picture) | Find a larger one; Wikimedia serves 1920 and 3840 px copies; push in less |
+| A film clip stutters or jumps | Its frame rate is not 30 and `speed` is fractional, or `from`/`to` cut mid-motion | Cut on a still moment; leave `speed` at 1 |
+| Film frames black at the start | `from` beyond the clip's length | `lockstep media <slug>` shows each clip's duration |
+| `find` returns nothing useful | Too specific, or the wrong kind | Search the thing, not the sentence ("penicillium mould", not "the mould that saved lives"); try `--sources` one at a time; Pexels and Pixabay need keys |
+| Wikimedia refuses a download (429) | Rate limit on original files | It falls back to the 1920 px copy automatically; wait a minute and `take` again for the original |
+| A 3D model is tiny, huge or floating | Its own units | `w.model(name, { height: 1.8 })` scales it and stands it on y = 0 |
+| A 3D frame is black | No light: no `w.sky`, `w.room`, `w.sun` or `w.ambient` | Add `w.room()` for even studio light |
+| 3D frames render slowly | Shadows and anti-aliasing in software rendering (~0.2 s a frame) | Fine for a minute of 3D; for more, `w.sun({ shadow: false })` |
 | Voice sounds buried or the music vanishes | Voice-to-bed ratio outside 15–17 dB | `"mix"` in `video.json` (audio.md) |
 | The same sentence twice on screen | The scene's own type (`sayText`) and the captions say the same words | `hideCaptions(t0, t1)` for that stretch (scene-api.md) |
 | Rendering slows down around scene changes | A heavy shader transition (blurs, glows) costs up to ~0.5 s a frame in software | Accept it, or pick a lighter one from `lockstep transitions` |

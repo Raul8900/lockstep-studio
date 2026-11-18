@@ -4,6 +4,13 @@
 # generated per video: frames, stills, stems, the mix. Rebuilt by `lockstep voice` + `lockstep build`.
 /videos/*/out/
 /videos/*/audio/
+# media are re-downloaded from media/credits.json (`lockstep media <video> restore`); only the credits are kept
+/videos/*/media/*
+!/videos/*/media/credits.json
+# the template's own generated files (its media/ is committed: the selftest builds it offline)
+/templates/video/out/
+/templates/video/audio/
+/templates/video/data/
 # finished MP4s exceed GitHub's 100 MB file limit; keep them outside git (or attach to a release)
 /videos/*/dist/*.mp4
 /videos/_*/

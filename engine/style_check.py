@@ -1,11 +1,12 @@
 """Check a video's style.json for legibility and for things the renderer cannot resolve.
 
   python3 engine/style_check.py <video-dir>
-  python3 engine/style_check.py --style path/to/style.json     (a candidate or library style on its own)
+  python3 engine/style_check.py --style path/to/style.json     (a candidate on its own)
 
-A style is free to look like anything, but text must stay readable on a phone, the five
-colour roles must be told apart, and every font must exist. FAIL rows stop the build;
-warn rows need a decision.
+style.json decides what is not the picture itself: the colour grade every photograph, clip and
+3D render gets, the captions, the fonts and colours of the overlays, the finish and the default
+cut. All of it is optional — the defaults are the short-form look (big white captions with a
+shadow, one key word in yellow). FAIL rows stop the build; warn rows need a decision.
 """
 import json
 import re
@@ -17,16 +18,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import REPO, project_dir  # noqa: E402
 
 if len(sys.argv) > 2 and sys.argv[1] == "--style":
-    ROOT, STYLE_PATH = None, Path(sys.argv[2])
+    STYLE_PATH = Path(sys.argv[2])
 else:
-    ROOT = project_dir()
-    STYLE_PATH = ROOT / "style.json"
-BACKDROPS = re.findall(r"^  (?:/\*.*?\*/\s*)?(\w+)\s*(?:\(|:)", (REPO / "engine/anim/js/backdrops.js").read_text().split("const BACKDROPS = {")[1], re.M)
+    STYLE_PATH = project_dir() / "style.json"
 TRANSITIONS = ["fade", "cut", "zoomIn", "zoomOut", "panDown", "panUp", "slideLeft", "slideRight", "flash"]
 GL_NAMES = {t["name"].lower(): t["name"] for t in json.load(open(REPO / "engine/anim/vendor/gl-transitions/transitions.json"))["transitions"]}
-KEYS = {"name", "about", "first_used_in", "mode", "palette", "fonts", "backdrop", "post", "captions", "hud", "shape", "transition", "lottie"}
-DEFAULT = {"bg": ["#05080D", "#090E17", "#04060A"], "ink": "#F3F8FF", "subject": "#27E1FF", "accent": "#FFA91E", "data": "#A073FF",
-           "alert": "#FF5F70", "good": "#4DFFB5"}
+KEYS = {"name", "about", "mode", "palette", "fonts", "post", "grade", "captions", "shape", "transition"}
+ROLES = ("subject", "accent", "data", "alert", "good", "ink", "bg", "text", "dim", "faint", "panel", "panelHi", "line", "lineHi", "onAccent")
 rows, failed = [], 0
 
 
@@ -36,12 +34,9 @@ def row(status, name, detail):
     rows.append((status, name, detail))
 
 
-def rgb(h):
-    return [int(h[i:i + 2], 16) for i in (1, 3, 5)]
-
-
 def lum(h):
-    c = [(v / 255 / 12.92) if v / 255 <= 0.03928 else ((v / 255 + 0.055) / 1.055) ** 2.4 for v in rgb(h)]
+    c = [int(h[i:i + 2], 16) / 255 for i in (1, 3, 5)]
+    c = [v / 12.92 if v <= 0.03928 else ((v + 0.055) / 1.055) ** 2.4 for v in c]
     return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
 
 
@@ -50,68 +45,61 @@ def contrast(a, b):
     return (la + 0.05) / (lb + 0.05)
 
 
-def lab(h):
-    c = [(v / 255 / 12.92) if v / 255 <= 0.04045 else ((v / 255 + 0.055) / 1.055) ** 2.4 for v in rgb(h)]
-    x = (0.4124 * c[0] + 0.3576 * c[1] + 0.1805 * c[2]) / 0.95047
-    y = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
-    z = (0.0193 * c[0] + 0.1192 * c[1] + 0.9505 * c[2]) / 1.08883
-    f = lambda t: t ** (1 / 3) if t > 0.008856 else 7.787 * t + 16 / 116
-    return 116 * f(y) - 16, 500 * (f(x) - f(y)), 200 * (f(y) - f(z))
-
-
-def delta_e(a, b):
-    return sum((p - q) ** 2 for p, q in zip(lab(a), lab(b))) ** 0.5
-
-
-path = STYLE_PATH
-if not path.exists():
-    print("  no style.json: the video uses the engine's built-in look (neon-blueprint).")
+HEX = re.compile(r"^#[0-9a-fA-F]{6}$")
+if not STYLE_PATH.exists():
+    print("  no style.json: the video uses the engine's defaults (the short-form look).")
     S = {}
 else:
     try:
-        S = json.load(open(path, encoding="utf-8"))
+        S = json.load(open(STYLE_PATH, encoding="utf-8"))
     except json.JSONDecodeError as e:
-        sys.exit(f"{path.name} is not valid JSON: {e}")
+        sys.exit(f"{STYLE_PATH.name} is not valid JSON: {e}")
 
 unknown = sorted(set(S) - KEYS)
 if unknown:
-    row("warn", "unknown keys", f"{unknown} are ignored — check the spelling (known: {sorted(KEYS)})")
+    row("warn", "unknown keys", f"{unknown} are ignored (known: {sorted(KEYS)}; the old backdrop, hud and lottie keys are gone)")
 
-# ---- palette
-P = dict(DEFAULT)
-given = S.get("palette", {})
-bad = [f"{k}={v!r}" for k, v in given.items() for h in (v if isinstance(v, list) else [v]) if not re.fullmatch(r"#[0-9A-Fa-f]{6}", str(h))]
+# ---- palette: the colours overlays and 3D materials take by role
+P = S.get("palette", {})
+bad = [f"{k}: {v}" for k, v in P.items() if k in ROLES and not (isinstance(v, str) and HEX.match(v)) and k != "bg"]
 if bad:
-    row("FAIL", "palette values", "must be 6-digit hex like #1F5FBF: " + ", ".join(bad))
-else:
-    P.update(given)
-    if given:
-        missing = [k for k in ("bg", "ink", "subject", "accent", "data", "alert", "good") if k not in given]
-        if missing:
-            row("FAIL", "palette is incomplete", f"missing {missing}: a palette needs bg, ink and all five roles")
-    bg = P["bg"] if isinstance(P["bg"], list) else [P["bg"]]
-    mid = bg[min(1, len(bg) - 1)]
-    light = S.get("mode", "light" if lum(mid) > 0.4 else "dark") == "light"
-    worst = min(contrast(P["ink"], b) for b in bg)
-    row("PASS" if worst >= 7 else "warn" if worst >= 4.5 else "FAIL", "ink on background", f"contrast {worst:.1f}:1 (aim for 7 or more; under 4.5 is unreadable on a phone)")
-    for r in ("subject", "accent", "data", "alert", "good"):
-        c = min(contrast(P[r], b) for b in bg)
-        row("PASS" if c >= 3 else "warn" if c >= 2.2 else "FAIL", f"{r} on background", f"{P[r]}  contrast {c:.1f}:1 (3 or more for lines and labels in this colour)")
-    roles = ["subject", "accent", "data", "alert", "good"]
-    close = [(a, b, delta_e(P[a], P[b])) for i, a in enumerate(roles) for b in roles[i + 1:] if delta_e(P[a], P[b]) < 20]
-    row("warn" if close else "PASS", "roles are distinct", "; ".join(f"{a}/{b} look alike (ΔE {d:.0f})" for a, b, d in close) or "all five can be told apart")
-    span = max(lum(b) for b in bg) - min(lum(b) for b in bg)
-    if span > 0.25:
-        row("warn", "background gradient", "very wide brightness range: text will not be equally readable top and bottom")
-    C = S.get("captions", {})
-    if C.get("highlight") == "box":
-        # same rule as applyStyle() in engine/anim/js/core.js
-        on = C.get("boxText") or given.get("onAccent") or ((P["ink"] if light else bg[-1]) if lum(P["subject"]) > 0.35 else (bg[min(1, len(bg) - 1)] if light else P["ink"]))
-        on = P.get(on, on) if not str(on).startswith("#") else on
-        c = min(contrast(on, P[r]) for r in ("subject", "accent", "data", "alert"))
-        row("PASS" if c >= 3 else "warn", "caption box text", f"text on the highlight boxes: contrast {c:.1f}:1 at worst (set palette.onAccent or captions.boxText if low)")
-    if C.get("strokeW", 15) == 0 and S.get("post", {}).get("scrim", 0.6) == 0 and worst < 9:
-        row("warn", "captions without outline", "no outline and no scrim: captions rely on plain contrast with whatever a scene draws behind them")
+    row("FAIL", "palette values", "must be 6-digit hex like #FFD23F: " + ", ".join(bad))
+odd = sorted(set(P) - set(ROLES))
+if odd:
+    row("warn", "palette keys", f"{odd} are not roles (roles: {', '.join(ROLES[:6])}, bg …)")
+row("PASS", "palette", ", ".join(f"{k} {v}" for k, v in P.items() if isinstance(v, str)) or "engine defaults")
+
+# ---- grade: one look for every picture, clip and render
+G = S.get("grade", {})
+LIMITS = {"contrast": (0.75, 1.4), "saturate": (0, 1.8), "brightness": (0.7, 1.3), "sepia": (0, 1), "tintAmount": (0, 0.5)}
+for k, (lo, hi) in LIMITS.items():
+    if k in G and not (isinstance(G[k], (int, float)) and lo <= G[k] <= hi):
+        row("FAIL", f"grade.{k}", f"{G.get(k)!r}: keep it within {lo}–{hi} (outside that, pictures fall apart)")
+if G.get("tint") and not (G["tint"] in ROLES or HEX.match(str(G["tint"]))):
+    row("FAIL", "grade.tint", f"{G['tint']!r}: a palette role or #hex")
+if G:
+    row("PASS", "grade", ", ".join(f"{k} {v}" for k, v in G.items()))
+
+# ---- captions
+C = S.get("captions", {})
+fill, key = C.get("fill", "#FFFFFF"), C.get("key", "#FFD23F")
+for name, v in (("fill", fill), ("key", key)):
+    if not (HEX.match(str(v)) or v in ROLES):
+        row("FAIL", f"captions.{name}", f"{v!r}: #hex or a palette role")
+if C.get("size", 70) < 56:
+    row("FAIL", "caption size", f"{C['size']} px is too small for a phone (56 or more; 64-80 is typical)")
+if not 1000 <= C.get("y", 1265) <= 1420:
+    row("FAIL", "caption position", f"y = {C['y']}: keep the caption centre between 1000 and 1420 (the platform's text and buttons sit below)")
+if C.get("maxW", 820) > 860:
+    row("FAIL", "caption width", "maxW over 860 runs under the platform buttons")
+if C.get("highlight", "color") not in ("color", "box", "underline"):
+    row("FAIL", "captions.highlight", f"{C['highlight']!r}: choose color, box or underline")
+if C.get("strokeW", 9) == 0 and C.get("shadow", 0.85) < 0.4:
+    row("warn", "captions on pictures", "no outline and little shadow: white captions vanish on bright skies and paper — keep strokeW or shadow")
+if HEX.match(str(fill)) and lum(fill) < 0.5:
+    row("warn", "caption colour", f"{fill} is dark: on real pictures, light captions with a dark outline read best")
+if HEX.match(str(key)) and HEX.match(str(fill)) and contrast(key, fill) < 1.25:
+    row("warn", "key word colour", f"{key} is hard to tell from the caption colour {fill}")
 
 # ---- fonts
 index = json.load(open(REPO / "assets/fonts/index.json")) if (REPO / "assets/fonts/index.json").exists() else {}
@@ -119,105 +107,27 @@ try:
     installed = subprocess.run(["fc-list", ":", "family"], capture_output=True, text=True).stdout
 except FileNotFoundError:
     installed = ""
-fonts = {"display": "Inter Display", "body": "Inter", "mono": "JetBrains Mono"}
+fonts = {"display": "Poppins", "body": "Inter", "mono": "JetBrains Mono"}
 fonts.update(S.get("fonts", {}))
 for role, fam in fonts.items():
     if fam in index:
-        ws = [f["weight"] for f in index[fam]]
-        note = "" if len(ws) > 1 else "  (one weight only: every bold/regular request renders the same)"
-        row("PASS", f"font {role}", f"{fam} — bundled, weights {ws}{note}")
+        row("PASS", f"font {role}", f"{fam} — bundled, weights {[f['weight'] for f in index[fam]]}")
     elif re.search(rf"(^|[:,]){re.escape(fam)}(,|:|$)", installed, re.M):
         row("PASS", f"font {role}", f"{fam} — installed on this machine")
     else:
-        row("FAIL", f"font {role}", f"{fam!r} is not in assets/fonts and not installed (bin/lockstep fonts lists what is available)")
-cap = S.get("captions", {})
-cf = cap.get("font", "disp")
+        row("FAIL", f"font {role}", f"{fam!r} is not in assets/fonts and not installed (lockstep fonts lists what is available)")
+cf = C.get("font", "disp")
 if cf not in ("disp", "ui", "mono") and cf not in index:
     row("FAIL", "captions.font", f"{cf!r}: use disp, ui or mono, or a bundled family name")
-if cap.get("size", 74) < 56:
-    row("FAIL", "caption size", f"{cap['size']} px is too small for a phone (56 or more; 68-92 is typical)")
-if not 1150 <= cap.get("y", 1350) <= 1400:
-    row("FAIL", "caption position", f"y = {cap['y']}: keep the caption centre between 1150 and 1400 (platform interface below, diagrams above)")
-if cap.get("highlight", "color") not in ("color", "box", "underline"):
-    row("FAIL", "captions.highlight", f"{cap['highlight']!r}: choose color, box or underline")
-if cap.get("maxW", 800) > 860:
-    row("FAIL", "caption width", "maxW over 860 runs under the platform buttons")
 
-# ---- backdrop, transitions, hud
-bd = S.get("backdrop", {}).get("type", "circuit")
-custom = ROOT is not None and (ROOT / "components.js").exists() and "window.drawBackdrop" in (ROOT / "components.js").read_text()
-if custom:
-    row("PASS", "backdrop", "custom (window.drawBackdrop in components.js)")
-elif bd in BACKDROPS:
-    row("PASS", "backdrop", bd)
-else:
-    row("FAIL", "backdrop", f"unknown type {bd!r}; library: {', '.join(BACKDROPS)} — or draw your own in components.js")
-tr = S.get("transition", {})
-default = str(tr.get("default", "fade"))
-if default.startswith("gl:"):
-    if default[3:].lower() not in GL_NAMES:
-        near = __import__("difflib").get_close_matches(default[3:], list(GL_NAMES.values()), n=3, cutoff=0.6)
-        row("FAIL", "transition.default", f"{default!r} is not a shader transition" + (f" (near: {', '.join('gl:' + n for n in near)})" if near else "") + " — lockstep transitions --all shows them")
-    else:
-        row("PASS", "transition.default", f"gl:{GL_NAMES[default[3:].lower()]} (a shader transition)")
-elif default not in TRANSITIONS:
-    row("FAIL", "transition.default", f"{default!r}; choose from {', '.join(TRANSITIONS)}, or gl:<Name> (lockstep transitions)")
-if not 0.2 <= tr.get("duration", 0.84) <= 1.2:
-    row("FAIL", "transition.duration", f"{tr['duration']} s: keep between 0.2 and 1.2")
-if S.get("hud", {}).get("type", "segments") not in ("segments", "line", "none"):
-    row("FAIL", "hud.type", "choose segments, line or none")
-if S.get("shape", {}).get("line", "clean") not in ("clean", "rough"):
-    row("FAIL", "shape.line", f"{S['shape']['line']!r}: choose clean or rough (hand-drawn outlines on the blocks)")
+# ---- transition
+T = S.get("transition", {})
+d = T.get("default", "cut")
+if not (d in TRANSITIONS or (d.startswith("gl:") and d[3:].lower() in GL_NAMES)):
+    row("FAIL", "transition.default", f"{d!r}: one of {', '.join(TRANSITIONS)} or gl:<Name> (lockstep transitions)")
+if not 0.1 <= T.get("duration", 0.35) <= 1.5:
+    row("FAIL", "transition.duration", f"{T['duration']} s: between 0.1 and 1.5")
 
-# ---- Lottie recolouring
-LO = S.get("lottie")
-if LO is not None:
-    def mix(h1, h2, k):
-        a, b2 = rgb(h1), rgb(h2)
-        return "#" + "".join(f"{round(x + (y - x) * k):02X}" for x, y in zip(a, b2))
-
-    def role_hex(v):
-        """a palette role or COL name (including the ones the engine derives), or #hex -> hex"""
-        if isinstance(v, str) and re.fullmatch(r"#[0-9A-Fa-f]{6}", v):
-            return v
-        bgl = P["bg"] if isinstance(P["bg"], list) else [P["bg"]]
-        mid, ink = bgl[min(1, len(bgl) - 1)], P["ink"]
-        is_light = S.get("mode", "light" if lum(mid) > 0.4 else "dark") == "light"
-        pal = dict(P, bgTop=bgl[0], bgMid=mid, bgBot=bgl[-1], white=ink,
-                   panel=given.get("panel") or mix(mid, ink, 0.0 if is_light else 0.05),
-                   panelHi=given.get("panelHi") or mix(mid, ink, 0.1), line=given.get("line") or mix(mid, ink, 0.18),
-                   lineHi=given.get("lineHi") or mix(mid, ink, 0.32), text=given.get("text") or mix(ink, mid, 0.1),
-                   dim=given.get("dim") or mix(ink, mid, 0.45), faint=given.get("faint") or mix(ink, mid, 0.7))
-        for r_ in ("subject", "accent", "data", "alert", "good"):
-            pal.setdefault(r_, P[r_])
-        return pal.get(v)
-    rc, cols, bad = LO.get("recolor", "none"), LO.get("colors") or [], []
-    if isinstance(rc, dict):
-        bad += [f"recolor map key {k!r} is not #hex" for k in rc if not re.fullmatch(r"#[0-9A-Fa-f]{6}", k)]
-        bad += [f"recolor map value {v!r} is not a palette role or #hex" for v in rc.values() if not role_hex(v)]
-    elif rc not in ("none", "tint", "palette", "nearest"):
-        bad.append(f"recolor {rc!r}: none, tint, palette, nearest, or a {{\"#hex\": colour}} map")
-    elif rc in ("palette", "nearest") and len(cols) < 2:
-        bad.append(f"recolor {rc!r} needs two or more colors")
-    bad += [f"colour {c!r} is not a palette role or #hex" for c in cols if not role_hex(c)]
-    if not 200 <= LO.get("res", 600) <= 2000:
-        bad.append("res 200-2000")
-    if bad:
-        row("FAIL", "lottie", "; ".join(bad))
-    else:
-        bgl = P["bg"] if isinstance(P["bg"], list) else [P["bg"]]
-        close = [c for c in (cols[:1] if rc == "tint" else []) if role_hex(c) and contrast(role_hex(c), bgl[min(1, len(bgl) - 1)]) < 1.4]
-        desc = f"recolor {rc}" + (f" {cols}" if cols else "")
-        row("warn" if close else "PASS", "lottie", desc + (f" — {close} is close to the background: tinted animations will vanish" if close else ""))
-
-# ---- is this just an example, unchanged?
-core = lambda d: json.dumps({k: d.get(k) for k in ("palette", "fonts", "backdrop")}, sort_keys=True)
-for ex in sorted((REPO / "styles").glob("*.json")):
-    if S and ex.resolve() != path.resolve() and core(json.load(open(ex))) == core(S):
-        row("warn", "same as an example", f"palette, fonts and backdrop are identical to styles/{ex.name}: fine only if the brief argues this topic calls for exactly that look")
-
-print(f"\n  style: {S.get('name', 'neon-blueprint (built-in)')}")
 for st, name, detail in rows:
-    print(f"  {st:<5} {name:<24} {detail}")
-print()
+    print(f"  {st:<4}  {name:<22} {detail}")
 sys.exit(1 if failed else 0)

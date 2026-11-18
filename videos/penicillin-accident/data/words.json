@@ -1,0 +1,1530 @@
+[
+{
+"w": "In",
+"t0": 0.3069,
+"t1": 0.3819,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "1928,",
+"t0": 0.4319,
+"t1": 1.5569,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "a",
+"t0": 1.6819,
+"t1": 1.7319,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "scientist",
+"t0": 1.8069,
+"t1": 2.2319,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "came",
+"t0": 2.2819,
+"t1": 2.4569,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "back",
+"t0": 2.5069,
+"t1": 2.7069,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "from",
+"t0": 2.7319,
+"t1": 2.8319,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "holiday",
+"t0": 2.8819,
+"t1": 3.3819,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "to",
+"t0": 3.4569,
+"t1": 3.5069,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "a",
+"t0": 3.5319,
+"t1": 3.5819,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "pile",
+"t0": 3.6569,
+"t1": 3.9319,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "of",
+"t0": 3.9569,
+"t1": 4.0319,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "dirty",
+"t0": 4.0819,
+"t1": 4.2819,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "dishes.",
+"t0": 4.3319,
+"t1": 4.9569,
+"beat": "hook",
+"take": 0,
+"cls": "k"
+},
+{
+"w": "One",
+"t0": 5.309,
+"t1": 5.459,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "of",
+"t0": 5.484,
+"t1": 5.559,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "them",
+"t0": 5.609,
+"t1": 5.909,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "was",
+"t0": 5.959,
+"t1": 6.084,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "about",
+"t0": 6.109,
+"t1": 6.359,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "to",
+"t0": 6.409,
+"t1": 6.484,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "change",
+"t0": 6.534,
+"t1": 6.809,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "the",
+"t0": 6.834,
+"t1": 6.884,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "world.",
+"t0": 6.934,
+"t1": 7.459,
+"beat": "hook",
+"take": 1,
+"cls": null
+},
+{
+"w": "A",
+"t0": 7.9157,
+"t1": 7.9657,
+"beat": "plate",
+"take": 2,
+"cls": null
+},
+{
+"w": "fuzzy",
+"t0": 8.0657,
+"t1": 8.3407,
+"beat": "plate",
+"take": 2,
+"cls": null
+},
+{
+"w": "mould",
+"t0": 8.3907,
+"t1": 8.6907,
+"beat": "plate",
+"take": 2,
+"cls": "k"
+},
+{
+"w": "had",
+"t0": 8.7157,
+"t1": 8.7907,
+"beat": "plate",
+"take": 2,
+"cls": null
+},
+{
+"w": "landed",
+"t0": 8.8407,
+"t1": 9.1157,
+"beat": "plate",
+"take": 2,
+"cls": null
+},
+{
+"w": "on",
+"t0": 9.1407,
+"t1": 9.2407,
+"beat": "plate",
+"take": 2,
+"cls": null
+},
+{
+"w": "it.",
+"t0": 9.2907,
+"t1": 9.6407,
+"beat": "plate",
+"take": 2,
+"cls": null
+},
+{
+"w": "And",
+"t0": 9.935,
+"t1": 10.035,
+"beat": "plate",
+"take": 3,
+"cls": null
+},
+{
+"w": "all",
+"t0": 10.085,
+"t1": 10.21,
+"beat": "plate",
+"take": 3,
+"cls": null
+},
+{
+"w": "around",
+"t0": 10.235,
+"t1": 10.46,
+"beat": "plate",
+"take": 3,
+"cls": null
+},
+{
+"w": "the",
+"t0": 10.485,
+"t1": 10.535,
+"beat": "plate",
+"take": 3,
+"cls": null
+},
+{
+"w": "mould,",
+"t0": 10.585,
+"t1": 11.035,
+"beat": "plate",
+"take": 3,
+"cls": "k"
+},
+{
+"w": "the",
+"t0": 11.135,
+"t1": 11.185,
+"beat": "plate",
+"take": 3,
+"cls": null
+},
+{
+"w": "bacteria",
+"t0": 11.21,
+"t1": 11.76,
+"beat": "plate",
+"take": 3,
+"cls": null
+},
+{
+"w": "were",
+"t0": 11.785,
+"t1": 11.86,
+"beat": "plate",
+"take": 3,
+"cls": null
+},
+{
+"w": "dead.",
+"t0": 11.91,
+"t1": 12.41,
+"beat": "plate",
+"take": 3,
+"cls": "k"
+},
+{
+"w": "Here's",
+"t0": 12.9303,
+"t1": 13.2053,
+"beat": "burst",
+"take": 4,
+"cls": null
+},
+{
+"w": "why.",
+"t0": 13.2553,
+"t1": 13.7303,
+"beat": "burst",
+"take": 4,
+"cls": null
+},
+{
+"w": "A",
+"t0": 13.9857,
+"t1": 14.0107,
+"beat": "burst",
+"take": 5,
+"cls": null
+},
+{
+"w": "bacterium",
+"t0": 14.0607,
+"t1": 14.6607,
+"beat": "burst",
+"take": 5,
+"cls": null
+},
+{
+"w": "lives",
+"t0": 14.7357,
+"t1": 14.9357,
+"beat": "burst",
+"take": 5,
+"cls": null
+},
+{
+"w": "inside",
+"t0": 14.9607,
+"t1": 15.2857,
+"beat": "burst",
+"take": 5,
+"cls": null
+},
+{
+"w": "a",
+"t0": 15.3107,
+"t1": 15.3357,
+"beat": "burst",
+"take": 5,
+"cls": null
+},
+{
+"w": "wall",
+"t0": 15.3857,
+"t1": 15.7357,
+"beat": "burst",
+"take": 5,
+"cls": null
+},
+{
+"w": "it",
+"t0": 15.7857,
+"t1": 15.8357,
+"beat": "burst",
+"take": 5,
+"cls": null
+},
+{
+"w": "keeps",
+"t0": 15.8857,
+"t1": 16.1357,
+"beat": "burst",
+"take": 5,
+"cls": null
+},
+{
+"w": "rebuilding",
+"t0": 16.1857,
+"t1": 16.6607,
+"beat": "burst",
+"take": 5,
+"cls": null
+},
+{
+"w": "as",
+"t0": 16.7107,
+"t1": 16.7857,
+"beat": "burst",
+"take": 5,
+"cls": null
+},
+{
+"w": "it",
+"t0": 16.8107,
+"t1": 16.8607,
+"beat": "burst",
+"take": 5,
+"cls": null
+},
+{
+"w": "grows.",
+"t0": 16.9107,
+"t1": 17.5107,
+"beat": "burst",
+"take": 5,
+"cls": null
+},
+{
+"w": "The",
+"t0": 17.814,
+"t1": 17.864,
+"beat": "burst",
+"take": 6,
+"cls": null
+},
+{
+"w": "mould's",
+"t0": 17.914,
+"t1": 18.264,
+"beat": "burst",
+"take": 6,
+"cls": null
+},
+{
+"w": "chemical",
+"t0": 18.314,
+"t1": 18.789,
+"beat": "burst",
+"take": 6,
+"cls": null
+},
+{
+"w": "jams",
+"t0": 18.889,
+"t1": 19.164,
+"beat": "burst",
+"take": 6,
+"cls": null
+},
+{
+"w": "the",
+"t0": 19.189,
+"t1": 19.239,
+"beat": "burst",
+"take": 6,
+"cls": null
+},
+{
+"w": "builders.",
+"t0": 19.289,
+"t1": 19.914,
+"beat": "burst",
+"take": 6,
+"cls": null
+},
+{
+"w": "The",
+"t0": 20.2173,
+"t1": 20.2673,
+"beat": "burst",
+"take": 7,
+"cls": null
+},
+{
+"w": "wall",
+"t0": 20.3173,
+"t1": 20.4923,
+"beat": "burst",
+"take": 7,
+"cls": null
+},
+{
+"w": "cracks,",
+"t0": 20.5423,
+"t1": 20.9673,
+"beat": "burst",
+"take": 7,
+"cls": null
+},
+{
+"w": "and",
+"t0": 21.1173,
+"t1": 21.1923,
+"beat": "burst",
+"take": 7,
+"cls": null
+},
+{
+"w": "the",
+"t0": 21.2173,
+"t1": 21.2673,
+"beat": "burst",
+"take": 7,
+"cls": null
+},
+{
+"w": "bacterium",
+"t0": 21.2923,
+"t1": 21.8173,
+"beat": "burst",
+"take": 7,
+"cls": null
+},
+{
+"w": "bursts.",
+"t0": 21.8673,
+"t1": 22.4423,
+"beat": "burst",
+"take": 7,
+"cls": "k"
+},
+{
+"w": "Fleming",
+"t0": 23.0297,
+"t1": 23.4047,
+"beat": "shelf",
+"take": 8,
+"cls": null
+},
+{
+"w": "called",
+"t0": 23.4547,
+"t1": 23.6797,
+"beat": "shelf",
+"take": 8,
+"cls": null
+},
+{
+"w": "it",
+"t0": 23.7047,
+"t1": 23.7547,
+"beat": "shelf",
+"take": 8,
+"cls": null
+},
+{
+"w": "penicillin.",
+"t0": 23.8047,
+"t1": 24.5797,
+"beat": "shelf",
+"take": 8,
+"cls": "k"
+},
+{
+"w": "But",
+"t0": 24.8647,
+"t1": 24.9647,
+"beat": "shelf",
+"take": 9,
+"cls": null
+},
+{
+"w": "he",
+"t0": 24.9897,
+"t1": 25.0397,
+"beat": "shelf",
+"take": 9,
+"cls": null
+},
+{
+"w": "could",
+"t0": 25.0897,
+"t1": 25.2147,
+"beat": "shelf",
+"take": 9,
+"cls": null
+},
+{
+"w": "barely",
+"t0": 25.2647,
+"t1": 25.5647,
+"beat": "shelf",
+"take": 9,
+"cls": null
+},
+{
+"w": "make",
+"t0": 25.6147,
+"t1": 25.7647,
+"beat": "shelf",
+"take": 9,
+"cls": null
+},
+{
+"w": "any,",
+"t0": 25.8147,
+"t1": 26.2647,
+"beat": "shelf",
+"take": 9,
+"cls": null
+},
+{
+"w": "and",
+"t0": 26.3897,
+"t1": 26.4647,
+"beat": "shelf",
+"take": 9,
+"cls": null
+},
+{
+"w": "for",
+"t0": 26.5147,
+"t1": 26.5897,
+"beat": "shelf",
+"take": 9,
+"cls": null
+},
+{
+"w": "ten",
+"t0": 26.6397,
+"t1": 26.8397,
+"beat": "shelf",
+"take": 9,
+"cls": null
+},
+{
+"w": "years,",
+"t0": 26.8897,
+"t1": 27.3397,
+"beat": "shelf",
+"take": 9,
+"cls": null
+},
+{
+"w": "almost",
+"t0": 27.4647,
+"t1": 27.8147,
+"beat": "shelf",
+"take": 9,
+"cls": null
+},
+{
+"w": "nobody",
+"t0": 27.8647,
+"t1": 28.1647,
+"beat": "shelf",
+"take": 9,
+"cls": null
+},
+{
+"w": "paid",
+"t0": 28.2147,
+"t1": 28.4147,
+"beat": "shelf",
+"take": 9,
+"cls": null
+},
+{
+"w": "attention.",
+"t0": 28.4397,
+"t1": 29.1397,
+"beat": "shelf",
+"take": 9,
+"cls": null
+},
+{
+"w": "Then,",
+"t0": 29.6378,
+"t1": 29.9378,
+"beat": "oxford",
+"take": 10,
+"cls": null
+},
+{
+"w": "in",
+"t0": 29.9877,
+"t1": 30.0377,
+"beat": "oxford",
+"take": 10,
+"cls": null
+},
+{
+"w": "Oxford,",
+"t0": 30.0877,
+"t1": 30.6378,
+"beat": "oxford",
+"take": 10,
+"cls": null
+},
+{
+"w": "a",
+"t0": 30.7628,
+"t1": 30.8128,
+"beat": "oxford",
+"take": 10,
+"cls": null
+},
+{
+"w": "team",
+"t0": 30.8627,
+"t1": 31.1127,
+"beat": "oxford",
+"take": 10,
+"cls": null
+},
+{
+"w": "finally",
+"t0": 31.1878,
+"t1": 31.5128,
+"beat": "oxford",
+"take": 10,
+"cls": null
+},
+{
+"w": "purified",
+"t0": 31.5628,
+"t1": 32.0378,
+"beat": "oxford",
+"take": 10,
+"cls": null
+},
+{
+"w": "it.",
+"t0": 32.0877,
+"t1": 32.4378,
+"beat": "oxford",
+"take": 10,
+"cls": null
+},
+{
+"w": "Their",
+"t0": 32.7327,
+"t1": 32.8577,
+"beat": "oxford",
+"take": 11,
+"cls": null
+},
+{
+"w": "first",
+"t0": 32.9327,
+"t1": 33.1577,
+"beat": "oxford",
+"take": 11,
+"cls": null
+},
+{
+"w": "real",
+"t0": 33.2077,
+"t1": 33.4327,
+"beat": "oxford",
+"take": 11,
+"cls": null
+},
+{
+"w": "test",
+"t0": 33.4827,
+"t1": 33.9077,
+"beat": "oxford",
+"take": 11,
+"cls": null
+},
+{
+"w": "was",
+"t0": 33.9577,
+"t1": 34.0577,
+"beat": "oxford",
+"take": 11,
+"cls": null
+},
+{
+"w": "a",
+"t0": 34.0827,
+"t1": 34.1077,
+"beat": "oxford",
+"take": 11,
+"cls": null
+},
+{
+"w": "dying",
+"t0": 34.1577,
+"t1": 34.4327,
+"beat": "oxford",
+"take": 11,
+"cls": null
+},
+{
+"w": "policeman.",
+"t0": 34.4827,
+"t1": 35.2327,
+"beat": "oxford",
+"take": 11,
+"cls": "k"
+},
+{
+"w": "Within",
+"t0": 35.5245,
+"t1": 35.8245,
+"beat": "oxford",
+"take": 12,
+"cls": null
+},
+{
+"w": "days,",
+"t0": 35.8745,
+"t1": 36.2745,
+"beat": "oxford",
+"take": 12,
+"cls": null
+},
+{
+"w": "he",
+"t0": 36.3745,
+"t1": 36.4245,
+"beat": "oxford",
+"take": 12,
+"cls": null
+},
+{
+"w": "was",
+"t0": 36.4495,
+"t1": 36.5495,
+"beat": "oxford",
+"take": 12,
+"cls": null
+},
+{
+"w": "getting",
+"t0": 36.5995,
+"t1": 36.8495,
+"beat": "oxford",
+"take": 12,
+"cls": null
+},
+{
+"w": "better.",
+"t0": 36.8995,
+"t1": 37.4745,
+"beat": "oxford",
+"take": 12,
+"cls": null
+},
+{
+"w": "Then",
+"t0": 37.7725,
+"t1": 37.9725,
+"beat": "oxford",
+"take": 13,
+"cls": null
+},
+{
+"w": "the",
+"t0": 37.9975,
+"t1": 38.0475,
+"beat": "oxford",
+"take": 13,
+"cls": null
+},
+{
+"w": "penicillin",
+"t0": 38.0975,
+"t1": 38.5975,
+"beat": "oxford",
+"take": 13,
+"cls": "k"
+},
+{
+"w": "ran",
+"t0": 38.6475,
+"t1": 38.8475,
+"beat": "oxford",
+"take": 13,
+"cls": null
+},
+{
+"w": "out.",
+"t0": 38.8975,
+"t1": 39.2975,
+"beat": "oxford",
+"take": 13,
+"cls": null
+},
+{
+"w": "They",
+"t0": 39.733,
+"t1": 39.858,
+"beat": "urine",
+"take": 14,
+"cls": null
+},
+{
+"w": "were",
+"t0": 39.883,
+"t1": 39.983,
+"beat": "urine",
+"take": 14,
+"cls": null
+},
+{
+"w": "so",
+"t0": 40.083,
+"t1": 40.283,
+"beat": "urine",
+"take": 14,
+"cls": null
+},
+{
+"w": "desperate,",
+"t0": 40.333,
+"t1": 40.983,
+"beat": "urine",
+"take": 14,
+"cls": null
+},
+{
+"w": "they",
+"t0": 41.108,
+"t1": 41.208,
+"beat": "urine",
+"take": 14,
+"cls": null
+},
+{
+"w": "pulled",
+"t0": 41.258,
+"t1": 41.458,
+"beat": "urine",
+"take": 14,
+"cls": null
+},
+{
+"w": "it",
+"t0": 41.483,
+"t1": 41.533,
+"beat": "urine",
+"take": 14,
+"cls": null
+},
+{
+"w": "back",
+"t0": 41.558,
+"t1": 41.758,
+"beat": "urine",
+"take": 14,
+"cls": null
+},
+{
+"w": "out",
+"t0": 41.783,
+"t1": 41.883,
+"beat": "urine",
+"take": 14,
+"cls": null
+},
+{
+"w": "of",
+"t0": 41.908,
+"t1": 41.958,
+"beat": "urine",
+"take": 14,
+"cls": null
+},
+{
+"w": "his",
+"t0": 41.983,
+"t1": 42.108,
+"beat": "urine",
+"take": 14,
+"cls": null
+},
+{
+"w": "urine",
+"t0": 42.158,
+"t1": 42.458,
+"beat": "urine",
+"take": 14,
+"cls": "k"
+},
+{
+"w": "to",
+"t0": 42.508,
+"t1": 42.583,
+"beat": "urine",
+"take": 14,
+"cls": null
+},
+{
+"w": "use",
+"t0": 42.633,
+"t1": 42.783,
+"beat": "urine",
+"take": 14,
+"cls": null
+},
+{
+"w": "it",
+"t0": 42.808,
+"t1": 42.858,
+"beat": "urine",
+"take": 14,
+"cls": null
+},
+{
+"w": "again.",
+"t0": 42.883,
+"t1": 43.433,
+"beat": "urine",
+"take": 14,
+"cls": null
+},
+{
+"w": "It",
+"t0": 43.7702,
+"t1": 43.8702,
+"beat": "urine",
+"take": 15,
+"cls": null
+},
+{
+"w": "wasn't",
+"t0": 43.8952,
+"t1": 44.0953,
+"beat": "urine",
+"take": 15,
+"cls": null
+},
+{
+"w": "enough.",
+"t0": 44.1202,
+"t1": 44.4952,
+"beat": "urine",
+"take": 15,
+"cls": null
+},
+{
+"w": "He",
+"t0": 44.6953,
+"t1": 44.7953,
+"beat": "urine",
+"take": 15,
+"cls": null
+},
+{
+"w": "died.",
+"t0": 44.8453,
+"t1": 45.3453,
+"beat": "urine",
+"take": 15,
+"cls": null
+},
+{
+"w": "So",
+"t0": 45.9825,
+"t1": 46.0825,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "the",
+"t0": 46.1075,
+"t1": 46.1575,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "hunt",
+"t0": 46.2075,
+"t1": 46.4325,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "moved",
+"t0": 46.4825,
+"t1": 46.7325,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "to",
+"t0": 46.7825,
+"t1": 46.8575,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "America,",
+"t0": 46.9075,
+"t1": 47.6575,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "where",
+"t0": 47.8075,
+"t1": 47.9075,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "the",
+"t0": 47.9325,
+"t1": 47.9825,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "best",
+"t0": 48.0325,
+"t1": 48.3075,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "penicillin",
+"t0": 48.3575,
+"t1": 48.8575,
+"beat": "melon",
+"take": 16,
+"cls": "k"
+},
+{
+"w": "mould",
+"t0": 48.9075,
+"t1": 49.2825,
+"beat": "melon",
+"take": 16,
+"cls": "k"
+},
+{
+"w": "they",
+"t0": 49.3325,
+"t1": 49.4325,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "ever",
+"t0": 49.5075,
+"t1": 49.7325,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "found",
+"t0": 49.8075,
+"t1": 50.3575,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "turned",
+"t0": 50.4575,
+"t1": 50.7075,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "up",
+"t0": 50.7325,
+"t1": 50.8575,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "on",
+"t0": 50.8825,
+"t1": 50.9575,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "a",
+"t0": 50.9825,
+"t1": 51.0325,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "rotten",
+"t0": 51.0825,
+"t1": 51.3575,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "cantaloupe",
+"t0": 51.4075,
+"t1": 51.9075,
+"beat": "melon",
+"take": 16,
+"cls": "k"
+},
+{
+"w": "from",
+"t0": 51.9575,
+"t1": 52.0575,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "a",
+"t0": 52.0825,
+"t1": 52.1075,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "market",
+"t0": 52.1575,
+"t1": 52.4825,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "in",
+"t0": 52.5325,
+"t1": 52.5825,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "Illinois.",
+"t0": 52.6075,
+"t1": 53.2825,
+"beat": "melon",
+"take": 16,
+"cls": null
+},
+{
+"w": "By",
+"t0": 53.7175,
+"t1": 53.8675,
+"beat": "dday",
+"take": 17,
+"cls": null
+},
+{
+"w": "D-Day,",
+"t0": 53.9175,
+"t1": 54.3425,
+"beat": "dday",
+"take": 17,
+"cls": null
+},
+{
+"w": "there",
+"t0": 54.4675,
+"t1": 54.5425,
+"beat": "dday",
+"take": 17,
+"cls": null
+},
+{
+"w": "were",
+"t0": 54.5675,
+"t1": 54.6675,
+"beat": "dday",
+"take": 17,
+"cls": null
+},
+{
+"w": "millions",
+"t0": 54.7425,
+"t1": 55.0925,
+"beat": "dday",
+"take": 17,
+"cls": "k"
+},
+{
+"w": "of",
+"t0": 55.1175,
+"t1": 55.1675,
+"beat": "dday",
+"take": 17,
+"cls": null
+},
+{
+"w": "doses.",
+"t0": 55.2175,
+"t1": 55.8925,
+"beat": "dday",
+"take": 17,
+"cls": null
+},
+{
+"w": "Fleming",
+"t0": 56.4185,
+"t1": 56.7685,
+"beat": "warning",
+"take": 18,
+"cls": null
+},
+{
+"w": "warned",
+"t0": 56.8185,
+"t1": 57.1185,
+"beat": "warning",
+"take": 18,
+"cls": null
+},
+{
+"w": "that",
+"t0": 57.1685,
+"t1": 57.2685,
+"beat": "warning",
+"take": 18,
+"cls": null
+},
+{
+"w": "if",
+"t0": 57.3185,
+"t1": 57.3935,
+"beat": "warning",
+"take": 18,
+"cls": null
+},
+{
+"w": "we",
+"t0": 57.4185,
+"t1": 57.5185,
+"beat": "warning",
+"take": 18,
+"cls": null
+},
+{
+"w": "misused",
+"t0": 57.5685,
+"t1": 57.9935,
+"beat": "warning",
+"take": 18,
+"cls": null
+},
+{
+"w": "it,",
+"t0": 58.0435,
+"t1": 58.3435,
+"beat": "warning",
+"take": 18,
+"cls": null
+},
+{
+"w": "bacteria",
+"t0": 58.4685,
+"t1": 59.0685,
+"beat": "warning",
+"take": 18,
+"cls": null
+},
+{
+"w": "would",
+"t0": 59.1185,
+"t1": 59.2435,
+"beat": "warning",
+"take": 18,
+"cls": null
+},
+{
+"w": "learn",
+"t0": 59.2935,
+"t1": 59.5185,
+"beat": "warning",
+"take": 18,
+"cls": null
+},
+{
+"w": "to",
+"t0": 59.5685,
+"t1": 59.6185,
+"beat": "warning",
+"take": 18,
+"cls": null
+},
+{
+"w": "resist",
+"t0": 59.6435,
+"t1": 60.0185,
+"beat": "warning",
+"take": 18,
+"cls": "k"
+},
+{
+"w": "it.",
+"t0": 60.0685,
+"t1": 60.4185,
+"beat": "warning",
+"take": 18,
+"cls": null
+},
+{
+"w": "He",
+"t0": 60.7211,
+"t1": 60.7961,
+"beat": "warning",
+"take": 19,
+"cls": null
+},
+{
+"w": "was",
+"t0": 60.8211,
+"t1": 60.9461,
+"beat": "warning",
+"take": 19,
+"cls": null
+},
+{
+"w": "right.",
+"t0": 60.9961,
+"t1": 61.5211,
+"beat": "warning",
+"take": 19,
+"cls": null
+},
+{
+"w": "The",
+"t0": 61.9744,
+"t1": 62.0244,
+"beat": "warning",
+"take": 20,
+"cls": null
+},
+{
+"w": "next",
+"t0": 62.0744,
+"t1": 62.3244,
+"beat": "warning",
+"take": 20,
+"cls": null
+},
+{
+"w": "miracle",
+"t0": 62.3494,
+"t1": 62.8994,
+"beat": "warning",
+"take": 20,
+"cls": "k"
+},
+{
+"w": "might",
+"t0": 62.9994,
+"t1": 63.1494,
+"beat": "warning",
+"take": 20,
+"cls": null
+},
+{
+"w": "already",
+"t0": 63.1994,
+"t1": 63.5244,
+"beat": "warning",
+"take": 20,
+"cls": null
+},
+{
+"w": "be",
+"t0": 63.5494,
+"t1": 63.6494,
+"beat": "warning",
+"take": 20,
+"cls": null
+},
+{
+"w": "growing",
+"t0": 63.7244,
+"t1": 64.0744,
+"beat": "warning",
+"take": 20,
+"cls": null
+},
+{
+"w": "in",
+"t0": 64.1244,
+"t1": 64.1994,
+"beat": "warning",
+"take": 20,
+"cls": null
+},
+{
+"w": "someone's",
+"t0": 64.2494,
+"t1": 64.5494,
+"beat": "warning",
+"take": 20,
+"cls": null
+},
+{
+"w": "dirty",
+"t0": 64.5994,
+"t1": 64.7994,
+"beat": "warning",
+"take": 20,
+"cls": null
+},
+{
+"w": "dishes.",
+"t0": 64.8494,
+"t1": 65.4994,
+"beat": "warning",
+"take": 20,
+"cls": "k"
+}
+]

@@ -76,21 +76,22 @@ w("| Stage | Method |")
 w("|---|---|")
 w(f"| Narration | {len(words)} words, recorded with Kokoro-82M (Apache-2.0 neural TTS, voice `{T['meta']['voice']}`, speed {T['meta']['speed']:.2f}) running locally. |")
 w("| Word timing | Read from the voice model’s own phoneme durations: every word boundary is exact to one 25 ms model frame. |")
-w(f"| Animation | {len(TL['scenes'])} chapters drawn on an HTML Canvas; every frame is a pure function of time and of the narration’s word timings. |")
+w(f"| Pictures | {len(TL['scenes'])} scenes of real photographs, film and 3D, composed on an HTML Canvas (3D by three.js); every frame is a pure function of time and of the narration’s word timings. |")
 w(f"| Rendering | Headless Chromium, 1080 × 1920 native, {TL['total']} frames, each leaving the page as a JPEG (q 0.97). |")
 MUS = CFG.get("music", {})
 ST = TL.get("style") or {}
-w(f"| Look | `{ST.get('name', 'engine default')}` ({ST.get('mode', 'dark')} theme); the reasoning behind it and the story shape is in docs/creative_brief.md. |")
+w(f"| Look | `{ST.get('name', 'engine default')}`: one colour grade for every picture; the reasoning behind it and the story is in docs/creative_brief.md. |")
 w(f"| Music | Original, synthesised at {MUS.get('bpm', 100):g} BPM ({MUS.get('kit', 'synth')} kit" + (f", transposed {MUS['transpose']:+g} semitones" if MUS.get("transpose") else "")
   + "), arranged per chapter from the moods in video.json, ending on a held major chord. |")
 w(f"| Sound design | {A['sfx_cues']} synthesised cues, emitted by the animation code at the same cue times as the visuals. |")
-LOTS = TL.get("lottie") or []
-if LOTS:
-    cred_path = ROOT / "lottie/credits.json"
-    cred = json.load(open(cred_path, encoding="utf-8")) if cred_path.exists() else {}
-    names = sorted({x["name"] for x in LOTS})
-    parts = [f"{n} — “{cred.get(n, {}).get('title', n)}” by {cred.get(n, {}).get('author', 'unknown')} ({cred.get(n, {}).get('licence', 'licence not recorded')})" for n in names]
-    w(f"| Lottie animations | {len(names)} played on the narration's clock by lottie-web (MIT): " + "; ".join(parts) + ". Sources in lottie/credits.json. |")
+MEDIA_CR = json.load(open(ROOT / "media/credits.json", encoding="utf-8")) if (ROOT / "media/credits.json").exists() else {}
+USED = [m["name"] for m in TL.get("media") or []]
+if USED:
+    lic = {}
+    for n in USED:
+        lic.setdefault(MEDIA_CR.get(n, {}).get("licence", "licence not recorded"), []).append(n)
+    w(f"| Media | {len(USED)} picture(s), clip(s) and model(s) from free sources: " + "; ".join(f"{k}: {', '.join(v)}" for k, v in sorted(lic.items()))
+      + ". Every source, author and licence is in media/credits.json; the credit lines for the description are in docs/credits.md. |")
 w("| Mix | Voice lightly compressed and peak-controlled; bed ducked under speech; mastered to −14 LUFS with a look-ahead limiter. |")
 w("| Encode | FFmpeg libx264 (CRF, preset slow), BT.709 limited range, 2 s keyframe interval; AAC-LC 256 kbps. |")
 w("")
@@ -121,7 +122,7 @@ w(f"- {caps.get('phrases')} burned-in phrases ({caps.get('two_line')} on two lin
 
 w("## 5. Mobile viewing\n")
 CS = ST.get("captions", {})
-w(f"- Layout zones (1080 × 1920): top 0–270 backdrop only; chapter bar y 286–340; diagrams y 372–1210; captions y {caps.get('y_extent', ['?', '?'])[0]}–{caps.get('y_extent', ['?', '?'])[1]}; bottom 1470–1920 backdrop only.\n"
+w(f"- Layout (1080 × 1920): every shot fills the frame; essential text stays within y 270–1470 and clear of the right-hand buttons; captions y {caps.get('y_extent', ['?', '?'])[0]}–{caps.get('y_extent', ['?', '?'])[1]}.\n"
   f"- Captions: {CS.get('family', 'Inter Display')} {CS.get('weight', 800)}, {CS.get('size', 74)} px, highlight mode `{CS.get('highlight', 'color')}`, widest phrase {caps.get('max_width_px')} px.\n"
   "- `dist/mobile_preview_reels_style.jpg` and `dist/mobile_preview_shorts_style.jpg` show frames at phone size under generic interface overlays. "
   "The overlays are approximations built from third-party measurements (neither platform publishes fixed pixel values), drawn conservatively.\n")
@@ -134,9 +135,8 @@ else:
 if fid.get("ssim_all"):
     w(f"Encode fidelity against the rendered frames: SSIM {fid['ssim_all']:.4f}, PSNR {fid['psnr_avg_db']:.1f} dB.\n")
 
-if LOTS:
-    w("Suggested credit for the video description: “Animations: " + "; ".join(
-        f"{cred.get(n, {}).get('title', n)} by {cred.get(n, {}).get('author', 'unknown')}" for n in names) + " (LottieFiles)”.\n")
+if any(MEDIA_CR.get(n, {}).get("credit_required") for n in USED):
+    w("Credit lines the licences require are in docs/credits.md: paste them into the video's description.\n")
 
 notes = ROOT / "docs/report_notes.md"
 if notes.exists():

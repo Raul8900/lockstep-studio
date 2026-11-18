@@ -103,25 +103,12 @@ def narration_md():
 
 
 # ------------------------------------------------------------------ storyboard
-FIELDS = ["Objects on screen", "Position and size (1080 × 1920)", "Background", "Movement", "Timing and easing", "Camera",
-          "Colour and emphasis", "Text overlays", "Transition out", "Sound", "Purpose"]
-ROLE_MEANING = [("subject", "the subject and its core mechanism"), ("accent", "numbers and the contrasting element"),
-                ("data", "the secondary family"), ("alert", "limits and negation"), ("good", "success")]
-BACKDROP_DESC = {
-    "circuit": "charcoal gradient, slow colour fog, a dot lattice drifting upward, a perspective floor grid and faint vertical traces with travelling pulses",
-    "solid": "the palette's vertical gradient alone",
-    "aurora": "large soft colour fields drifting slowly across the gradient",
-    "paper": "paper with fixed grain and fibres and a slow drifting colour wash",
-    "grid": "graph-paper grid drifting slowly on a diagonal",
-    "halftone": "a field of print dots whose size follows a slow wave",
-    "stage": "a dark stage with one light from above, a pool of light on the floor and drifting dust",
-    "sunburst": "slowly turning rays from behind the main object",
-    "blobs": "large flat shapes drifting slowly, tinted from the palette",
-    "custom": "drawn by this video's own components.js",
-}
-HIGHLIGHT_DESC = {"color": "the spoken word takes its role colour, scales up slightly and lifts",
-                  "box": "the spoken word sits on a filled box in its role colour",
-                  "underline": "the spoken word takes its role colour and an underline draws in beneath it"}
+FIELDS = ["What fills the frame", "Media", "Camera", "Overlays", "Timing", "Transition out", "Sound", "Purpose"]
+ROLE_MEANING = [("subject", "the subject"), ("accent", "numbers and the thing to look at"),
+                ("data", "the secondary family"), ("alert", "danger, limits and negation"), ("good", "success")]
+HIGHLIGHT_DESC = {"color": "the spoken key word takes the key colour, scales up slightly and lifts",
+                  "box": "the spoken word sits on a filled box",
+                  "underline": "the spoken word takes its colour and an underline draws in beneath it"}
 
 
 def style_info():
@@ -150,41 +137,33 @@ def storyboard_md(seq, colour):
              "the animation code reads the same word timings, so picture and voice cannot drift apart.\n")
     o.append("## Conventions that apply to every sequence\n")
     cst = (tl.get("style") or {}).get("captions", {})
-    cy, cw, clh = cst.get("y", 1350), cst.get("maxW", 800), cst.get("lineH", 90)
-    o.append("**Canvas and safe areas.** Designed natively for 9:16; nothing is cropped from a wider layout.\n\n"
-             "| Zone | y range | Use |\n|---|---|---|\n"
-             "| Top UI band | 0–270 | Backdrop only |\n"
-             f"| Chapter bar | 286–340 | {len(tl['scenes'])}-segment progress bar (y 292) and chapter label (y 334) |\n"
-             "| Diagram zone | 372–1210 | All essential graphics, x 70–1010 |\n"
-             f"| Caption band | {cy - clh - 10}–{cy + clh + 10} | Burned-in captions, centred on x 540, y {cy}, max width {cw} px |\n"
-             "| Bottom UI band | 1470–1920 | Backdrop and non-essential spill only |\n\n"
-             "Below y 900, numbers and names stay left of x ≈ 910, where both platforms stack their action buttons; only repeated or decorative elements extend further right.\n")
+    o.append("**Canvas.** 1080 × 1920, designed for 9:16. Every shot fills the frame — a photograph, a film clip or a 3D world — "
+             "and the camera keeps moving through it. Essential text stays inside x 70–1010, y 270–1470 and left of x 950 below y 1000, "
+             "clear of the platform's own interface.\n")
     st, about = style_info()
-    fonts, caps_st, pal = st.get("fonts", {}), st.get("captions", {}), st.get("palette", {})
+    fonts, caps_st = st.get("fonts", {}), st.get("captions", {})
     if st:
-        o.append(f"**Look.** `{st.get('name')}` ({st.get('mode')} theme)" + (f" — {about}" if about else "") + "\n")
-        o.append(f"**Backdrop.** {BACKDROP_DESC.get(st.get('backdrop'), st.get('backdrop'))}; background gradient "
-                 + " → ".join(pal.get("bg", [])) + ".\n")
-    o.append("**Colour language.** " + colour + "\n")
+        g = st.get("grade") or {}
+        o.append(f"**Look.** `{st.get('name')}`" + (f" — {about}" if about else "") + ". Every picture, clip and render gets one grade: "
+                 + ", ".join(f"{k} {v}" for k, v in g.items() if v not in (None, 0) or k in ("contrast", "saturate")) + ".\n")
+    o.append("**Colour language (overlays).** " + colour + "\n")
     if fonts:
-        o.append(f"**Type.** {fonts.get('disp')} for headlines, {fonts.get('ui')} for glosses and body, {fonts.get('mono')} for labels and counters. "
-                 "Smallest label 19–22 px; primary labels ≥ 24 px.\n")
+        o.append(f"**Type.** {fonts.get('disp')} for numbers, stamps and names; {fonts.get('ui')} for small print.\n")
     if caps_st:
         o.append(f"**Captions.** {caps_st.get('family')} {caps_st.get('weight')}, {caps_st.get('size')} px"
-                 + (", upper case" if caps_st.get("case") == "upper" else "") + f", centred on y {caps_st.get('y')}, 1–5 words per phrase ("
-                 + str(len(tl["caps"])) + " phrases, " + str(sum(1 for c in tl["caps"] if c["lines"] > 1)) + " of them two-line); "
-                 + HIGHLIGHT_DESC.get(caps_st.get("highlight"), "") + ". Words not yet spoken are dimmed. Position never changes.\n")
-    lots = tl.get("lottie") or []
-    if lots:
-        cred_path = ROOT / "lottie/credits.json"
+                 + (", upper case" if caps_st.get("case") == "upper" else "") + f", centred on y {caps_st.get('y')}, two to four words at a time ("
+                 + str(len(tl["caps"])) + " phrases); " + HIGHLIGHT_DESC.get(caps_st.get("highlight"), "") + ".\n")
+    media = tl.get("media") or []
+    if media:
+        cred_path = ROOT / "media/credits.json"
         cred = json.load(open(cred_path, encoding="utf-8")) if cred_path.exists() else {}
-        names = sorted({x["name"] for x in lots})
-        o.append("**Lottie animations.** " + "; ".join(f"`{n}` (“{cred.get(n, {}).get('title', n)}” by {cred.get(n, {}).get('author', 'unknown')})" for n in names)
-                 + ", each started, paced or pinned to spoken words; recolouring: " + ", ".join(sorted({str(x['recolor']) for x in lots})) + ".\n")
+        o.append("**Media.** " + "; ".join(f"`{m['name']}` ({m['kind']}{', cut out' if m.get('cutout') else ''}: “{cred.get(m['name'], {}).get('title', m['name'])}”, "
+                                          f"{cred.get(m['name'], {}).get('licence', '?')})" for m in media) + ". Credits: docs/credits.md.\n")
+    if tl.get("worlds"):
+        o.append(f"**3D.** {tl['worlds']} world(s) rendered with three.js; models and skies listed under Media.\n")
     tr = st.get("transition") or {}
     if tr:
-        o.append(f"**Scene changes.** {tr.get('duration')} s, default `{tr.get('default')}`; each scene can choose its own arrival "
-                 "(zoom into a point, pull back, pan, slide, cut, flash). The incoming scene is already drawn and moving before the outgoing one has gone.\n")
+        o.append(f"**Scene changes.** default `{tr.get('default')}` ({tr.get('duration')} s); cuts inside a scene are shots, not transitions.\n")
     o.append("---\n")
     for i, q in enumerate(seq):
         title, t0, t1 = q[0], q[1], q[2]

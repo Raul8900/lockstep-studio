@@ -173,20 +173,36 @@ def enforce_pauses(audio, words, pause_after):
     return audio, words
 
 
+# The voices worth using: Kokoro's own quality grades (VOICES.md of hexgrad/Kokoro-82M). Everything
+# else is C+ or lower and is the "robotic" sound to avoid.
+BEST = {
+    "af_heart": ("A", "American English, female: warm, expressive, the most natural — the default"),
+    "af_bella": ("A-", "American English, female: brighter and more energetic"),
+}
+
+
 def clean_word(text):
     return re.sub(r"^[^\w]+|[^\w]+$", "", text).lower()
 
 
 def main():
     voice = sys.argv[2] if len(sys.argv) > 2 else getattr(S, "VOICE", "af_heart")
-    speed = float(sys.argv[3]) if len(sys.argv) > 3 else getattr(S, "SPEED", 1.0)
-    out_tag = ""
-    english = sorted(v for v in voices if v[0] in "ab")      # a* = American, b* = British; second letter f/m = female/male
     if voice == "list":
-        print("English voices (af_/am_ American, bf_/bm_ British):\n  " + "  ".join(english))
+        speed = 1.0
+    else:
+        speed = float(sys.argv[3]) if len(sys.argv) > 3 else getattr(S, "SPEED", 1.15)
+    out_tag = ""
+    if voice == "list":
+        print("Voices this pipeline uses (the best Kokoro has, by its authors' own grades):")
+        for v, (grade, desc) in BEST.items():
+            print(f"  {v:<10} {grade:<3} {desc}")
+        print("The other Kokoro voices are graded C+ or lower and sound synthetic; they are not offered.")
         return
-    if voice not in voices:
-        sys.exit(f"unknown voice {voice!r}; available: " + ", ".join(english))
+    if voice not in BEST:
+        sys.exit(f"voice {voice!r} is not one of the best voices ({', '.join(BEST)}): the others are graded B- or lower by "
+                 "Kokoro's authors and sound noticeably synthetic. `lockstep voice <video> list` shows the choice.")
+    if not 0.9 <= speed <= 1.3:
+        sys.exit(f"speed {speed}: keep it between 0.9 and 1.3 (1.1-1.2 gives the 190-210 words a minute short-form narration runs at)")
     ids = [b["id"] for b in S.BEATS]
     assert len(ids) == len(set(ids)), "beat ids in script.py must be unique"
 

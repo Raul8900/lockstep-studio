@@ -1,0 +1,94 @@
+{
+ "moon-capitol": {
+  "file": "moon-capitol.jpg",
+  "kind": "photo",
+  "source": "nasa",
+  "id": "201202070005HQ",
+  "title": "Full Moon",
+  "author": "NASA/Bill Ingalls, HQ",
+  "licence": "NASA (public domain)",
+  "licence_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+  "page": "https://images.nasa.gov/details/201202070005HQ",
+  "download": "https://images-assets.nasa.gov/image/201202070005HQ/201202070005HQ~large.jpg",
+  "credit_required": true,
+  "taken": "2026-11-18",
+  "size": [
+   1277,
+   1919
+  ]
+ },
+ "moon-map": {
+  "file": "moon-map.jpg",
+  "kind": "photo",
+  "source": "wikimedia",
+  "id": "95503461",
+  "title": "Solarsystemscope texture 2k moon.jpg",
+  "author": "Solar System Scope",
+  "licence": "CC BY 4.0",
+  "licence_url": "https://creativecommons.org/licenses/by/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Solarsystemscope_texture_2k_moon.jpg",
+  "download": "https://upload.wikimedia.org/wikipedia/commons/2/26/Solarsystemscope_texture_2k_moon.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "credit_required": true,
+  "taken": "2026-11-18",
+  "size": [
+   1920,
+   960
+  ]
+ },
+ "earth-map": {
+  "file": "earth-map.jpg",
+  "kind": "photo",
+  "source": "wikimedia",
+  "id": "84107736",
+  "title": "Blue Marble Next Generation + topography + bathymetry.jpg",
+  "author": "Reto Stöckli, NASA Earth Observatory, modified by NordNordWest",
+  "licence": "Public domain",
+  "licence_url": "",
+  "page": "https://commons.wikimedia.org/wiki/File:Blue_Marble_Next_Generation_%2B_topography_%2B_bathymetry.jpg",
+  "download": "https://upload.wikimedia.org/wikipedia/commons/5/56/Blue_Marble_Next_Generation_%2B_topography_%2B_bathymetry.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "credit_required": false,
+  "taken": "2026-11-18",
+  "size": [
+   1920,
+   960
+  ]
+ },
+ "retroreflector": {
+  "file": "retroreflector.jpg",
+  "kind": "photo",
+  "source": "wikimedia",
+  "id": "719521",
+  "title": "Apollo 11 Lunar Laser Ranging Experiment.jpg",
+  "author": "NASA",
+  "licence": "Public domain",
+  "licence_url": "",
+  "page": "https://commons.wikimedia.org/wiki/File:Apollo_11_Lunar_Laser_Ranging_Experiment.jpg",
+  "download": "https://upload.wikimedia.org/wikipedia/commons/0/08/Apollo_11_Lunar_Laser_Ranging_Experiment.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "credit_required": false,
+  "taken": "2026-11-18",
+  "size": [
+   1584,
+   1600
+  ]
+ },
+ "apollo-moonwalk": {
+  "file": "apollo-moonwalk.mp4",
+  "kind": "video",
+  "source": "nasa",
+  "id": "Apollo_11_moonwalk_montage_720p",
+  "title": "Apollo_11_moonwalk_montage_720p",
+  "author": "NASA, HQ",
+  "licence": "NASA (public domain)",
+  "licence_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+  "page": "https://images.nasa.gov/details/Apollo_11_moonwalk_montage_720p",
+  "download": "https://images-assets.nasa.gov/video/Apollo_11_moonwalk_montage_720p/Apollo_11_moonwalk_montage_720p~medium.mp4",
+  "credit_required": true,
+  "taken": "2026-11-18",
+  "size": [
+   1280,
+   720
+  ],
+  "duration": 4.0,
+  "note": "a 4-second excerpt (1:38–1:42) of the NASA montage, cut for the template"
+ }
+}

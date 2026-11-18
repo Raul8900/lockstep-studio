@@ -1,0 +1,9 @@
+{
+  "name": "penicillin-archive",
+  "about": "1920s–40s photographs and a 3D cell, warmed, a little faded and sepia, deep vignette: one old film; white captions, the key word in yellow.",
+  "palette": { "accent": "#FFD23F", "alert": "#FF4D4D", "good": "#7CFFB2", "subject": "#6FD3FF" },
+  "grade": { "contrast": 1.12, "saturate": 0.82, "brightness": 1.0, "sepia": 0.16 },
+  "captions": { "key": "#FFD23F", "size": 72 },
+  "post": { "bloom": 0.25, "vignette": 0.75 },
+  "transition": { "default": "cut", "duration": 0.3 }
+}

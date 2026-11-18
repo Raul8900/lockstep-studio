@@ -165,13 +165,20 @@ async function prepareGLTransitions() {
   }
 }
 
-/* `render.js <video> transitions` boots the page in this mode: two scenes in the video's look
-   (two block demos) with the transition under test between them; the cut sits at 2 s */
+/* `render.js <video> transitions` boots the page in this mode: two plain scenes in the video's
+   colours with the transition under test between them; the cut sits at 2 s */
 function setupTransitionSheet() {
   DATA.words = []; DATA.takes = []; DATA.meta = { duration: 4 }; DATA.dur = 4; CAPS = [];
   DATA.beats = [{ id: 'from', title: 'From', t0: 0, t1: 2.4 }, { id: 'to', title: 'To', t0: 2.5, t1: 4 }];
-  addScene('from', (ctx, t) => BLOCK_DEMOS.barChart.demo(ctx, 1, t));
-  addScene('to', (ctx, t) => BLOCK_DEMOS.donutChart.demo(ctx, 1, t), { type: 'fade' });
+  const card = (a, b, word) => (ctx) => {
+    const g = ctx.createLinearGradient(0, 0, W * 0.4, H);
+    g.addColorStop(0, a); g.addColorStop(1, b);
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    for (let i = 0; i < 9; i++) dot(ctx, 140 + hash(i + word.length) * 800, 300 + hash(i * 3.1) * 1300, 40 + 90 * hash(i * 7.7), 'rgba(255,255,255,0.10)');
+    bigWord(ctx, word, CX, 900, 1, { max: 230 });
+  };
+  addScene('from', card(COL.subject, mixToHex(COL.subject, '#000000', 0.7), 'FROM'));
+  addScene('to', card(COL.accent, mixToHex(COL.alert, '#000000', 0.5), 'TO'), { type: 'fade' });
 }
 
 /* The shortlist `lockstep transitions` shows by default, by the kind of look it suits. The other

@@ -15,7 +15,9 @@ or mark it as intended. --strict counts warnings as errors.
   error  cue               at('beat', 'word', n), or sayText's beat, from or to, that does not resolve
   error  sound             a sound cue type the mixer does not know
   error  icon              an icon name (icon(ctx, 'x', …) or { icon: 'x' }) not in assets/icons/names.txt
-  error  lottie            useLottie('name') without lottie/name.json, or a file without credits
+  error  media             useImage / useVideo / w.model / w.sky / w.texture naming something not taken into
+                           media/ (or its file missing), a cut-out not made yet, or media without a licence
+                           a video can use
   error  transition        a shader transition 'gl:Name' that does not exist
   warn   typed-time        a time typed in seconds, which drifts when the narration is re-recorded
   warn   hex-colour        a colour typed as a value instead of a role (COL.subject, ...)
@@ -203,7 +205,7 @@ def check_static(sources, words):
     by_beat = {}
     for w in words or []:
         by_beat.setdefault(w["beat"], []).append(clean(w["w"]))
-    stems = sorted(p.stem for p in (ROOT / "lottie").glob("*.json") if p.name != "credits.json") if (ROOT / "lottie").exists() else []
+    credits = json.load(open(ROOT / "media/credits.json")) if (ROOT / "media/credits.json").exists() else {}
     grouped = {}       # (rule, file) -> [line numbers]  for the colour rules, reported once per file
 
     for s in sources:
@@ -277,14 +279,20 @@ def check_static(sources, words):
                 s.flag("error", "transition", m.start(), f"'gl:{m.group(2)}' is not a shader transition"
                        f"{suggest(m.group(2), GL_NAMES.values())} (lockstep transitions --all shows them)")
 
-        for pos, a in s.calls("useLottie"):
-            name = lit(a[0]) if a else None
-            if name is None or (len(a) > 1 and re.search(r"\bdir\s*:", a[1])):
-                continue
-            name = re.sub(r"\.json$", "", name)
-            if name not in stems:
-                s.flag("error", "lottie", pos, f"useLottie('{name}'): there is no lottie/{name}.json{suggest(name, stems)}"
-                       + (f" (files: {', '.join(stems)})" if stems else "") + " — lockstep lottie-get takes one")
+        for fn, kinds in (("useImage", ("photo",)), ("useVideo", ("video",)), ("w.model", ("model",)), ("w.sky", ("hdri",)), ("w.texture", ("photo", "texture"))):
+            for pos, a in s.calls(fn):
+                name = lit(a[0]) if a else None
+                if name is None:
+                    continue
+                base = name.split("/")[0]
+                e = credits.get(base)
+                if not e:
+                    s.flag("error", "media", pos, f"{fn}('{name}'): nothing called '{base}' has been taken into media/{suggest(base, credits)}"
+                           f" — lockstep find {ROOT.name} {kinds[0]} \"…\", then lockstep take (media/credits.json lists what there is)")
+                elif e.get("kind") not in kinds:
+                    s.flag("error", "media", pos, f"{fn}('{name}'): '{base}' is a {e.get('kind')}, not a {' or '.join(kinds)}")
+                elif fn == "useImage" and len(a) > 1 and re.search(r"\bcutout\s*:\s*true", a[1]) and not e.get("cutout"):
+                    s.flag("error", "media", pos, f"useImage('{name}', {{ cutout: true }}): no cut-out made yet — lockstep cutout {ROOT.name} {base}")
 
         for pos, a in list(s.calls("prog")) + list(s.calls("tw")):
             if len(a) >= 3 and a[0] == "t":
@@ -298,6 +306,9 @@ def check_static(sources, words):
                 s.flag("warn", "typed-time", m.start(), f"'{m.group(0).strip()}': {v} s is typed in, and drifts when the narration is re-recorded — compare t with a cue from at()")
 
         for m in re.finditer(r"(['\"`])(#[0-9a-fA-F]{8}|#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3})\1", s.txt):
+            h = m.group(2)[1:7] if len(m.group(2)) > 4 else "".join(ch * 2 for ch in m.group(2)[1:4])
+            if h[0:2].lower() == h[2:4].lower() == h[4:6].lower():
+                continue                          # black, white and greys are style-neutral (a 3D material's white base, a night sky)
             grouped.setdefault(("hex-colour", s), []).append((m.start(), m.group(2)))
         for m in re.finditer(r"(['\"`])rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)", s.txt):
             if not (m.group(2) == m.group(3) == m.group(4)):          # greys (shadows, scrims) are style-neutral
@@ -366,13 +377,28 @@ def check_project():
         r = subprocess.run([sys.executable, str(ENGINE / "make_captions.py"), str(ROOT)], capture_output=True, text=True)
         if r.returncode != 0:
             add("error", "captions", " ".join((r.stderr or r.stdout).strip().splitlines()[-2:]) or "caption_phrases.json does not match the narration", "caption_phrases.json")
-    d = ROOT / "lottie"
-    files = sorted(p.stem for p in d.glob("*.json") if p.name != "credits.json") if d.exists() else []
-    credits = json.load(open(d / "credits.json")) if (d / "credits.json").exists() else {}
-    for f in files:
-        c = credits.get(f) or {}
-        if not (c.get("licence") and c.get("source")):
-            add("error", "lottie", f"lottie/{f}.json has no source and licence in lottie/credits.json (lottie-get writes them; add your own files by hand)", "lottie/credits.json")
+    cp = ROOT / "media/credits.json"
+    credits = json.load(open(cp)) if cp.exists() else {}
+    missing = []
+    for name, e in credits.items():
+        lic = (e.get("licence") or "").lower()
+        if not lic or not (e.get("page") or e.get("source") == "added"):
+            add("error", "media", f"{name}: no licence or source page recorded — every picture, clip and model needs both", "media/credits.json")
+        elif re.search(r"\bnc\b|non-?commercial|\bnd\b|no-?deriv", lic):
+            add("error", "media", f"{name}: licence '{e['licence']}' does not allow this use (non-commercial or no-derivatives) — choose another", "media/credits.json")
+        elif "sa" in re.findall(r"[a-z]+", lic):
+            add("warn", "media", f"{name}: '{e['licence']}' is share-alike — the whole video then falls under it; prefer CC0, public domain or CC BY", "media/credits.json")
+        if not (ROOT / "media" / e.get("file", "")).exists():
+            missing.append(name)
+    if missing:
+        add("error", "media", f"{len(missing)} file(s) in media/credits.json are not on disk ({', '.join(missing[:5])}{', …' if len(missing) > 5 else ''})"
+            f" — lockstep media {ROOT.name} restore downloads them again", "media/")
+    for f in sorted((ROOT / "media").glob("*")) if (ROOT / "media").exists() else []:
+        if f.name == "credits.json" or f.name.endswith(".cut.png"):
+            continue
+        if not any(f.name == e.get("file") or f.name == Path(e.get("file", "")).parts[0] for e in credits.values()):
+            add("error", "media", f"media/{f.name} has no entry in media/credits.json: where it came from and its licence must be known"
+                f" (lockstep media {ROOT.name} add <file> --as <name> --licence …)", f"media/{f.name}")
     return words
 
 
