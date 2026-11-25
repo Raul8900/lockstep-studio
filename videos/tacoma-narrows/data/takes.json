@@ -12,55 +12,64 @@
    "id": "hook",
    "title": "The dancing bridge",
    "t0": 0.298,
-   "t1": 9.1255
+   "t1": 9.1255,
+   "speed": 1.15
   },
   {
    "id": "ribbon",
    "title": "A ribbon",
    "t0": 9.6105,
-   "t1": 16.0919
+   "t1": 16.0919,
+   "speed": 1.15
   },
   {
    "id": "wind",
    "title": "The wind",
    "t0": 16.577,
-   "t1": 22.702
+   "t1": 22.702,
+   "speed": 1.15
   },
   {
    "id": "twist",
    "title": "The twist",
    "t0": 23.1531,
-   "t1": 35.9279
+   "t1": 35.9279,
+   "speed": 1.15
   },
   {
    "id": "film",
    "title": "The real film",
    "t0": 36.4275,
-   "t1": 38.2275
+   "t1": 38.2275,
+   "speed": 1.15
   },
   {
    "id": "tubby",
    "title": "Tubby",
    "t0": 38.6785,
-   "t1": 42.9035
+   "t1": 42.9035,
+   "speed": 1.15
   },
   {
    "id": "fall",
    "title": "The fall",
    "t0": 43.4042,
-   "t1": 46.5042
+   "t1": 46.5042,
+   "speed": 1.15
   },
   {
    "id": "myth",
    "title": "The myth",
    "t0": 47.1115,
-   "t1": 55.5215
+   "t1": 55.5215,
+   "speed": 1.15
   },
   {
    "id": "lesson",
    "title": "The lesson",
    "t0": 56.017,
-   "t1": 61.7408
+   "t1": 61.7408,
+   "speed": 1.15
   }
  ],
  "takes": [

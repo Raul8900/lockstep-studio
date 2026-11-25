@@ -13,7 +13,7 @@ trap cleanup EXIT
 
 python3 "$REPO/engine/new_video.py" selftest "Lockstep Self-Test" --into "$TMP" --example >/dev/null
 V="$TMP/selftest"
-echo "== voice";  "$REPO/bin/lockstep" voice "$V" | head -1
+echo "== voice";  "$REPO/bin/lockstep" voice "$V" > "$TMP/voice.log"; head -1 "$TMP/voice.log"
 "$REPO/bin/lockstep" build "$V" --preset veryfast --crf 20
 echo "== lint --strict (the template must not even warn)"; "$REPO/bin/lockstep" lint "$V" --strict
 if [ "$KEEP" = 1 ]; then echo "kept: $V  (video in $V/dist/)"; fi

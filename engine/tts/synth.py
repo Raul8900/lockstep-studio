@@ -14,6 +14,7 @@ Outputs
   data/takes.json             per-take and per-beat timing
 """
 import json
+import os
 import re
 import sys
 import warnings
@@ -261,11 +262,15 @@ def main():
     json.dump(all_words, open(ROOT / f"data/words{out_tag}.json", "w"), ensure_ascii=False, indent=0)
     json.dump({"meta": meta, "beats": beats, "takes": takes},
               open(ROOT / f"data/takes{out_tag}.json", "w"), ensure_ascii=False, indent=1)
-    print(json.dumps(meta))
     from pacing import table
-    print(table(beats, all_words, meta["duration"]))
-    print("  Check it against the brief's Pacing plan: the beats that carry the story (the mechanism, the real")
-    print("  footage, the reveal) are the long ones, with held time; setup beats are short. (lockstep pacing)")
+    try:
+        print(json.dumps(meta))
+        print(table(beats, all_words, meta["duration"]))
+        print("  Check it against the brief's Pacing plan: the beats that carry the story (the mechanism, the real")
+        print("  footage, the reveal) are the long ones, with held time; setup beats are short. (lockstep pacing)")
+        sys.stdout.flush()
+    except BrokenPipeError:            # piped into `head`: the files are written; the rest of the report is not wanted
+        os.dup2(os.open(os.devnull, os.O_WRONLY), sys.stdout.fileno())
 
 
 if __name__ == "__main__":
