@@ -1,6 +1,6 @@
 ---
 name: explainer-video
-description: Produce a finished vertical explainer video (9:16, 1080x1920, 30 fps MP4 with voiceover, original music, sound design and word-synced burned-in captions) for Instagram Reels / YouTube Shorts on any topic, using this repository's lockstep engine. Each video tells a story in one world — real photographs, archive film and 3D from free, licensed sources — with a camera that never stops, planned in a creative brief before anything is recorded. Use when asked to make, create or produce an explainer video, short or reel about a topic ("make a video about X"), or to revise or re-render a video under videos/.
+description: Produce a finished vertical explainer video (9:16, 1080x1920, 30 fps MP4 with voiceover, original music, sound design and word-synced burned-in captions) for Instagram Reels / YouTube Shorts on any topic, using this repository's lockstep engine. Each video tells a story in one world animated in code with three.js — objects, mechanisms and places built from shapes — with real photographs and film from free, licensed sources only where the real thing is the evidence, and a camera that never stops, planned in a creative brief before anything is recorded. Use when asked to make, create or produce an explainer video, short or reel about a topic ("make a video about X"), or to revise or re-render a video under videos/.
 ---
 
 # Explainer video
@@ -16,13 +16,16 @@ frame by frame (reference/story.md, reference/shots.md):
 - **A story, not a lecture.** A protagonist (a person, an object, or "you"), a mystery in the
   first line, an escalation, a twist or payoff that calls back to the first line. 190–210 spoken
   words a minute, no dead air.
-- **One world, one hero.** The whole video lives in one world — the real photographs and film of
-  the place and the people, a 3D world, a map, space — and a recurring hero acts out each line.
-  Abstract ideas become physical things (a dose is a stack of glowing blocks; a delay is a ring
-  that counts).
-- **Real pictures, full frame, a camera that never stops.** Every shot fills the frame and moves:
-  push-ins, pull-backs, pans across photographs, fly-throughs and orbits in 3D, film that plays.
-  There are no title cards, chapter bars, panels or diagrams on flat colour.
+- **One world built in code, one hero.** The animation is three.js, all code: a stage, a lab, a
+  city, a cell, space — built from shapes — around one hero *thing* (the cell, the dish, the Moon,
+  the coin) that acts out each line. No human figures made of shapes (they look cheap); real
+  people appear in their real photographs. Nothing is downloaded or AI-generated for the animation. Abstract ideas become
+  physical things (a dose is a stack of glowing blocks; a delay is a ring that counts).
+- **Real pictures only as evidence.** A photograph or clip of the real person, place, event or
+  document comes in when the real thing is the point — at most about one shot in three.
+- **A camera that never stops.** Every shot fills the frame and moves: dollies, orbits and
+  push-ins in 3D, pans across photographs, film that plays. There are no title cards, chapter
+  bars, panels or diagrams on flat colour.
 - **The narration is the clock.** The voice is recorded first; every cut, move, overlay, sound
   and caption is looked up from the moment a word is spoken. Nothing is timed by hand.
 
@@ -31,7 +34,8 @@ frame by frame (reference/story.md, reference/shots.md):
 1. **Decide before you make.** No narration and no scene before `bin/lockstep brief <video>`
    passes: the story, the hook, the world and hero, and a shot plan that names the media for
    every shot.
-2. **Only free, properly licensed media, always credited.** Pictures, film and models come from
+2. **Animation is code; media only free, properly licensed, always credited.** Worlds, objects and
+   places are built with three.js (`kit3d`), never downloaded or AI-generated; no human figures made of shapes. Pictures and film come from
    the free sources `lockstep find` searches (public domain, CC0, CC BY, the Pexels and Pixabay
    licences) or from files the person gives you with their licence (`lockstep media <v> add`).
    Never non-commercial or no-derivatives; share-alike only if the person accepts it for the whole
@@ -108,7 +112,7 @@ For every shot in the plan (reference/media.md):
 bin/lockstep find <slug> photo "Alexander Fleming laboratory"     # every source at once -> out/find/<search>.jpg
 bin/lockstep take <slug> last 3 --as fleming-lab                   # candidate 3 -> media/fleming-lab.jpg + credit
 bin/lockstep find <slug> video "petri dish bacteria"               # film: wikimedia, nasa, archive (+ pexels, pixabay with keys)
-bin/lockstep find <slug> model "robot"                             # 3D: poly haven, khronos, catalog
+bin/lockstep find <slug> model "microscope"                        # a realistic prop, if code will not do: poly haven, khronos
 bin/lockstep cutout <slug> fleming-lab                             # the person without the room -> media/fleming-lab.cut.png
 bin/lockstep look <slug>                                           # everything taken, through the grade -> out/look.jpg
 ```
@@ -150,8 +154,10 @@ addScene('discovery', (ctx, t) => {
   circleIt(ctx, ...pic.at(0.62, 0.58), 120, 90, { p: tw(t, c.mould, c.mould + 0.6) });       // pinned to the picture
 });
 ```
-Pictures (`photo`), film (`film`), cut-outs with parallax (`cutout`), 3D worlds with CC0 models,
-skies and animated characters (`world3d`, `view3d`, `camPath`), several shots inside one beat
+3D worlds built in code — a stage, shapes, labels, lines, arrows, crowds of
+instances (`world3d` + the kit: `w.studio`, `w.box`, `w.instances` …, `view3d`, `camPath`); real
+pictures as evidence (`photo`, `photoPath`, `film`, `cutout`, or `w.picture` on a board inside the
+world); several shots inside one beat
 (`shots`), and overlays that read on any picture (`bigNumber`, `ringGauge`, `pointer`, `circleIt`,
 `arrowTo`, `spotlight`, `stamp`, `nameTag`). Look at every scene as soon as it draws:
 ```bash

@@ -3,7 +3,8 @@
 A scene is a JavaScript file that registers one draw function for one beat. The engine calls it
 with a 2D canvas context and the time in seconds; it draws that instant. `templates/video/scenes/`
 is a small working set: a photograph with a pull-back, a 3D Earth and Moon with NASA's maps,
-archive film and a photograph with a laser drawn onto it.
+archive film and a photograph with a laser drawn onto it. `videos/penicillin-accident/scenes/s03_burst.js`
+builds a whole mechanism in code (a bacterium whose wall of bricks cracks and bursts).
 
 ## Anatomy
 
@@ -98,33 +99,53 @@ shots(ctx, t, [
 
 ## 3D worlds (`world3d.js`, three.js)
 
-A world is built once at boot, from three.js objects, glTF models, HDRI skies and textures in
-`media/`; a draw function views it through a camera. Frames are deterministic: animation clips
-are set from `t`, never from a clock.
+A world is built once at boot, in code, from three.js shapes, materials and light (and, only
+when the real thing is needed, a picture from `media/`); a draw function views it through a
+camera. Frames are deterministic: every pose is set from `t`, never from a clock.
 
 ```js
-const lab = world3d(async (T, w) => {                 // T: three.js; w: this world's helpers
-  w.room();                                            // soft studio light, no file needed (or: await w.sky('studio'))
-  w.background('#0e1116');  w.fog('#0e1116', 8, 30);
-  w.ground({ color: '#2b3442' });                      // or { shadowOnly: true } to stand a model in a photo
-  w.sun({ dir: [4, 8, 3], intensity: 2.4 });
-  const bot = await w.model('robot', { height: 1.8 }); // media/robot.glb, scaled, stood on the floor, centred
-  const pill = w.add(new T.Mesh(new T.CapsuleGeometry(0.2, 0.6, 8, 24), w.glow('accent', 2)));
-  return (t) => {                                      // the world's state at time t — set everything from t
-    bot.act(t, [[0, 'Idle'], [c.walk, 'Walking'], [c.wave, 'Wave', { loop: false }]]);
-    bot.object.position.x = lerp(-2, 0, tw(t, c.walk, c.wave));
-    pill.rotation.y = t * 1.2;
+const lab = world3d(async (T, w) => {                  // T: three.js; w: this world's helpers
+  w.studio();                                           // seamless floor into fog, soft light, shadows
+  const dish = w.cyl(0.25, 0.04, '#dfe8ee', { at: [0.6, 1.0, 0.3], toon: true });  // a prop: a petri dish
+  const bench = w.box([1.6, 0.9, 0.7], 'data', { at: [0.6, 0.45, 0.3] });
+  const big = w.label('1928', { size: 0.6, color: 'accent', at: [0, 2.6, 0] });
+  const route = w.line([[-2, 0.05, 1], [0, 0.6, 1.5], [2, 0.05, 1]], { color: 'accent' });
+  return (t) => {                                       // the world's state at time t — set everything from t
+    dish.scale.setScalar(pop3(t, c.dish));                 // the hero appears on its word
+    dish.rotation.y = 0.3 * t;
+    big.scale.set(big.userData.baseScale[0] * pop3(t, c.year), big.userData.baseScale[1] * pop3(t, c.year), 1);
+    route.draw(tw(t, c.a, c.b, E.lin));
   };
 });
 
 addScene('lab', (ctx, t) => {
   const v = view3d(ctx, lab, t, camPath(t, [
     [c.start, { from: [0, 2, 9], to: [0, 1, 0], fov: 40 }],
-    [c.wave,  { from: [2.2, 1.5, 3.4], to: [0, 1.4, 0], fov: 32 }],
+    [c.saw,   { from: [1.8, 1.6, 3.6], to: [0, 1.4, 0], fov: 32 }],
   ]));
-  if (v) { const [x, y] = v.project([0, 2.0, 0]); bubble(ctx, x + 160, y - 160, 300, 110, x + 20, y - 20, { text: 'Hi!', p: tw(t, c.wave, c.wave + 0.3) }); }
+  if (v) pointer(ctx, ...v.project([0.6, 1.02, 0.3]), 700, 600, 'THE DISH', { p: tw(t, c.saw, c.saw + 0.6, E.lin) });
 });
 ```
+
+### Built in code (`kit3d.js`)
+
+There are deliberately no human figures: people made of shapes look cheap. The hero is a thing;
+real people appear in real photographs.
+
+
+| `w.` | |
+|---|---|
+| `studio({ color, floor, light, intensity })` | a seamless stage: the floor runs into fog of the background colour, soft light, a key light with shadows |
+| `box(size, c, o)` · `ball(r, c, o)` · `cyl(r, h, c, o)` · `capsule(r, len, c, o)` · `cone(r, h, c, o)` · `torus(r, tube, c, o)` · `group(o)` | shapes, placed: `o.at`, `o.rot`, `o.parent`, `o.toon` (cartoon shading), `o.glow`, `o.outline` (a dark rim) |
+| `label(text, { size, color, weight, flat, at })` | text standing in the world, facing the camera (`flat`: a fixed plate); scale it with `pop3(t, t0)` × `userData.baseScale` |
+| `line(points, { color, radius, glow })` → `.draw(k)` | a tube through points that draws itself on |
+| `arrow(from, to, { color, radius, glow })` → `.grow(k)` | an arrow that grows from its start |
+| `instances(geometry, material, n)` → `.set(i, pos, scale, rot)` · `.commit()` | many copies of one shape posed every frame: crowds, bricks, cells, particles, rain |
+| `await picture(name, { width, at, rot, frame })` | a real photograph from `media/`, graded, on a framed board standing in the world — evidence inside the story |
+| `toon(color)` · `outline(object, color, thick)` | the cartoon material and rim, for anything you build with `T` |
+| `pop3(t, t0, d)` | a scale 0 → 1 that overshoots a little: things appearing |
+
+### Lights, materials, models
 
 | `w.` | |
 |---|---|
@@ -133,7 +154,7 @@ addScene('lab', (ctx, t) => {
 | `sun({ dir, intensity, color, shadow, area })` · `ambient(color, intensity)` | a key light with soft shadows; a fill |
 | `background(color)` · `fog(color, near, far)` | colours may be roles (`'subject'`) or values |
 | `ground({ color, size, shadowOnly, opacity, y })` | a floor; `shadowOnly` catches shadows only — draw `photo()` first and the model stands in the photograph |
-| `await model(name, { height \| size, at, turn, ground, shadows })` → `{ object, clips, act(t, schedule) }` | a glTF from `media/`, cloned (use one several times). `act` poses its animation from a schedule `[[start, clip, { speed, loop, blend }], …]`; `clips` lists the clip names |
+| `await model(name, { height \| size, at, turn, ground, shadows })` → `{ object, clips, act(t, schedule) }` | a realistic prop from `media/` (Poly Haven, Khronos), cloned; `act` plays its own clips if it has any |
 | `await texture(name)` | a picture from `media/` as a texture: a planet's surface, a poster on a wall |
 | `mat(color, o)` · `glow(color, intensity)` · `glass(o)` | materials that look right under image-based light |
 | `add(object)` · `scene` · `T` | anything three.js can build: shapes, lines, points, text sprites |
@@ -145,9 +166,6 @@ addScene('lab', (ctx, t) => {
 | `orbit(t, { center, radius, height, speed, start, fov })` | circling a point |
 
 Rendering in software takes about 0.2 s a frame with shadows; that is fine for a minute of 3D.
-Characters: `lockstep find <slug> model "robot"` (an expressive CC0 robot with walk, run, wave,
-jump, dance, yes/no, thumbs-up, sit, death), Khronos samples (a fox, a walking man), Poly Haven
-props; files you add yourself (Kenney, Quaternius packs: CC0) with `lockstep media <slug> add`.
 
 ## Overlays (`overlays.js`)
 

@@ -12,10 +12,11 @@ with no paid services.
   into one numbered sheet. Every file taken is credited with its source and licence; non-commercial
   and no-derivatives licences are refused. When two pictures are equally right, the agent asks you
   to choose.
-- **Shots, not slides:** every frame is filled by a photograph, a film clip or a 3D world
-  (three.js, with CC0 models, skies and an animated character), and the camera keeps moving —
-  push-ins, pull-backs, pans, orbits, cut-outs with parallax. Overlays are few: a number that
-  counts, a ring, a pointer, a circle, a stamp, a name.
+- **Animation built in code:** worlds, objects and mechanisms are made with three.js — shapes,
+  materials, light, text and particles posed from the narration's clock — nothing downloaded or
+  AI-generated for the animation. Real photographs and film come in only as evidence (the real
+  person, place or event). The camera keeps moving; overlays are few: a number that counts, a
+  ring, a pointer, a circle, a stamp, a name.
 - **Story first:** scripts follow what was learned from a frame-by-frame study of five successful
   science and history shorts — a mystery in the first line, a protagonist, escalation, a payoff that
   calls back to the start, about 200 words a minute.
@@ -32,6 +33,8 @@ Fleming cut out of his photograph, a 3D bacterium whose brick wall cracks and bu
 the route from Oxford to Peoria, and a callback to the dirty dishes of the first line.
 
 ## Make a video
+
+See [PROMPTING.md](PROMPTING.md) for a request template and examples.
 
 Open the repository in Claude Code (terminal, desktop, or claude.ai/code) and ask:
 

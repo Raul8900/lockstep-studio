@@ -1,8 +1,9 @@
 # lockstep-studio
 
 A pipeline that turns a topic into a finished vertical short (1080 × 1920, 30 fps, voiceover,
-original music and sound design, word-synced captions): a story told over real photographs,
-archive film and 3D from free, licensed sources. The narration is recorded first and every cut,
+original music and sound design, word-synced captions): a story animated in code with three.js
+(objects, mechanisms and places built from shapes; no human figures made of shapes, nothing
+AI-generated), with real photographs and film from free, licensed sources only as evidence. The narration is recorded first and every cut,
 camera move, overlay, sound and caption is timed from its measured word timings.
 
 ## When asked to make or change a video
@@ -26,7 +27,7 @@ sheet.
 
 - `bin/lockstep` — the only entry point. `bin/lockstep help` lists the commands.
 - `engine/` — shared by every video: renderer (`render.js`, `anim/js/`: `media.js` pictures and
-  film, `world3d.js` three.js worlds, `overlays.js`, `text.js`, `gl.js`), media sourcing
+  film, `world3d.js` three.js worlds, `kit3d.js` things built in code, `overlays.js`, `text.js`, `gl.js`), media sourcing
   (`media.py`), voice (`tts/`), score and mix (`audio/`), encode (`assemble.py`), QA
   (`lint.py`, `validate.py`, `summary.py`), documents.
 - `templates/video/` — what `bin/lockstep new` copies: a 15-second runnable example with its media
@@ -36,6 +37,10 @@ sheet.
 - `videos/<slug>/` — one folder per video. `videos/penicillin-accident/` is the reference production.
 - `scripts/setup.sh` — installs Python packages, the voice model, fonts; `scripts/selftest.sh`
   builds the template end to end.
+
+## Requests
+
+`PROMPTING.md` is the template for asking for a video; follow its checkpoints when a request uses them.
 
 ## Branches
 

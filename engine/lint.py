@@ -279,7 +279,7 @@ def check_static(sources, words):
                 s.flag("error", "transition", m.start(), f"'gl:{m.group(2)}' is not a shader transition"
                        f"{suggest(m.group(2), GL_NAMES.values())} (lockstep transitions --all shows them)")
 
-        for fn, kinds in (("useImage", ("photo",)), ("useVideo", ("video",)), ("w.model", ("model",)), ("w.sky", ("hdri",)), ("w.texture", ("photo", "texture"))):
+        for fn, kinds in (("useImage", ("photo",)), ("useVideo", ("video",)), ("w.model", ("model",)), ("w.sky", ("hdri",)), ("w.texture", ("photo", "texture")), ("w.picture", ("photo",))):
             for pos, a in s.calls(fn):
                 name = lit(a[0]) if a else None
                 if name is None:

@@ -194,6 +194,7 @@ async function load3D() {
     w.scene = new T3.Scene();
     w.camera = new T3.PerspectiveCamera(40, W / H, 0.05, 500);
     const api = _worldAPI(w);
+    if (typeof kit3d === 'function') Object.assign(api, kit3d(T3, api, w));   // kit3d.js: things built in code
     w.update = (await w.build(T3, api)) || null;
     if (w.o.exposure != null) w.exposure = w.o.exposure;
     w.ready = true;

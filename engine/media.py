@@ -22,7 +22,7 @@ Licences: CC0, public domain, NASA, CC BY (credit required), the Pexels and Pixa
 NC (non-commercial) or ND (no derivatives). Share-alike (BY-SA) would put the whole video under
 BY-SA, so it is left out unless --allow-sa.
 
-`add` brings in a file you downloaded yourself (a Kenney or Quaternius pack, your own photo) with
+`add` brings in a file you obtained yourself (your own photo, a clip from an archive) with
 its licence, so it is credited like the rest. `cutout` cuts a person or object out of its photo
 (IS-Net, an open background-removal model, run locally) for a scene to stand in front of another
 picture with parallax.
@@ -430,34 +430,6 @@ class Khronos(Source):
         return out
 
 
-class Catalog(Source):
-    """A short, checked list of rigged characters with animations — the 'recurring hero' of a 3D world."""
-    name, kinds = "catalog", ("model",)
-    about = "hand-checked animated characters (CC0): a robot that walks, runs, waves, jumps, dances, thumbs-up"
-    ITEMS = [
-        dict(id="robot-expressive", title="Expressive robot (walk, run, idle, wave, jump, dance, yes, no, thumbs-up, punch, sit, death)",
-             author="Tomás Laulhé (Quaternius); morph targets by Don McCurdy", licence="CC0",
-             page="https://github.com/mrdoob/three.js/tree/dev/examples/models/gltf/RobotExpressive",
-             download="https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/models/gltf/RobotExpressive/RobotExpressive.glb",
-             thumb="https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/screenshots/webgl_animation_skinning_morph.jpg",
-             tags="robot character hero person walk run wave jump dance mascot animated"),
-    ]
-
-    def search(self, kind, q, n):
-        words = [w for w in re.findall(r"[a-z0-9]+", q.lower()) if len(w) > 1]
-        out = []
-        for it in self.ITEMS:
-            hay = (it["title"] + " " + it["tags"]).lower()
-            if not words or any(w in hay for w in words):
-                out.append(dict(source=self.name, kind="model", licence_url="", note=it["tags"], **{k: it[k] for k in ("id", "title", "author", "licence", "page", "download", "thumb")}))
-        return out[:n]
-
-    def fetch(self, c, dest):
-        out = dest.with_suffix(".glb")
-        out.write_bytes(get(c["download"], binary=True, timeout=300))
-        return out
-
-
 class Pexels(Source):
     name, kinds, needs = "pexels", ("photo", "video"), "PEXELS_API_KEY"
     about = "Pexels: modern stock photos and video, many vertical (free key; Pexels License)"
@@ -508,7 +480,7 @@ class Pixabay(Source):
                 for h in d.get("hits", [])]
 
 
-SOURCES = [Wikimedia(), NASA(), ArtInstitute(), Cleveland(), Openverse(), Archive(), PolyHaven(), Khronos(), Catalog(), AmbientCG(),
+SOURCES = [Wikimedia(), NASA(), ArtInstitute(), Cleveland(), Openverse(), Archive(), PolyHaven(), Khronos(), AmbientCG(),
            Pexels(), Pixabay()]
 BY_NAME = {s.name: s for s in SOURCES}
 

@@ -18,7 +18,6 @@ Nothing is bought, nothing is ripped from a platform, nothing is generated and p
 | `archive` | Internet Archive: public-domain films, newsreels, educational reels | public domain, CC BY | none |
 | `polyhaven` | photoreal 3D models, HDRI skies, textures | CC0 | none |
 | `khronos` | glTF sample models: a fox, a walking man, showcase objects | CC0 / CC BY per model | none |
-| `catalog` | hand-checked animated characters: an expressive robot (walk, run, wave, jump, dance, sit…) | CC0 | none |
 | `ambientcg` | PBR textures: wood, paper, metal, ground | CC0 | none |
 | `pexels` | modern stock photos and footage, many vertical | Pexels licence | `PEXELS_API_KEY` (free) |
 | `pixabay` | stock photos, illustrations, vectors, footage | Pixabay licence | `PIXABAY_API_KEY` (free) |
@@ -27,9 +26,8 @@ Keys: in the environment or in `~/.config/lockstep/keys.json` (`{"PEXELS_API_KEY
 are the person's own accounts: if the video needs modern footage and no key is set, tell them where
 to get one (pexels.com/api, pixabay.com/api/docs) and carry on with the rest.
 
-Other free collections that are worth downloading by hand and adding (`lockstep media <slug> add`):
-Kenney and Quaternius 3D kits and characters (CC0), Open Peeps hand-drawn people (CC0), unDraw
-illustrations (unDraw licence: free, no attribution, not for building a competing collection).
+Media are for evidence — the real person, place, event or document. Animation is built in code
+(reference/shots.md), so most videos need only a handful of pictures and clips.
 
 ## The loop: find, look, take
 
@@ -88,11 +86,12 @@ find the moment with a frame sheet first, e.g.
 
 ## 3D
 
-`find <slug> model "…"` searches Poly Haven (props, furniture, food, nature), Khronos samples and
-the character catalog; `hdri` finds skies that light a world realistically; `texture` finds
+Worlds and characters are built in code (scene-api.md, "Built in code"). When a realistic prop
+helps, `find <slug> model "…"` searches Poly Haven (props, furniture, food, nature) and Khronos
+samples; `hdri` finds skies that light a world realistically; `texture` finds
 surfaces. A picture can also be a texture (`await w.texture('earth-map')` on a sphere: NASA's
-Blue Marble). Models from elsewhere (Kenney, Quaternius: CC0 GLB files) go in with
-`lockstep media <slug> add path/to/model.glb --as name --licence CC0 --author "…" --page <url>`.
+Blue Marble). A file you have yourself goes in with
+`lockstep media <slug> add <file> --as name --licence CC0 --author "…" --page <url>`.
 
 ## Credits and licences
 
