@@ -48,9 +48,11 @@ counting; a probability is a field of a hundred dots with a few lit; a signal is
 is giant type standing in the scene (`w.label`). Find the physical thing in the brief's "World
 and hero" section, then build it in code.
 
-**Give the mechanism time.** The moment that explains the idea (a wall cracking, a signal
-travelling, a crowd thinning) gets 10–15 seconds of narration and a held beat at its peak, not
-three seconds at the end of a sentence.
+**Give the important shots time.** The moment that explains the idea (a wall cracking, a signal
+travelling, a crowd thinning) gets 10–15 seconds and a held beat at its peak, not three seconds at
+the end of a sentence. Real footage gets 4–8 seconds and plays its whole action, with the voice
+silent for part of it; a real photograph used as proof stays at least 2.5 seconds. The time comes
+out of the setup shots, not out of the video's length (reference/story.md, "Pacing").
 
 ## The camera never stops
 
@@ -58,8 +60,9 @@ three seconds at the end of a sentence.
 - **Every shot moves**: push in on the detail the line names, pull back to reveal, pan across a
   wide photograph, tilt down a tall one, orbit or dolly through 3D, film that plays. A still
   photograph is held for at most a word without a move.
-- **Shots are short**: 1.5–4 s, one per sentence or half-sentence, cut on the word that names the
-  next picture (`shots()` with `at: at(beat, word) - 0.2`).
+- **Setup shots are short**: 1.5–4 s, one per sentence or half-sentence, cut on the word that
+  names the next picture (`shots()` with `at: at(beat, word) - 0.2`). The shots that carry the
+  story are long: the mechanism, the real footage, the reveal (above).
 - **Few hard cuts between worlds; many moves inside one.** The references have 0–9 hard cuts in a
   minute; the rest is camera motion carrying the eye from one thing to the next.
 - **Cut-outs give depth to a photograph** — a person cut out (`lockstep cutout`) in front of

@@ -202,6 +202,7 @@ function _drawContained(ctx, src, w, h, p, o) {
    to pin a label or an arrow to something in it. */
 function photo(ctx, m, p, o = {}) {
   if (!m.img) return null;
+  m.lastFrameAt = CUR_FRAME;
   if (o.fit === 'contain') return _drawContained(ctx, m.img, m.w, m.h, p, o);
   return _drawCovered(ctx, m.img, m.w, m.h, _camera(p, o), o);
 }
@@ -212,6 +213,7 @@ function photo(ctx, m, p, o = {}) {
    detail, each arrival timed to its word. Returns what photo() returns. */
 function photoPath(ctx, m, t, keys, o = {}) {
   if (!m.img) return null;
+  m.lastFrameAt = CUR_FRAME;
   let cam = keys[keys.length - 1][1];
   if (t <= keys[0][0]) cam = keys[0][1];
   else for (let i = 1; i < keys.length; i++) {

@@ -13,6 +13,7 @@
    inside a transition are drawn (a frame that throws there is still an error) but their text is
    not recorded, since the scenes are composited there with zooms and slides. Every sampled frame
    is first drawn with its film frames loaded (renderFrameReady), then drawn again to record.
+   It also records which real photographs and film clips fill each sampled frame (`shown`).
    ===================================================================== */
 async function lintLayout(step) {
   const P = CanvasRenderingContext2D.prototype, fill0 = P.fillText, stroke0 = P.strokeText;
@@ -97,7 +98,7 @@ async function lintLayout(step) {
   P.strokeText = function (s, x, y, mw) { if (mute) return; note(this, s, x, y, mw, true); return stroke0.apply(this, arguments); };
   window.drawCaptions = function () { chrome = 'cap'; try { return cap0.apply(this, arguments); } finally { chrome = null; } };
 
-  const samples = [], errors = [], half = TR / 2 + 1 / FPS;
+  const samples = [], errors = [], shown = [], half = TR / 2 + 1 / FPS;
   const inTransition = (t) => SCENES.some((s, k) => k > 0 && Math.abs(t - s.t0) < half);
   try {
     for (let i = 0; i < window.TOTAL_FRAMES; i += step) {
@@ -108,6 +109,10 @@ async function lintLayout(step) {
         if (errors.length > 60) break;
         continue;
       }
+      /* which real pictures and clips fill the frame (photo, photoPath, film): engine/lint.py measures
+         how long each stays on screen and how much of that time the narration talks over it */
+      const sh = [...MEDIA.values()].filter((m) => m.lastFrameAt === i && !m.o.cutout).map((m) => (m.kind === 'Video' ? 'film:' : 'photo:') + m.name);
+      if (sh.length) shown.push([+t.toFixed(2), [...new Set(sh)]]);
       if (!rec) continue;
       const items = dedupe(rec);
       rec = null;
@@ -128,6 +133,6 @@ async function lintLayout(step) {
     cap_zone: capSeen ? cap : null,
     scenes: SCENES.map((s) => ({ id: s.id, t0: s.t0, t1: s.t1 })),
     sfx: SFX.map((s) => ({ t: s.t, type: s.type })),
-    errors, samples,
+    errors, samples, shown,
   };
 }

@@ -1,8 +1,9 @@
 'use strict';
-/* Scene 3 — PROOF: "How do we know? Apollo astronauts left mirrors up there. And we still fire
-   lasers at them."
-   Three shots in one scene: NASA's film of the Moon walk, then the mirror they left (a NASA
-   photograph), then a laser beam from the sky landing on it.                                     */
+/* Scene 3 — PROOF: "How do we know? Apollo astronauts walked up there. They left mirrors behind.
+   And we still fire lasers at them."
+   Two shots in one scene: NASA's film of the Moon walk — the real thing, so it gets time: the line,
+   then a held moment (the 1.2 s pause after the take in script.py) while it plays — then the mirror
+   they left (a NASA photograph), with a laser beam from the sky landing on it.                    */
 (window.SCENE_DEFS = window.SCENE_DEFS || []).push(function () {
   const c = { how: at('proof', 'how'), apollo: at('proof', 'apollo'), mirrors: at('proof', 'mirrors'), fire: at('proof', 'fire'), lasers: at('proof', 'lasers'), end: at('proof', 'them', 1, 't1') };
   const walk = useVideo('apollo-moonwalk', { from: 0, to: 4 });      // media/apollo-moonwalk.mp4 — NASA, public domain

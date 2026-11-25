@@ -62,6 +62,16 @@ out: Chain's chemistry, Heatley's apparatus, the Nobel, the strain names.
   returns to the lab photo, pushing in on the dishes — the callback.
 Where two portraits or two D-Day photographs are equally good, the person is asked to choose.
 
+## Pacing
+
+Written after the build, when per-beat pacing became part of the brief; the numbers are measured
+(`lockstep pacing penicillin-accident`). 68 s in all. Setup beats are brisk: plate 5 s, dday 2.7 s.
+The mechanism (burst) gets 10 s at a slower 170 words a minute and the Oxford rescue 10 s; the
+warning beat ends on 2.5 s held on the closing photograph. What it lacks, by today's rule: no held
+moment inside the story — the burst is talked over from start to end, and the D-Day photograph is
+on screen under 3 s. A rebuild would hold 1.5 s at the burst's peak and give D-Day 4 s, paid for by
+trimming the hook (7.6 s) and the melon beat (7.7 s), keeping the total.
+
 ## Look
 
 `penicillin-archive`: archive photographs warmed and slightly desaturated with a little sepia, a

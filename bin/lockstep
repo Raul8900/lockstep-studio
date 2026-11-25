@@ -23,7 +23,7 @@ lockstep <command> [<video>] [options]
  media — real photographs, paintings, maps, film and 3D from free, licensed sources
   sources                       the sources, what each holds, which need a free key (Pexels, Pixabay)
   find <video> <kind> "<query>" [--sources a,b] [--n 24] [--allow-sa]
-                                search every source of that kind at once (photo, video, model, hdri, texture)
+                                search every source of that kind at once (photo, video, model, hdri, texture, music)
                                 -> a numbered contact sheet out/find/<search>.jpg with source, licence, size
   take <video> <search|last> <n> [--as name]
                                 download candidate n into media/<name> and record its credit and licence
@@ -42,6 +42,7 @@ lockstep <command> [<video>] [options]
   check-voice <video>           transcribe the narration back and compare with the script (needs --with-asr)
   captions <video> [--draft]    check caption_phrases.json against the narration, or draft it
   words <video> [beat]          print every spoken word with its start time (for choosing cues)
+  pacing <video>                each beat's length, words a minute and held (silent) time, against the brief's plan
 
  pictures
   preview <video> [--port 4173] [--host 0.0.0.0]
@@ -67,6 +68,7 @@ lockstep <command> [<video>] [options]
   validate <video>              technical, sync and layout checks -> data/validation.json, dist/contact_sheet.jpg
   docs <video>                  docs/narration_script.md and docs/visual_storyboard.md
   report <video>                docs/production_report.md
+  share <video>                 a phone-size copy of the finished MP4 (about a third of the size) -> dist/<output>_phone.mp4
 
   build <video>                 brief + style check -> lint -> meta -> scan -> audio -> render -> assemble -> srt -> validate
                                 -> docs -> credits -> report
@@ -137,6 +139,7 @@ case "$cmd" in
   check-voice)  V=$(resolve "${1:-}"); python3 "$E/tts/asr_check.py" "$V" 2> >(grep -v -e 'Creating a resampler' -e '_sample_rate:' -e '^[[:space:]]*$' >&2) ;;
   captions)     V=$(resolve "${1:-}"); shift; python3 "$E/make_captions.py" "$V" "$@" ;;
   words)        V=$(resolve "${1:-}"); shift; python3 "$E/words.py" "$V" "$@" ;;
+  pacing)       V=$(resolve "${1:-}"); python3 "$E/pacing.py" "$V" ;;
   meta)         V=$(resolve "${1:-}"); node "$E/render.js" "$V" meta ;;
   lint)         V=$(resolve "${1:-}"); shift; exec python3 "$E/lint.py" "$V" "$@" ;;
   transitions)
@@ -169,6 +172,11 @@ case "$cmd" in
   validate)     V=$(resolve "${1:-}"); shift; python3 "$E/validate.py" "$V" "$@" ;;
   docs)         V=$(resolve "${1:-}"); python3 "$E/make_docs.py" "$V" ;;
   report)       V=$(resolve "${1:-}"); python3 "$E/make_report.py" "$V" ;;
+  share)
+    V=$(resolve "${1:-}"); OUT=$(json_field "$V/video.json" output); OUT="${OUT:-$(basename "$V")}"
+    [ -f "$V/dist/$OUT.mp4" ] || { echo "no dist/$OUT.mp4 yet: lockstep build $(basename "$V")" >&2; exit 1; }
+    ffmpeg -v error -y -i "$V/dist/$OUT.mp4" -c:v libx264 -preset medium -crf 23 -c:a copy -movflags +faststart "$V/dist/${OUT}_phone.mp4"
+    python3 -c 'import os,sys; print(f"{sys.argv[1]}  {os.path.getsize(sys.argv[1])/1e6:.1f} MB")' "$V/dist/${OUT}_phone.mp4" ;;
   build)
     V=$(resolve "${1:-}"); shift
     echo "== direction"; python3 "$E/check_brief.py" "$V"; style_gate "$V"

@@ -29,6 +29,13 @@ camera riding the bouncing deck, the twist growing on the bridge, the fall landi
 Weakest: the cross-section is schematic and the streamlined deck in the wind tunnel reads as a disc;
 the bridge has no texture detail; the music was chosen from its description, not by ear.
 
+## The person's review
+
+Animation, voice, the real footage and the music were right. The pacing was not: the explanation
+and the real film were rushed while the setup had time to spare (the film of the twisting deck
+2.3 s, talked over). Kept as built for reference; `lockstep lint` now flags both film appearances
+(`pacing`), and the brief's Pacing section says how the time should have been shared.
+
 ## What was not verified
 
 How the music sounds against the voice (measured, not heard); playback in the platform apps.

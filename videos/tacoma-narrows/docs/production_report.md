@@ -29,7 +29,7 @@ All figures in the numbered sections were measured on the delivered file by `eng
 | Pictures | 9 scenes of real photographs, film and 3D, composed on an HTML Canvas (3D by three.js); every frame is a pure function of time and of the narration’s word timings. |
 | Rendering | Headless Chromium, 1080 × 1920 native, 1936 frames, each leaving the page as a JPEG (q 0.97). |
 | Look | `overcast-1940`: one colour grade for every picture; the reasoning behind it and the story is in docs/creative_brief.md. |
-| Music | Original, synthesised at 100 BPM (synth kit), arranged per chapter from the moods in video.json, ending on a held major chord. |
+| Music | Licensed track: “Impending Boom” by Kevin MacLeod (CC BY 4.0), from Incompetech, from 0 s; levelled against the voice, ducked under speech, faded in. Chosen from its description, not by ear. |
 | Sound design | 31 synthesised cues, emitted by the animation code at the same cue times as the visuals. |
 | Media | 1 picture(s), clip(s) and model(s) from free sources: Public domain: collapse-1940. Every source, author and licence is in media/credits.json; the credit lines for the description are in docs/credits.md. |
 | Mix | Voice lightly compressed and peak-controlled; bed ducked under speech; mastered to −14 LUFS with a look-ahead limiter. |
@@ -48,6 +48,22 @@ Versions: ffmpeg version 6.1.1-3ubuntu5 · Node v22.23.4 · Python 3.13.18
 | Music level in pauses vs. under speech | +2.6 dB (ducking) |
 | Limiter gain reduction at mastering | 0.0 dB |
 | Speaking pace | 207 wpm while speaking; 186 wpm including pauses |
+
+Pacing per beat (`lockstep pacing`): the time each beat has on screen, how fast it is spoken and how long the voice is silent in it (held, pauses of 0.6 s or more).
+
+```
+  beat             from      to  length  words   wpm   held  speed
+  hook             0.30    9.61    9.3s     25   170   0.0s  1.15
+  ribbon           9.61   16.58    7.0s     25   231   0.0s  1.15
+  wind            16.58   23.15    6.6s     20   196   0.0s  1.15
+  twist           23.15   36.43   13.3s     44   207   0.0s  1.15
+  film            36.43   38.68    2.3s      7   233   0.0s  1.15
+  tubby           38.68   43.40    4.7s     15   213   0.0s  1.15
+  fall            43.40   47.11    3.7s     11   213   0.6s  1.15
+  myth            47.11   56.02    8.9s     25   178   0.0s  1.15
+  lesson          56.02   64.53    8.5s     19   199   2.8s  1.15
+  length: the beat's time on screen. held: the voice silent for 0.6 s or more. wpm: while speaking.
+```
 
 ## 4. Caption synchronisation
 
@@ -97,6 +113,13 @@ The whole story is animated in code; the real film appears twice, as proof. Stro
 camera riding the bouncing deck, the twist growing on the bridge, the fall landing on its word.
 Weakest: the cross-section is schematic and the streamlined deck in the wind tunnel reads as a disc;
 the bridge has no texture detail; the music was chosen from its description, not by ear.
+
+## The person's review
+
+Animation, voice, the real footage and the music were right. The pacing was not: the explanation
+and the real film were rushed while the setup had time to spare (the film of the twisting deck
+2.3 s, talked over). Kept as built for reference; `lockstep lint` now flags both film appearances
+(`pacing`), and the brief's Pacing section says how the time should have been shared.
 
 ## What was not verified
 

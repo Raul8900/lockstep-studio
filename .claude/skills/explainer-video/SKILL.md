@@ -1,6 +1,6 @@
 ---
 name: explainer-video
-description: Produce a finished vertical explainer video (9:16, 1080x1920, 30 fps MP4 with voiceover, original music, sound design and word-synced burned-in captions) for Instagram Reels / YouTube Shorts on any topic, using this repository's lockstep engine. Each video tells a story in one world animated in code with three.js — objects, mechanisms and places built from shapes — with real photographs and film from free, licensed sources only where the real thing is the evidence, and a camera that never stops, planned in a creative brief before anything is recorded. Use when asked to make, create or produce an explainer video, short or reel about a topic ("make a video about X"), or to revise or re-render a video under videos/.
+description: Produce a finished vertical explainer video (9:16, 1080x1920, 30 fps MP4 with voiceover, licensed music, sound design and word-synced burned-in captions) for Instagram Reels / YouTube Shorts on any topic, using this repository's lockstep engine. Each video tells a story in one world animated in code with three.js — objects, mechanisms and places built from shapes — with real photographs and film from free, licensed sources only where the real thing is the evidence, and a camera that never stops, paced per scene (time and held moments for the explanation and the real footage), planned in a creative brief before anything is recorded. Use when asked to make, create or produce an explainer video, short or reel about a topic ("make a video about X"), or to revise or re-render a video under videos/.
 ---
 
 # Explainer video
@@ -14,8 +14,10 @@ What makes a short worth watching was learned from five successful science and h
 frame by frame (reference/story.md, reference/shots.md):
 
 - **A story, not a lecture.** A protagonist (a person, an object, or "you"), a mystery in the
-  first line, an escalation, a twist or payoff that calls back to the first line. 190–210 spoken
-  words a minute, no dead air.
+  first line, an escalation, a twist or payoff that calls back to the first line.
+- **Paced per beat, never rushed.** Brisk through the setup; time and held moments for what
+  matters: the mechanism gets 10–15 s, real footage 4–8 s with the voice silent for part of it.
+  The time comes out of the setup, not out of a longer video (reference/story.md, "Pacing").
 - **One world built in code, one hero.** The animation is three.js, all code: a stage, a lab, a
   city, a cell, space — built from shapes — around one hero *thing* (the cell, the dish, the Moon,
   the coin) that acts out each line. No human figures made of shapes (they look cheap); real
@@ -89,7 +91,7 @@ tell them how to add one (`PEXELS_API_KEY` / `PIXABAY_API_KEY` in the environmen
 | 11 | Deliver | report, credits, retrospective | `lockstep report`, `lockstep media <slug> credits` |
 
 ### 0. Scaffold
-`bin/lockstep new <slug> "Title"` copies the starter project: a runnable 15-second example (a NASA
+`bin/lockstep new <slug> "Title"` copies the starter project: a runnable 17-second example (a NASA
 photograph, a 3D Earth and Moon, Apollo film) whose script, scenes and media are there to be
 replaced. Its brief is blank and it has no `style.json`.
 
@@ -104,7 +106,8 @@ often the one with the best pictures.
 Write `docs/creative_brief.md` (reference/story.md, then reference/shots.md): audience and promise,
 five candidate angles and the one kept, the story with its beats, three hooks, the world and the
 hero, the shot plan (one line per beat: what fills the frame, the camera move, the overlay, and
-the media search that will fill it), the look, the sound, and what would make it fail.
+the media search that will fill it), the pacing (each beat's seconds and pace, the two to four
+held moments, which setup beats pay for them), the look, the sound, and what would make it fail.
 
 ### 3. Media
 For every shot in the plan (reference/media.md):
@@ -128,9 +131,11 @@ fonts, the default cut. Small is fine — `{"name": "…", "grade": {…}}` — 
 check it on the real media with `lockstep look <slug>`, then `lockstep brief <slug>` must pass.
 
 ### 5. Script
-Write `script.py` from the brief's story (reference/story.md): short sentences, one idea each, the
-hook in the first line, 190–210 words a minute (`SPEED` 1.1–1.2), short pauses. Read it aloud in
-your head against the shot plan: every line must have a picture.
+Write `script.py` from the brief's story and pacing plan (reference/story.md): short sentences,
+one idea each, the hook in the first line, `SPEED` 1.1–1.2; short pauses between sentences and
+1–2.5 s pauses for the held moments (after the line that introduces the real footage, at the peak
+of the mechanism); `"speed": 1.0–1.05` on the explanation beat. Read it aloud in your head against
+the shot plan: every line must have a picture, and every important picture time to be seen.
 
 ### 6. Voice and captions
 ```bash
@@ -140,7 +145,10 @@ bin/lockstep words <slug>             # every word with its start time — your 
 bin/lockstep captions <slug> --draft  # then edit: 2–4 words a phrase, a number with its unit
 ```
 Only the best voices are offered (`lockstep voice <slug> list`); the others sound synthetic.
-Fix mispronunciations with a phoneme override and re-record.
+Fix mispronunciations with a phoneme override and re-record. `voice` ends with the pacing table
+(also `lockstep pacing <slug>`): each beat's length, words a minute and held time. If the mechanism
+or the real footage came out short, or nothing is held, fix the script and record again now —
+before any scene is drawn to the timings.
 
 ### 7. Music
 A licensed track by default: `lockstep find <slug> music "suspenseful building"` searches Kevin
@@ -196,8 +204,12 @@ reference/qa.md. After a fix, re-run only what changed:
 ### 11. Deliver
 Fill `docs/report_notes.md` truthfully, run `bin/lockstep report <slug>`, and give the person the
 MP4, `dist/subtitles.srt`, the contact sheet, the brief, `docs/sources.md` and **`docs/credits.md`
-— the credit lines the licences require, to paste into the video's description.** State the
-measured facts and anything you could not check. Append a `## Retrospective` to the brief.
+— the credit lines the licences require, to paste into the video's description.** In a cloud
+session the container is discarded: send the video itself (SendUserFile when available) —
+`bin/lockstep share <slug>` makes a phone-size copy (`dist/<output>_phone.mp4`, about a third of
+the size) that opens easily on a phone — with the contact sheet. State the measured facts and
+anything you could not check (you cannot hear the mix). Append a `## Retrospective` to the brief,
+and record the person's feedback there when it comes.
 
 Media files and MP4s are not committed (`media/credits.json` is, so `lockstep media <slug>
 restore` downloads everything again). Commit the project folder and hand the MP4 over directly.

@@ -33,7 +33,7 @@ Media are for evidence — the real person, place, event or document. Animation 
 ## The loop: find, look, take
 
 ```bash
-bin/lockstep find <slug> photo "Alexander Fleming laboratory"     # kinds: photo, video, model, hdri, texture
+bin/lockstep find <slug> photo "Alexander Fleming laboratory"     # kinds: photo, video, model, hdri, texture, music
 #   -> out/find/photo-alexander-fleming-laboratory.jpg : numbered tiles with source, licence, size
 bin/lockstep take <slug> last 3 --as fleming-lab                   # or the search's name instead of last
 #   -> media/fleming-lab.jpg (at most 2,600 px), its entry in media/credits.json
@@ -87,7 +87,7 @@ find the moment with a frame sheet first, e.g.
 
 ## 3D
 
-Worlds and characters are built in code (scene-api.md, "Built in code"). When a realistic prop
+Worlds and the things in them are built in code (scene-api.md, "Built in code"). When a realistic prop
 helps, `find <slug> model "…"` searches Poly Haven (props, furniture, food, nature) and Khronos
 samples; `hdri` finds skies that light a world realistically; `texture` finds
 surfaces. A picture can also be a texture (`await w.texture('earth-map')` on a sphere: NASA's

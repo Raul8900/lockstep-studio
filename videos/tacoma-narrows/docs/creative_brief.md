@@ -53,6 +53,17 @@ from shapes; the car stands in for the man and the dog.
 - lesson: a streamlined deck still in a wind tunnel; the bridge from the air, calm.
 Music: `impending-boom` (find music "suspenseful building tension cinematic" → Kevin MacLeod, CC BY 4.0).
 
+## Pacing
+
+Written after the test build, from the person's review; measured with `lockstep pacing
+tacoma-narrows`. 64.5 s in all: hook 9.3 s, ribbon 7.0, wind 6.6, twist 13.3, film 2.3, tubby 4.7,
+fall 3.7, myth 8.9, lesson 8.5. The mechanism (twist) got its 13 s, but the real 1940 film of the
+twisting deck was on screen 2.3 s with narration over all of it, and no beat held until the last
+2.8 s. The review: the animation and the footage were right, the pacing was rushed where it should
+not have been. As it should be, at about the same length (65 s): hook 7.5 s and ribbon 5 s (one
+sentence fewer in each); film 6 s — the line, then 1.5 s held while the deck twists; fall 5 s with
+the splash held 1 s; twist 13 s with 1 s held at the steepest tilt; the rest as built.
+
 ## Look
 
 `overcast-1940`: the 3D world in the 1940 film's grey-blue light so the archive film drops in without
@@ -70,3 +81,17 @@ A bridge model that looks like a toy — so it is shown in fog and soft light, w
 the real film as the reference. The mechanism turning into a lecture — so it is one picture (the
 tilted deck and the push) held for twelve seconds. Repeating the myth — the script says plainly that
 resonance is the wrong word and what is right.
+
+## Retrospective
+
+What worked, by the person's review of the test build: the animation built in code, the voice, the
+real 1940 film used as evidence, and the music (Kevin MacLeod's "Impending Boom").
+
+What did not: the pacing. The explanation and the real footage went by too fast for a viewer to
+take in, while the setup had more time than it needed. The film of the twisting deck was on screen
+2.3 s and talked over; the fall was talked over too. The fix is not a longer video but time moved
+between beats (see Pacing above). This review is why the skill now plans pacing per beat in the
+brief, prints it after recording (`lockstep pacing`), and lints real footage that is rushed.
+
+Next time: plan the held moments in the brief before writing the script; give the real footage
+4–8 s with the voice silent for part of it; check `lockstep pacing` before drawing any scene.

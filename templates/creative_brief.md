@@ -26,7 +26,7 @@ TODO
 <!-- The narrative, not a list of facts. Who or what is the protagonist ("you", a person, an
 object)? What is the mystery or stake in the first line? Where does it escalate ("and it gets
 stranger…")? What is the twist or payoff, and how does the last line call back to the first?
-Then the beats: id, job, rough seconds. Target 190–210 spoken words a minute. -->
+Then the beats: id and job (their seconds go in Pacing). -->
 TODO
 
 ## Hook
@@ -39,9 +39,10 @@ TODO
 
 <!-- The ONE world the video lives in, start to finish: archive photographs and film of the real
 place and people; a 3D world; a map; space imagery; or a deliberate mix with a reason. The
-recurring hero who acts out each line (a person in the photos, a cut-out, a 3D character, an
-object). Every abstract idea turned into something physical (memory → a warehouse, a dose → a
-stack of glowing blocks, delay → a ring that counts). What is deliberately left out. -->
+recurring hero who acts out each line — a thing built in code (the cell, the dish, the bridge),
+never a human figure made of shapes; real people appear in their real photographs. Every abstract
+idea turned into something physical (memory → a warehouse, a dose → a stack of glowing blocks,
+delay → a ring that counts). What is deliberately left out. -->
 TODO
 
 ## Shot plan
@@ -51,6 +52,16 @@ pan, orbit, dolly, whip), the overlay if any (number, pointer, circle, stamp), a
 as a search: `find photo "Alexander Fleming laboratory"` -> taken as fleming-lab (wikimedia, public
 domain). The camera never stops; a hard cut is a choice, not a default. Mark the shots where you
 asked the person to choose between candidates, and any gap no free source could fill. -->
+TODO
+
+## Pacing
+
+<!-- The total length, then each beat's seconds and pace: brisk (setup), steady, slow (the
+explanation, one step per sentence, "speed": 1.0–1.05) or held. The two to four held moments
+where the narration stops for 1–2.5 s and the picture carries the story (the real footage playing,
+the peak of the mechanism, the reveal), and which setup beats are kept short to pay for them — the
+video does not get longer. Real footage 4–8 s on screen; the mechanism 10–15 s.
+reference/story.md, "Pacing". -->
 TODO
 
 ## Look

@@ -5,8 +5,10 @@ BEATS -> takes. A beat is one stretch of the story and owns one scene file
 in seconds: keep a take to one or two sentences so the voice keeps natural prosody.
 
 Write it the way the short-form references talk: a hook that opens a question in the first
-line, one idea per sentence, plain words, short pauses (0.15-0.4 s), and a last line that pays
-the first one off. 190-210 words a minute (SPEED 1.1-1.2).
+line, one idea per sentence, plain words, and a last line that pays the first one off. Pace it per
+beat (reference/story.md, "Pacing"): short pauses (0.15-0.4 s) through the setup; a held pause of
+1-2.5 s where the picture should be watched (real footage, the peak of the mechanism); a beat may
+set its own "speed" (0.9-1.3; 1.0-1.05 for the explanation). SPEED 1.1-1.2 for the rest.
 
 Inline markers:
   {p:0.30}               make the pause at this point at least 0.30 s long
@@ -39,7 +41,8 @@ BEATS = [
         "id": "proof",
         "title": "Mirrors on the Moon",
         "takes": [
-            ("How do we know? {p:0.15} Apollo astronauts left mirrors up there.", 0.20),
+            ("How do we know? {p:0.15} Apollo astronauts walked up there.", 1.20),   # held: the real film plays on
+            ("They left mirrors behind.", 0.25),
             ("And we still fire lasers at them.", 0.30),
         ],
     },

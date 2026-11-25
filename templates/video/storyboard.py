@@ -47,7 +47,7 @@ def sequences(at, S, dur):
      ("Mirrors on the Moon", S("proof"), dur,
       "NASA film of the Apollo 11 moonwalk, then the laser-ranging mirror the astronauts left, then a green laser from the sky landing on it.",
       "apollo-moonwalk (NASA film, public domain), retroreflector (NASA photograph AS11-40-5952, public domain).",
-      "The film pushes in gently; the photograph pushes in on the mirror.",
+      "The film pushes in gently and plays through a held moment (the voice silent 1.2 s); the photograph pushes in on the mirror.",
       "A pointer “MIRROR” on the array; the laser beam and its glow.",
       "The photograph cuts in 0.3 s before “mirrors”; the beam draws down on “lasers”.",
       "End of video.",

@@ -24,6 +24,7 @@ SECTIONS = {
     "Hook": 40,
     "World and hero": 40,
     "Shot plan": 80,
+    "Pacing": 30,
     "Look": 25,
     "Sound and voice": 20,
     "What would make this fail": 30,

@@ -43,6 +43,14 @@ shell bulging towards the Moon. Left out: angular momentum, Earth's slowing day,
   `retroreflector` (find photo "Apollo 11 laser ranging retroreflector" → NASA, public domain) pushing in on the mirror,
   a pointer on “mirrors”, a green beam on “lasers”. Gaps: none.
 
+## Pacing
+
+About 17 seconds. The hook is brisk (the claim, about 2.5 s) and the drift beat is one sentence over
+the 3D Earth and Moon (about 5 s). The proof is the payoff and the only real footage, so it gets
+the most time: the Apollo film plays through its line and then for a held 1.2 s with the voice
+silent, about 4.5 s on screen, before the cut to the mirror; the laser lands with 1.4 s of the
+photograph held at the end. No beat is slowed down: the explanation is a single sentence here.
+
 ## Look
 
 `night-archive`: NASA's pictures graded a little cooler and contrastier with a faint blue tint so the orange Moon, the

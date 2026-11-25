@@ -3,8 +3,11 @@
 A scene is a JavaScript file that registers one draw function for one beat. The engine calls it
 with a 2D canvas context and the time in seconds; it draws that instant. `templates/video/scenes/`
 is a small working set: a photograph with a pull-back, a 3D Earth and Moon with NASA's maps,
-archive film and a photograph with a laser drawn onto it. `videos/penicillin-accident/scenes/s03_burst.js`
-builds a whole mechanism in code (a bacterium whose wall of bricks cracks and bursts).
+archive film and a photograph with a laser drawn onto it. `videos/tacoma-narrows/` is the reference
+production: a whole bridge built in code (`components.js`), its deck bouncing and twisting from the
+narration's clock, a cross-section in the wind, and the real 1940 film shown whole as evidence.
+`videos/penicillin-accident/scenes/s03_burst.js` builds a mechanism in code (a bacterium whose wall
+of bricks cracks and bursts).
 
 ## Anatomy
 
@@ -184,12 +187,12 @@ Drawn over a picture, film or 3D, with a soft shadow that reads on anything; eac
 | `nameTag(ctx, name, sub, x, y, o)` | a person's or place's name with a line under it, sliding in on a plate: `align: 'right'`, `color`, `size` |
 | `stagger(p, i, n, spread)` · `numText(v, o)` | the share of a group's build-in that is item i's; a number as text |
 
-## Type, characters, drawing
+## Type, motion, drawing
 
 - **Type that moves** (`text.js`): `textBlock(ctx, 'Text with *emphasis* and [a role](alert)', x, y, w, { size, p, reveal: 'rise' | 'pop' | 'slam' | 'type', fit, h, upper })`;
   `sayText(ctx, t, beat, x, y, w, o)` — the narration's own words, each on its word; with it,
   `hideCaptions(t0, t1)` in setup so the same words are not on screen twice.
-- **Characters and things that act** (`kit.js`): `bob(t)`, `sway(t)`, `breathe(t)`, `wiggle(t,
+- **Things that act** (`kit.js`): `bob(t)`, `sway(t)`, `breathe(t)`, `wiggle(t,
   { from, until })`, `hop(t, t0)` → `{ dy, squash }` — apply to a cut-out's `y`, rotation or scale;
   `bubble(ctx, x, y, w, h, tailX, tailY, { text, think, p })` for speech.
 - **Drawing** (`core.js`, `kit.js`): `text`, `measure`, `pill`, `line`, `polyline` (with progress),

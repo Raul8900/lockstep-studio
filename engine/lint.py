@@ -30,6 +30,8 @@ or mark it as intended. --strict counts warnings as errors.
   warn   low-contrast      a label drawn over something in its own colour (an icon, a line, a glow)
   warn   off-frame         text cut off by the edge of the frame
   warn   text-overlap      two different texts drawn over each other
+  warn   pacing            real footage on screen under 4 s, or talked over from start to end (no pause of
+                           1 s); a real photograph on screen under 2 s: evidence needs time to be taken in
 
 Layout warnings count only when they hold for three samples in a row (0.4 s at the default step)
 while the text stays put (text sliding, popping or zooming through a zone is animation), and only
@@ -58,6 +60,9 @@ RT_JSON = ARGS[ARGS.index("--runtime-json") + 1] if "--runtime-json" in ARGS els
 
 MIN_PX = 20          # on a phone the frame is shown at about a third of its size
 LOW_SHARE = 0.05     # share of a label's box where its colour is under 2:1 against what is behind it
+FILM_MIN_S = 4.0     # real footage: seconds on screen before a viewer has taken it in
+FILM_AIR_S = 1.0     # ... and a moment of it with the narration silent
+PHOTO_MIN_S = 2.0    # a real photograph used as evidence
 MIN_RUN = 3          # samples in a row (0.4 s at the default step) before a layout finding counts
 SETTLED_PX = 30      # text that moves further than this between samples is passing through, not placed
 LEGACY = {"white": "ink", "cyan": "subject", "amber": "accent", "violet": "data", "coral": "alert", "mint": "good",
@@ -359,6 +364,9 @@ def narration_differs():
     titles = [(b["id"], b["title"]) for b in script.BEATS]
     if titles != [(b["id"], b["title"]) for b in rec["beats"]]:
         return "a beat id or title in script.py differs from the recording"
+    for b, r in zip(script.BEATS, rec["beats"]):
+        if "speed" in b and abs(float(b["speed"]) - float(r.get("speed", rec["meta"]["speed"]))) > 1e-6:
+            return f"script.py has changed since the narration was recorded: beat '{b['id']}' speed {b['speed']}, the recording {r.get('speed', rec['meta']['speed'])}"
     return None
 
 
@@ -434,6 +442,8 @@ def check_runtime(static_cue_errors):
     for typ in sorted({c["type"] for c in rt["sfx"]} - set(SOUNDS) - reported):
         t = next(c["t"] for c in rt["sfx"] if c["type"] == typ)
         add("error", "sound", f"sound '{typ}' does not exist{suggest(typ, SOUNDS)} (sounds: {', '.join(SOUNDS)})", f"{mmss(t)} ({scene_at(t)})", t=t)
+
+    check_pacing(rt.get("shown") or [], step_t, scene_at)
 
     S, R, W, H, cz = rt["safe"], rt["right"], rt["W"], rt["H"], rt["cap_zone"]
     runs = {}                                    # (rule, text) -> [(t, detail)]
@@ -511,6 +521,53 @@ def check_runtime(static_cue_errors):
                     text=list(text) if isinstance(text, tuple) else text, t=t0)
             if h is not None:
                 run = [h]
+
+
+def check_pacing(shown, step_t, scene_at):
+    """Evidence needs time: each stretch a real clip or photograph fills the frame, how long it lasts
+    and the longest moment in it with the narration silent."""
+    words = json.load(open(ROOT / "data/words.json"))
+    speech = []                                   # spoken stretches; gaps under 0.35 s are breaths, not pauses
+    for w in words:
+        if speech and w["t0"] - speech[-1][1] < 0.35:
+            speech[-1][1] = max(speech[-1][1], w["t1"])
+        else:
+            speech.append([w["t0"], w["t1"]])
+
+    def longest_quiet(a, b):
+        best, cur = 0.0, a
+        for s0, s1 in speech:
+            if s1 <= a or s0 >= b:
+                continue
+            best, cur = max(best, max(s0, a) - cur), max(cur, min(s1, b))
+        return max(best, b - cur)
+
+    on = {}
+    for t, names in shown:
+        for n in names:
+            on.setdefault(n, []).append(t)
+    for key, ts in on.items():
+        kind, name = key.split(":", 1)
+        run = [ts[0]]
+        for t in ts[1:] + [None]:
+            if t is not None and t - run[-1] <= step_t * 1.5:
+                run.append(t)
+                continue
+            a, b = run[0], run[-1] + step_t
+            dur, where = b - a, f"{mmss(a)}–{mmss(b)} ({scene_at((a + b) / 2)})"
+            if kind == "film" and dur < FILM_MIN_S:
+                add("warn", "pacing", f"the real footage '{name}' is on screen for only {dur:.1f} s: give the real thing "
+                    f"{FILM_MIN_S:.0f}–8 s, longer than the animated shots around it, and take the time from a setup beat "
+                    "rather than making the video longer (reference/story.md, Pacing)", where, text=name, t=a)
+            elif kind == "film" and longest_quiet(a, b) < FILM_AIR_S:
+                add("warn", "pacing", f"the narration talks over all of '{name}' (longest pause {longest_quiet(a, b):.1f} s): let the "
+                    f"footage play on its own for 1–2 s — a longer pause after the take that introduces it in script.py, "
+                    "with the clip still running (reference/story.md, Pacing)", where, text=name, t=a)
+            elif kind == "photo" and dur < PHOTO_MIN_S:
+                add("warn", "pacing", f"the photograph '{name}' is on screen for only {dur:.1f} s: a real picture used as evidence "
+                    f"needs {PHOTO_MIN_S:.0f} s or more to be taken in", where, text=name, t=a)
+            if t is not None:
+                run = [t]
 
 
 # ------------------------------------------------------------------ ignoring, reporting

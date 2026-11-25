@@ -14,6 +14,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import load_config, need, project_dir  # noqa: E402
+from pacing import table as pacing_table  # noqa: E402
 
 ROOT = project_dir()
 CFG = load_config(ROOT)
@@ -81,8 +82,13 @@ w(f"| Rendering | Headless Chromium, 1080 × 1920 native, {TL['total']} frames, 
 MUS = CFG.get("music", {})
 ST = TL.get("style") or {}
 w(f"| Look | `{ST.get('name', 'engine default')}`: one colour grade for every picture; the reasoning behind it and the story is in docs/creative_brief.md. |")
-w(f"| Music | Original, synthesised at {MUS.get('bpm', 100):g} BPM ({MUS.get('kit', 'synth')} kit" + (f", transposed {MUS['transpose']:+g} semitones" if MUS.get("transpose") else "")
-  + "), arranged per chapter from the moods in video.json, ending on a held major chord. |")
+if MUS.get("track"):
+    _tc = (json.load(open(ROOT / "media/credits.json", encoding="utf-8")) if (ROOT / "media/credits.json").exists() else {}).get(MUS["track"], {})
+    w(f"| Music | Licensed track: “{_tc.get('title', MUS['track'])}” by {_tc.get('author', 'unknown')} ({_tc.get('licence', 'licence not recorded')}), "
+      f"from {_tc.get('source', 'its source').capitalize()}, from {MUS.get('start', 0):g} s; levelled against the voice, ducked under speech, faded in. Chosen from its description, not by ear. |")
+else:
+    w(f"| Music | Original, synthesised at {MUS.get('bpm', 100):g} BPM ({MUS.get('kit', 'synth')} kit" + (f", transposed {MUS['transpose']:+g} semitones" if MUS.get("transpose") else "")
+      + "), arranged per chapter from the moods in video.json, ending on a held major chord. |")
 w(f"| Sound design | {A['sfx_cues']} synthesised cues, emitted by the animation code at the same cue times as the visuals. |")
 MEDIA_CR = json.load(open(ROOT / "media/credits.json", encoding="utf-8")) if (ROOT / "media/credits.json").exists() else {}
 USED = list(dict.fromkeys(m["name"] for m in TL.get("media") or []))
@@ -108,6 +114,10 @@ w(f"| Music level in pauses vs. under speech | {A['music_rms_in_pauses_db'] - A[
 w(f"| Limiter gain reduction at mastering | {abs(M['max_limiter_reduction_db']):.1f} dB |")
 w(f"| Speaking pace | {len(words) / speech * 60:.0f} wpm while speaking; {len(words) / T['meta']['speech_end'] * 60:.0f} wpm including pauses |")
 w("")
+w("Pacing per beat (`lockstep pacing`): the time each beat has on screen, how fast it is spoken and how long the voice is silent in it (held, pauses of 0.6 s or more).\n")
+w("```")
+w(pacing_table(T["beats"], words, T["meta"]["duration"], T["meta"].get("speed")))
+w("```\n")
 if ASR and "wer_percent" in asr_final:
     w(f"The narration was transcribed back by an independent recogniser (Whisper small.en) on the clean voice track and on the finished mix: "
       f"{ASR['wer_percent']} % and {asr_final['wer_percent']} % word error. Differences on the final mix: {'; '.join(d.strip("[]").replace("'", "") for d in asr_final.get('diffs', [])) or 'none'}.\n")

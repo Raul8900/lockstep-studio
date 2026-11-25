@@ -212,9 +212,12 @@ def main():
     take_no = 0
     for beat in S.BEATS:
         b0 = None
+        bspeed = float(beat.get("speed", speed))          # a beat can be slower (the explanation) or faster (the setup)
+        if not 0.9 <= bspeed <= 1.3:
+            sys.exit(f"beat {beat['id']!r}: speed {bspeed} is outside 0.9-1.3")
         for text, pause in beat["takes"]:
             tts_text = text.replace("*", "")
-            audio, words, pause_after = synth_take(tts_text, voice, speed)
+            audio, words, pause_after = synth_take(tts_text, voice, bspeed)
             audio, words = enforce_pauses(audio, words, pause_after)
             head, tail = trim_bounds(audio, words)
             clip = fade(audio[head:tail])
@@ -243,7 +246,7 @@ def main():
             cursor += len(gap)
             take_no += 1
         beats.append({"id": beat["id"], "title": beat["title"], "t0": b0,
-                      "t1": all_words[-1]["t1"]})
+                      "t1": all_words[-1]["t1"], "speed": bspeed})
     pieces.append(np.zeros(int(getattr(S, "TAIL", 2.6) * SR), np.float32))
     narration = np.concatenate(pieces)
     peak = float(np.abs(narration).max())
@@ -259,8 +262,10 @@ def main():
     json.dump({"meta": meta, "beats": beats, "takes": takes},
               open(ROOT / f"data/takes{out_tag}.json", "w"), ensure_ascii=False, indent=1)
     print(json.dumps(meta))
-    for b in beats:
-        print(f"  {b['id']:<13} {b['t0']:7.2f} -> {b['t1']:7.2f}  ({b['t1'] - b['t0']:.2f}s)")
+    from pacing import table
+    print(table(beats, all_words, meta["duration"]))
+    print("  Check it against the brief's Pacing plan: the beats that carry the story (the mechanism, the real")
+    print("  footage, the reveal) are the long ones, with held time; setup beats are short. (lockstep pacing)")
 
 
 if __name__ == "__main__":

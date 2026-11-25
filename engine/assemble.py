@@ -125,11 +125,24 @@ def main():
            "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
            "-movflags", "+faststart", "-shortest", "-fflags", "+shortest", "-max_interleave_delta", "100M",
            "-metadata", "title=" + cfg.get("title", ROOT.name),
-           "-metadata", "comment=Programmatically rendered (HTML Canvas + FFmpeg). Voice: Kokoro TTS. Music and sound design: original synthesis.",
+           "-metadata", "comment=" + _credit_comment(cfg),
            args.out]
     subprocess.run(cmd, check=True)
     json.dump(arep, open(ROOT / "data/master_report.json", "w"), indent=1)
     print("wrote", args.out)
+
+
+def _credit_comment(cfg):
+    """The file's comment: how it was made, and whose music it carries (a licensed track or the engine's own)."""
+    track = (cfg.get("music") or {}).get("track")
+    music = "Music: original synthesis."
+    if track:
+        try:
+            c = json.load(open(ROOT / "media/credits.json"))[track]
+            music = f"Music: \u201c{c.get('title', track)}\u201d by {c.get('author', 'unknown')}, {c.get('licence', '')}."
+        except (OSError, KeyError, json.JSONDecodeError):
+            music = f"Music: {track} (see docs/credits.md)."
+    return f"Programmatically rendered (HTML Canvas + three.js + FFmpeg). Voice: Kokoro TTS. {music} Sound design: original synthesis."
 
 
 if __name__ == "__main__":

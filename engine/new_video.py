@@ -2,7 +2,7 @@
 
   python3 engine/new_video.py <slug> ["Title"] [--into DIR] [--example]
 
-Creates videos/<slug>/ (or DIR/<slug>/) from templates/video: a complete, runnable 15-second
+Creates videos/<slug>/ (or DIR/<slug>/) from templates/video: a complete, runnable 17-second
 video (a NASA photograph, a 3D Earth and Moon, Apollo film) whose script, scenes, media and
 storyboard are examples to replace.
 

@@ -31,7 +31,7 @@ All figures in the numbered sections were measured on the delivered file by `eng
 | Look | `penicillin-archive`: one colour grade for every picture; the reasoning behind it and the story is in docs/creative_brief.md. |
 | Music | Original, synthesised at 100 BPM (synth kit), arranged per chapter from the moods in video.json, ending on a held major chord. |
 | Sound design | 50 synthesised cues, emitted by the animation code at the same cue times as the visuals. |
-| Media | 12 picture(s), clip(s) and model(s) from free sources: CC BY 2.0: mrsa; CC BY 4.0: fleming-dish, mould-plate, paper-1929, fleming-dish; Public domain: fleming-colour, florey, oxford-racks, extraction, cantaloupe, dday, fleming-painting. Every source, author and licence is in media/credits.json; the credit lines for the description are in docs/credits.md. |
+| Media | 11 picture(s), clip(s) and model(s) from free sources: CC BY 2.0: mrsa; CC BY 4.0: fleming-dish, mould-plate, paper-1929; Public domain: fleming-colour, florey, oxford-racks, extraction, cantaloupe, dday, fleming-painting. Every source, author and licence is in media/credits.json; the credit lines for the description are in docs/credits.md. |
 | Mix | Voice lightly compressed and peak-controlled; bed ducked under speech; mastered to −14 LUFS with a look-ahead limiter. |
 | Encode | FFmpeg libx264 (CRF, preset slow), BT.709 limited range, 2 s keyframe interval; AAC-LC 256 kbps. |
 
@@ -48,6 +48,22 @@ Versions: ffmpeg version 6.1.1-3ubuntu5 · Node v22.23.4 · Python 3.13.18
 | Music level in pauses vs. under speech | +4.3 dB (ducking) |
 | Limiter gain reduction at mastering | 0.0 dB |
 | Speaking pace | 200 wpm while speaking; 175 wpm including pauses |
+
+Pacing per beat (`lockstep pacing`): the time each beat has on screen, how fast it is spoken and how long the voice is silent in it (held, pauses of 0.6 s or more).
+
+```
+  beat             from      to  length  words   wpm   held  speed
+  hook             0.31    7.92    7.6s     23   193   0.0s  1.15
+  plate            7.92   12.93    5.0s     16   214   0.0s  1.15
+  burst           12.93   23.03   10.1s     27   170   0.0s  1.15
+  shelf           23.03   29.64    6.6s     18   177   0.0s  1.15
+  oxford          29.64   39.73   10.1s     27   168   0.0s  1.15
+  urine           39.73   45.98    6.2s     21   225   0.6s  1.15
+  melon           45.98   53.72    7.7s     25   205   0.0s  1.15
+  dday            53.72   56.42    2.7s      7   193   0.0s  1.15
+  warning         56.42   67.99   11.6s     27   178   2.5s  1.15
+  length: the beat's time on screen. held: the voice silent for 0.6 s or more. wpm: while speaking.
+```
 
 ## 4. Caption synchronisation
 

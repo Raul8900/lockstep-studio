@@ -79,6 +79,7 @@ is animation) and need a decision:
 | `low-contrast` | at least 5 % of a label's box is something drawn in nearly its colour — usually its own icon, a line or a glow | move it clear, or give it a plate (`pill`) or an outline |
 | `off-frame` | text cut off by the frame's edge | bring it in |
 | `text-overlap` | two different texts on top of each other | lay out from measured widths (`measure`) |
+| `pacing` | real footage on screen under 4 s, or talked over from start to end; a real photograph under 2 s | give it time from a setup beat and a longer pause after the take that introduces it (story.md, "Pacing") — not a longer video |
 
 To accept a warning, end its line with `// lint-ignore` (or `// lint-ignore typed-time`), or list
 it in `video.json` with the reason, narrowed to a text or a file when you can:
@@ -94,16 +95,20 @@ it in `video.json` with the reason, narrowed to a text or a file when you can:
 1. **`dist/contact_sheet.jpg`** — frames from the finished MP4, a few per beat. Does the video
    read as one world, one film? Is any beat visibly thinner than the others (a held photo where
    the rest moves)?
-2. **`dist/mobile_preview_reels_style.jpg`, `…_shorts_style.jpg`** — phone-size frames under
+2. **Pacing** — `bin/lockstep pacing <slug>` against the brief's Pacing plan. Does the mechanism
+   get its 10–15 s? Is the real footage on long enough to take in, with a held moment? Are there
+   two to four held moments in a minute? Is any setup beat longer than the explanation it leads
+   to? A viewer seeing it once must be able to follow each step.
+3. **`dist/mobile_preview_reels_style.jpg`, `…_shorts_style.jpg`** — phone-size frames under
    generic interface overlays (approximations: neither platform publishes exact pixels). Nothing
    essential under a shaded area.
-3. **Transitions** — `bin/lockstep filmstrip <slug> 7.4:8.6:10 28.9:30.1:10` makes rows of
+4. **Transitions** — `bin/lockstep filmstrip <slug> 7.4:8.6:10 28.9:30.1:10` makes rows of
    consecutive frames across each scene change (use the scene start times from
    `data/timeline.json`). Look for an empty or half-drawn frame mid-transition, a jump, or an
    element popping. With shader transitions, also check the look survives them: a colour that
    clashes (set it with a role in `params`), or a black 3D background on a light look.
-4. **`docs/visual_storyboard.md` against the frames** — does each sequence do what you planned?
-5. **Accuracy re-read** — go through every frame's on-screen text against `docs/sources.md`.
+5. **`docs/visual_storyboard.md` against the frames** — does each sequence do what you planned?
+6. **Accuracy re-read** — go through every frame's on-screen text against `docs/sources.md`.
    Labels drift during design ("never idle" where the truth is "kept busy").
 
 ### Reading the verdict
@@ -150,6 +155,7 @@ it is acceptable.
 | Empty or near-empty frame at a scene change | Incoming scene fades its content in after the cut | Content present and moving from 0.4 s before the scene's start; no fade-in of the base layout |
 | "Static holds" in a pause between sentences | Only small elements moving | Slow `withCam` push-in, pulsing glow, a second pass of the animation — something large |
 | Two captions flash by | One- or two-word phrases under 0.35 s | Merge with a neighbour |
+| The real footage is gone before it registers; the explanation feels rushed | One pace for the whole video: every beat talked through at the same speed | Pace per beat (story.md, "Pacing"): footage 4–8 s with a held moment, the mechanism 10–15 s; take the time from the setup |
 | A name is spelled out letter by letter | TTS default reading | `[Name](/IPA/)` override in `script.py` |
 | A short word misheard only in the final mix | Percussive cue or dense music on it | Cue 50–80 ms earlier at gain ≤ 0.6; sparser mood; or join the short sentence to its neighbour |
 | Text collisions | Labels positioned independently | Lay out from measured widths (`measure`), or give labels opaque plates (`pill`) |
