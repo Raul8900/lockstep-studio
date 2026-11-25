@@ -1,4 +1,8 @@
-"""Original score, sound design and final mix — everything synthesised here.
+"""Score, sound design and final mix.
+
+The music is either a licensed track from the video's media/ (video.json "music": {"track":
+"<name>", "start": seconds into the track} — taken with `lockstep find <video> music "…"`), or,
+without one, an original score synthesised here. Sound effects are always synthesised.
 
   python3 engine/audio/make_audio.py <video-dir>
 
@@ -10,10 +14,12 @@ Outputs
   audio/music.wav  audio/sfx.wav  audio/voice.wav      (48 kHz stemmed)
   audio/mix_premaster.wav                               (sum, before loudness normalisation)
 
-No samples or third-party recordings are used: every sound is generated from
-oscillators and noise below, so the soundtrack is original and licence-free.
+The synthesised score and the effects use no samples: every sound is generated from oscillators
+and noise below. A licensed track is levelled against the voice (music.rel_db, -9 dB by default),
+faded in and out, looped with a crossfade if it is shorter than the video, and ducked under speech.
 """
 import json
+import subprocess
 from pathlib import Path
 
 import numpy as np
@@ -125,7 +131,8 @@ def reverb(x, ir, wet):
     return x + out * wet
 
 
-MUSIC = CFG.get("music", {})                 # video.json: {"bpm": 100, "transpose": 0, "kit": "synth"}
+MUSIC = CFG.get("music", {})                 # video.json: {"track": "name", "start": 0} or {"bpm": 100, "transpose": 0, "kit": "synth"}
+TRACK = MUSIC.get("track")
 TRANSPOSE = float(MUSIC.get("transpose", 0))  # semitones; moves the whole score (-5 .. +6 is a sensible range)
 
 
@@ -500,6 +507,30 @@ def build_voice():
     return reverb(st, ir, 0.05), np.maximum(fast, slow)
 
 
+def load_track():
+    """The licensed track named in video.json, as stereo float at SR, cut (or looped) to the video's length."""
+    cr_path = ROOT / "media/credits.json"
+    cr = json.load(open(cr_path)) if cr_path.exists() else {}
+    e = cr.get(TRACK)
+    if not e:
+        sys.exit(f"video.json music.track = {TRACK!r}: no such entry in media/credits.json (lockstep find <video> music \"…\", then take)")
+    f = ROOT / "media" / e["file"]
+    if not f.exists():
+        sys.exit(f"media/{e['file']} is missing: lockstep media {ROOT.name} restore")
+    start = float(MUSIC.get("start", 0))
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-ss", f"{start:.3f}", "-i", str(f), "-f", "f32le", "-ac", "2", "-ar", str(SR), "-"],
+                         capture_output=True, check=True).stdout
+    x = np.frombuffer(raw, dtype=np.float32).reshape(-1, 2).astype(np.float64)
+    if len(x) < SR:
+        sys.exit(f"media/{e['file']}: less than a second of audio after start = {start}")
+    while len(x) < N:                                # loop with a 1.5 s crossfade
+        xf = int(1.5 * SR)
+        ramp = np.linspace(0, 1, xf)[:, None]
+        head = x[:xf] * ramp + x[-xf:] * (1 - ramp)
+        x = np.concatenate([x[:-xf], head, x[xf:]])
+    return x[:N]
+
+
 def duck_curve(envl, depth_db, thr=0.012, attack=0.06, release=0.4):
     """gain curve that dips while the narrator speaks"""
     speak = (envl > thr).astype(float)
@@ -515,15 +546,15 @@ def duck_curve(envl, depth_db, thr=0.012, attack=0.06, release=0.4):
 def main():
     print("voice ...")
     voice, envl = build_voice()
-    print("music ...")
-    music = build_music()
+    print("music ..." + (f" (track: {TRACK})" if TRACK else " (synthesised score)"))
+    music = load_track() if TRACK else build_music()
     print("sfx ...")
     sfx = build_sfx()
 
     # fades: music eases in under the first word and rings out with the end card
     fade = np.ones(N)
-    fi = int(0.35 * SR)
-    fade[:fi] = np.linspace(0.25, 1, fi)
+    fi = int((0.8 if TRACK else 0.35) * SR)
+    fade[:fi] = np.linspace(0.0 if TRACK else 0.25, 1, fi)
     fo = int(1.6 * SR)
     fade[-fo:] *= np.linspace(1, 0, fo) ** 1.5
     music *= fade[:, None]
@@ -531,7 +562,15 @@ def main():
 
     mixcfg = CFG.get("mix", {})                    # optional overrides in video.json
     music_lvl, sfx_lvl = db(mixcfg.get("music_db", -4.0)), db(mixcfg.get("sfx_db", -0.5))
-    music_d = music * music_lvl * duck_curve(envl, mixcfg.get("duck_music_db", -8.5))[:, None]
+    duck_db = mixcfg.get("duck_music_db", -8.5)
+    if TRACK:                                      # a mastered track: set its level against the voice, not by a fixed gain
+        def rms(y):
+            return np.sqrt((y ** 2).mean() + 1e-12)
+        loud = music[np.abs(music).max(axis=1) > 1e-3]
+        target = rms(voice[envl > 0.012]) * db(float(MUSIC.get("rel_db", -9.0)))
+        music_lvl = target / max(1e-9, rms(loud if len(loud) else music))
+        duck_db = mixcfg.get("duck_music_db", -7.5)
+    music_d = music * music_lvl * duck_curve(envl, duck_db)[:, None]
     sfx_d = sfx * sfx_lvl * duck_curve(envl, mixcfg.get("duck_sfx_db", -3.5))[:, None]
     mix = voice + music_d + sfx_d
     peak = np.abs(mix).max()

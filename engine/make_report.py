@@ -85,7 +85,7 @@ w(f"| Music | Original, synthesised at {MUS.get('bpm', 100):g} BPM ({MUS.get('ki
   + "), arranged per chapter from the moods in video.json, ending on a held major chord. |")
 w(f"| Sound design | {A['sfx_cues']} synthesised cues, emitted by the animation code at the same cue times as the visuals. |")
 MEDIA_CR = json.load(open(ROOT / "media/credits.json", encoding="utf-8")) if (ROOT / "media/credits.json").exists() else {}
-USED = [m["name"] for m in TL.get("media") or []]
+USED = list(dict.fromkeys(m["name"] for m in TL.get("media") or []))
 if USED:
     lic = {}
     for n in USED:

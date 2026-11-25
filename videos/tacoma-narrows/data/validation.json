@@ -1,0 +1,80 @@
+{
+ "file": {
+  "path": "dist/tacoma_narrows_vertical.mp4",
+  "size_mb": 70.7,
+  "container": "QuickTime / MOV",
+  "duration_s": 64.533,
+  "overall_bitrate_mbps": 8.77,
+  "faststart": true
+ },
+ "video": {
+  "codec": "h264",
+  "profile": "High",
+  "level": 4.2,
+  "width": 1080,
+  "height": 1920,
+  "aspect": "9:16",
+  "pix_fmt": "yuv420p",
+  "fps": 30.0,
+  "frames": 1936,
+  "bitrate_mbps": 8.49,
+  "color": "bt709/bt709/bt709 tv"
+ },
+ "audio": {
+  "codec": "aac",
+  "profile": "LC",
+  "sample_rate": 48000,
+  "channels": 2,
+  "bitrate_kbps": 266,
+  "duration_s": 64.469
+ },
+ "decode_errors": 0,
+ "black_segments": [],
+ "freeze_segments": [],
+ "encode_fidelity": {
+  "ssim_all": 0.992623,
+  "psnr_avg_db": 49.185408
+ },
+ "loudness": {
+  "integrated_lufs": -14.0,
+  "range_lu": 2.1,
+  "true_peak_dbtp": -2.5
+ },
+ "sync": {
+  "narration_lag_ms_in_mp4": 0,
+  "method": "cross-correlation of 10 ms envelopes, MP4 audio vs. original narration"
+ },
+ "final_mix_asr": {
+  "wer_percent": 2.04,
+  "errors": 4,
+  "words": 196,
+  "diffs": [
+   "['gertie -> girdy']",
+   "['seventh -> 7th']",
+   "['in -> and']",
+   "['learn -> learned']"
+  ]
+ },
+ "caption_timing_crosscheck": {
+  "matched_words": 184,
+  "median_offset_ms": -113,
+  "mean_abs_dev_ms": 80,
+  "p95_abs_dev_ms": 199,
+  "note": "independent transducer ASR vs. TTS-derived word starts; the median is the recogniser's own emission delay"
+ },
+ "captions": {
+  "phrases": 60,
+  "two_line": 10,
+  "max_width_px": 808,
+  "x_extent": [
+   136,
+   944
+  ],
+  "y_extent": [
+   1185,
+   1345
+  ],
+  "min_on_screen_s": 0.43,
+  "max_words": 5
+ }
+}

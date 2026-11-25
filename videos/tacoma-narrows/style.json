@@ -1,0 +1,9 @@
+{
+  "name": "overcast-1940",
+  "about": "A grey-blue overcast morning in 1940: the 3D world painted in the 1940 film's muted light, so the real footage drops in without a jump; white captions, key words in yellow.",
+  "palette": { "accent": "#FFD23F", "alert": "#FF5A4F", "good": "#7CE0A0", "subject": "#7FC4F0", "data": "#C9B8FF" },
+  "grade": { "contrast": 1.08, "saturate": 0.85, "brightness": 1.0 },
+  "captions": { "key": "#FFD23F", "size": 72 },
+  "post": { "bloom": 0.15, "vignette": 0.65 },
+  "transition": { "default": "cut", "duration": 0.3 }
+}

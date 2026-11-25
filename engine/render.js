@@ -86,12 +86,12 @@ function manifest() {
 const { spawn, spawnSync } = require('child_process');
 const PREP = new Map();
 function prepareClip(spec) {
-  const name = String(spec.name || '').replace(/[^\w.-]/g, '_'), file = String(spec.file || '');
+  const name = String(spec.id || spec.name || '').replace(/[^\w.-]/g, '_'), file = String(spec.file || '');
   const src = path.resolve(PROJECT, 'media', file);
   if (!name || !src.startsWith(path.join(PROJECT, 'media') + path.sep)) return Promise.resolve({ error: 'bad clip name or file' });
   if (!fs.existsSync(src)) return Promise.resolve({ error: `no film media/${file} — take one with: lockstep take, or lockstep media ${path.basename(PROJECT)} restore` });
-  const st = fs.statSync(src), from = Math.max(0, +spec.from || 0), to = spec.to == null ? null : +spec.to, fx = spec.focus ? clampN(+spec.focus[0], 0, 1) : 0.5;
-  const stamp = require('crypto').createHash('sha1').update(JSON.stringify([file, st.size, Math.round(st.mtimeMs), from, to, fx, FPS, H, CLIP_W])).digest('hex').slice(0, 16);
+  const st = fs.statSync(src), from = Math.max(0, +spec.from || 0), to = spec.to == null ? null : +spec.to, fx = spec.focus ? clampN(+spec.focus[0], 0, 1) : 0.5, contain = spec.fit === 'contain';
+  const stamp = require('crypto').createHash('sha1').update(JSON.stringify([file, st.size, Math.round(st.mtimeMs), from, to, fx, FPS, H, CLIP_W, contain])).digest('hex').slice(0, 16);
   const key = name + ':' + stamp;
   if (PREP.has(key)) return PREP.get(key);
   const dir = path.join(OUT, 'media', name), infoFile = path.join(dir, 'clip.json');
@@ -101,7 +101,10 @@ function prepareClip(spec) {
     const args = ['-v', 'error', '-y'];
     if (from > 0) args.push('-ss', from.toFixed(3));
     if (to != null) args.push('-t', Math.max(0.1, to - from).toFixed(3));
-    args.push('-i', src, '-an', '-vf', `fps=${FPS},scale=-2:${H}:flags=lanczos,crop='min(iw,${CLIP_W})':${H}:'(iw-min(iw,${CLIP_W}))*${fx}':0`, '-q:v', '3', path.join(dir, '%05d.jpg'));
+    /* contain: the whole picture, W wide (old 4:3 film shown as a framed print); otherwise the frame's
+       height, cut to at most CLIP_W wide around the focus (room for a pan) */
+    const vf = contain ? `fps=${FPS},scale=${W}:-2:flags=lanczos` : `fps=${FPS},scale=-2:${H}:flags=lanczos,crop='min(iw,${CLIP_W})':${H}:'(iw-min(iw,${CLIP_W}))*${fx}':0`;
+    args.push('-i', src, '-an', '-vf', vf, '-q:v', '3', path.join(dir, '%05d.jpg'));
     const err = await new Promise((res) => { const p = spawn('ffmpeg', args); let e = ''; p.stderr.on('data', (d) => { e += d; }); p.on('close', (code) => res(code ? e || 'ffmpeg failed' : null)); p.on('error', (x) => res(String(x))); });
     if (err) return { error: String(err).trim().split('\n').slice(-2).join(' ') };
     const frames = fs.readdirSync(dir).filter((f) => /^\d{5}\.jpg$/.test(f)).length;
@@ -129,7 +132,7 @@ function startServer(opts = {}) {
           try {
             const list = JSON.parse(Buffer.concat(chunks).toString('utf8') || '[]'), out = {};
             const res2 = await Promise.all(list.map((sp) => prepareClip(sp)));
-            list.forEach((sp, k) => { out[sp.name] = res2[k]; });
+            list.forEach((sp, k) => { out[sp.id || sp.name] = res2[k]; });
             res.writeHead(200, { 'Content-Type': 'application/json' }); res.end(JSON.stringify(out));
           } catch (e) { res.writeHead(500); res.end(String((e && e.message) || e)); }
         });

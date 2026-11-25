@@ -11,7 +11,8 @@ A fuller request gets a better video. In order of how much it helps:
 3. **Audience, length and platform.**
 4. **Tone.** Dramatic, curious, funny, calm.
 5. **Must include / must avoid.** Facts, names, sources, claims to stay away from.
-6. **Checkpoints.** Where Claude should stop and show you something before carrying on.
+6. **Music mood.** A licensed track (Incompetech, CC BY) is picked to match; name a mood if you have one.
+7. **Checkpoints.** Where Claude should stop and show you something before carrying on.
 
 ## Template
 
@@ -28,6 +29,7 @@ Tone: [dramatic / curious / funny / calm / urgent]
 Visuals: animation built in code with three.js; real photos or footage only where the real
 thing matters ([e.g. the real scientist, the real ship, the real place]).
 The one thing the animation should show: [e.g. "the cell wall cracking and the cell bursting"]
+Music: [mood, e.g. "tense, building" — a licensed track is chosen to match]
 
 Must include: [facts, names, numbers, sources]
 Avoid: [claims, topics, styles]

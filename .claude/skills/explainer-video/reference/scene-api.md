@@ -74,7 +74,7 @@ false }` keeps a picture's own colours.
 | Setup (once) | |
 |---|---|
 | `useImage(name, o)` | a photograph, painting, print, map or texture from `media/` (`name` as taken). `o.grade` (false, or values that override the style's), `o.cutout: true` for `media/<name>.cut.png` |
-| `useVideo(name, { from, to, focus })` | a film clip: the seconds `from`–`to` of the source are cut into frames once (at 30 fps, to `out/media/<name>/`). `focus: [x, y]` — the part of a wide clip to keep |
+| `useVideo(name, { from, to, focus, fit })` | a film clip: the seconds `from`–`to` of the source are cut into frames once (at 30 fps, under `out/media/`). `focus: [x, y]` — the part of a wide clip to keep. `fit: 'contain'` keeps the whole picture — old 4:3 film shown as a framed print over a blurred copy of itself (`film(…, { y, push })`) instead of cropped and blown up. The same clip can be used several times with different seconds |
 
 | Draw (every frame) | |
 |---|---|

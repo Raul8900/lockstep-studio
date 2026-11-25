@@ -19,6 +19,7 @@ Nothing is bought, nothing is ripped from a platform, nothing is generated and p
 | `polyhaven` | photoreal 3D models, HDRI skies, textures | CC0 | none |
 | `khronos` | glTF sample models: a fox, a walking man, showcase objects | CC0 / CC BY per model | none |
 | `ambientcg` | PBR textures: wood, paper, metal, ground | CC0 | none |
+| `incompetech` | music: 1,400+ tracks by Kevin MacLeod, tagged by feel, instruments, tempo | CC BY 4.0 | none |
 | `pexels` | modern stock photos and footage, many vertical | Pexels licence | `PEXELS_API_KEY` (free) |
 | `pixabay` | stock photos, illustrations, vectors, footage | Pixabay licence | `PIXABAY_API_KEY` (free) |
 

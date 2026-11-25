@@ -1,0 +1,36 @@
+{
+ "collapse-1940": {
+  "file": "collapse-1940.mp4",
+  "kind": "video",
+  "source": "archive",
+  "id": "CEP176",
+  "title": "Tacoma Narrows Bridge Collapse (Standard 4:3) (1940)",
+  "author": "Stillman Fires Collection; Tacoma Fire Department",
+  "licence": "Public domain",
+  "licence_url": "http://creativecommons.org/licenses/publicdomain/",
+  "page": "https://archive.org/details/CEP176",
+  "download": "https://archive.org/download/CEP176/CEP176_512kb.mp4",
+  "credit_required": false,
+  "taken": "2026-11-25",
+  "size": [
+   320,
+   240
+  ],
+  "duration": 125.53
+ },
+ "impending-boom": {
+  "file": "impending-boom.mp3",
+  "kind": "music",
+  "source": "incompetech",
+  "id": "USUAN1100198",
+  "title": "Impending Boom",
+  "author": "Kevin MacLeod",
+  "licence": "CC BY 4.0",
+  "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+  "page": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100198",
+  "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Impending%20Boom.mp3",
+  "credit_required": true,
+  "taken": "2026-11-25",
+  "duration": 157.0
+ }
+}

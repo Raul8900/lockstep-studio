@@ -143,7 +143,12 @@ Only the best voices are offered (`lockstep voice <slug> list`); the others soun
 Fix mispronunciations with a phoneme override and re-record.
 
 ### 7. Music
-In `video.json`, a mood per beat tracing the story's arc (reference/audio.md).
+A licensed track by default: `lockstep find <slug> music "suspenseful building"` searches Kevin
+MacLeod's 1,400 tracks on Incompetech (CC BY 4.0) by feel, instruments and description, with tempo
+and length on the sheet; take one and name it in `video.json`: `"music": { "track": "name", "start": 0 }`.
+Choose by the story's arc and the track's length (longer than the video; it loops otherwise). The
+mixer levels it against the voice and ducks it under speech. Without a track the engine synthesises
+a score from moods per beat (reference/audio.md).
 
 ### 8. Scenes
 One file per beat, drawing the shot plan (reference/scene-api.md has the whole API):

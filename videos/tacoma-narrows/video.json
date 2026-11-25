@@ -1,0 +1,47 @@
+{
+  "title": "The Bridge That Danced Itself to Death",
+  "output": "tacoma_narrows_vertical",
+  "max_seconds": 90,
+  "music": {
+    "track": "impending-boom",
+    "start": 0
+  },
+  "chapters": [
+    {
+      "id": "hook"
+    },
+    {
+      "id": "ribbon"
+    },
+    {
+      "id": "wind"
+    },
+    {
+      "id": "twist"
+    },
+    {
+      "id": "film"
+    },
+    {
+      "id": "tubby"
+    },
+    {
+      "id": "fall"
+    },
+    {
+      "id": "myth"
+    },
+    {
+      "id": "lesson"
+    }
+  ],
+  "lint": {
+    "ignore": [
+      {
+        "rule": "hex-colour",
+        "file": "components.js",
+        "why": "the real materials of the 1940 bridge and its shores; overlays use roles"
+      }
+    ]
+  }
+}

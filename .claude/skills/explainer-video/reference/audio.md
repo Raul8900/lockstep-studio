@@ -1,13 +1,33 @@
 # Music, sound design and mix
 
-Everything is synthesised by `engine/audio/make_audio.py` — no samples, no third-party
-recordings — from three inputs: the narration, the chapter moods in `video.json`, and the sound
-cues your scenes emit with `sfx()`. `bin/lockstep audio <slug>` builds it (the build does this
-for you) and prints the voice-to-bed ratio.
+`engine/audio/make_audio.py` mixes three things: the narration, the music, and the sound cues your
+scenes emit with `sfx()` (always synthesised). `bin/lockstep audio <slug>` builds it (the build does
+this for you) and prints the voice-to-bed ratio.
 
-## Music settings
+## A licensed track (the default)
 
-The score is chosen in the brief like the look. `video.json`:
+```bash
+bin/lockstep find <slug> music "suspenseful building tension"   # Incompetech: feel, instruments, tempo, length
+bin/lockstep take <slug> last 2 --as impending-boom
+```
+
+```json
+"music": { "track": "impending-boom", "start": 0, "rel_db": -9 }
+```
+
+- Choose by feel and shape: a quiet opening under the hook, tension that sustains under the
+  mechanism, and enough length (longer than the video; a shorter one loops with a crossfade).
+  You cannot listen to it: read the description on the sheet, and look at its loudness over time
+  (`ffmpeg -i media/x.mp3 -af astats` or a short numpy RMS) to find a `start` that skips silence.
+- `start`: seconds into the track. `rel_db` (−9): the track's level against the voice before
+  ducking; `"mix": { "duck_music_db": -7.5 }` how far it dips under speech.
+- The credit line (Kevin MacLeod, CC BY 4.0) goes into `docs/credits.md` with the other media.
+
+## The synthesised score (without a track)
+
+### Score settings
+
+`video.json`:
 
 ```json
 "music": { "bpm": 112, "transpose": -2, "kit": "pluck" }

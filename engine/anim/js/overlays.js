@@ -59,7 +59,7 @@ function bigNumber(ctx, value, x, y, o = {}) {
   _shadow(ctx, a, () => text(ctx, str, 0, size * 0.36, { size, weight, family, color: _oc(o.color, COL.ink), align: 'center', alpha: a, ls: -size * 0.02 }), 34);
   if (o.label) {
     const ls = Math.round(size * 0.24), la = clamp((p - 0.35) / 0.3);
-    _shadow(ctx, la, () => text(ctx, o.label, 0, size * 0.36 + ls * 1.5, { size: ls, weight: 800, family, color: _oc(o.labelColor, COL.ink), align: 'center', alpha: la }));
+    _shadow(ctx, la, () => text(ctx, o.label, 0, size * 0.36 + ls * 2.0, { size: ls, weight: 800, family, color: _oc(o.labelColor, COL.ink), align: 'center', alpha: la }));
   }
   ctx.restore();
   const w = measure(ctx, str, size, weight, family);

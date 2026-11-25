@@ -9,7 +9,8 @@
   python3 engine/media.py credits <video>          write docs/credits.md (paste it into the description)
   python3 engine/media.py sources                  which sources exist, which need a key, what they hold
 
-kind: photo (photographs, paintings, prints, maps, illustrations), video, model (3D), hdri, texture.
+kind: photo (photographs, paintings, prints, maps, illustrations), video, model (3D), hdri, texture,
+music (tracks to score the video: video.json "music": {"track": "<name>"}).
 
 `find` searches every source that holds that kind at once and tiles the candidates into one numbered
 sheet, out/find/<search>.jpg, with each one's source, licence and size; out/find/<search>.json keeps
@@ -49,7 +50,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import MODELS, project_dir  # noqa: E402
 
 UA = "lockstep-studio/0.2 (open-source explainer video tool)"
-KINDS = ("photo", "video", "model", "hdri", "texture")
+KINDS = ("photo", "video", "model", "hdri", "texture", "music")
 MAX_PX = 2600
 
 
@@ -290,7 +291,7 @@ class Archive(Source):
     about = "Internet Archive: public-domain and CC BY films, newsreels, educational reels"
 
     def search(self, kind, q, n):
-        query = f"({q}) AND mediatype:movies AND (licenseurl:*publicdomain* OR licenseurl:*licenses/by/*)"
+        query = f"({q}) AND mediatype:(movies) AND licenseurl:(*publicdomain* OR *licenses\\/by\\/* OR *zero*)"   # the form the search accepts
         d = get("https://archive.org/advancedsearch.php?" + urllib.parse.urlencode(
             [("q", query), ("fl[]", "identifier"), ("fl[]", "title"), ("fl[]", "licenseurl"), ("fl[]", "creator"),
              ("fl[]", "year"), ("rows", min(n, 30)), ("output", "json")]))
@@ -299,7 +300,7 @@ class Archive(Source):
             lu = doc.get("licenseurl", "")
             out.append(dict(source=self.name, id=doc["identifier"], kind=kind, title=f"{doc.get('title', '')} ({doc.get('year', '')})",
                             author=doc.get("creator") if isinstance(doc.get("creator"), str) else ", ".join(doc.get("creator") or []),
-                            licence="Public domain" if "publicdomain" in lu else "CC BY", licence_url=lu,
+                            licence="Public domain" if "publicdomain" in lu else "CC0" if "zero" in lu else "CC BY", licence_url=lu,
                             page=f"https://archive.org/details/{doc['identifier']}", thumb=f"https://archive.org/services/img/{doc['identifier']}",
                             download=None))
         return out
@@ -430,6 +431,36 @@ class Khronos(Source):
         return out
 
 
+class Incompetech(Source):
+    """Kevin MacLeod's library: 1,400+ tracks tagged by feel, genre, tempo and instruments (CC BY 4.0)."""
+    name, kinds = "incompetech", ("music",)
+    about = "Incompetech: 1,400+ music tracks by Kevin MacLeod, tagged by feel and tempo (CC BY 4.0)"
+    BASE = "https://incompetech.com/music/royalty-free"
+    _list = None
+
+    def search(self, kind, q, n):
+        if Incompetech._list is None:
+            Incompetech._list = get(f"{self.BASE}/pieces.json")
+        words = [w for w in re.findall(r"[a-z0-9]+", q.lower()) if len(w) > 2]
+        scored = []
+        for p in Incompetech._list:
+            hay = " ".join(str(p.get(k) or "") for k in ("title", "feel", "description", "instruments")).lower()
+            hw = set(re.findall(r"[a-z0-9]+", hay))
+            sc = sum(w in hw for w in words) + 0.5 * sum(w in str(p.get("feel", "")).lower() for w in words)
+            if sc:
+                scored.append((-sc, p.get("uploaded", ""), p))
+        out = []
+        for _, _, p in sorted(scored, key=lambda x: (x[0], x[1]))[:n]:
+            hh, mm, ss = (int(x) for x in (p.get("length") or "0:0:0").split(":"))
+            out.append(dict(source=self.name, id=p.get("isrc") or p["title"], kind="music", title=p["title"], author="Kevin MacLeod",
+                            licence="CC BY 4.0", licence_url="https://creativecommons.org/licenses/by/4.0/",
+                            page="https://incompetech.com/music/royalty-free/index.html?isrc=" + (p.get("isrc") or ""),
+                            download=f"{self.BASE}/mp3-royaltyfree/" + urllib.parse.quote(p["filename"]),
+                            duration=hh * 3600 + mm * 60 + ss, bpm=p.get("bpm"), feel=p.get("feel"),
+                            note=f"{p.get('feel', '')} · {p.get('instruments', '')} · {p.get('description', '')}", ext=".mp3"))
+        return out
+
+
 class Pexels(Source):
     name, kinds, needs = "pexels", ("photo", "video"), "PEXELS_API_KEY"
     about = "Pexels: modern stock photos and video, many vertical (free key; Pexels License)"
@@ -480,7 +511,7 @@ class Pixabay(Source):
                 for h in d.get("hits", [])]
 
 
-SOURCES = [Wikimedia(), NASA(), ArtInstitute(), Cleveland(), Openverse(), Archive(), PolyHaven(), Khronos(), AmbientCG(),
+SOURCES = [Wikimedia(), NASA(), ArtInstitute(), Cleveland(), Openverse(), Archive(), PolyHaven(), Khronos(), AmbientCG(), Incompetech(),
            Pexels(), Pixabay()]
 BY_NAME = {s.name: s for s in SOURCES}
 
@@ -505,7 +536,7 @@ def find(video, kind, q, names=None, n=24, allow_sa=False):
                 found += f.result()
             except Exception as e:  # noqa: BLE001 — one slow or failing source must not sink the search
                 errors.append(f"{futs[f].name}: {str(e)[:80]}")
-    ok = [c for c in found if allowed(c, allow_sa) and c.get("thumb")]
+    ok = [c for c in found if allowed(c, allow_sa) and (c.get("thumb") or c["kind"] == "music")]
     dropped = len(found) - len(ok)
     # relevance: the share of the query's words found in what a candidate says about itself; museum
     # searches match single words ("Alexander" -> Alexander the Great), so a candidate must match one
@@ -546,6 +577,8 @@ def find(video, kind, q, names=None, n=24, allow_sa=False):
     for c in mixed:
         size = f"{c['width']}x{c['height']}" if c.get("width") else ""
         dur = f" {c['duration']:.0f}s" if isinstance(c.get("duration"), (int, float)) else ""
+        if c["kind"] == "music":
+            size = f"{c.get('bpm') or '?'} bpm"
         print(f"  {c['n']:>2}  {c['source']:<10} {licence_info(c['licence'], c.get('licence_url', ''))[0]:<22} {size:<11}{dur:<5} {c['title'][:60]}")
     if dropped:
         print(f"  ({dropped} more left out for their licence: non-commercial, no-derivatives, unknown, or share-alike without --allow-sa)")
@@ -575,6 +608,8 @@ def contact_sheet(cands, path, title):
     d.text((12, 12), title, font=font(22, True), fill=(240, 240, 240))
 
     def thumb(c):
+        if not c.get("thumb"):
+            return None
         try:
             return Image.open(io.BytesIO(get(c["thumb"], binary=True, timeout=25))).convert("RGB")
         except Exception:  # noqa: BLE001
@@ -589,6 +624,19 @@ def contact_sheet(cands, path, title):
             sheet.paste(im, (x + (cw - im.width) // 2, y + (ch - im.height) // 2))
         d.rectangle([x + 4, y + 4, x + 40, y + 26], fill=(0, 0, 0))
         d.text((x + 9, y + 6), str(c["n"]), font=f1, fill=(255, 220, 0))
+        if c["kind"] == "music":                  # no picture: what the track is, in words
+            d.rectangle([x + 4, y + 30, x + cw - 4, y + ch - 4], fill=(32, 34, 42))
+            m, s2 = divmod(int(c.get("duration") or 0), 60)
+            d.text((x + 12, y + 40), f"{m}:{s2:02d} · {c.get('bpm') or '?'} bpm", font=f1, fill=(255, 220, 0))
+            words, line, yy = (c.get("note") or "").split(), "", y + 66
+            for wd in words:
+                if len(line) + len(wd) > 34:
+                    d.text((x + 12, yy), line, font=f2, fill=(220, 220, 220)); yy += 17; line = ""
+                    if yy > y + ch - 24:
+                        break
+                line = (line + " " + wd).strip()
+            if line and yy <= y + ch - 24:
+                d.text((x + 12, yy), line, font=f2, fill=(220, 220, 220))
         if c["kind"] == "video":
             d.text((x + 46, y + 6), f"▶ {c['duration']:.0f}s" if isinstance(c.get("duration"), (int, float)) else "▶", font=f1, fill=(255, 255, 255))
         lic = licence_info(c["licence"], c.get("licence_url", ""))[0]
@@ -624,7 +672,8 @@ def finish_photo(path):
 
 USE_HINT = {"photo": "useImage('{name}')  (setup) · photo(ctx, h, p) (draw)", "video": "useVideo('{name}', {{ from, to }})  (setup) · film(ctx, h, local) (draw)",
             "model": "await w.model('{name}', {{ height: 1.8 }})  inside world3d(async (T, w) => …)",
-            "hdri": "await w.sky('{name}')  inside world3d(async (T, w) => …)", "texture": "await w.texture('{name}/<map file>')  inside world3d(…)"}
+            "hdri": "await w.sky('{name}')  inside world3d(async (T, w) => …)",
+            "music": 'video.json: "music": {{ "track": "{name}", "start": 0 }}  (start: seconds into the track)', "texture": "await w.texture('{name}/<map file>')  inside world3d(…)"}
 
 
 def take(video, search, number, as_name=None):
@@ -641,7 +690,7 @@ def take(video, search, number, as_name=None):
     info = {}
     if c["kind"] == "photo":
         f, size = finish_photo(f); info["size"] = list(size)
-    elif c["kind"] == "video":
+    elif c["kind"] in ("video", "music"):
         info.update(probe(f))
     lic, _, credit, _ = licence_info(c["licence"], c.get("licence_url", ""))
     cr = load_credits(video)
@@ -654,7 +703,7 @@ def take(video, search, number, as_name=None):
     print("in a scene: " + USE_HINT[c["kind"]].format(name=name))
 
 
-EXT_KIND = {".jpg": "photo", ".jpeg": "photo", ".png": "photo", ".webp": "photo", ".tif": "photo", ".tiff": "photo",
+EXT_KIND = {".mp3": "music", ".wav": "music", ".ogg": "music", ".flac": "music", ".jpg": "photo", ".jpeg": "photo", ".png": "photo", ".webp": "photo", ".tif": "photo", ".tiff": "photo",
             ".mp4": "video", ".mov": "video", ".webm": "video", ".mkv": "video", ".glb": "model", ".gltf": "model", ".hdr": "hdri"}
 
 
@@ -738,6 +787,12 @@ def cutout(video, name):
 
 
 def probe(f):
+    if Path(f).suffix.lower() in (".mp3", ".wav", ".ogg", ".flac", ".m4a"):
+        try:
+            r = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "json", str(f)], capture_output=True, text=True, check=True)
+            return {"duration": round(float(json.loads(r.stdout)["format"]["duration"]), 2)}
+        except Exception:  # noqa: BLE001
+            return {}
     try:
         r = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height,r_frame_rate",
                             "-show_entries", "format=duration", "-of", "json", str(f)], capture_output=True, text=True, check=True)

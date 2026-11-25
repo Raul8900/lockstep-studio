@@ -1,0 +1,188 @@
+{
+ "meta": {
+  "voice": "af_heart",
+  "speed": 1.15,
+  "sample_rate": 24000,
+  "duration": 64.531,
+  "speech_end": 61.7408,
+  "word_count": 191
+ },
+ "beats": [
+  {
+   "id": "hook",
+   "title": "The dancing bridge",
+   "t0": 0.298,
+   "t1": 9.1255
+  },
+  {
+   "id": "ribbon",
+   "title": "A ribbon",
+   "t0": 9.6105,
+   "t1": 16.0919
+  },
+  {
+   "id": "wind",
+   "title": "The wind",
+   "t0": 16.577,
+   "t1": 22.702
+  },
+  {
+   "id": "twist",
+   "title": "The twist",
+   "t0": 23.1531,
+   "t1": 35.9279
+  },
+  {
+   "id": "film",
+   "title": "The real film",
+   "t0": 36.4275,
+   "t1": 38.2275
+  },
+  {
+   "id": "tubby",
+   "title": "Tubby",
+   "t0": 38.6785,
+   "t1": 42.9035
+  },
+  {
+   "id": "fall",
+   "title": "The fall",
+   "t0": 43.4042,
+   "t1": 46.5042
+  },
+  {
+   "id": "myth",
+   "title": "The myth",
+   "t0": 47.1115,
+   "t1": 55.5215
+  },
+  {
+   "id": "lesson",
+   "title": "The lesson",
+   "t0": 56.017,
+   "t1": 61.7408
+  }
+ ],
+ "takes": [
+  {
+   "take": 0,
+   "beat": "hook",
+   "text": "In 1940, a brand-new bridge in Washington State started to dance.",
+   "t0": 0.298,
+   "t1": 4.448,
+   "pause_after": 0.25
+  },
+  {
+   "take": 1,
+   "beat": "hook",
+   "text": "Locals called it Galloping Gertie, and people drove across just to feel it bounce.",
+   "t0": 4.8505,
+   "t1": 9.1255,
+   "pause_after": 0.35
+  },
+  {
+   "take": 2,
+   "beat": "ribbon",
+   "text": "Its main span was over half a mile long, but its deck was only eight feet deep.",
+   "t0": 9.6105,
+   "t1": 13.8355,
+   "pause_after": 0.2
+  },
+  {
+   "take": 3,
+   "beat": "ribbon",
+   "text": "In the wind, it rippled like a ribbon.",
+   "t0": 14.1919,
+   "t1": 16.0919,
+   "pause_after": 0.35
+  },
+  {
+   "take": 4,
+   "beat": "wind",
+   "text": "On November seventh, four months after it opened, a steady wind of about forty miles an hour began to blow.",
+   "t0": 16.577,
+   "t1": 22.702,
+   "pause_after": 0.3
+  },
+  {
+   "take": 5,
+   "beat": "twist",
+   "text": "Then the motion changed. The bounce turned into a twist.",
+   "t0": 23.1531,
+   "t1": 26.1031,
+   "pause_after": 0.2
+  },
+  {
+   "take": 6,
+   "beat": "twist",
+   "text": "As the deck tilted, the wind caught it at an angle and pushed it further.",
+   "t0": 26.45,
+   "t1": 30.175,
+   "pause_after": 0.2
+  },
+  {
+   "take": 7,
+   "beat": "twist",
+   "text": "Every twist fed the next one. The wind was pumping energy in faster than the bridge could lose it.",
+   "t0": 30.5279,
+   "t1": 35.9279,
+   "pause_after": 0.35
+  },
+  {
+   "take": 8,
+   "beat": "film",
+   "text": "This is real film from that morning.",
+   "t0": 36.4275,
+   "t1": 38.2275,
+   "pause_after": 0.3
+  },
+  {
+   "take": 9,
+   "beat": "tubby",
+   "text": "One man fled his car on the bridge, with his daughter's dog, Tubby, still inside.",
+   "t0": 38.6785,
+   "t1": 42.9035,
+   "pause_after": 0.35
+  },
+  {
+   "take": 10,
+   "beat": "fall",
+   "text": "Around eleven, the deck tore loose and fell into the water.",
+   "t0": 43.4042,
+   "t1": 46.5042,
+   "pause_after": 0.45
+  },
+  {
+   "take": 11,
+   "beat": "myth",
+   "text": "For decades, textbooks blamed resonance, the wind matching the bridge's rhythm.",
+   "t0": 47.1115,
+   "t1": 51.4115,
+   "pause_after": 0.2
+  },
+  {
+   "take": 12,
+   "beat": "myth",
+   "text": "It wasn't. The bridge made its own rhythm, and the wind kept feeding it.",
+   "t0": 51.7465,
+   "t1": 55.5215,
+   "pause_after": 0.35
+  },
+  {
+   "take": 13,
+   "beat": "lesson",
+   "text": "That's why big bridges are now tested in wind tunnels before they're built.",
+   "t0": 56.017,
+   "t1": 59.867,
+   "pause_after": 0.2
+  },
+  {
+   "take": 14,
+   "beat": "lesson",
+   "text": "So they never learn to dance.",
+   "t0": 60.2658,
+   "t1": 61.7408,
+   "pause_after": 0.7
+  }
+ ]
+}

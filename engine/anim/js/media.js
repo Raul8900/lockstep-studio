@@ -28,8 +28,10 @@ let CUR_FRAME = -1;                      // the frame being rendered (for read-a
 
 function _spec(name, kind, o) {
   if (window.READY) throw new Error(`use${kind}('${name}') called after loading: declare media in a scene's setup code, not in its draw function`);
-  const key = kind + ':' + name + (o.cutout ? ':cut' : '');
-  if (!MEDIA.has(key)) MEDIA.set(key, { name, kind, o, img: null, w: 0, h: 0, frames: 0, last: 0 });
+  /* a clip used twice with different seconds is two handles, each with its own frames */
+  const cut = kind === 'Video' ? `@${o.from || 0}-${o.to == null ? 'end' : o.to}${o.fit === 'contain' ? '-c' : ''}${o.focus ? '-' + o.focus.join('_') : ''}` : '';
+  const key = kind + ':' + name + (o.cutout ? ':cut' : '') + cut;
+  if (!MEDIA.has(key)) MEDIA.set(key, { name, id: (name + cut).replace(/[^\w.-]/g, '_'), kind, o, img: null, w: 0, h: 0, frames: 0, last: 0 });
   return MEDIA.get(key);
 }
 /* a photograph, painting, print or map from media/ */
@@ -82,14 +84,14 @@ async function loadMedia() {
       });
       m.w = im.naturalWidth; m.h = im.naturalHeight;
       m.img = m.o.cutout ? im : _graded(im, m.w, m.h, m.o);
-    } else videos.push({ name: m.name, file, from: m.o.from || 0, to: m.o.to == null ? null : m.o.to, focus: m.o.focus || [0.5, 0.5] });
+    } else videos.push({ name: m.name, id: m.id, file, from: m.o.from || 0, to: m.o.to == null ? null : m.o.to, focus: m.o.focus || [0.5, 0.5], fit: m.o.fit || 'cover' });
   }));
   if (videos.length) {
     const r = await fetch('/prepare-media', { method: 'POST', body: JSON.stringify(videos) });
     if (!r.ok) throw new Error('preparing film clips failed: ' + (await r.text()));
     const info = await r.json();
     for (const m of MEDIA.values()) if (m.kind === 'Video') {
-      const i = info[m.name];
+      const i = info[m.id];
       if (!i || i.error) throw new Error(`film clip ${m.name}: ${i ? i.error : 'not prepared'}`);
       Object.assign(m, { frames: i.frames, w: i.w, h: i.h });
     }
@@ -100,17 +102,17 @@ async function loadMedia() {
 /* one film frame, if loaded; otherwise the render notes the miss (renderFrameReady loads it and draws again) */
 function _videoFrame(m, idx) {
   idx = Math.max(0, Math.min(m.frames - 1, idx));
-  const k = m.name + ':' + idx, im = VCACHE.get(k);
+  const k = m.id + ':' + idx, im = VCACHE.get(k);
   if (!im) VMISS.push([m, idx]);
   else { VCACHE.delete(k); VCACHE.set(k, im); }                 // most recently used last
   m.last = idx;
-  return im || VCACHE.get(m.name + ':' + (m.shown == null ? -1 : m.shown)) || null;
+  return im || VCACHE.get(m.id + ':' + (m.shown == null ? -1 : m.shown)) || null;
 }
 async function _loadFrames(list) {
   await Promise.all(list.map(async ([m, idx]) => {
-    const k = m.name + ':' + idx;
+    const k = m.id + ':' + idx;
     if (VCACHE.has(k)) return;
-    const im = await _loadImg(`project/out/media/${m.name}/${String(idx + 1).padStart(5, '0')}.jpg`);
+    const im = await _loadImg(`project/out/media/${m.id}/${String(idx + 1).padStart(5, '0')}.jpg`);
     VCACHE.set(k, _graded(im, im.naturalWidth, im.naturalHeight, m.o));
   }));
   while (VCACHE.size > 160) VCACHE.delete(VCACHE.keys().next().value);       // oldest first
@@ -169,11 +171,38 @@ function _drawCovered(ctx, src, w, h, cam, o) {
   return { x, y, w: dw, h: dh, at: (u, v) => [x + u * dw, y + v * dh] };
 }
 
+/* The whole picture as a framed print — old 4:3 film or a document that must not be cropped — over
+   a blurred, darkened copy of itself that fills the frame. o: width (W − 70), y (the print's centre,
+   880), border (12 px, off-white), push (0.05: how much it grows over the shot), backdrop (true) */
+function _drawContained(ctx, src, w, h, p, o) {
+  const a = o.alpha == null ? 1 : o.alpha;
+  if (a <= 0.003) return null;
+  ctx.save(); ctx.globalAlpha *= clamp(a);
+  if (o.backdrop !== false) {
+    const s = Math.max(W / w, H / h) * 1.1;
+    ctx.filter = 'blur(28px) brightness(0.42) saturate(0.7)';
+    ctx.drawImage(src, (W - w * s) / 2, (H - h * s) / 2, w * s, h * s);
+    ctx.filter = 'none';
+  }
+  const k = 1 + (o.push == null ? 0.05 : o.push) * E.ioSine(clamp(p));
+  const bw = (o.width || W - 70) * k, bh = bw * h / w, cx = CX, cy = o.y || 880, b = o.border == null ? 12 : o.border;
+  if (o.shake) ctx.translate(Math.sin(o.shake[1] * 37.1) * o.shake[0], Math.cos(o.shake[1] * 29.3) * o.shake[0]);
+  ctx.shadowColor = 'rgba(0,0,0,0.6)'; ctx.shadowBlur = 40; ctx.shadowOffsetY = 12;
+  ctx.fillStyle = '#EFEBE2'; ctx.fillRect(cx - bw / 2 - b, cy - bh / 2 - b, bw + 2 * b, bh + 2 * b);
+  ctx.shadowColor = 'rgba(0,0,0,0)'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(src, cx - bw / 2, cy - bh / 2, bw, bh);
+  ctx.restore();
+  const x0 = cx - bw / 2, y0 = cy - bh / 2;
+  return { x: x0, y: y0, w: bw, h: bh, at: (u, v) => [x0 + u * bw, y0 + v * bh] };
+}
+
 /* A picture filling the frame, the camera moving through it over the shot (p: 0..1).
    Returns where the picture landed, with at(u, v): the frame position of a point of the picture —
    to pin a label or an arrow to something in it. */
 function photo(ctx, m, p, o = {}) {
   if (!m.img) return null;
+  if (o.fit === 'contain') return _drawContained(ctx, m.img, m.w, m.h, p, o);
   return _drawCovered(ctx, m.img, m.w, m.h, _camera(p, o), o);
 }
 
@@ -207,6 +236,7 @@ function film(ctx, m, local, o = {}) {
   if (!im) return null;
   m.shown = Math.min(m.frames - 1, Math.max(0, idx));
   const cam = _camera(local / (o.dur || 4), Object.assign({ amount: 0.5 }, o));
+  if ((o.fit || m.o.fit) === 'contain') return _drawContained(ctx, im, im.width, im.height, local / (o.dur || 4), o);
   return _drawCovered(ctx, im, im.width, im.height, cam, o);
 }
 
