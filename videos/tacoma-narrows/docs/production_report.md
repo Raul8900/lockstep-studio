@@ -4,13 +4,13 @@ All figures in the numbered sections were measured on the delivered file by `eng
 
 ## 1. Deliverable
 
-`tacoma_narrows_vertical.mp4` — 70.7 MB, 64.53 s (1:04.5).
+`tacoma_narrows_vertical.mp4` — 71.8 MB, 64.53 s (1:04.5).
 
 | Requirement | Measured | Result |
 |---|---|---|
 | 1080 × 1920, 9:16 portrait | 1080 × 1920, 9:16 | PASS |
 | 30 fps or higher | 30 fps constant, 1936 frames | PASS |
-| H.264 video | H264 High @ L4.2, yuv420p, bt709/bt709/bt709 tv, 8.49 Mbps | PASS |
+| H.264 video | H264 High @ L4.2, yuv420p, bt709/bt709/bt709 tv, 8.63 Mbps | PASS |
 | AAC audio | AAC-LC, 48 kHz, 2 ch, 266 kbps | PASS |
 | MP4 container | MP4 (ISO BMFF), index at the front for streaming: yes | PASS |
 | 90 s maximum | 64.53 s | PASS |
@@ -65,7 +65,7 @@ Versions: ffmpeg version 6.1.1-3ubuntu5 · Node v22.23.4 · Python 3.13.18
 
 FFmpeg’s freeze detector (0.15 % mean change, 0.4 s) reports no holds anywhere in the video.
 
-Encode fidelity against the rendered frames: SSIM 0.9926, PSNR 49.2 dB.
+Encode fidelity against the rendered frames: SSIM 0.9925, PSNR 49.1 dB.
 
 ## Technical accuracy review
 

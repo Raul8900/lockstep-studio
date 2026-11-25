@@ -1,10 +1,10 @@
 {
  "file": {
   "path": "dist/tacoma_narrows_vertical.mp4",
-  "size_mb": 70.7,
+  "size_mb": 71.8,
   "container": "QuickTime / MOV",
   "duration_s": 64.533,
-  "overall_bitrate_mbps": 8.77,
+  "overall_bitrate_mbps": 8.91,
   "faststart": true
  },
  "video": {
@@ -17,7 +17,7 @@
   "pix_fmt": "yuv420p",
   "fps": 30.0,
   "frames": 1936,
-  "bitrate_mbps": 8.49,
+  "bitrate_mbps": 8.63,
   "color": "bt709/bt709/bt709 tv"
  },
  "audio": {
@@ -32,8 +32,8 @@
  "black_segments": [],
  "freeze_segments": [],
  "encode_fidelity": {
-  "ssim_all": 0.992623,
-  "psnr_avg_db": 49.185408
+  "ssim_all": 0.992494,
+  "psnr_avg_db": 49.125999
  },
  "loudness": {
   "integrated_lufs": -14.0,
