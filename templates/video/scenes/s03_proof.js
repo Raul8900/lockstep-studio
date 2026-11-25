@@ -19,7 +19,7 @@
     shots(ctx, t, [
       { at: 0, draw: (ctx, t, p, local) => film(ctx, walk, t - (c.how - 0.5), { dur: c.mirrors - c.how, move: 'in', focus: [0.5, 0.55] }) },
       { at: c.mirrors - 0.3, cut: 'flash', draw: (ctx, t, p) => {
-        const pic = photo(ctx, mirror, tw(t, c.mirrors - 0.3, c.end + 1.2, E.lin), { from: { z: 1.15, x: 0.45, y: 0.5 }, to: { z: 1.7, x: TARGET[0], y: TARGET[1] + 0.04 }, ease: E.ioSine });
+        const pic = photo(ctx, mirror, tw(t, c.mirrors - 0.3, DATA.dur, E.lin), { from: { z: 1.15, x: 0.45, y: 0.5 }, to: { z: 1.7, x: TARGET[0], y: TARGET[1] + 0.04 }, ease: E.ioSine });
         if (!pic) return;
         const [tx, ty] = pic.at(TARGET[0], TARGET[1]);
         laser(ctx, t, tx, ty);
