@@ -19,7 +19,7 @@
     shots(ctx, t, [
       { at: 0, draw: (ctx, t) => {
         const k = tw(t, t0, c.wrong2 - 0.5, E.io2);
-        view3d(ctx, world, t, heroCam(t, lerp(0.42, 0.75, k), lerp(-0.12, 0.2, k), lerp(0.05, 0.16, k), 30));
+        view3d(ctx, world, t, heroCam(t, lerp(0.8, 1.3, k), lerp(-0.2, 0.3, k), lerp(0.08, 0.2, k), 32));
         topShade(ctx, 1, 700);
         readout(ctx, '10.23000000000', '10.22999999543', CX, 470, tw(t, c.tuned - 0.1, c.tuned + 0.8, E.lin),
           { t, label: 'TUNED BEFORE LAUNCH', hot: 'accent', size: 66 });
@@ -33,8 +33,8 @@
         nameTag(ctx, 'Every GPS satellite', '24+ satellites, six orbits', 70, 400, { p: prog(t, c.wrong2, c.wrong2 + 0.6) * (1 - tw(t, c.finds - 0.6, c.finds - 0.3)), color: 'data', size: 58 });
         if (!v) return;
         const [px, py] = v.project(f.d);
-        pointer(ctx, px, py, px + 160, py - 300, 'YOU', { p: prog(t, blue, blue + 0.6), color: 'subject', t });
-        stamp(ctx, 'PASSED', CX, 1250, { p: prog(t, c.test - 0.05, c.test + 0.5), color: 'good', size: 130 });
+        pin(ctx, px, py, 'YOU', -280, { p: prog(t, blue, blue + 0.6), color: 'subject', t });
+        stamp(ctx, 'PASSED', CX, 1080, { p: prog(t, c.test - 0.05, c.test + 0.5), color: 'good', size: 130 });
         text(ctx, "Einstein's Off Switch", CX, 470, { size: 60, weight: 900, family: F.disp, color: '#FFFFFF', align: 'center', alpha: tw(t, again + 0.4, again + 0.9) });
       } },
     ], { end });

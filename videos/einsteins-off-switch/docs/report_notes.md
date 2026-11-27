@@ -18,6 +18,14 @@
 | Found | Cause | Fix |
 |---|---|---|
 | Lint: one colour typed as a value in the ruler panel | rgb() in s02_phone.js | Uses a neutral dark panel |
+| Lint: overlays and pins sitting in the caption band (y 1225–1300) and under the like/share column | Positions set from geometry, before any frame was seen | Stamps, gauges and pins moved above the band; `pin()` now clamps labels to y 320–1170 and inside the side margins |
+| Lint: low-contrast dial labels (ORBIT) and small text | Thin text on a busy Earth | Labels stroked, sizes raised |
+| Contact sheet: phone close-up of the blue dot looked pixelated | Camera too close to the Earth texture | Close-up pulled back (distance 1.0 → 0.85 framing, wider FOV) |
+| Contact sheet: hook and payoff framed too tight on the satellite | heroCam distance | Camera now eases out (0.5 → 1.3 and 0.8 → 1.3) |
+| Contact sheet: Einstein name tag lingered over the +45/−7 split | No fade-out | Tag fades out before the numbers land |
+| Build scan: dark frames at 59.6–60.2 s | Proof shot opened looking into the unlit back of the NTS-2 drum | Camera reframed to the lit face; clock face lowered and moved clear of the drum |
+| Verdict numbers read 447 and 443 | `bigNumber` rounds values of 100 or more while counting | Shown exact (`count: false`): +446.5 and +442.5 |
+| Switch shot cropped the lever at ON | Camera too close | Camera eases back from [1.6, 0.3, 2.8] to [1.4, 0.6, 3.8] |
 
 ## Creative self-assessment
 
@@ -29,6 +37,6 @@ doubt beat, credited in media/credits.json.
 
 ## What was not verified
 
-Frames, motion and the mix: the render could not run in the session that wrote the scenes (no
-headless Chromium in that machine), so every check that needs pixels is still to do.
-Playback inside the platform apps; loudness on real devices.
+Playback inside the YouTube and Instagram apps, and loudness on real phones. Frames were checked
+on contact sheets and by the build's scan, not watched end to end at full speed by a person.
+There is still no real archive photo of NTS-2 (see above).

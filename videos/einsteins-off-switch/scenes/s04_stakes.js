@@ -28,11 +28,11 @@
       bigNumber(ctx, 11, CX, 450, { p: prog(t, c.eleven - 0.05, c.eleven + 0.9), suffix: ' km', label: 'light covers in 38 µs', size: 230, color: 'accent', t, hit: c.eleven + 0.5 }));
     const dk = tw(t, c.drifts - 0.2, c.sday + 0.4, E.io2);
     withAlpha(ctx, tw(t, c.ignore - 0.1, c.ignore + 0.3), () => {
-      ringGauge(ctx, 260, 460, 120, dk, { p: prog(t, c.ignore - 0.1, c.ignore + 0.6), color: 'subject', label: 'one day', show: (k) => `${Math.round(24 * k)} h`, size: 64 });
+      ringGauge(ctx, 260, 460, 120, dk, { p: prog(t, c.ignore - 0.1, c.ignore + 0.6), color: 'subject', label: 'one day', show: (k) => `${Math.round(24 * k)} h`, size: 82 });
       bigNumber(ctx, 11.6 * dk, 760, 430, { p: 1, count: false, decimals: 1, suffix: ' km', label: 'off', size: 140, color: dk >= 0.99 ? 'alert' : 'ink' });
     });
     const [hx, hy] = v.project(cityStart), dp = v3.lerp(cityStart, cityEnd, dk), [dx, dy] = v.project(dp);
-    pointer(ctx, hx, hy, hx + 230, hy + 140, 'where you are', { p: prog(t, c.ignore, c.ignore + 0.6), color: 'good', t, size: 38 });
-    pointer(ctx, dx, dy, dx - 260, dy - 120, 'where GPS puts you', { p: prog(t, c.drifts + 0.3, c.drifts + 0.9), color: 'alert', t, size: 38 });
+    pin(ctx, hx, hy, 'where you are', -260, { p: prog(t, c.ignore, c.ignore + 0.6), color: 'good', t, size: 38 });
+    pin(ctx, dx, dy, 'where GPS puts you', 220, { p: prog(t, c.drifts + 0.3, c.drifts + 0.9), color: 'alert', t, size: 38 });
   });
 });

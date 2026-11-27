@@ -13,7 +13,7 @@
   sfx(c.fix - 0.3, 'slide', 0.4);
   sfx(off, 'deny', 0.6);
   sfx(turn, 'tick', 0.6); sfx(turn + 0.6, 'tick', 0.5); sfx(turn + 1.2, 'tick', 0.45);
-  const face = (t) => { const ry = -0.35 + 0.04 * (t - c.doubt.t0); return v3.add(TW.SAT, rotY([0, 0, 0.34], ry)); };
+  const face = (t) => { const ry = -0.35 + 0.04 * (t - c.doubt.t0); return v3.add(v3.add(TW.SAT, [0, -0.07, 0]), rotY([0, 0, 0.35], ry)); };
   addScene('doubt', function (ctx, t) {
     shots(ctx, t, [
       { at: 0, draw: (ctx, t) => {
@@ -23,20 +23,20 @@
       } },
       { at: navy - 0.4, cut: 'flash', draw: (ctx, t) => {
         const k = tw(t, navy - 0.4, c.fix - 0.4, E.io2), f = face(t);
-        const v = view3d(ctx, world, t, { from: v3.lerp([0.3, 1.5, 2.6], [0.6, 1.25, 2.1], k), to: v3.add(TW.SAT, [0.1, 0, 0]), fov: 36 });
+        const v = view3d(ctx, world, t, { from: v3.lerp([0.4, 1.6, 4.0], [0.8, 1.35, 3.3], k), to: v3.add(TW.SAT, [0.1, 0, 0]), fov: 36 });
         nameTag(ctx, 'NTS-2', 'U.S. Navy test satellite, 1977', 70, 400, { p: prog(t, c.nts - 0.1, c.nts + 0.6), color: 'accent', size: 64 });
         if (!v) return;
         const [fx, fy] = v.project(f);
-        pointer(ctx, fx, fy, fx + 200, fy + 380, 'atomic clock', { p: prog(t, c.nts + 0.4, c.nts + 1.0), color: 'alert', t, size: 40 });
+        pin(ctx, fx, fy, 'atomic clock', 300, { p: prog(t, c.nts + 0.4, c.nts + 1.0), color: 'alert', t, size: 40 });
       } },
       { at: c.fix - 0.4, cut: 'flash', draw: (ctx, t) => {
         const k = tw(t, c.fix - 0.4, end, E.io2);
-        view3d(ctx, world, t, { from: v3.lerp([1.35, 0.25, 2.5], [1.0, 0.75, 5.0], k), to: v3.lerp([0.55, -0.42, 0.65], [0.1, 0.1, 0.2], k), fov: lerp(34, 40, k) });
+        view3d(ctx, world, t, { from: v3.lerp([1.8, 0.55, 3.3], [1.0, 0.75, 5.0], k), to: v3.lerp([0.55, -0.42, 0.65], [0.1, 0.1, 0.2], k), fov: lerp(34, 40, k) });
         topShade(ctx, 1, 640);
-        nameTag(ctx, 'RELATIVITY FIX', 'built in, but switched off', 70, 400, { p: prog(t, c.fix, c.fix + 0.6), color: 'alert', size: 60 });
-        stamp(ctx, 'OFF', 790, 1230, { p: prog(t, off - 0.05, off + 0.5) * (1 - tw(t, turn - 0.3, turn)), size: 130 });
+        withAlpha(ctx, 1 - tw(t, turn - 0.4, turn), () => nameTag(ctx, 'RELATIVITY FIX', 'built in, but switched off', 70, 400, { p: prog(t, c.fix, c.fix + 0.6), color: 'alert', size: 60 }));
+        stamp(ctx, 'OFF', 790, 1060, { p: prog(t, off - 0.05, off + 0.5) * (1 - tw(t, turn - 0.3, turn)), size: 130 });
         withAlpha(ctx, tw(t, turn - 0.2, turn + 0.3), () => {
-          text(ctx, 'ON only if Einstein is right', CX, 1300, { size: 52, weight: 800, family: F.disp, color: COL.good, align: 'center' });
+          text(ctx, 'ON only if Einstein is right', CX, 1090, { size: 52, weight: 800, family: F.disp, color: COL.good, align: 'center' });
         });
       } },
     ], { end });

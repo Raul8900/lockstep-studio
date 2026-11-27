@@ -158,17 +158,16 @@ a riser into the verdict, a lock and chime on the flip, a swell on the final pul
 
 ## Status (27 Nov 2026)
 
-Written and checked: topic, sources, script, narration (recorded, 85.9 s, pacing checked), caption
-phrases, style, and all seven scenes with their four code-built worlds (components.js). Every
-narration cue the scenes use exists in data/words.json and every file passes `node --check`.
+Rendered. Lint is clean (0 errors, 0 warnings), the build's dark-frame scan passes, and the mix
+peaks at −1.5 dB with speech 17.1 dB over the bed and 77 sound cues. The narration is not
+committed; `bin/lockstep voice einsteins-off-switch` rebuilds it before a build.
 
-Not yet rendered: the machine that wrote the scenes had no headless Chromium, which the renderer
-needs, and could not download one. On a machine with Playwright's Chromium:
+## Retrospective
 
-    bin/lockstep voice einsteins-off-switch      # the narration is not committed; this rebuilds it
-    bin/lockstep lint einsteins-off-switch
-    bin/lockstep sheet einsteins-off-switch 2s 8s 14s 25s 34s 45s 53s 67s 71s 80s
-    bin/lockstep build einsteins-off-switch
-
-Expect camera framings to need a pass after the first contact sheet: they were set from the
-geometry, not from looking at frames.
+- Framing from geometry alone was wrong about half the time. The first contact sheet found
+  overlays in the caption band, a pixelated close-up and a dark proof shot; budget a full sheet
+  pass before the first build.
+- `bigNumber` rounds anything of 100 or more while it counts, so exact measured values need
+  `count: false`. Worth a note in the engine docs.
+- Code-built worlds carried the video without any stock footage, but the doubt beat would land
+  harder with one real archive photo of NTS-2. That is the first thing to add in a second pass.

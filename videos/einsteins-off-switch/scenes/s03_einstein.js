@@ -32,37 +32,36 @@
   addScene('einstein', function (ctx, t) {
     shots(ctx, t, [
       { at: 0, draw: (ctx, t) => {
-        view3d(ctx, world, t, camPath(t, [[t0, { from: [0.4, 11.5, 16.5], to: [0, -1.2, 0], fov: 40 }],
+        view3d(ctx, world, t, camPath(t, [[t0, { from: [2.0, 9.5, 13.5], to: [1.2, -1.0, 1.0], fov: 40 }],
           [c.gravity - 0.4, { from: [3.6, 6.0, 12.5], to: [1.5, -0.6, 1.0], fov: 40 }]]));
-        nameTag(ctx, 'Albert Einstein', 'relativity, 1905 and 1915', 70, 360, { p: prog(t, ein, ein + 0.7) * (1 - tw(t, tick - 0.6, tick - 0.3)) });
+        withAlpha(ctx, 1 - tw(t, tick - 0.6, tick - 0.3), () => nameTag(ctx, 'Albert Einstein', 'relativity, 1905 and 1915', 70, 360, { p: prog(t, ein, ein + 0.7) }));
         dials(ctx, t);
       } },
       { at: c.gravity - 0.4, draw: (ctx, t) => {
-        const k = tw(t, c.gravity - 0.4, c.moving - 0.4, E.io2);
-        const v = view3d(ctx, world, t, sheetCam(t, lerp(4.2, 3.6, k), lerp(1.9, 1.35, k), lerp(-1.4, 0.6, k), 40, lerp(-0.4, 1.0, k)));
+        const k = tw(t, c.gravity - 0.4, c.fortyfive - 0.4, E.io2), k2 = tw(t, c.fortyfive - 0.4, c.fortyfive + 0.8, E.io2);
+        const v = view3d(ctx, world, t, sheetCam(t, lerp(lerp(4.2, 3.6, k), 5.6, k2), lerp(lerp(1.9, 1.35, k), 2.2, k2), lerp(lerp(-1.4, 0.4, k), 1.6, k2), 40, lerp(lerp(-0.4, 1.0, k), 1.6, k2)));
         dials(ctx, t);
         if (!v) return;
         const s = sheetSat(t), [sx, sy] = v.project(s), [ex, ey] = v.project([0, -1.4, 0]);
-        pointer(ctx, ex, ey, 760, 1180, 'strong gravity', { p: prog(t, c.gravity - 0.1, c.gravity + 0.5) * (1 - tw(t, c.fast, c.fast + 0.3)), color: 'data', t, size: 38 });
-        pointer(ctx, sx, sy, 140, 1020, 'weaker up here', { p: prog(t, c.gravity + 0.3, c.gravity + 0.9) * (1 - tw(t, c.fortyfive - 0.3, c.fortyfive)), color: 'good', t, size: 38 });
-        bigNumber(ctx, 45, CX, 1220, { p: prog(t, c.fortyfive - 0.05, c.fortyfive + 1.0), prefix: '+', suffix: ' µs', label: 'a day, from weaker gravity', size: 170, color: 'good', labelColor: 'good' });
+        pin(ctx, sx, sy, 'weaker up here', -240, { p: prog(t, c.gravity + 0.3, c.gravity + 0.9) * (1 - tw(t, c.fortyfive - 0.3, c.fortyfive)), color: 'good', t, size: 38 });
+        bigNumber(ctx, 45, 340, 1000, { p: prog(t, c.fortyfive - 0.05, c.fortyfive + 1.0), prefix: '+', suffix: ' µs', label: 'a day, from weaker gravity', size: 170, color: 'good', labelColor: 'good' });
       } },
       { at: c.moving - 0.4, cut: 'flash', draw: (ctx, t) => {
         const k = tw(t, c.moving - 0.4, c.net - 0.4, E.io2);
-        const v = view3d(ctx, world, t, sheetCam(t, lerp(3.2, 4.4, k), lerp(0.7, 1.4, k), lerp(-3.0, -1.2, k), 40, 0.9));
+        const v = view3d(ctx, world, t, sheetCam(t, lerp(4.0, 5.6, k), lerp(0.9, 2.0, k), lerp(-2.6, 1.2, k), 40, lerp(0.9, 1.5, k)));
         dials(ctx, t);
         if (!v) return;
         const [sx, sy] = v.project(sheetSat(t));
-        pointer(ctx, sx, sy, sx < CX ? sx + 260 : sx - 260, 1080, '3.9 km/s', { p: prog(t, four - 0.1, four + 0.5) * (1 - tw(t, slows, slows + 0.3)), color: 'accent', t });
+        pin(ctx, sx, sy, '3.9 km/s', 240, { p: prog(t, four - 0.1, four + 0.5) * (1 - tw(t, slows, slows + 0.3)), color: 'accent', t });
         withAlpha(ctx, 1 - tw(t, c.net - 0.7, c.net - 0.4), () =>
-          bigNumber(ctx, 7, CX, 1220, { p: prog(t, c.seven - 0.05, c.seven + 0.6), prefix: '−', suffix: ' µs', label: 'a day, from speed', size: 170, color: 'alert', labelColor: 'alert', t, hit: c.seven }));
+          bigNumber(ctx, 7, 340, 1000, { p: prog(t, c.seven - 0.05, c.seven + 0.6), prefix: '−', suffix: ' µs', label: 'a day, from speed', size: 170, color: 'alert', labelColor: 'alert', t, hit: c.seven }));
       } },
       { at: c.net - 0.4, draw: (ctx, t) => {
-        const k = tw(t, c.net - 0.4, end, E.io2), pt = plateTop(t, 20);
+        const k = tw(t, c.net - 0.4, end, E.io2), pt = plateTop(t, 31);
         const s = sheetSat(t), out = v3.norm([s[0], 0, s[2]]), tang = v3.norm(v3.cross([0, 1, 0], out));
         const dir = v3.add(v3.add(v3.mul(out, 1.0), v3.mul(tang, lerp(0.9, 0.5, k))), [0, lerp(0.25, 0.45, k), 0]);
         const [sx, sy] = shake(t, c.thirtyeight, 10, 0.5);
-        view3d(ctx, world, t, camAt(pt, dir, lerp(4.2, 6.2, k), 40, 0.004 * sx * Math.sin(sy)));
+        view3d(ctx, world, t, camAt(pt, dir, lerp(6.6, 8.0, k), 40, 0.004 * sx * Math.sin(sy)));
         topShade(ctx, tw(t, c.thirtyeight - 0.3, c.thirtyeight), 700);
         bigNumber(ctx, 38, CX, 450, { p: prog(t, c.thirtyeight - 0.05, c.thirtyeight + 0.8), prefix: '+', suffix: ' µs', label: 'fast, every single day',
           size: 230, color: 'accent', labelColor: 'ink', t, hit: c.thirtyeight });

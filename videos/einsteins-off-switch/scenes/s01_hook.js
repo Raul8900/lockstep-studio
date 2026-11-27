@@ -12,11 +12,11 @@
   sfx(c.purpose, 'stamp', 0.8);
   addScene('hook', function (ctx, t) {
     const k = tw(t, c.hook.t0 - 0.5, end, E.io3);
-    const cam = heroCam(t, lerp(0.3, 1.25, k), lerp(0.02, 0.42, k), lerp(0.02, 0.3, k), lerp(26, 34, k));
+    const cam = heroCam(t, lerp(0.5, 1.3, k), lerp(0.06, 0.42, k), lerp(0.04, 0.3, k), lerp(28, 34, k));
     view3d(ctx, world, t, cam);
     topShade(ctx, tw(t, clk - 0.4, clk));
     readout(ctx, '10.23000000000', '10.22999999543', CX, 470, tw(t, c.wrong - 0.05, c.wrong + 0.75, E.lin),
       { t, alpha: tw(t, clk - 0.3, clk + 0.1), label: 'SATELLITE CLOCK', hot: 'alert', size: 66 });
-    stamp(ctx, 'ON PURPOSE', CX, 1260, { p: prog(t, c.purpose - 0.05, c.purpose + 0.6), color: 'accent', size: 110 });
+    stamp(ctx, 'ON PURPOSE', CX, 1080, { p: prog(t, c.purpose - 0.05, c.purpose + 0.6), color: 'accent', size: 110 });
   });
 });

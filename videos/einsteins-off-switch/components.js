@@ -149,7 +149,7 @@ function dial(ctx, x, y, r, angle, o = {}) {
   line(ctx, x, y, x + Math.cos(q) * (r - 26), y + Math.sin(q) * (r - 26), col, 7);
   ctx.shadowBlur = 0;
   dot(ctx, x, y, 10, '#FFFFFF');
-  if (o.label) text(ctx, o.label, x, y + r + 58, { size: 40, weight: 800, family: F.disp, color: '#FFFFFF', align: 'center', ls: 2 });
+  if (o.label) text(ctx, o.label, x, y + r + 58, { size: 40, weight: 800, family: F.disp, color: '#FFFFFF', align: 'center', ls: 2, stroke: 'rgba(0,0,0,0.9)', strokeW: 10 });
   ctx.restore();
 }
 /* a frequency readout whose digits roll from one value to another, left to right */
@@ -271,7 +271,7 @@ function spaceWorld() {
       halo.material.opacity = 0.75;
       /* the 30 cm ghost: a second ring beside the dot while "puts you thirty centimetres off" */
       const gk = tw(t, c.puts - 0.2, c.puts + 0.4) * (1 - tw(t, c.einstein.t0 - 1.0, c.einstein.t0 - 0.5));
-      ghost.position.set(0.045 * gk, 0.0, 0.001); ghost.material.opacity = gk;
+      ghost.position.set(0.05 * gk, 0.0, 0.001); ghost.material.opacity = gk;
       ghost.scale.setScalar(gk > 0 ? 1 : 0.0001);
       /* satellites */
       const hp = heroAt(t); place(hero, hp, [0, 0, 0]); hero.rotateZ(0.6);
@@ -347,7 +347,7 @@ function sheetWorld() {
     geo.computeVertexNormals();
     const sheet = new T.Mesh(geo, new T.MeshStandardMaterial({ color: new T.Color('#0A1226'), emissive: new T.Color(COL.data), emissiveMap: gt, emissiveIntensity: 0.9, roughness: 0.6, transparent: true, opacity: 0.96 }));
     w.add(sheet);
-    w.fog('#03050B', 9, 24);
+    w.fog('#03050B', 14, 42);
     /* the Earth in the well */
     const map = await w.texture('earth-map');
     const earth = w.add(new T.Mesh(new T.SphereGeometry(0.85, 96, 64), w.mat('#ffffff', { map, roughness: 0.85 })));
@@ -406,7 +406,7 @@ function sheetWorld() {
 /* where the plate stack stands, for overlays */
 function plateBase(t) {
   const s = sheetSat(t), out = v3.norm([s[0], 0, s[2]]), tang = v3.norm(v3.cross([0, 1, 0], out));
-  return v3.add(v3.add([s[0] * 0.8, s[1] - 0.2, s[2] * 0.8], v3.mul(tang, 1.35)), [0, 0, 0]);
+  return v3.add(v3.add([s[0] * 0.8, s[1] - 0.2, s[2] * 0.8], v3.mul(tang, 0.95)), [0, 0, 0]);
 }
 function plateTop(t, n = 38) { const b = plateBase(t); return [b[0], b[1] + n * 0.055, b[2]]; }
 
@@ -498,7 +498,7 @@ function testWorld() {
     /* the Earth's limb below, at dawn */
     const map = await w.texture('earth-map');
     const earth = w.add(new T.Mesh(new T.SphereGeometry(9, 160, 120), w.mat('#ffffff', { map, roughness: 0.85 })));
-    earth.position.set(0, -10.4, -2); earth.rotation.set(0.5, 2.2, 0);
+    earth.position.set(0, -10.4, -2); earth.rotation.order = 'ZYX'; earth.rotation.set(0, -1.31, Math.PI / 2);
     w.add(new T.Mesh(new T.SphereGeometry(9.12, 128, 96), fresnelMat(T, '#5AA8FF', 2.8, 1.4))).position.copy(earth.position);
     w.add(new T.Mesh(new T.SphereGeometry(9.6, 96, 72), fresnelMat(T, '#3C7BFF', 5, 0.6, T.BackSide))).position.copy(earth.position);
     /* NTS-2 (generic): an octagonal drum, four solar paddles, antennas, a clock face */
@@ -513,8 +513,8 @@ function testWorld() {
       const s = new T.Mesh(new T.CylinderGeometry(0.01, 0.01, 0.12, 6), silver); s.rotation.z = Math.PI / 2; s.position.x = 0.38; arm.add(s);
     }
     for (let i = 0; i < 6; i++) { const r = new T.Mesh(new T.CylinderGeometry(0.008, 0.008, 0.36, 6), silver); const a = (TAU * i) / 6; r.position.set(Math.cos(a) * 0.12, -0.38, Math.sin(a) * 0.12); sat.add(r); }
-    const face = new T.Group(); face.position.set(0, 0.0, 0); sat.add(face);
-    const fr = 0.15, fz = 0.33;
+    const face = new T.Group(); face.position.set(0, -0.07, 0); sat.add(face);
+    const fr = 0.15, fz = 0.348;
     const faceDisc = new T.Mesh(new T.CircleGeometry(fr, 40), new T.MeshBasicMaterial({ color: 0x05070c })); faceDisc.position.z = fz; face.add(faceDisc);
     const tickMat = new T.MeshBasicMaterial({ color: new T.Color('#ffffff'), toneMapped: false });
     for (let i = 0; i < 60; i++) { const a = (TAU * i) / 60, big = i % 5 === 0, m = new T.Mesh(new T.BoxGeometry(0.005, big ? 0.03 : 0.014, 0.004), tickMat); m.position.set(Math.cos(a) * fr * 0.82, Math.sin(a) * fr * 0.82, fz + 0.004); m.rotation.z = a + Math.PI / 2; face.add(m); }
@@ -576,4 +576,13 @@ function topShade(ctx, a = 1, h = 640) {
   const g = ctx.createLinearGradient(0, 0, 0, h);
   g.addColorStop(0, `rgba(0,0,0,${0.6 * a})`); g.addColorStop(1, 'rgba(0,0,0,0)');
   ctx.fillStyle = g; ctx.fillRect(0, 0, W, h);
+}
+/* a pointer whose label stays inside the side margins and clear of the captions: the label goes
+   dy above (negative) or below the point, on whichever side has room */
+function pin(ctx, tx, ty, label, dy, o = {}) {
+  const size = o.size || 40, pw = measure(ctx, label, size, 800, F.disp) + size + 40, gap = o.gap || 70;
+  const ly = clamp(ty + dy, 320, 1170);
+  let lx = tx <= CX ? tx + gap : tx - gap;
+  if (tx <= CX) lx = Math.min(lx, SAFE.r - pw); else lx = Math.max(lx, SAFE.l + pw);
+  return pointer(ctx, tx, ty, lx, ly, label, o);
 }
