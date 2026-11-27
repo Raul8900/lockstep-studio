@@ -1,0 +1,168 @@
+{
+ "meta": {
+  "voice": "af_heart",
+  "speed": 1.15,
+  "sample_rate": 24000,
+  "duration": 57.833,
+  "speech_end": 57.1431,
+  "word_count": 165
+ },
+ "beats": [
+  {
+   "id": "hook",
+   "title": "Worn out on purpose",
+   "t0": 0.336,
+   "t1": 6.536,
+   "speed": 1.15
+  },
+  {
+   "id": "normal",
+   "title": "Three things stop you",
+   "t0": 7.1028,
+   "t1": 19.2607,
+   "speed": 1.15
+  },
+  {
+   "id": "test",
+   "title": "Take the help away",
+   "t0": 19.8185,
+   "t1": 31.9841,
+   "speed": 1.08
+  },
+  {
+   "id": "heat",
+   "title": "1,370 degrees",
+   "t0": 32.5781,
+   "t1": 44.5003,
+   "speed": 1.15
+  },
+  {
+   "id": "rule",
+   "title": "Five minutes",
+   "t0": 45.4442,
+   "t1": 51.2125,
+   "speed": 1.15
+  },
+  {
+   "id": "payoff",
+   "title": "Loop",
+   "t0": 52.0931,
+   "t1": 57.1431,
+   "speed": 1.15
+  }
+ ],
+ "takes": [
+  {
+   "take": 0,
+   "beat": "hook",
+   "text": "To certify a new jet, Boeing grinds its brakes down until they're worn out. Then it tries to stop the plane with them.",
+   "t0": 0.336,
+   "t1": 6.536,
+   "pause_after": 0.4
+  },
+  {
+   "take": 1,
+   "beat": "normal",
+   "text": "Normally, three things stop you.",
+   "t0": 7.1028,
+   "t1": 8.7777,
+   "pause_after": 0.1
+  },
+  {
+   "take": 2,
+   "beat": "normal",
+   "text": "Panels on the wings pop up and dump the lift, pressing the plane onto its wheels.",
+   "t0": 9.0343,
+   "t1": 13.1593,
+   "pause_after": 0.15
+  },
+  {
+   "take": 3,
+   "beat": "normal",
+   "text": "The engines roar into reverse.",
+   "t0": 13.4506,
+   "t1": 15.2756,
+   "pause_after": 0.15
+  },
+  {
+   "take": 4,
+   "beat": "normal",
+   "text": "But the real work is done by carbon brakes, turning your speed into heat.",
+   "t0": 15.5607,
+   "t1": 19.2607,
+   "pause_after": 0.4
+  },
+  {
+   "take": 5,
+   "beat": "test",
+   "text": "The test takes the help away.",
+   "t0": 19.8185,
+   "t1": 21.3435,
+   "pause_after": 0.15
+  },
+  {
+   "take": 6,
+   "beat": "test",
+   "text": "Maximum weight. Brakes worn to the last two percent. No reverse thrust.",
+   "t0": 21.6694,
+   "t1": 25.9944,
+   "pause_after": 0.45
+  },
+  {
+   "take": 7,
+   "beat": "test",
+   "text": "A seven thirty-seven hits three hundred and thirty-three kilometres an hour, then slams the brakes.",
+   "t0": 26.6091,
+   "t1": 31.9841,
+   "pause_after": 0.45
+  },
+  {
+   "take": 8,
+   "beat": "heat",
+   "text": "That's three hundred and eighty-five megajoules, poured mostly into four brakes.",
+   "t0": 32.5781,
+   "t1": 36.6281,
+   "pause_after": 0.2
+  },
+  {
+   "take": 9,
+   "beat": "heat",
+   "text": "They pass thirteen hundred and seventy degrees.",
+   "t0": 36.9652,
+   "t1": 39.3152,
+   "pause_after": 0.85
+  },
+  {
+   "take": 10,
+   "beat": "heat",
+   "text": "Plugs in the wheels melt on purpose, letting the air out before the tyres burst.",
+   "t0": 40.3253,
+   "t1": 44.5003,
+   "pause_after": 0.8
+  },
+  {
+   "take": 11,
+   "beat": "rule",
+   "text": "Then nobody touches it for five minutes, the time fire crews take to arrive.",
+   "t0": 45.4442,
+   "t1": 49.5942,
+   "pause_after": 0.3
+  },
+  {
+   "take": 12,
+   "beat": "rule",
+   "text": "All four brakes held.",
+   "t0": 50.0625,
+   "t1": 51.2125,
+   "pause_after": 0.7
+  },
+  {
+   "take": 13,
+   "beat": "payoff",
+   "text": "So the brakes under your seat have survived worse than any landing. Because to certify a new jet,",
+   "t0": 52.0931,
+   "t1": 57.1431,
+   "pause_after": 0.0
+  }
+ ]
+}

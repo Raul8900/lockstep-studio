@@ -1,0 +1,9 @@
+{
+  "name": "runway-night",
+  "about": "A sodium-lit night airfield: cool blue-grey shadows, warm runway light, and heat as the only strongly saturated colour; white captions with the key word in amber.",
+  "palette": { "accent": "#FFB23F", "alert": "#FF4A3D", "good": "#7CE0A0", "subject": "#8CC8FF", "data": "#C9B8FF" },
+  "grade": { "contrast": 1.08, "saturate": 0.95, "brightness": 1.0 },
+  "captions": { "key": "#FFB23F", "size": 72 },
+  "post": { "bloom": 0.3, "vignette": 0.6 },
+  "transition": { "default": "cut", "duration": 0.3 }
+}
