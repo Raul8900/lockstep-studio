@@ -1,0 +1,223 @@
+{
+ "meta": {
+  "voice": "af_heart",
+  "speed": 1.15,
+  "sample_rate": 24000,
+  "duration": 85.863,
+  "speech_end": 83.2729,
+  "word_count": 225
+ },
+ "beats": [
+  {
+   "id": "hook",
+   "title": "Set wrong on purpose",
+   "t0": 0.3113,
+   "t1": 4.4613,
+   "speed": 1.15
+  },
+  {
+   "id": "phone",
+   "title": "Timing is position",
+   "t0": 5.0463,
+   "t1": 17.1033,
+   "speed": 1.15
+  },
+  {
+   "id": "einstein",
+   "title": "Time runs fast up there",
+   "t0": 17.5891,
+   "t1": 37.2535,
+   "speed": 1.05
+  },
+  {
+   "id": "stakes",
+   "title": "Eleven kilometres",
+   "t0": 38.8027,
+   "t1": 46.8099,
+   "speed": 1.15
+  },
+  {
+   "id": "doubt",
+   "title": "The off switch",
+   "t0": 47.5598,
+   "t1": 58.8929,
+   "speed": 1.15
+  },
+  {
+   "id": "proof",
+   "title": "The verdict",
+   "t0": 60.0617,
+   "t1": 70.944,
+   "speed": 1.08
+  },
+  {
+   "id": "payoff",
+   "title": "Wrong on the ground, right in the sky",
+   "t0": 72.3919,
+   "t1": 83.2729,
+   "speed": 1.15
+  }
+ ],
+ "takes": [
+  {
+   "take": 0,
+   "beat": "hook",
+   "text": "Every GPS satellite is launched with its clock set wrong. On purpose.",
+   "t0": 0.3113,
+   "t1": 4.4613,
+   "pause_after": 0.45
+  },
+  {
+   "take": 1,
+   "beat": "phone",
+   "text": "Your phone finds you by timing radio signals from satellites twenty thousand kilometres up.",
+   "t0": 5.0463,
+   "t1": 10.0213,
+   "pause_after": 0.2
+  },
+  {
+   "take": 2,
+   "beat": "phone",
+   "text": "Light covers thirty centimetres in a billionth of a second.",
+   "t0": 10.3967,
+   "t1": 13.4967,
+   "pause_after": 0.15
+  },
+  {
+   "take": 3,
+   "beat": "phone",
+   "text": "So a clock that's a billionth off puts you thirty centimetres off.",
+   "t0": 13.8283,
+   "t1": 17.1033,
+   "pause_after": 0.35
+  },
+  {
+   "take": 4,
+   "beat": "einstein",
+   "text": "But Einstein showed that time doesn't tick at the same rate everywhere.",
+   "t0": 17.5891,
+   "t1": 21.1141,
+   "pause_after": 0.3
+  },
+  {
+   "take": 5,
+   "beat": "einstein",
+   "text": "Up there, gravity is weaker, so the clock runs fast, by about forty-five microseconds a day.",
+   "t0": 21.5705,
+   "t1": 27.1955,
+   "pause_after": 0.35
+  },
+  {
+   "take": 6,
+   "beat": "einstein",
+   "text": "It's also moving at almost four kilometres a second, which slows it down by about seven.",
+   "t0": 27.6805,
+   "t1": 32.7555,
+   "pause_after": 0.35
+  },
+  {
+   "take": 7,
+   "beat": "einstein",
+   "text": "Net result: thirty-eight microseconds fast. Every single day.",
+   "t0": 33.3035,
+   "t1": 37.2535,
+   "pause_after": 1.4
+  },
+  {
+   "take": 8,
+   "beat": "stakes",
+   "text": "That sounds like nothing. But at the speed of light, it's more than eleven kilometres.",
+   "t0": 38.8027,
+   "t1": 43.1527,
+   "pause_after": 0.25
+  },
+  {
+   "take": 9,
+   "beat": "stakes",
+   "text": "Ignore it, and your blue dot drifts that far off in a single day.",
+   "t0": 43.5599,
+   "t1": 46.8099,
+   "pause_after": 0.6
+  },
+  {
+   "take": 10,
+   "beat": "doubt",
+   "text": "In 1977, not everyone believed it.",
+   "t0": 47.5598,
+   "t1": 50.5097,
+   "pause_after": 0.25
+  },
+  {
+   "take": 11,
+   "beat": "doubt",
+   "text": "So the Navy's test satellite, NTS-2, flew with the fix built in, but switched off.",
+   "t0": 50.9312,
+   "t1": 55.5062,
+   "pause_after": 0.3
+  },
+  {
+   "take": 12,
+   "beat": "doubt",
+   "text": "They'd only turn it on if Einstein turned out to be right.",
+   "t0": 55.9429,
+   "t1": 58.8929,
+   "pause_after": 1.0
+  },
+  {
+   "take": 13,
+   "beat": "proof",
+   "text": "For about twenty days, the clock ran uncorrected.",
+   "t0": 60.0617,
+   "t1": 62.8117,
+   "pause_after": 0.3
+  },
+  {
+   "take": 14,
+   "beat": "proof",
+   "text": "Einstein's math predicted how fast it would run.",
+   "t0": 63.2739,
+   "t1": 65.8239,
+   "pause_after": 0.25
+  },
+  {
+   "take": 15,
+   "beat": "proof",
+   "text": "The clock matched him to within one percent.",
+   "t0": 66.2319,
+   "t1": 68.5319,
+   "pause_after": 1.1
+  },
+  {
+   "take": 16,
+   "beat": "proof",
+   "text": "They flipped the switch.",
+   "t0": 69.819,
+   "t1": 70.944,
+   "pause_after": 1.3
+  },
+  {
+   "take": 17,
+   "beat": "payoff",
+   "text": "Ever since, every GPS clock is tuned a hair slow before launch.",
+   "t0": 72.3919,
+   "t1": 76.1419,
+   "pause_after": 0.25
+  },
+  {
+   "take": 18,
+   "beat": "payoff",
+   "text": "Wrong on the ground, so it's right in the sky.",
+   "t0": 76.5629,
+   "t1": 78.8129,
+   "pause_after": 0.4
+  },
+  {
+   "take": 19,
+   "beat": "payoff",
+   "text": "And every time that blue dot finds you, Einstein passes the test again.",
+   "t0": 79.3479,
+   "t1": 83.2729,
+   "pause_after": 0.3
+  }
+ ]
+}

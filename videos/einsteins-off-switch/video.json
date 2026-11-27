@@ -1,0 +1,49 @@
+{
+  "title": "Einstein's Off Switch",
+  "output": "einsteins_off_switch_vertical",
+  "max_seconds": 100,
+  "music": {
+    "bpm": 96,
+    "transpose": -2,
+    "kit": "deep"
+  },
+  "chapters": [
+    {
+      "id": "hook",
+      "mood": "drone"
+    },
+    {
+      "id": "phone",
+      "mood": "light"
+    },
+    {
+      "id": "einstein",
+      "mood": "mechanical"
+    },
+    {
+      "id": "stakes",
+      "mood": "dark"
+    },
+    {
+      "id": "doubt",
+      "mood": "tense"
+    },
+    {
+      "id": "proof",
+      "mood": "build"
+    },
+    {
+      "id": "payoff",
+      "mood": "finale"
+    }
+  ],
+  "lint": {
+    "ignore": [
+      {
+        "rule": "hex-colour",
+        "file": "components.js",
+        "why": "real materials: gold foil, solar cells, the Earth's atmosphere, night-city lights"
+      }
+    ]
+  }
+}

@@ -1,0 +1,1802 @@
+[
+{
+"w": "Every",
+"t0": 0.3113,
+"t1": 0.5613,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "GPS",
+"t0": 0.6363,
+"t1": 1.0613,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "satellite",
+"t0": 1.1113,
+"t1": 1.5113,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "is",
+"t0": 1.5613,
+"t1": 1.6613,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "launched",
+"t0": 1.7363,
+"t1": 2.0613,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "with",
+"t0": 2.0863,
+"t1": 2.1863,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "its",
+"t0": 2.2113,
+"t1": 2.3113,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "clock",
+"t0": 2.3613,
+"t1": 2.6113,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "set",
+"t0": 2.6613,
+"t1": 2.7863,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "wrong.",
+"t0": 2.8363,
+"t1": 3.3363,
+"beat": "hook",
+"take": 0,
+"cls": "k"
+},
+{
+"w": "On",
+"t0": 3.6363,
+"t1": 3.7613,
+"beat": "hook",
+"take": 0,
+"cls": null
+},
+{
+"w": "purpose.",
+"t0": 3.8113,
+"t1": 4.4613,
+"beat": "hook",
+"take": 0,
+"cls": "k"
+},
+{
+"w": "Your",
+"t0": 5.0463,
+"t1": 5.1713,
+"beat": "phone",
+"take": 1,
+"cls": null
+},
+{
+"w": "phone",
+"t0": 5.2213,
+"t1": 5.4963,
+"beat": "phone",
+"take": 1,
+"cls": null
+},
+{
+"w": "finds",
+"t0": 5.5463,
+"t1": 5.7963,
+"beat": "phone",
+"take": 1,
+"cls": null
+},
+{
+"w": "you",
+"t0": 5.8213,
+"t1": 5.9463,
+"beat": "phone",
+"take": 1,
+"cls": null
+},
+{
+"w": "by",
+"t0": 5.9963,
+"t1": 6.1213,
+"beat": "phone",
+"take": 1,
+"cls": null
+},
+{
+"w": "timing",
+"t0": 6.1713,
+"t1": 6.4963,
+"beat": "phone",
+"take": 1,
+"cls": "k"
+},
+{
+"w": "radio",
+"t0": 6.5463,
+"t1": 6.8963,
+"beat": "phone",
+"take": 1,
+"cls": null
+},
+{
+"w": "signals",
+"t0": 6.9463,
+"t1": 7.5213,
+"beat": "phone",
+"take": 1,
+"cls": null
+},
+{
+"w": "from",
+"t0": 7.5713,
+"t1": 7.6963,
+"beat": "phone",
+"take": 1,
+"cls": null
+},
+{
+"w": "satellites",
+"t0": 7.7713,
+"t1": 8.2963,
+"beat": "phone",
+"take": 1,
+"cls": null
+},
+{
+"w": "twenty",
+"t0": 8.3713,
+"t1": 8.6213,
+"beat": "phone",
+"take": 1,
+"cls": "k"
+},
+{
+"w": "thousand",
+"t0": 8.6713,
+"t1": 9.0213,
+"beat": "phone",
+"take": 1,
+"cls": null
+},
+{
+"w": "kilometres",
+"t0": 9.0713,
+"t1": 9.5463,
+"beat": "phone",
+"take": 1,
+"cls": null
+},
+{
+"w": "up.",
+"t0": 9.5963,
+"t1": 10.0213,
+"beat": "phone",
+"take": 1,
+"cls": null
+},
+{
+"w": "Light",
+"t0": 10.3967,
+"t1": 10.6467,
+"beat": "phone",
+"take": 2,
+"cls": null
+},
+{
+"w": "covers",
+"t0": 10.6967,
+"t1": 11.0217,
+"beat": "phone",
+"take": 2,
+"cls": null
+},
+{
+"w": "thirty",
+"t0": 11.0967,
+"t1": 11.3717,
+"beat": "phone",
+"take": 2,
+"cls": "k"
+},
+{
+"w": "centimetres",
+"t0": 11.4217,
+"t1": 12.1467,
+"beat": "phone",
+"take": 2,
+"cls": null
+},
+{
+"w": "in",
+"t0": 12.2217,
+"t1": 12.2717,
+"beat": "phone",
+"take": 2,
+"cls": null
+},
+{
+"w": "a",
+"t0": 12.2967,
+"t1": 12.3217,
+"beat": "phone",
+"take": 2,
+"cls": null
+},
+{
+"w": "billionth",
+"t0": 12.3717,
+"t1": 12.6717,
+"beat": "phone",
+"take": 2,
+"cls": "k"
+},
+{
+"w": "of",
+"t0": 12.6967,
+"t1": 12.7467,
+"beat": "phone",
+"take": 2,
+"cls": null
+},
+{
+"w": "a",
+"t0": 12.7717,
+"t1": 12.7967,
+"beat": "phone",
+"take": 2,
+"cls": null
+},
+{
+"w": "second.",
+"t0": 12.8467,
+"t1": 13.4967,
+"beat": "phone",
+"take": 2,
+"cls": null
+},
+{
+"w": "So",
+"t0": 13.8283,
+"t1": 13.9033,
+"beat": "phone",
+"take": 3,
+"cls": null
+},
+{
+"w": "a",
+"t0": 13.9283,
+"t1": 13.9783,
+"beat": "phone",
+"take": 3,
+"cls": null
+},
+{
+"w": "clock",
+"t0": 14.0283,
+"t1": 14.3033,
+"beat": "phone",
+"take": 3,
+"cls": null
+},
+{
+"w": "that's",
+"t0": 14.3533,
+"t1": 14.5033,
+"beat": "phone",
+"take": 3,
+"cls": null
+},
+{
+"w": "a",
+"t0": 14.5283,
+"t1": 14.5533,
+"beat": "phone",
+"take": 3,
+"cls": null
+},
+{
+"w": "billionth",
+"t0": 14.6283,
+"t1": 15.0033,
+"beat": "phone",
+"take": 3,
+"cls": "k"
+},
+{
+"w": "off",
+"t0": 15.0533,
+"t1": 15.4033,
+"beat": "phone",
+"take": 3,
+"cls": null
+},
+{
+"w": "puts",
+"t0": 15.4783,
+"t1": 15.6033,
+"beat": "phone",
+"take": 3,
+"cls": null
+},
+{
+"w": "you",
+"t0": 15.6283,
+"t1": 15.7033,
+"beat": "phone",
+"take": 3,
+"cls": null
+},
+{
+"w": "thirty",
+"t0": 15.7783,
+"t1": 16.0533,
+"beat": "phone",
+"take": 3,
+"cls": "k"
+},
+{
+"w": "centimetres",
+"t0": 16.1033,
+"t1": 16.6033,
+"beat": "phone",
+"take": 3,
+"cls": null
+},
+{
+"w": "off.",
+"t0": 16.6533,
+"t1": 17.1033,
+"beat": "phone",
+"take": 3,
+"cls": null
+},
+{
+"w": "But",
+"t0": 17.5891,
+"t1": 17.6891,
+"beat": "einstein",
+"take": 4,
+"cls": null
+},
+{
+"w": "Einstein",
+"t0": 17.7391,
+"t1": 18.1891,
+"beat": "einstein",
+"take": 4,
+"cls": "k"
+},
+{
+"w": "showed",
+"t0": 18.2641,
+"t1": 18.4891,
+"beat": "einstein",
+"take": 4,
+"cls": null
+},
+{
+"w": "that",
+"t0": 18.5391,
+"t1": 18.6891,
+"beat": "einstein",
+"take": 4,
+"cls": null
+},
+{
+"w": "time",
+"t0": 18.7391,
+"t1": 19.0641,
+"beat": "einstein",
+"take": 4,
+"cls": null
+},
+{
+"w": "doesn't",
+"t0": 19.1141,
+"t1": 19.3391,
+"beat": "einstein",
+"take": 4,
+"cls": null
+},
+{
+"w": "tick",
+"t0": 19.3891,
+"t1": 19.5391,
+"beat": "einstein",
+"take": 4,
+"cls": null
+},
+{
+"w": "at",
+"t0": 19.5641,
+"t1": 19.6141,
+"beat": "einstein",
+"take": 4,
+"cls": null
+},
+{
+"w": "the",
+"t0": 19.6391,
+"t1": 19.7141,
+"beat": "einstein",
+"take": 4,
+"cls": null
+},
+{
+"w": "same",
+"t0": 19.7891,
+"t1": 20.0391,
+"beat": "einstein",
+"take": 4,
+"cls": null
+},
+{
+"w": "rate",
+"t0": 20.0891,
+"t1": 20.3141,
+"beat": "einstein",
+"take": 4,
+"cls": null
+},
+{
+"w": "everywhere.",
+"t0": 20.3641,
+"t1": 21.1141,
+"beat": "einstein",
+"take": 4,
+"cls": null
+},
+{
+"w": "Up",
+"t0": 21.5705,
+"t1": 21.7205,
+"beat": "einstein",
+"take": 5,
+"cls": null
+},
+{
+"w": "there,",
+"t0": 21.7705,
+"t1": 22.0205,
+"beat": "einstein",
+"take": 5,
+"cls": null
+},
+{
+"w": "gravity",
+"t0": 22.0955,
+"t1": 22.4705,
+"beat": "einstein",
+"take": 5,
+"cls": null
+},
+{
+"w": "is",
+"t0": 22.5205,
+"t1": 22.6205,
+"beat": "einstein",
+"take": 5,
+"cls": null
+},
+{
+"w": "weaker,",
+"t0": 22.6705,
+"t1": 23.1955,
+"beat": "einstein",
+"take": 5,
+"cls": null
+},
+{
+"w": "so",
+"t0": 23.3205,
+"t1": 23.4205,
+"beat": "einstein",
+"take": 5,
+"cls": null
+},
+{
+"w": "the",
+"t0": 23.4455,
+"t1": 23.4955,
+"beat": "einstein",
+"take": 5,
+"cls": null
+},
+{
+"w": "clock",
+"t0": 23.5455,
+"t1": 23.7955,
+"beat": "einstein",
+"take": 5,
+"cls": null
+},
+{
+"w": "runs",
+"t0": 23.8455,
+"t1": 24.0705,
+"beat": "einstein",
+"take": 5,
+"cls": null
+},
+{
+"w": "fast,",
+"t0": 24.1205,
+"t1": 24.7205,
+"beat": "einstein",
+"take": 5,
+"cls": "k"
+},
+{
+"w": "by",
+"t0": 24.8455,
+"t1": 24.9705,
+"beat": "einstein",
+"take": 5,
+"cls": null
+},
+{
+"w": "about",
+"t0": 24.9955,
+"t1": 25.2205,
+"beat": "einstein",
+"take": 5,
+"cls": null
+},
+{
+"w": "forty-five",
+"t0": 25.2955,
+"t1": 25.8955,
+"beat": "einstein",
+"take": 5,
+"cls": "k"
+},
+{
+"w": "microseconds",
+"t0": 25.9455,
+"t1": 26.5705,
+"beat": "einstein",
+"take": 5,
+"cls": null
+},
+{
+"w": "a",
+"t0": 26.5955,
+"t1": 26.6205,
+"beat": "einstein",
+"take": 5,
+"cls": null
+},
+{
+"w": "day.",
+"t0": 26.6705,
+"t1": 27.1955,
+"beat": "einstein",
+"take": 5,
+"cls": null
+},
+{
+"w": "It's",
+"t0": 27.6805,
+"t1": 27.8055,
+"beat": "einstein",
+"take": 6,
+"cls": null
+},
+{
+"w": "also",
+"t0": 27.8305,
+"t1": 28.1555,
+"beat": "einstein",
+"take": 6,
+"cls": null
+},
+{
+"w": "moving",
+"t0": 28.2055,
+"t1": 28.4555,
+"beat": "einstein",
+"take": 6,
+"cls": null
+},
+{
+"w": "at",
+"t0": 28.5055,
+"t1": 28.5555,
+"beat": "einstein",
+"take": 6,
+"cls": null
+},
+{
+"w": "almost",
+"t0": 28.6055,
+"t1": 29.0055,
+"beat": "einstein",
+"take": 6,
+"cls": null
+},
+{
+"w": "four",
+"t0": 29.0805,
+"t1": 29.2555,
+"beat": "einstein",
+"take": 6,
+"cls": null
+},
+{
+"w": "kilometres",
+"t0": 29.3055,
+"t1": 29.8055,
+"beat": "einstein",
+"take": 6,
+"cls": null
+},
+{
+"w": "a",
+"t0": 29.8305,
+"t1": 29.8555,
+"beat": "einstein",
+"take": 6,
+"cls": null
+},
+{
+"w": "second,",
+"t0": 29.9055,
+"t1": 30.5055,
+"beat": "einstein",
+"take": 6,
+"cls": null
+},
+{
+"w": "which",
+"t0": 30.6305,
+"t1": 30.7805,
+"beat": "einstein",
+"take": 6,
+"cls": null
+},
+{
+"w": "slows",
+"t0": 30.8555,
+"t1": 31.1305,
+"beat": "einstein",
+"take": 6,
+"cls": null
+},
+{
+"w": "it",
+"t0": 31.1555,
+"t1": 31.2055,
+"beat": "einstein",
+"take": 6,
+"cls": null
+},
+{
+"w": "down",
+"t0": 31.2555,
+"t1": 31.5555,
+"beat": "einstein",
+"take": 6,
+"cls": null
+},
+{
+"w": "by",
+"t0": 31.6055,
+"t1": 31.7305,
+"beat": "einstein",
+"take": 6,
+"cls": null
+},
+{
+"w": "about",
+"t0": 31.7805,
+"t1": 32.0555,
+"beat": "einstein",
+"take": 6,
+"cls": null
+},
+{
+"w": "seven.",
+"t0": 32.1305,
+"t1": 32.7555,
+"beat": "einstein",
+"take": 6,
+"cls": "k"
+},
+{
+"w": "Net",
+"t0": 33.3035,
+"t1": 33.4535,
+"beat": "einstein",
+"take": 7,
+"cls": null
+},
+{
+"w": "result:",
+"t0": 33.4785,
+"t1": 34.0285,
+"beat": "einstein",
+"take": 7,
+"cls": null
+},
+{
+"w": "thirty-eight",
+"t0": 34.1785,
+"t1": 34.5535,
+"beat": "einstein",
+"take": 7,
+"cls": "k"
+},
+{
+"w": "microseconds",
+"t0": 34.6035,
+"t1": 35.2535,
+"beat": "einstein",
+"take": 7,
+"cls": null
+},
+{
+"w": "fast.",
+"t0": 35.3035,
+"t1": 35.8285,
+"beat": "einstein",
+"take": 7,
+"cls": "k"
+},
+{
+"w": "Every",
+"t0": 36.0785,
+"t1": 36.3285,
+"beat": "einstein",
+"take": 7,
+"cls": null
+},
+{
+"w": "single",
+"t0": 36.4035,
+"t1": 36.6785,
+"beat": "einstein",
+"take": 7,
+"cls": null
+},
+{
+"w": "day.",
+"t0": 36.7285,
+"t1": 37.2535,
+"beat": "einstein",
+"take": 7,
+"cls": null
+},
+{
+"w": "That",
+"t0": 38.8027,
+"t1": 39.0027,
+"beat": "stakes",
+"take": 8,
+"cls": null
+},
+{
+"w": "sounds",
+"t0": 39.0527,
+"t1": 39.3027,
+"beat": "stakes",
+"take": 8,
+"cls": null
+},
+{
+"w": "like",
+"t0": 39.3277,
+"t1": 39.5027,
+"beat": "stakes",
+"take": 8,
+"cls": null
+},
+{
+"w": "nothing.",
+"t0": 39.5527,
+"t1": 40.1777,
+"beat": "stakes",
+"take": 8,
+"cls": null
+},
+{
+"w": "But",
+"t0": 40.3027,
+"t1": 40.4027,
+"beat": "stakes",
+"take": 8,
+"cls": null
+},
+{
+"w": "at",
+"t0": 40.4277,
+"t1": 40.4777,
+"beat": "stakes",
+"take": 8,
+"cls": null
+},
+{
+"w": "the",
+"t0": 40.5027,
+"t1": 40.5527,
+"beat": "stakes",
+"take": 8,
+"cls": null
+},
+{
+"w": "speed",
+"t0": 40.6027,
+"t1": 40.8027,
+"beat": "stakes",
+"take": 8,
+"cls": null
+},
+{
+"w": "of",
+"t0": 40.8277,
+"t1": 40.8777,
+"beat": "stakes",
+"take": 8,
+"cls": null
+},
+{
+"w": "light,",
+"t0": 40.9277,
+"t1": 41.2777,
+"beat": "stakes",
+"take": 8,
+"cls": null
+},
+{
+"w": "it's",
+"t0": 41.3777,
+"t1": 41.5277,
+"beat": "stakes",
+"take": 8,
+"cls": null
+},
+{
+"w": "more",
+"t0": 41.5777,
+"t1": 41.7527,
+"beat": "stakes",
+"take": 8,
+"cls": null
+},
+{
+"w": "than",
+"t0": 41.7777,
+"t1": 41.8527,
+"beat": "stakes",
+"take": 8,
+"cls": null
+},
+{
+"w": "eleven",
+"t0": 41.9027,
+"t1": 42.2777,
+"beat": "stakes",
+"take": 8,
+"cls": "k"
+},
+{
+"w": "kilometres.",
+"t0": 42.3277,
+"t1": 43.1527,
+"beat": "stakes",
+"take": 8,
+"cls": null
+},
+{
+"w": "Ignore",
+"t0": 43.5599,
+"t1": 43.8849,
+"beat": "stakes",
+"take": 9,
+"cls": null
+},
+{
+"w": "it,",
+"t0": 43.9349,
+"t1": 44.1599,
+"beat": "stakes",
+"take": 9,
+"cls": null
+},
+{
+"w": "and",
+"t0": 44.2599,
+"t1": 44.3349,
+"beat": "stakes",
+"take": 9,
+"cls": null
+},
+{
+"w": "your",
+"t0": 44.3599,
+"t1": 44.4349,
+"beat": "stakes",
+"take": 9,
+"cls": null
+},
+{
+"w": "blue",
+"t0": 44.4849,
+"t1": 44.6599,
+"beat": "stakes",
+"take": 9,
+"cls": null
+},
+{
+"w": "dot",
+"t0": 44.7099,
+"t1": 44.9349,
+"beat": "stakes",
+"take": 9,
+"cls": null
+},
+{
+"w": "drifts",
+"t0": 44.9849,
+"t1": 45.2599,
+"beat": "stakes",
+"take": 9,
+"cls": "k"
+},
+{
+"w": "that",
+"t0": 45.2849,
+"t1": 45.4099,
+"beat": "stakes",
+"take": 9,
+"cls": null
+},
+{
+"w": "far",
+"t0": 45.4599,
+"t1": 45.6099,
+"beat": "stakes",
+"take": 9,
+"cls": null
+},
+{
+"w": "off",
+"t0": 45.6599,
+"t1": 45.8349,
+"beat": "stakes",
+"take": 9,
+"cls": null
+},
+{
+"w": "in",
+"t0": 45.8599,
+"t1": 45.9099,
+"beat": "stakes",
+"take": 9,
+"cls": null
+},
+{
+"w": "a",
+"t0": 45.9349,
+"t1": 45.9599,
+"beat": "stakes",
+"take": 9,
+"cls": null
+},
+{
+"w": "single",
+"t0": 46.0099,
+"t1": 46.2599,
+"beat": "stakes",
+"take": 9,
+"cls": null
+},
+{
+"w": "day.",
+"t0": 46.3099,
+"t1": 46.8099,
+"beat": "stakes",
+"take": 9,
+"cls": null
+},
+{
+"w": "In",
+"t0": 47.5598,
+"t1": 47.6347,
+"beat": "doubt",
+"take": 10,
+"cls": null
+},
+{
+"w": "1977,",
+"t0": 47.6848,
+"t1": 48.8847,
+"beat": "doubt",
+"take": 10,
+"cls": "k"
+},
+{
+"w": "not",
+"t0": 49.0097,
+"t1": 49.2097,
+"beat": "doubt",
+"take": 10,
+"cls": null
+},
+{
+"w": "everyone",
+"t0": 49.2597,
+"t1": 49.6598,
+"beat": "doubt",
+"take": 10,
+"cls": null
+},
+{
+"w": "believed",
+"t0": 49.7097,
+"t1": 50.1097,
+"beat": "doubt",
+"take": 10,
+"cls": null
+},
+{
+"w": "it.",
+"t0": 50.1598,
+"t1": 50.5097,
+"beat": "doubt",
+"take": 10,
+"cls": null
+},
+{
+"w": "So",
+"t0": 50.9312,
+"t1": 51.0062,
+"beat": "doubt",
+"take": 11,
+"cls": null
+},
+{
+"w": "the",
+"t0": 51.0312,
+"t1": 51.0812,
+"beat": "doubt",
+"take": 11,
+"cls": null
+},
+{
+"w": "Navy's",
+"t0": 51.1312,
+"t1": 51.4312,
+"beat": "doubt",
+"take": 11,
+"cls": null
+},
+{
+"w": "test",
+"t0": 51.4812,
+"t1": 51.7062,
+"beat": "doubt",
+"take": 11,
+"cls": "k"
+},
+{
+"w": "satellite,",
+"t0": 51.7562,
+"t1": 52.2562,
+"beat": "doubt",
+"take": 11,
+"cls": null
+},
+{
+"w": "NTS-2,",
+"t0": 52.3562,
+"t1": 53.2062,
+"beat": "doubt",
+"take": 11,
+"cls": "k"
+},
+{
+"w": "flew",
+"t0": 53.3562,
+"t1": 53.5312,
+"beat": "doubt",
+"take": 11,
+"cls": null
+},
+{
+"w": "with",
+"t0": 53.5562,
+"t1": 53.6312,
+"beat": "doubt",
+"take": 11,
+"cls": null
+},
+{
+"w": "the",
+"t0": 53.6562,
+"t1": 53.7062,
+"beat": "doubt",
+"take": 11,
+"cls": null
+},
+{
+"w": "fix",
+"t0": 53.7812,
+"t1": 54.0062,
+"beat": "doubt",
+"take": 11,
+"cls": null
+},
+{
+"w": "built",
+"t0": 54.0562,
+"t1": 54.2812,
+"beat": "doubt",
+"take": 11,
+"cls": null
+},
+{
+"w": "in,",
+"t0": 54.3062,
+"t1": 54.4812,
+"beat": "doubt",
+"take": 11,
+"cls": null
+},
+{
+"w": "but",
+"t0": 54.6312,
+"t1": 54.7312,
+"beat": "doubt",
+"take": 11,
+"cls": null
+},
+{
+"w": "switched",
+"t0": 54.7812,
+"t1": 55.0062,
+"beat": "doubt",
+"take": 11,
+"cls": "k"
+},
+{
+"w": "off.",
+"t0": 55.0562,
+"t1": 55.5062,
+"beat": "doubt",
+"take": 11,
+"cls": null
+},
+{
+"w": "They'd",
+"t0": 55.9429,
+"t1": 56.0929,
+"beat": "doubt",
+"take": 12,
+"cls": null
+},
+{
+"w": "only",
+"t0": 56.1429,
+"t1": 56.3679,
+"beat": "doubt",
+"take": 12,
+"cls": null
+},
+{
+"w": "turn",
+"t0": 56.4179,
+"t1": 56.5679,
+"beat": "doubt",
+"take": 12,
+"cls": null
+},
+{
+"w": "it",
+"t0": 56.5929,
+"t1": 56.6429,
+"beat": "doubt",
+"take": 12,
+"cls": null
+},
+{
+"w": "on",
+"t0": 56.6929,
+"t1": 57.0429,
+"beat": "doubt",
+"take": 12,
+"cls": null
+},
+{
+"w": "if",
+"t0": 57.1179,
+"t1": 57.2179,
+"beat": "doubt",
+"take": 12,
+"cls": null
+},
+{
+"w": "Einstein",
+"t0": 57.2929,
+"t1": 57.7179,
+"beat": "doubt",
+"take": 12,
+"cls": "k"
+},
+{
+"w": "turned",
+"t0": 57.7679,
+"t1": 57.9679,
+"beat": "doubt",
+"take": 12,
+"cls": null
+},
+{
+"w": "out",
+"t0": 57.9929,
+"t1": 58.1179,
+"beat": "doubt",
+"take": 12,
+"cls": null
+},
+{
+"w": "to",
+"t0": 58.1679,
+"t1": 58.2179,
+"beat": "doubt",
+"take": 12,
+"cls": null
+},
+{
+"w": "be",
+"t0": 58.2429,
+"t1": 58.3429,
+"beat": "doubt",
+"take": 12,
+"cls": null
+},
+{
+"w": "right.",
+"t0": 58.3929,
+"t1": 58.8929,
+"beat": "doubt",
+"take": 12,
+"cls": "k"
+},
+{
+"w": "For",
+"t0": 60.0617,
+"t1": 60.1617,
+"beat": "proof",
+"take": 13,
+"cls": null
+},
+{
+"w": "about",
+"t0": 60.1867,
+"t1": 60.4117,
+"beat": "proof",
+"take": 13,
+"cls": null
+},
+{
+"w": "twenty",
+"t0": 60.4617,
+"t1": 60.7117,
+"beat": "proof",
+"take": 13,
+"cls": "k"
+},
+{
+"w": "days,",
+"t0": 60.7617,
+"t1": 61.2617,
+"beat": "proof",
+"take": 13,
+"cls": null
+},
+{
+"w": "the",
+"t0": 61.3617,
+"t1": 61.4117,
+"beat": "proof",
+"take": 13,
+"cls": null
+},
+{
+"w": "clock",
+"t0": 61.4617,
+"t1": 61.7117,
+"beat": "proof",
+"take": 13,
+"cls": null
+},
+{
+"w": "ran",
+"t0": 61.7617,
+"t1": 61.9617,
+"beat": "proof",
+"take": 13,
+"cls": null
+},
+{
+"w": "uncorrected.",
+"t0": 61.9867,
+"t1": 62.8117,
+"beat": "proof",
+"take": 13,
+"cls": null
+},
+{
+"w": "Einstein's",
+"t0": 63.2739,
+"t1": 63.7739,
+"beat": "proof",
+"take": 14,
+"cls": null
+},
+{
+"w": "math",
+"t0": 63.8489,
+"t1": 64.1739,
+"beat": "proof",
+"take": 14,
+"cls": null
+},
+{
+"w": "predicted",
+"t0": 64.2239,
+"t1": 64.5739,
+"beat": "proof",
+"take": 14,
+"cls": null
+},
+{
+"w": "how",
+"t0": 64.6239,
+"t1": 64.7489,
+"beat": "proof",
+"take": 14,
+"cls": null
+},
+{
+"w": "fast",
+"t0": 64.8239,
+"t1": 65.0989,
+"beat": "proof",
+"take": 14,
+"cls": "k"
+},
+{
+"w": "it",
+"t0": 65.1239,
+"t1": 65.1739,
+"beat": "proof",
+"take": 14,
+"cls": null
+},
+{
+"w": "would",
+"t0": 65.1989,
+"t1": 65.2739,
+"beat": "proof",
+"take": 14,
+"cls": null
+},
+{
+"w": "run.",
+"t0": 65.3239,
+"t1": 65.8239,
+"beat": "proof",
+"take": 14,
+"cls": null
+},
+{
+"w": "The",
+"t0": 66.2319,
+"t1": 66.2819,
+"beat": "proof",
+"take": 15,
+"cls": null
+},
+{
+"w": "clock",
+"t0": 66.3319,
+"t1": 66.6569,
+"beat": "proof",
+"take": 15,
+"cls": null
+},
+{
+"w": "matched",
+"t0": 66.7319,
+"t1": 67.0069,
+"beat": "proof",
+"take": 15,
+"cls": null
+},
+{
+"w": "him",
+"t0": 67.0319,
+"t1": 67.1569,
+"beat": "proof",
+"take": 15,
+"cls": null
+},
+{
+"w": "to",
+"t0": 67.2069,
+"t1": 67.3069,
+"beat": "proof",
+"take": 15,
+"cls": null
+},
+{
+"w": "within",
+"t0": 67.3569,
+"t1": 67.6069,
+"beat": "proof",
+"take": 15,
+"cls": null
+},
+{
+"w": "one",
+"t0": 67.6569,
+"t1": 67.8319,
+"beat": "proof",
+"take": 15,
+"cls": null
+},
+{
+"w": "percent.",
+"t0": 67.8819,
+"t1": 68.5319,
+"beat": "proof",
+"take": 15,
+"cls": "k"
+},
+{
+"w": "They",
+"t0": 69.819,
+"t1": 69.944,
+"beat": "proof",
+"take": 16,
+"cls": null
+},
+{
+"w": "flipped",
+"t0": 70.019,
+"t1": 70.244,
+"beat": "proof",
+"take": 16,
+"cls": "k"
+},
+{
+"w": "the",
+"t0": 70.269,
+"t1": 70.319,
+"beat": "proof",
+"take": 16,
+"cls": null
+},
+{
+"w": "switch.",
+"t0": 70.369,
+"t1": 70.944,
+"beat": "proof",
+"take": 16,
+"cls": null
+},
+{
+"w": "Ever",
+"t0": 72.3919,
+"t1": 72.5919,
+"beat": "payoff",
+"take": 17,
+"cls": null
+},
+{
+"w": "since,",
+"t0": 72.6669,
+"t1": 73.0919,
+"beat": "payoff",
+"take": 17,
+"cls": null
+},
+{
+"w": "every",
+"t0": 73.2169,
+"t1": 73.4669,
+"beat": "payoff",
+"take": 17,
+"cls": null
+},
+{
+"w": "GPS",
+"t0": 73.5169,
+"t1": 73.9669,
+"beat": "payoff",
+"take": 17,
+"cls": null
+},
+{
+"w": "clock",
+"t0": 74.0169,
+"t1": 74.2919,
+"beat": "payoff",
+"take": 17,
+"cls": null
+},
+{
+"w": "is",
+"t0": 74.3419,
+"t1": 74.4419,
+"beat": "payoff",
+"take": 17,
+"cls": null
+},
+{
+"w": "tuned",
+"t0": 74.4919,
+"t1": 74.6919,
+"beat": "payoff",
+"take": 17,
+"cls": null
+},
+{
+"w": "a",
+"t0": 74.7169,
+"t1": 74.7419,
+"beat": "payoff",
+"take": 17,
+"cls": null
+},
+{
+"w": "hair",
+"t0": 74.7919,
+"t1": 74.9669,
+"beat": "payoff",
+"take": 17,
+"cls": null
+},
+{
+"w": "slow",
+"t0": 75.0169,
+"t1": 75.2419,
+"beat": "payoff",
+"take": 17,
+"cls": "k"
+},
+{
+"w": "before",
+"t0": 75.2919,
+"t1": 75.5669,
+"beat": "payoff",
+"take": 17,
+"cls": null
+},
+{
+"w": "launch.",
+"t0": 75.6169,
+"t1": 76.1419,
+"beat": "payoff",
+"take": 17,
+"cls": null
+},
+{
+"w": "Wrong",
+"t0": 76.5629,
+"t1": 76.7629,
+"beat": "payoff",
+"take": 18,
+"cls": "k"
+},
+{
+"w": "on",
+"t0": 76.7879,
+"t1": 76.8629,
+"beat": "payoff",
+"take": 18,
+"cls": null
+},
+{
+"w": "the",
+"t0": 76.8879,
+"t1": 76.9379,
+"beat": "payoff",
+"take": 18,
+"cls": null
+},
+{
+"w": "ground,",
+"t0": 76.9879,
+"t1": 77.4629,
+"beat": "payoff",
+"take": 18,
+"cls": null
+},
+{
+"w": "so",
+"t0": 77.6129,
+"t1": 77.6879,
+"beat": "payoff",
+"take": 18,
+"cls": null
+},
+{
+"w": "it's",
+"t0": 77.7129,
+"t1": 77.8129,
+"beat": "payoff",
+"take": 18,
+"cls": null
+},
+{
+"w": "right",
+"t0": 77.8629,
+"t1": 78.0379,
+"beat": "payoff",
+"take": 18,
+"cls": "k"
+},
+{
+"w": "in",
+"t0": 78.0629,
+"t1": 78.1129,
+"beat": "payoff",
+"take": 18,
+"cls": null
+},
+{
+"w": "the",
+"t0": 78.1379,
+"t1": 78.1879,
+"beat": "payoff",
+"take": 18,
+"cls": null
+},
+{
+"w": "sky.",
+"t0": 78.2379,
+"t1": 78.8129,
+"beat": "payoff",
+"take": 18,
+"cls": "k"
+},
+{
+"w": "And",
+"t0": 79.3479,
+"t1": 79.4729,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "every",
+"t0": 79.5479,
+"t1": 79.7979,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "time",
+"t0": 79.8479,
+"t1": 80.0479,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "that",
+"t0": 80.0729,
+"t1": 80.1729,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "blue",
+"t0": 80.2229,
+"t1": 80.3979,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "dot",
+"t0": 80.4479,
+"t1": 80.6729,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "finds",
+"t0": 80.7229,
+"t1": 80.9729,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "you,",
+"t0": 81.0229,
+"t1": 81.3479,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "Einstein",
+"t0": 81.5229,
+"t1": 81.9479,
+"beat": "payoff",
+"take": 19,
+"cls": "k"
+},
+{
+"w": "passes",
+"t0": 81.9979,
+"t1": 82.3479,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "the",
+"t0": 82.3729,
+"t1": 82.4229,
+"beat": "payoff",
+"take": 19,
+"cls": null
+},
+{
+"w": "test",
+"t0": 82.4729,
+"t1": 82.6979,
+"beat": "payoff",
+"take": 19,
+"cls": "k"
+},
+{
+"w": "again.",
+"t0": 82.7229,
+"t1": 83.2729,
+"beat": "payoff",
+"take": 19,
+"cls": null
+}
+]

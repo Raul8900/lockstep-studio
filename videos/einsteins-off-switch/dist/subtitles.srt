@@ -1,0 +1,125 @@
+1
+00:00:00,261 --> 00:00:03,576
+Every GPS satellite is launched
+with its clock set wrong.
+
+2
+00:00:03,586 --> 00:00:04,761
+On purpose.
+
+3
+00:00:04,996 --> 00:00:08,311
+Your phone finds you by timing
+radio signals from satellites
+
+4
+00:00:08,321 --> 00:00:10,321
+twenty thousand kilometres up.
+
+5
+00:00:10,347 --> 00:00:13,768
+Light covers thirty centimetres
+in a billionth of a second.
+
+6
+00:00:13,778 --> 00:00:17,403
+So a clock that's a billionth off
+puts you thirty centimetres off.
+
+7
+00:00:17,539 --> 00:00:21,414
+But Einstein showed that time doesn't
+tick at the same rate everywhere.
+
+8
+00:00:21,520 --> 00:00:25,886
+Up there, gravity is weaker, so the
+clock runs fast, by about forty-five
+
+9
+00:00:25,896 --> 00:00:27,496
+microseconds a day.
+
+10
+00:00:27,630 --> 00:00:31,546
+It's also moving at almost four
+kilometres a second, which slows it down
+
+11
+00:00:31,556 --> 00:00:33,055
+by about seven.
+
+12
+00:00:33,254 --> 00:00:36,018
+Net result: thirty-eight
+microseconds fast.
+
+13
+00:00:36,028 --> 00:00:37,554
+Every single day.
+
+14
+00:00:38,753 --> 00:00:40,243
+That sounds like nothing.
+
+15
+00:00:40,253 --> 00:00:43,453
+But at the speed of light, it's
+more than eleven kilometres.
+
+16
+00:00:43,510 --> 00:00:47,110
+Ignore it, and your blue dot drifts
+that far off in a single day.
+
+17
+00:00:47,510 --> 00:00:50,810
+In 1977, not everyone believed it.
+
+18
+00:00:50,881 --> 00:00:54,571
+So the Navy's test satellite,
+NTS-2, flew with the fix built in,
+
+19
+00:00:54,581 --> 00:00:55,806
+but switched off.
+
+20
+00:00:55,893 --> 00:00:59,193
+They'd only turn it on if
+Einstein turned out to be right.
+
+21
+00:01:00,012 --> 00:01:03,112
+For about twenty days,
+the clock ran uncorrected.
+
+22
+00:01:03,224 --> 00:01:06,124
+Einstein's math predicted
+how fast it would run.
+
+23
+00:01:06,182 --> 00:01:08,832
+The clock matched him
+to within one percent.
+
+24
+00:01:09,769 --> 00:01:11,244
+They flipped the switch.
+
+25
+00:01:12,342 --> 00:01:16,442
+Ever since, every GPS clock is
+tuned a hair slow before launch.
+
+26
+00:01:16,513 --> 00:01:19,113
+Wrong on the ground, so
+it's right in the sky.
+
+27
+00:01:19,298 --> 00:01:23,573
+And every time that blue dot finds
+you, Einstein passes the test again.
