@@ -1,0 +1,10 @@
+{
+  "name": "orbit-gold",
+  "about": "Space at night with a faint blue tint; the Earth bright; the hero satellite in warm gold foil, the warmest thing in every frame; glowing clocks and signals; white captions, key words gold.",
+  "palette": { "accent": "#FFC94A", "subject": "#5BC8FF", "alert": "#FF5A4F", "good": "#43E58F", "data": "#C9B8FF" },
+  "grade": { "contrast": 1.1, "saturate": 0.95, "tint": "#2B4C7E", "tintAmount": 0.05 },
+  "captions": { "key": "#FFC94A", "size": 72 },
+  "fonts": { "display": "Space Grotesk" },
+  "post": { "bloom": 0.35, "vignette": 0.55 },
+  "transition": { "default": "cut", "duration": 0.3 }
+}

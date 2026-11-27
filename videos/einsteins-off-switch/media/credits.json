@@ -1,0 +1,20 @@
+{
+ "earth-map": {
+  "file": "earth-map.jpg",
+  "kind": "photo",
+  "source": "wikimedia",
+  "id": "84107736",
+  "title": "Blue Marble Next Generation + topography + bathymetry.jpg",
+  "author": "Reto Stöckli, NASA Earth Observatory, modified by NordNordWest",
+  "licence": "Public domain",
+  "licence_url": "",
+  "page": "https://commons.wikimedia.org/wiki/File:Blue_Marble_Next_Generation_%2B_topography_%2B_bathymetry.jpg",
+  "download": "https://upload.wikimedia.org/wikipedia/commons/5/56/Blue_Marble_Next_Generation_%2B_topography_%2B_bathymetry.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "credit_required": false,
+  "taken": "2026-11-18",
+  "size": [
+   1920,
+   960
+  ]
+ }
+}
