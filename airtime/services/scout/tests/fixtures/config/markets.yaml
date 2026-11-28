@@ -1,0 +1,19 @@
+# The ten starting markets.
+# weight     share of the planner's attention; control re-fits it from measured views and revenue
+#            by country (see autopilot.yaml → markets_refit) and the dashboard can override it.
+# rpm_index  revenue per 1000 views relative to the US (1.0): a prior until real RPM data exists.
+# prime_time local time when the market's audience is most active; used to schedule publishing.
+markets:
+  - {code: US, name: United States,  languages: [en],     tz: America/New_York,    prime_time: "19:00", weight: 0.30, rpm_index: 1.00, enabled: true}
+  - {code: IN, name: India,          languages: [en, hi], tz: Asia/Kolkata,        prime_time: "20:00", weight: 0.20, rpm_index: 0.15, enabled: true}
+  - {code: GB, name: United Kingdom, languages: [en],     tz: Europe/London,       prime_time: "19:00", weight: 0.10, rpm_index: 0.80, enabled: true}
+  - {code: CA, name: Canada,         languages: [en, fr], tz: America/Toronto,     prime_time: "19:00", weight: 0.07, rpm_index: 0.85, enabled: true}
+  - {code: DE, name: Germany,        languages: [de],     tz: Europe/Berlin,       prime_time: "19:00", weight: 0.07, rpm_index: 0.75, enabled: true}
+  - {code: AU, name: Australia,      languages: [en],     tz: Australia/Sydney,    prime_time: "19:00", weight: 0.06, rpm_index: 0.90, enabled: true}
+  - {code: BR, name: Brazil,         languages: [pt],     tz: America/Sao_Paulo,   prime_time: "20:00", weight: 0.06, rpm_index: 0.20, enabled: true}
+  - {code: MX, name: Mexico,         languages: [es],     tz: America/Mexico_City, prime_time: "20:00", weight: 0.05, rpm_index: 0.20, enabled: true}
+  - {code: JP, name: Japan,          languages: [ja],     tz: Asia/Tokyo,          prime_time: "20:00", weight: 0.05, rpm_index: 0.55, enabled: true}
+  - {code: PH, name: Philippines,    languages: [en],     tz: Asia/Manila,         prime_time: "20:00", weight: 0.04, rpm_index: 0.10, enabled: true}
+
+# Languages that titles, descriptions and captions are translated into (the source is English).
+translate_to: [hi, fr, de, pt, es, ja]
