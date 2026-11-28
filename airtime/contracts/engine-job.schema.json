@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://airtime.local/contracts/engine-job.schema.json",
+  "title": "D. Engine job API (engine-bridge, 127.0.0.1:8004)",
+  "description": "POST /v1/jobs {request_id, brief, options} → 201 {job_id, state}; GET /v1/jobs/{id} → Job; GET /v1/jobs?state=&limit=; GET /v1/jobs/{id}/events?after=<seq> (SSE) and /events.json; POST /v1/jobs/{id}/revise {notes: ReviewNotes} → 202 {revision}; POST /v1/jobs/{id}/cancel; GET /v1/jobs/{id}/revisions/{n}/handoff → Handoff; GET /v1/jobs/{id}/files/{path} (Range); GET /v1/engine → Engine.",
+  "$defs": {
+    "create_request": {
+      "type": "object", "required": ["request_id", "brief"],
+      "properties": {
+        "request_id": {"type": "string", "description": "Idempotency key (control uses the production id plus a counter)"},
+        "brief": {"$ref": "growth-brief.schema.json"},
+        "options": {
+          "type": "object",
+          "properties": {"engine_ref": {"type": "string"}, "engine_source": {"enum": ["ref", "working_tree"]}}
+        }
+      }
+    },
+    "revise_request": {
+      "type": "object", "required": ["notes"],
+      "properties": {"notes": {"$ref": "review-notes.schema.json"}}
+    },
+    "job": {
+      "type": "object", "required": ["job_id", "request_id", "state", "revision", "revisions"],
+      "properties": {
+        "job_id": {"type": "string", "pattern": "^job_"},
+        "request_id": {"type": "string"},
+        "state": {"enum": ["queued", "preparing", "running", "revising", "packaging", "completed", "failed", "cancelled"]},
+        "stage": {"enum": ["briefing", "media", "scripting", "voicing", "scenes", "rendering", "qa", "packaging", null]},
+        "revision": {"type": "integer", "minimum": 0},
+        "revisions": {
+          "type": "array",
+          "items": {
+            "type": "object", "required": ["revision", "state"],
+            "properties": {
+              "revision": {"type": "integer"}, "state": {"type": "string"},
+              "started_at": {"type": ["string", "null"]}, "finished_at": {"type": ["string", "null"]}
+            }
+          }
+        },
+        "slug": {"type": ["string", "null"]},
+        "error": {"type": ["object", "string", "null"]},
+        "retry_at": {"type": ["string", "null"], "description": "Set while waiting for a Claude account to come out of cooldown"},
+        "claude": {
+          "type": ["object", "null"],
+          "properties": {
+            "account_id": {"type": ["string", "null"]},
+            "session_id": {"type": ["string", "null"]},
+            "model": {"type": ["string", "null"]},
+            "effort": {"type": ["string", "null"]},
+            "turns": {"type": ["integer", "null"]},
+            "usage": {"$ref": "common.schema.json#/$defs/usage"},
+            "duration_ms": {"type": ["integer", "null"]}
+          }
+        },
+        "created_at": {"type": "string"},
+        "updated_at": {"type": "string"}
+      }
+    },
+    "event": {
+      "type": "object", "required": ["seq", "ts", "job_id", "type"],
+      "properties": {
+        "seq": {"type": "integer", "minimum": 1},
+        "ts": {"type": "string"},
+        "job_id": {"type": "string"},
+        "revision": {"type": ["integer", "null"]},
+        "type": {"enum": ["job.state_changed", "stage.changed", "agent.message", "agent.tool", "file.changed", "script.updated", "components.updated", "qa.result", "artifact.created", "revision.completed", "job.completed", "job.failed", "job.cancelled", "log"]},
+        "stage": {"type": ["string", "null"]},
+        "data": {"type": ["object", "null"]}
+      }
+    },
+    "engine": {
+      "type": "object", "required": ["ref", "commit"],
+      "properties": {
+        "ref": {"type": "string"}, "commit": {"type": ["string", "null"]},
+        "source": {"enum": ["ref", "working_tree"]},
+        "doctor": {"type": ["string", "object", "null"]},
+        "queue": {"type": ["object", "null"]}
+      }
+    }
+  },
+  "$ref": "#/$defs/job"
+}

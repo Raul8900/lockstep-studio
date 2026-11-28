@@ -1,0 +1,8 @@
+{
+  "upload_id": "upl_01JDX3B4C5D6E7F8G9H0J1K2L3",
+  "state": "scheduled",
+  "video_id": "dQw4w9WgXcQ",
+  "url": "https://youtube.com/shorts/dQw4w9WgXcQ",
+  "steps": [{"name": "open_upload_dialog", "ok": true, "screenshot": "/home/owner/.local/share/airtime/youtube/screens/upl_01JDX3B4C5D6E7F8G9H0J1K2L3/01.png", "at": "2026-11-28T19:00:01Z", "detail": null}],
+  "error": null
+}

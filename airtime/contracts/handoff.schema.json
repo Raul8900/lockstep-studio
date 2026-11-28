@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://airtime.local/contracts/handoff.schema.json",
+  "title": "C. Handoff (engine → Airtime, one per revision)",
+  "description": "The engine agent writes videos/<slug>/handoff.json; engine-bridge completes it from the engine's own files, validates it, and snapshots it with the files under $AIRTIME_DATA_DIR/artifacts/<job_id>/rev-<n>/. Paths in a snapshotted handoff are absolute and point into that snapshot.",
+  "type": "object",
+  "required": ["schema_version", "job_id", "revision", "slug", "status", "video", "script", "beats", "components", "media", "music", "sources", "qa", "frames", "captions", "publish_kit", "decisions", "engine"],
+  "properties": {
+    "schema_version": {"const": "1"},
+    "job_id": {"type": "string", "pattern": "^job_"},
+    "revision": {"type": "integer", "minimum": 0},
+    "slug": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "status": {"enum": ["completed", "unfinished"]},
+    "video": {
+      "type": "object", "required": ["path", "duration_s", "width", "height", "fps"],
+      "properties": {
+        "path": {"$ref": "common.schema.json#/$defs/abs_path"},
+        "phone_path": {"type": ["string", "null"]},
+        "duration_s": {"type": "number", "exclusiveMinimum": 0},
+        "width": {"type": "integer"}, "height": {"type": "integer"}, "fps": {"type": "number"},
+        "size_mb": {"type": "number"}
+      }
+    },
+    "script": {
+      "type": "object", "required": ["title", "text", "lines"],
+      "properties": {
+        "title": {"type": "string"},
+        "text": {"type": "string"},
+        "lines": {
+          "type": "array",
+          "items": {
+            "type": "object", "required": ["id", "text", "start_s", "end_s"],
+            "properties": {"id": {"type": "string"}, "beat": {"type": ["string", "null"]}, "text": {"type": "string"}, "start_s": {"type": "number"}, "end_s": {"type": "number"}}
+          }
+        },
+        "words_path": {"type": ["string", "null"]}
+      }
+    },
+    "beats": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["id", "start_s", "end_s"],
+        "properties": {"id": {"type": "string"}, "start_s": {"type": "number"}, "end_s": {"type": "number"}, "summary": {"type": "string"}}
+      }
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["name", "kind"],
+        "properties": {
+          "name": {"type": "string"},
+          "kind": {"enum": ["custom", "engine", "media", "transition", "overlay", "three"]},
+          "source": {"type": ["string", "null"]},
+          "used_in": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "style": {
+      "type": ["object", "null"],
+      "properties": {
+        "name": {"type": ["string", "null"]},
+        "palette": {"type": "object", "additionalProperties": {"type": "string"}},
+        "fonts": {"type": "array", "items": {"type": "string"}},
+        "path": {"type": ["string", "null"]}
+      }
+    },
+    "media": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["file", "licence"],
+        "properties": {"file": {"type": "string"}, "title": {"type": ["string", "null"]}, "licence": {"type": "string"}, "author": {"type": ["string", "null"]}, "source_url": {"type": ["string", "null"]}}
+      }
+    },
+    "music": {
+      "type": ["object", "null"],
+      "properties": {"track": {"type": ["string", "null"]}, "credit": {"type": ["string", "null"]}}
+    },
+    "sources": {
+      "type": "array",
+      "items": {"type": "object", "required": ["claim", "url"], "properties": {"claim": {"type": "string"}, "url": {"type": "string"}}}
+    },
+    "qa": {
+      "type": "object", "required": ["passed", "summary", "issues"],
+      "properties": {
+        "passed": {"type": "boolean"},
+        "validation_path": {"type": ["string", "null"]},
+        "summary": {
+          "type": "object",
+          "properties": {
+            "loudness_lufs": {"type": ["number", "null"]},
+            "true_peak_dbtp": {"type": ["number", "null"]},
+            "sync_ms": {"type": ["number", "null"]},
+            "wer_percent": {"type": ["number", "null"]},
+            "freeze_segments": {"type": ["integer", "null"]},
+            "black_segments": {"type": ["integer", "null"]},
+            "decode_errors": {"type": ["integer", "null"]},
+            "lint_warnings": {"type": ["integer", "null"]}
+          }
+        },
+        "issues": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "frames": {
+      "type": "object",
+      "properties": {
+        "contact_sheet": {"type": ["string", "null"]},
+        "keyframes": {
+          "type": "array", "maxItems": 8,
+          "items": {"type": "object", "required": ["t", "path"], "properties": {"t": {"type": "number"}, "path": {"$ref": "common.schema.json#/$defs/abs_path"}}}
+        }
+      }
+    },
+    "captions": {
+      "type": "object",
+      "properties": {"srt": {"type": ["string", "null"]}, "language": {"type": "string"}}
+    },
+    "publish_kit": {
+      "type": "object", "required": ["title_options", "description", "tags"],
+      "properties": {
+        "title_options": {"type": "array", "minItems": 1, "items": {"type": "string", "maxLength": 100}},
+        "description": {"type": "string", "maxLength": 5000},
+        "tags": {"type": "array", "items": {"type": "string"}},
+        "hashtags": {"type": "array", "items": {"type": "string", "pattern": "^#"}},
+        "category": {"type": ["string", "null"]},
+        "language": {"type": ["string", "null"]},
+        "made_for_kids": {"const": false},
+        "altered_content": {"type": "boolean"},
+        "thumbnail_candidates": {
+          "type": "array",
+          "items": {"type": "object", "required": ["path"], "properties": {"path": {"type": "string"}, "t": {"type": ["number", "null"]}, "why": {"type": ["string", "null"]}}}
+        },
+        "chapters": {"type": "array", "items": {"type": "object", "properties": {"t": {"type": "number"}, "title": {"type": "string"}}}},
+        "credits_text": {"type": ["string", "null"]},
+        "pinned_comment": {"type": ["string", "null"]}
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["question", "choice"],
+        "properties": {"question": {"type": "string"}, "choice": {"type": "string"}, "alternatives": {"type": "array", "items": {"type": "string"}}}
+      }
+    },
+    "engine": {
+      "type": "object", "required": ["ref", "commit"],
+      "properties": {
+        "ref": {"type": "string"},
+        "commit": {"type": "string"},
+        "source": {"enum": ["ref", "working_tree"]},
+        "overlay_files": {"type": ["integer", "null"]},
+        "build_seconds": {"type": ["number", "null"]}
+      }
+    },
+    "notes": {"type": ["string", "null"]}
+  }
+}

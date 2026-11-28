@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://airtime.local/contracts/scout.schema.json",
+  "title": "G. Scout (127.0.0.1:8002)",
+  "description": "GET /v1/signals?markets=&max_age_h= → signals; POST /v1/probe {queries, max_results} → probes; GET /v1/sources.",
+  "$defs": {
+    "signal_item": {
+      "type": "object", "required": ["source", "title"],
+      "properties": {
+        "source": {"type": "string"}, "title": {"type": "string"}, "url": {"type": ["string", "null"]},
+        "language": {"type": ["string", "null"]}, "rank": {"type": ["integer", "null"]},
+        "metric": {"type": ["object", "null"], "properties": {"name": {"type": "string"}, "value": {"type": ["number", "null"]}}},
+        "first_seen": {"type": ["string", "null"]}, "category": {"type": ["string", "null"]}
+      }
+    },
+    "signals": {
+      "type": "object", "required": ["packs"],
+      "properties": {
+        "packs": {
+          "type": "array",
+          "items": {
+            "type": "object", "required": ["market", "collected_at", "items"],
+            "properties": {"market": {"type": "string"}, "collected_at": {"type": "string"}, "items": {"type": "array", "items": {"$ref": "#/$defs/signal_item"}}, "errors": {"type": "array"}}
+          }
+        }
+      }
+    },
+    "probe_request": {
+      "type": "object", "required": ["queries"],
+      "properties": {
+        "queries": {"type": "array", "items": {"type": "object", "required": ["query", "market"], "properties": {"query": {"type": "string"}, "market": {"type": "string"}, "language": {"type": "string"}}}},
+        "max_results": {"type": "integer"}
+      }
+    },
+    "search_result": {
+      "type": "object", "required": ["video_id", "title"],
+      "properties": {
+        "video_id": {"type": "string"}, "title": {"type": "string"}, "channel": {"type": ["string", "null"]},
+        "views": {"type": ["integer", "null"]}, "age_days": {"type": ["number", "null"]},
+        "duration_s": {"type": ["number", "null"]}, "is_short": {"type": ["boolean", "null"]}
+      }
+    },
+    "probe_stats": {
+      "type": "object",
+      "properties": {"result_count": {"type": "integer"}, "median_views": {"type": ["number", "null"]}, "recent_breakouts": {"type": ["integer", "null"]}, "shorts_share": {"type": ["number", "null"]}}
+    },
+    "probes": {
+      "type": "object", "required": ["probes"],
+      "properties": {
+        "probes": {
+          "type": "array",
+          "items": {
+            "type": "object", "required": ["query", "market", "results", "stats"],
+            "properties": {
+              "query": {"type": "string"}, "market": {"type": "string"}, "language": {"type": ["string", "null"]}, "probed_at": {"type": "string"},
+              "results": {"type": "array", "items": {"$ref": "#/$defs/search_result"}},
+              "stats": {"$ref": "#/$defs/probe_stats"},
+              "suggestions": {"type": "array", "items": {"type": "string"}},
+              "missing": {"type": "array", "items": {"type": "string"}}
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "dimensions": [
+    {"id": "hook", "score": 78, "evidence": "0:00–0:02 is a static title card", "issues": ["no motion in the first 2 s"]},
+    {"id": "retention", "score": 85, "evidence": "Beats escalate; payoff rushed", "issues": []},
+    {"id": "visuals", "score": 90, "evidence": "Every line has a matching shot", "issues": []},
+    {"id": "demand", "score": 88, "evidence": "Fresh news with search spikes in 3 markets", "issues": []},
+    {"id": "packaging", "score": 84, "evidence": "Title and first frame match", "issues": []},
+    {"id": "seo", "score": 86, "evidence": "Primary keywords in title and first line", "issues": []},
+    {"id": "accuracy", "score": 95, "evidence": "All numbers match NASA's release", "issues": []},
+    {"id": "policy", "score": 98, "evidence": "Credits present; not made for kids", "issues": []}
+  ],
+  "review_notes": {"summary": "Fix the opening and hold the payoff.", "notes": [{"priority": 1, "dimension": "hook", "at_s": 0, "beat": "hook", "issue": "static title card", "change": "open on motion", "expected_gain": 4}], "keep": ["the 3D world"], "engine_feedback_md": "- 0:00, the opening: drop the title card; open on the light pulse."},
+  "predicted": {"avg_view_pct": 78, "viewed_vs_swiped_pct": 71}
+}

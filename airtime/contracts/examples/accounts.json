@@ -1,0 +1,7 @@
+{
+  "strategy": "least_used",
+  "accounts": [
+    {"id": "main", "config_dir": "~/.claude", "enabled": true, "logged_in": false, "subscription_type": null, "org_name": null, "cooling_down_until": null, "last_error": "not signed in", "last_used_at": null, "usage_5h": {"input_tokens": 0, "output_tokens": 0, "runs": 0}, "usage_7d": {"input_tokens": 0, "output_tokens": 0, "runs": 0}},
+    {"id": "second", "config_dir": "~/.claude-second", "enabled": true, "logged_in": true, "subscription_type": "team", "org_name": "Team", "cooling_down_until": null, "last_error": null, "last_used_at": "2026-11-28T18:40:14Z", "usage_5h": {"input_tokens": 2100, "output_tokens": 180, "runs": 1}, "usage_7d": {"input_tokens": 2100, "output_tokens": 180, "runs": 1}}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "round": 1,
+  "score": 84,
+  "threshold": 90,
+  "summary": "Strong world and evidence; the hook spends 2 s on a title card before the stake, and the payoff is rushed.",
+  "notes": [
+    {"priority": 1, "dimension": "hook", "at_s": 0.0, "beat": "hook", "issue": "A title card holds for 2 s before anything moves", "change": "Open on the light pulse leaving Earth while the first line plays", "expected_gain": 4},
+    {"priority": 2, "dimension": "retention", "at_s": 38.5, "beat": "payoff", "issue": "The Pale Blue Dot is on screen for 1.2 s", "change": "Hold it for at least 3 s with the voice silent", "expected_gain": 2}
+  ],
+  "keep": ["the 3D shrinking Earth", "the music"],
+  "engine_feedback_md": "- 0:00, the opening: drop the title card; open on the light pulse leaving Earth as the first line plays.\n- 0:38, the Pale Blue Dot: hold it for 3 seconds with the voice silent."
+}

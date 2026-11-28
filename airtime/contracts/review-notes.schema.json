@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://airtime.local/contracts/review-notes.schema.json",
+  "title": "B. ReviewNotes (critic → engine-bridge revise)",
+  "type": "object",
+  "required": ["round", "score", "threshold", "summary", "notes", "keep", "engine_feedback_md"],
+  "properties": {
+    "round": {"type": "integer", "minimum": 1},
+    "score": {"$ref": "common.schema.json#/$defs/score"},
+    "threshold": {"type": "number"},
+    "summary": {"type": "string"},
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["priority", "dimension", "issue", "change"],
+        "properties": {
+          "priority": {"type": "integer", "minimum": 1, "description": "1 = most important"},
+          "dimension": {"type": "string"},
+          "at_s": {"type": ["number", "null"], "minimum": 0},
+          "beat": {"type": ["string", "null"]},
+          "issue": {"type": "string"},
+          "change": {"type": "string"},
+          "expected_gain": {"type": ["number", "null"], "description": "Points of total score this change should add"}
+        }
+      }
+    },
+    "keep": {"type": "array", "items": {"type": "string"}},
+    "engine_feedback_md": {"type": "string", "description": "PROMPTING.md 'Giving feedback' style: '0:11, the plate shot: show …'"}
+  }
+}

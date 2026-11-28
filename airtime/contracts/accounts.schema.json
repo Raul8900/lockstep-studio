@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://airtime.local/contracts/accounts.schema.json",
+  "title": "Claude account pool (brain, addendum B)",
+  "description": "GET /v1/accounts → accounts; POST /v1/accounts/lease {purpose, exclude} → lease or 503 claude_unavailable; POST /v1/accounts/leases/{lease_id}/release {outcome, resets_at, message, usage}; POST /v1/accounts/{id}/refresh. E-mails are never returned.",
+  "$defs": {
+    "tally": {
+      "type": "object",
+      "properties": {"input_tokens": {"type": "integer"}, "output_tokens": {"type": "integer"}, "runs": {"type": "integer"}}
+    },
+    "account": {
+      "type": "object", "required": ["id", "config_dir", "enabled", "logged_in"],
+      "properties": {
+        "id": {"type": "string"},
+        "config_dir": {"type": "string"},
+        "enabled": {"type": "boolean"},
+        "logged_in": {"type": ["boolean", "null"]},
+        "subscription_type": {"type": ["string", "null"]},
+        "org_name": {"type": ["string", "null"]},
+        "cooling_down_until": {"type": ["string", "null"]},
+        "last_error": {"type": ["string", "null"]},
+        "last_used_at": {"type": ["string", "null"]},
+        "usage_5h": {"$ref": "#/$defs/tally"},
+        "usage_7d": {"$ref": "#/$defs/tally"}
+      },
+      "not": {"required": ["email"]}
+    },
+    "accounts": {
+      "type": "object", "required": ["strategy", "accounts"],
+      "properties": {"strategy": {"enum": ["least_used", "ordered"]}, "accounts": {"type": "array", "items": {"$ref": "#/$defs/account"}}}
+    },
+    "lease_request": {
+      "type": "object", "required": ["purpose"],
+      "properties": {"purpose": {"type": "string"}, "exclude": {"type": "array", "items": {"type": "string"}}}
+    },
+    "lease": {
+      "type": "object", "required": ["lease_id", "account_id", "config_dir", "set_env", "unset_env"],
+      "properties": {
+        "lease_id": {"type": "string"},
+        "account_id": {"type": "string"},
+        "config_dir": {"type": "string"},
+        "set_env": {"type": "object", "additionalProperties": {"type": "string"}},
+        "unset_env": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "release_request": {
+      "type": "object", "required": ["outcome"],
+      "properties": {
+        "outcome": {"enum": ["ok", "rate_limited", "auth_failed", "error"]},
+        "resets_at": {"type": ["string", "null"]},
+        "message": {"type": ["string", "null"]},
+        "usage": {"$ref": "common.schema.json#/$defs/usage"}
+      }
+    }
+  },
+  "$ref": "#/$defs/accounts"
+}

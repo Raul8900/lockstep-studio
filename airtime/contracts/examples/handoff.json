@@ -1,0 +1,40 @@
+{
+  "schema_version": "1",
+  "job_id": "job_01JDX1M2N3P4Q5R6S7T8V9W0X1",
+  "revision": 0,
+  "slug": "voyager-light-day",
+  "status": "completed",
+  "video": {"path": "/home/owner/.local/share/airtime/artifacts/job_01JDX1M2N3P4Q5R6S7T8V9W0X1/rev-0/video.mp4", "phone_path": "/home/owner/.local/share/airtime/artifacts/job_01JDX1M2N3P4Q5R6S7T8V9W0X1/rev-0/video_phone.mp4", "duration_s": 46.2, "width": 1080, "height": 1920, "fps": 30, "size_mb": 38.4},
+  "script": {
+    "title": "Voyager 1 is one light-day away",
+    "text": "If you said hello to Voyager 1 right now, it would hear you tomorrow.",
+    "lines": [{"id": "l1", "beat": "hook", "text": "If you said hello to Voyager 1 right now, it would hear you tomorrow.", "start_s": 0.0, "end_s": 3.4}],
+    "words_path": "/home/owner/.local/share/airtime/artifacts/job_01JDX1M2N3P4Q5R6S7T8V9W0X1/rev-0/words.json"
+  },
+  "beats": [{"id": "hook", "start_s": 0.0, "end_s": 3.4, "summary": "A light pulse leaves Earth"}],
+  "components": [{"name": "LightPulse", "kind": "custom", "source": "videos/voyager-light-day/components.js", "used_in": ["hook", "scale"]}, {"name": "apollo-film", "kind": "media", "source": "media/launch.mp4", "used_in": ["evidence"]}],
+  "style": {"name": "voyager-night", "palette": {"subject": "#E8EEF7", "accent": "#FFB547"}, "fonts": ["Inter"], "path": "videos/voyager-light-day/style.json"},
+  "media": [{"file": "media/pale_blue_dot.jpg", "title": "Pale Blue Dot", "licence": "Public domain (NASA)", "author": "NASA/JPL-Caltech", "source_url": "https://photojournal.jpl.nasa.gov/catalog/PIA00452"}],
+  "music": {"track": "Lightless Dawn", "credit": "\"Lightless Dawn\" Kevin MacLeod (incompetech.com), CC BY 4.0"},
+  "sources": [{"claim": "Voyager 1 is 25.9 billion km away", "url": "https://science.nasa.gov/mission/voyager/"}],
+  "qa": {"passed": true, "validation_path": "/home/owner/.local/share/airtime/artifacts/job_01JDX1M2N3P4Q5R6S7T8V9W0X1/rev-0/validation.json", "summary": {"loudness_lufs": -14.1, "true_peak_dbtp": -1.6, "sync_ms": 18, "wer_percent": 1.2, "freeze_segments": 0, "black_segments": 0, "decode_errors": 0, "lint_warnings": 1}, "issues": ["lint: scene 4 camera pause of 0.4 s"]},
+  "frames": {"contact_sheet": "/home/owner/.local/share/airtime/artifacts/job_01JDX1M2N3P4Q5R6S7T8V9W0X1/rev-0/contact_sheet.jpg", "keyframes": [{"t": 0.5, "path": "/home/owner/.local/share/airtime/artifacts/job_01JDX1M2N3P4Q5R6S7T8V9W0X1/rev-0/keyframes/0000.5.jpg"}]},
+  "captions": {"srt": "/home/owner/.local/share/airtime/artifacts/job_01JDX1M2N3P4Q5R6S7T8V9W0X1/rev-0/subtitles.srt", "language": "en"},
+  "publish_kit": {
+    "title_options": ["Voyager 1 Is Now One Light-Day Away"],
+    "description": "Voyager 1 just crossed one light-day from Earth...",
+    "tags": ["voyager 1", "nasa", "light day"],
+    "hashtags": ["#space", "#nasa", "#shorts"],
+    "category": "Science & Technology",
+    "language": "en",
+    "made_for_kids": false,
+    "altered_content": false,
+    "thumbnail_candidates": [{"path": "/home/owner/.local/share/airtime/artifacts/job_01JDX1M2N3P4Q5R6S7T8V9W0X1/rev-0/thumbs/t01.jpg", "t": 12.4, "why": "Earth as a dot with the pulse leaving it"}],
+    "chapters": [],
+    "credits_text": "Music: \"Lightless Dawn\" Kevin MacLeod (incompetech.com), CC BY 4.0. Images: NASA/JPL-Caltech (public domain).",
+    "pinned_comment": "What would you say to Voyager if it took a day to arrive?"
+  },
+  "decisions": [{"question": "Which launch clip?", "choice": "NASA 1977 launch film, wide shot", "alternatives": ["close-up of the engines"]}],
+  "engine": {"ref": "engine", "commit": "b095026b5c8533755243edcff1d98729085c7666", "source": "ref", "overlay_files": null, "build_seconds": 1140},
+  "notes": null
+}

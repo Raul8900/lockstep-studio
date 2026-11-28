@@ -1,0 +1,19 @@
+{
+  "upload_id": "upl_01JDX3B4C5D6E7F8G9H0J1K2L3",
+  "video_path": "/home/owner/.local/share/airtime/publish/prd_01JDX0J1K2L3M4N5P6Q7R8S9T0/video.mp4",
+  "resume_video_id": null,
+  "title": "Voyager 1 Is Now One Light-Day Away",
+  "description": "Voyager 1 just crossed one light-day from Earth...",
+  "tags": ["voyager 1", "nasa", "light day"],
+  "thumbnail_path": null,
+  "category": "Science & Technology",
+  "language": "en",
+  "made_for_kids": false,
+  "altered_content": false,
+  "playlist": null,
+  "visibility": "public",
+  "schedule_at": "2026-11-29T00:00:00Z",
+  "captions": [{"language": "en", "path": "/home/owner/.local/share/airtime/publish/prd_01JDX0J1K2L3M4N5P6Q7R8S9T0/captions/en.srt"}],
+  "localizations": [{"language": "hi", "title": "वॉयजर 1 अब एक प्रकाश-दिवस दूर है", "description": "..."}],
+  "dry_run": false
+}

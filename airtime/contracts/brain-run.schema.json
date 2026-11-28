@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://airtime.local/contracts/brain-run.schema.json",
+  "title": "E. Brain runs (brain, 127.0.0.1:8001)",
+  "description": "POST /v1/runs {role, input, files, wait, timeout_s, options} → BrainRun; GET /v1/runs/{id}; GET /v1/runs?role=&limit=; GET /v1/runs/{id}/transcript; GET /v1/roles; GET /v1/usage?since=. A run that finds no usable Claude account fails with error code claude_unavailable and details.retry_at.",
+  "$defs": {
+    "role": {"enum": ["ideator", "strategist", "brief_writer", "critic", "seo", "translator", "analyst", "learner"]},
+    "create_request": {
+      "type": "object", "required": ["role", "input"],
+      "properties": {
+        "role": {"$ref": "#/$defs/role"},
+        "input": {"type": "object"},
+        "files": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/abs_path"}},
+        "wait": {"type": "boolean", "default": true},
+        "timeout_s": {"type": ["integer", "null"]},
+        "options": {"type": "object", "properties": {"model": {"type": "string"}, "effort": {"enum": ["low", "medium", "high", "xhigh", "max"]}}}
+      }
+    },
+    "run": {
+      "type": "object", "required": ["run_id", "role", "state"],
+      "properties": {
+        "run_id": {"type": "string", "pattern": "^run_"},
+        "role": {"$ref": "#/$defs/role"},
+        "state": {"enum": ["queued", "running", "succeeded", "failed"]},
+        "output": {"type": ["object", "null"]},
+        "error": {"type": ["object", "null"], "properties": {"code": {"type": "string"}, "message": {"type": "string"}, "details": {}}},
+        "usage": {"$ref": "common.schema.json#/$defs/usage"},
+        "account_id": {"type": ["string", "null"]},
+        "model": {"type": ["string", "null"]},
+        "effort": {"type": ["string", "null"]},
+        "num_turns": {"type": ["integer", "null"]},
+        "duration_ms": {"type": ["integer", "null"]},
+        "session_id": {"type": ["string", "null"]},
+        "cached": {"type": "boolean"},
+        "created_at": {"type": "string"},
+        "finished_at": {"type": ["string", "null"]}
+      }
+    }
+  },
+  "$ref": "#/$defs/run"
+}

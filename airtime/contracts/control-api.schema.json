@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://airtime.local/contracts/control-api.schema.json",
+  "title": "I. Control API for the dashboard (127.0.0.1:8000, proxied by web at /api)",
+  "description": "See airtime/docs/PLAN.md contract I and addendum F for the endpoint list. These are the main shapes.",
+  "$defs": {
+    "production_state": {"enum": ["queued", "briefing", "producing", "scoring", "revising", "finalizing", "awaiting_approval", "uploading", "scheduled", "published", "monitoring", "done", "failed", "cancelled", "needs_attention"]},
+    "attention_reason": {"enum": ["upload_failed", "hard_gate", "engine_failed", "claude_unavailable", "youtube_session", "other", null]},
+    "production_summary": {
+      "type": "object", "required": ["production_id", "state", "topic", "created_at"],
+      "properties": {
+        "production_id": {"type": "string", "pattern": "^prd_"},
+        "state": {"$ref": "#/$defs/production_state"},
+        "attention_reason": {"$ref": "#/$defs/attention_reason"},
+        "topic": {"type": "string"}, "angle": {"type": ["string", "null"]},
+        "markets": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/market_weight"}},
+        "revision": {"type": ["integer", "null"]},
+        "best_score": {"type": ["number", "null"]},
+        "video_id": {"type": ["string", "null"]},
+        "created_at": {"type": "string"}, "updated_at": {"type": ["string", "null"]}
+      }
+    },
+    "scorecard": {
+      "type": "object", "required": ["total", "dimensions", "gates_passed"],
+      "properties": {
+        "total": {"type": "number"},
+        "raw_total": {"type": ["number", "null"], "description": "Before a failed gate capped it"},
+        "gates_passed": {"type": "boolean"},
+        "failed_gates": {"type": "array", "items": {"type": "string"}},
+        "dimensions": {"type": "array", "items": {"type": "object", "required": ["id", "score", "weight"], "properties": {"id": {"type": "string"}, "score": {"type": "number"}, "weight": {"type": "number"}, "evidence": {"type": ["string", "null"]}, "issues": {"type": "array", "items": {"type": "string"}}}}},
+        "predicted": {"type": ["object", "null"]}
+      }
+    },
+    "upload_attempt": {
+      "type": "object", "required": ["n", "upload_id", "state"],
+      "properties": {"n": {"type": "integer", "minimum": 1, "maximum": 3}, "upload_id": {"type": "string"}, "state": {"type": "string"}, "video_id": {"type": ["string", "null"]}, "error": {}, "steps": {"type": "array"}}
+    },
+    "production_detail": {
+      "allOf": [{"$ref": "#/$defs/production_summary"}],
+      "type": "object",
+      "properties": {
+        "opportunity": {"type": ["object", "null"]},
+        "brief": {"oneOf": [{"$ref": "growth-brief.schema.json"}, {"type": "null"}]},
+        "engine": {"type": ["object", "null"], "properties": {"job_id": {"type": ["string", "null"]}, "state": {"type": ["string", "null"]}, "stage": {"type": ["string", "null"]}, "revision": {"type": ["integer", "null"]}, "claude": {"type": ["object", "null"]}}},
+        "revisions": {"type": "array", "items": {"type": "object", "required": ["revision"], "properties": {"revision": {"type": "integer"}, "state": {"type": ["string", "null"]}, "handoff": {"type": ["object", "null"]}, "scorecard": {"oneOf": [{"$ref": "#/$defs/scorecard"}, {"type": "null"}]}, "review_notes": {"type": ["object", "null"]}}}},
+        "chosen_revision": {"type": ["integer", "null"]},
+        "final_kit": {"type": ["object", "null"]},
+        "upload": {"type": ["object", "null"], "properties": {"attempts": {"type": "array", "items": {"$ref": "#/$defs/upload_attempt"}}, "max_attempts": {"type": "integer"}, "video_id": {"type": ["string", "null"]}, "url": {"type": ["string", "null"]}, "manual": {"type": "boolean"}}},
+        "error": {},
+        "timeline": {"type": "array", "items": {"type": "object", "required": ["at", "state"], "properties": {"at": {"type": "string"}, "state": {"type": "string"}, "note": {"type": ["string", "null"]}}}}
+      }
+    },
+    "create_production": {
+      "type": "object", "required": ["topic"],
+      "properties": {"topic": {"type": "string"}, "angle": {"type": ["string", "null"]}, "markets": {"type": ["array", "null"]}, "notes": {"type": ["string", "null"]}}
+    },
+    "mark_uploaded": {
+      "type": "object", "required": ["video_url"],
+      "properties": {"video_url": {"type": "string", "description": "A YouTube URL (watch, shorts or youtu.be) or a bare 11-character video id"}}
+    },
+    "overview": {
+      "type": "object", "required": ["pipeline", "channel", "markets", "alerts"],
+      "properties": {
+        "pipeline": {"type": "object", "properties": {"active": {"type": "array", "items": {"$ref": "#/$defs/production_summary"}}, "queued": {"type": "integer"}, "next_runs": {"type": "array", "items": {"type": "object", "properties": {"job": {"type": "string"}, "at": {"type": "string"}}}}, "last_research_at": {"type": ["string", "null"]}}},
+        "channel": {"type": "object", "properties": {"connected": {"type": "boolean"}, "channel_name": {"type": ["string", "null"]}, "subscribers": {"type": ["number", "null"]}, "views_28d": {"type": ["number", "null"]}, "watch_hours_28d": {"type": ["number", "null"]}, "revenue_28d_usd": {"type": ["number", "null"]}, "rpm_28d_usd": {"type": ["number", "null"]}}},
+        "markets": {"type": "array", "items": {"type": "object", "properties": {"code": {"type": "string"}, "name": {"type": "string"}, "weight": {"type": "number"}, "views_28d": {"type": ["number", "null"]}, "revenue_28d_usd": {"type": ["number", "null"]}}}},
+        "alerts": {"type": "array", "items": {"type": "object", "required": ["level", "message"], "properties": {"level": {"enum": ["info", "warning", "error"]}, "message": {"type": "string"}, "link": {"type": ["string", "null"]}}}}
+      }
+    },
+    "status": {
+      "type": "object", "required": ["services"],
+      "properties": {
+        "services": {"type": "object", "additionalProperties": {"type": "object", "properties": {"ok": {"type": "boolean"}, "url": {"type": "string"}, "detail": {}}}},
+        "claude": {"oneOf": [{"$ref": "accounts.schema.json"}, {"type": "null"}]},
+        "youtube": {"type": ["object", "null"]},
+        "engine": {"type": ["object", "null"]}
+      }
+    },
+    "event": {
+      "type": "object", "required": ["seq", "at", "type"],
+      "properties": {"seq": {"type": "integer"}, "at": {"type": "string"}, "type": {"type": "string"}, "production_id": {"type": ["string", "null"]}, "data": {}}
+    }
+  }
+}

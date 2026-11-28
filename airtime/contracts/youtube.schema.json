@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://airtime.local/contracts/youtube.schema.json",
+  "title": "H. YouTube (127.0.0.1:8003, drives the host Chrome over CDP)",
+  "description": "GET /v1/session; POST /v1/uploads → upload status; GET /v1/uploads/{id}; POST /v1/analytics/sync → {sync_id}; GET /v1/analytics/sync/{id}; POST /v1/search; POST /v1/calibrate.",
+  "$defs": {
+    "session": {
+      "type": "object", "required": ["chrome", "youtube"],
+      "properties": {
+        "chrome": {"type": "object", "required": ["reachable"], "properties": {"reachable": {"type": "boolean"}, "version": {"type": ["string", "null"]}}},
+        "youtube": {"type": "object", "required": ["logged_in"], "properties": {"logged_in": {"type": "boolean"}, "channel_id": {"type": ["string", "null"]}, "channel_name": {"type": ["string", "null"]}}}
+      }
+    },
+    "upload_request": {
+      "type": "object", "required": ["upload_id", "video_path", "title", "description", "visibility"],
+      "properties": {
+        "upload_id": {"type": "string", "pattern": "^upl_"},
+        "video_path": {"$ref": "common.schema.json#/$defs/abs_path"},
+        "resume_video_id": {"type": ["string", "null"], "description": "Continue on this already-created video's edit page instead of uploading again"},
+        "title": {"type": "string", "maxLength": 100},
+        "description": {"type": "string", "maxLength": 5000},
+        "tags": {"type": "array", "items": {"type": "string"}},
+        "thumbnail_path": {"type": ["string", "null"]},
+        "category": {"type": ["string", "null"]},
+        "language": {"type": ["string", "null"]},
+        "made_for_kids": {"type": "boolean"},
+        "altered_content": {"type": "boolean"},
+        "playlist": {"type": ["string", "null"]},
+        "visibility": {"enum": ["public", "unlisted", "private"]},
+        "schedule_at": {"type": ["string", "null"]},
+        "captions": {"type": "array", "items": {"type": "object", "required": ["language", "path"], "properties": {"language": {"type": "string"}, "path": {"type": "string"}}}},
+        "localizations": {"type": "array", "items": {"type": "object", "required": ["language", "title"], "properties": {"language": {"type": "string"}, "title": {"type": "string"}, "description": {"type": "string"}}}},
+        "dry_run": {"type": "boolean"}
+      }
+    },
+    "upload_status": {
+      "type": "object", "required": ["upload_id", "state", "steps"],
+      "properties": {
+        "upload_id": {"type": "string"},
+        "state": {"enum": ["queued", "running", "scheduled", "published", "failed", "needs_attention"]},
+        "video_id": {"type": ["string", "null"]},
+        "url": {"type": ["string", "null"]},
+        "steps": {"type": "array", "items": {"type": "object", "required": ["name", "ok"], "properties": {"name": {"type": "string"}, "ok": {"type": "boolean"}, "screenshot": {"type": ["string", "null"]}, "at": {"type": ["string", "null"]}, "detail": {"type": ["string", "null"]}}}},
+        "error": {"type": ["object", "string", "null"]}
+      }
+    },
+    "analytics_sync_request": {
+      "type": "object", "required": ["period"],
+      "properties": {"period": {"enum": ["last_7_days", "last_28_days", "last_90_days", "lifetime"]}, "video_ids": {"type": ["array", "null"], "items": {"type": "string"}}}
+    },
+    "video_metrics": {
+      "type": "object",
+      "properties": {
+        "views": {"type": ["number", "null"]}, "engaged_views": {"type": ["number", "null"]}, "watch_hours": {"type": ["number", "null"]},
+        "avg_view_duration_s": {"type": ["number", "null"]}, "avg_view_pct": {"type": ["number", "null"]}, "impressions": {"type": ["number", "null"]},
+        "ctr_pct": {"type": ["number", "null"]}, "viewed_vs_swiped_pct": {"type": ["number", "null"]}, "likes": {"type": ["number", "null"]},
+        "comments": {"type": ["number", "null"]}, "shares": {"type": ["number", "null"]}, "subscribers_gained": {"type": ["number", "null"]},
+        "estimated_revenue_usd": {"type": ["number", "null"]}, "rpm_usd": {"type": ["number", "null"]}
+      }
+    },
+    "analytics_snapshot": {
+      "type": "object", "required": ["taken_at", "period", "channel", "videos"],
+      "properties": {
+        "taken_at": {"type": "string"},
+        "period": {"type": "object", "properties": {"start": {"type": "string"}, "end": {"type": "string"}}},
+        "channel": {"type": "object", "properties": {"subscribers": {"type": ["number", "null"]}, "views": {"type": ["number", "null"]}, "watch_hours": {"type": ["number", "null"]}, "estimated_revenue_usd": {"type": ["number", "null"]}}},
+        "videos": {
+          "type": "array",
+          "items": {
+            "type": "object", "required": ["video_id", "metrics"],
+            "properties": {
+              "video_id": {"type": "string"}, "title": {"type": ["string", "null"]}, "published_at": {"type": ["string", "null"]}, "is_short": {"type": ["boolean", "null"]},
+              "metrics": {"$ref": "#/$defs/video_metrics"},
+              "by_country": {"type": "array", "items": {"type": "object", "properties": {"country": {"type": "string"}, "views": {"type": ["number", "null"]}, "watch_hours": {"type": ["number", "null"]}, "estimated_revenue_usd": {"type": ["number", "null"]}}}},
+              "traffic_sources": {"type": "array", "items": {"type": "object", "properties": {"source": {"type": "string"}, "views": {"type": ["number", "null"]}}}},
+              "retention": {"type": "array", "items": {"type": "object", "properties": {"t_ratio": {"type": "number"}, "audience_watch_ratio": {"type": "number"}}}}
+            }
+          }
+        },
+        "missing": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "analytics_sync_status": {
+      "type": "object", "required": ["state"],
+      "properties": {"sync_id": {"type": "string"}, "state": {"enum": ["queued", "running", "succeeded", "failed", "needs_attention"]}, "snapshot": {"oneOf": [{"$ref": "#/$defs/analytics_snapshot"}, {"type": "null"}]}, "error": {}}
+    },
+    "search_request": {
+      "type": "object", "required": ["query", "market"],
+      "properties": {"query": {"type": "string"}, "market": {"type": "string"}, "language": {"type": "string"}, "filters": {"type": "object", "properties": {"upload_date": {"type": "string"}, "type": {"type": "string"}, "sort": {"type": "string"}}}}
+    },
+    "calibration": {
+      "type": "object", "required": ["steps"],
+      "properties": {"steps": {"type": "array", "items": {"type": "object", "required": ["name", "ok"], "properties": {"name": {"type": "string"}, "selector": {"type": ["string", "null"]}, "ok": {"type": "boolean"}, "screenshot": {"type": ["string", "null"]}}}}}
+    }
+  }
+}

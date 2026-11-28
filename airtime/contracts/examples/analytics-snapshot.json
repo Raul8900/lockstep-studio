@@ -1,0 +1,13 @@
+{
+  "taken_at": "2026-11-30T00:15:00Z",
+  "period": {"start": "2026-11-02", "end": "2026-11-29"},
+  "channel": {"subscribers": 1520, "views": 241000, "watch_hours": 1310.5, "estimated_revenue_usd": 41.2},
+  "videos": [{
+    "video_id": "dQw4w9WgXcQ", "title": "Voyager 1 Is Now One Light-Day Away", "published_at": "2026-11-29T00:00:00Z", "is_short": true,
+    "metrics": {"views": 18400, "engaged_views": 15100, "watch_hours": 160.2, "avg_view_duration_s": 31.3, "avg_view_pct": 67.8, "impressions": null, "ctr_pct": null, "viewed_vs_swiped_pct": 68.5, "likes": 950, "comments": 41, "shares": 77, "subscribers_gained": 63, "estimated_revenue_usd": 2.6, "rpm_usd": 0.14},
+    "by_country": [{"country": "US", "views": 7300, "watch_hours": 64.1, "estimated_revenue_usd": 1.7}],
+    "traffic_sources": [{"source": "Shorts feed", "views": 16900}],
+    "retention": [{"t_ratio": 0.0, "audience_watch_ratio": 1.0}, {"t_ratio": 0.5, "audience_watch_ratio": 0.62}, {"t_ratio": 1.0, "audience_watch_ratio": 0.41}]
+  }],
+  "missing": ["impressions and CTR are not reported for Shorts"]
+}

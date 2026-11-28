@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://airtime.local/contracts/config.schema.json",
+  "title": "J. Config files (airtime/config/*.yaml)",
+  "$defs": {
+    "cron": {"type": "string", "pattern": "^\\S+ \\S+ \\S+ \\S+ \\S+$"},
+    "markets": {
+      "type": "object", "required": ["markets"],
+      "properties": {
+        "markets": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "required": ["code", "name", "languages", "tz", "prime_time", "weight", "rpm_index", "enabled"],
+            "properties": {
+              "code": {"type": "string", "pattern": "^[A-Z]{2}$"}, "name": {"type": "string"},
+              "languages": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+              "tz": {"type": "string"}, "prime_time": {"type": "string", "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"},
+              "weight": {"type": "number", "minimum": 0, "maximum": 1}, "rpm_index": {"type": "number", "minimum": 0},
+              "enabled": {"type": "boolean"}
+            }
+          }
+        },
+        "translate_to": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "rubric": {
+      "type": "object", "required": ["threshold", "max_rounds", "dimensions", "hard_gates", "calibration"],
+      "properties": {
+        "threshold": {"type": "number", "minimum": 0, "maximum": 100},
+        "max_rounds": {"type": "integer", "minimum": 0},
+        "dimensions": {"type": "array", "items": {"type": "object", "required": ["id", "weight", "what"], "properties": {"id": {"type": "string"}, "weight": {"type": "number", "minimum": 0}, "what": {"type": "string"}, "deterministic": {"type": "boolean"}}}},
+        "hard_gates": {"type": "array", "items": {"type": "object", "required": ["dimension", "min"], "properties": {"dimension": {"type": "string"}, "min": {"type": "number"}}}},
+        "calibration": {"type": "object", "required": ["min_videos", "max_weight_change", "window_days"]}
+      }
+    },
+    "autopilot": {
+      "type": "object", "required": ["mode", "auto_upload", "upload_visibility", "upload_max_attempts", "timezone", "schedules", "limits", "timing"],
+      "properties": {
+        "mode": {"enum": ["off", "assist", "auto"]},
+        "auto_upload": {"type": "boolean"},
+        "upload_visibility": {"enum": ["public", "unlisted", "private"]},
+        "upload_max_attempts": {"type": "integer", "minimum": 1, "maximum": 10},
+        "timezone": {"type": "string"},
+        "schedules": {"type": "object", "required": ["research_cron", "production_cron", "analytics_cron", "learning_cron"], "additionalProperties": {"$ref": "#/$defs/cron"}},
+        "limits": {"type": "object", "required": ["max_productions_per_day", "max_concurrent"], "properties": {"max_productions_per_day": {"type": "integer", "minimum": 0}, "max_concurrent": {"type": "integer", "minimum": 1}}},
+        "timing": {"type": "object", "required": ["schedule_strategy", "half_life_days", "max_age_days", "signal_max_age_days", "topic_cooldown_days"]},
+        "analytics_checkpoints_h": {"type": "array", "items": {"type": "number"}},
+        "markets_refit": {"type": "object"}
+      }
+    },
+    "roles": {
+      "type": "object", "required": ["defaults", "roles"],
+      "properties": {
+        "defaults": {"type": "object", "required": ["model", "effort"], "properties": {"model": {"type": "string"}, "effort": {"enum": ["low", "medium", "high", "xhigh", "max"]}, "max_turns": {"type": "integer"}, "timeout_s": {"type": "integer"}}},
+        "roles": {"type": "object", "additionalProperties": {"type": "object", "required": ["tools"], "properties": {"tools": {"type": "array", "items": {"type": "string"}}, "max_turns": {"type": "integer"}, "timeout_s": {"type": "integer"}, "model": {"type": "string"}, "effort": {"type": "string"}}}}
+      }
+    },
+    "claude": {
+      "type": "object", "required": ["strategy", "accounts"],
+      "properties": {
+        "strategy": {"enum": ["least_used", "ordered"]},
+        "cooldown_default_min": {"type": "number", "minimum": 1},
+        "status_ttl_s": {"type": "number", "minimum": 0},
+        "accounts": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["id", "config_dir", "enabled"], "properties": {"id": {"type": "string", "pattern": "^[a-z0-9_-]+$"}, "config_dir": {"type": "string"}, "enabled": {"type": "boolean"}}}}
+      }
+    }
+  }
+}

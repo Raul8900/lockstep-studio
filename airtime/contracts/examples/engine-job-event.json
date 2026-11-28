@@ -1,0 +1,1 @@
+{"seq": 57, "ts": "2026-11-28T18:22:10Z", "job_id": "job_01JDX1M2N3P4Q5R6S7T8V9W0X1", "revision": 0, "type": "stage.changed", "stage": "voicing", "data": {"from": "scripting", "tool": "Bash", "command": "bin/lockstep voice voyager-light-day"}}

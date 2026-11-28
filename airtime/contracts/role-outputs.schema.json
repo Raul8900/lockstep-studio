@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://airtime.local/contracts/role-outputs.schema.json",
+  "title": "F. Brain role outputs",
+  "description": "The structured output of each brain role (BrainRun.output). brain passes the matching $def to `claude -p --json-schema`.",
+  "$defs": {
+    "ideator": {
+      "type": "object", "required": ["candidates"],
+      "properties": {
+        "candidates": {
+          "type": "array", "maxItems": 15,
+          "items": {
+            "type": "object", "required": ["topic", "angle", "queries", "why"],
+            "properties": {
+              "topic": {"type": "string"}, "angle": {"type": "string"},
+              "queries": {"type": "array", "items": {"type": "object", "required": ["market", "language", "query"], "properties": {"market": {"type": "string"}, "language": {"type": "string"}, "query": {"type": "string"}}}},
+              "source_items": {"type": "array", "items": {"type": "string"}},
+              "why": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "strategist": {
+      "type": "object", "required": ["opportunities"],
+      "properties": {
+        "opportunities": {
+          "type": "array", "maxItems": 5,
+          "items": {
+            "type": "object", "required": ["topic", "angle", "format", "markets", "scores", "priority", "why"],
+            "properties": {
+              "topic": {"type": "string"}, "angle": {"type": "string"}, "format": {"enum": ["short", "long"]},
+              "markets": {"type": "array", "items": {"type": "object", "required": ["code", "weight"], "properties": {"code": {"type": "string"}, "weight": {"type": "number"}, "evidence": {"type": "array", "items": {"type": "string"}}}}},
+              "scores": {
+                "type": "object", "required": ["demand", "timeliness", "competition_gap", "channel_fit", "revenue_potential", "explainability"],
+                "additionalProperties": {"type": "number", "minimum": 0, "maximum": 100}
+              },
+              "priority": {"type": "number"},
+              "evidence": {"type": "array", "items": {"type": "object", "properties": {"source": {"type": "string"}, "title": {"type": "string"}, "url": {"type": "string"}, "metric": {"type": "string"}}}},
+              "why": {"type": "string"},
+              "risks": {"type": "array", "items": {"type": "string"}},
+              "expires_in_days": {"type": "number"}
+            }
+          }
+        }
+      }
+    },
+    "brief_writer": {
+      "description": "A GrowthBrief without brief_id, opportunity_id, created_at and rubric (control adds them).",
+      "type": "object",
+      "required": ["format", "duration_s", "topic", "angle", "why_now", "audience", "markets", "language", "tone", "hook_options", "title_options", "keywords", "must_include", "avoid", "visual_direction", "give_time_to", "music_mood", "competitors", "engine_request_md"]
+    },
+    "critic": {
+      "type": "object", "required": ["dimensions", "review_notes", "predicted"],
+      "properties": {
+        "dimensions": {
+          "type": "array",
+          "items": {"type": "object", "required": ["id", "score", "evidence"], "properties": {"id": {"type": "string"}, "score": {"type": "number", "minimum": 0, "maximum": 100}, "evidence": {"type": "string"}, "issues": {"type": "array", "items": {"type": "string"}}}}
+        },
+        "review_notes": {
+          "type": "object", "required": ["summary", "notes", "keep", "engine_feedback_md"],
+          "properties": {"summary": {"type": "string"}, "notes": {"type": "array"}, "keep": {"type": "array", "items": {"type": "string"}}, "engine_feedback_md": {"type": "string"}}
+        },
+        "predicted": {"type": "object", "properties": {"avg_view_pct": {"type": ["number", "null"]}, "viewed_vs_swiped_pct": {"type": ["number", "null"]}}}
+      }
+    },
+    "seo": {
+      "type": "object", "required": ["title", "description", "tags", "hashtags", "category", "default_language", "localizations"],
+      "properties": {
+        "title": {"type": "string", "maxLength": 100},
+        "title_alternates": {"type": "array", "items": {"type": "string", "maxLength": 100}},
+        "description": {"type": "string", "maxLength": 5000},
+        "tags": {"type": "array", "items": {"type": "string"}},
+        "hashtags": {"type": "array", "items": {"type": "string"}},
+        "category": {"type": "string"},
+        "default_language": {"type": "string"},
+        "localizations": {"type": "array", "items": {"type": "object", "required": ["language", "title", "description"], "properties": {"language": {"type": "string"}, "title": {"type": "string", "maxLength": 100}, "description": {"type": "string", "maxLength": 5000}}}},
+        "thumbnail": {"type": ["object", "null"], "properties": {"path": {"type": "string"}, "why": {"type": "string"}}},
+        "pinned_comment": {"type": ["string", "null"]},
+        "schedule": {"type": ["object", "null"], "properties": {"market": {"type": "string"}, "why": {"type": "string"}}}
+      }
+    },
+    "translator": {
+      "type": "object", "required": ["translations"],
+      "properties": {
+        "translations": {
+          "type": "array",
+          "items": {"type": "object", "required": ["language", "lines"], "properties": {"language": {"type": "string"}, "lines": {"type": "array", "items": {"type": "object", "required": ["i", "text"], "properties": {"i": {"type": "integer"}, "text": {"type": "string"}}}}}}
+        }
+      }
+    },
+    "analyst": {
+      "title": "Diagnosis",
+      "type": "object", "required": ["video_id", "as_of", "verdict", "primary_cause", "findings", "actions"],
+      "properties": {
+        "video_id": {"type": "string"}, "as_of": {"type": "string"},
+        "verdict": {"enum": ["outperforming", "on_track", "underperforming", "too_early"]},
+        "percentile_vs_channel": {"type": ["number", "null"]},
+        "primary_cause": {"enum": ["hook", "packaging", "topic_demand", "retention_midroll", "distribution", "timing", "market_mismatch", "unknown"]},
+        "findings": {"type": "array", "items": {"type": "object", "properties": {"metric": {"type": "string"}, "value": {}, "baseline": {}, "interpretation": {"type": "string"}}}},
+        "retention_drops": {"type": "array", "items": {"type": "object", "properties": {"t_s": {"type": "number"}, "drop_pct": {"type": "number"}, "line_id": {"type": ["string", "null"]}, "beat": {"type": ["string", "null"]}, "on_screen": {"type": ["string", "null"]}}}},
+        "actions": {"type": "array", "items": {"type": "string"}},
+        "hypotheses": {"type": "array", "items": {"type": "object", "properties": {"statement": {"type": "string"}, "confidence": {"type": "number"}}}}
+      }
+    },
+    "learner": {
+      "type": "object", "required": ["add", "confirm", "retire"],
+      "properties": {
+        "add": {"type": "array", "items": {"type": "object", "required": ["scope", "statement", "confidence"], "properties": {"scope": {"type": "string"}, "statement": {"type": "string"}, "evidence": {"type": "array", "items": {"type": "string"}}, "effect": {"type": "string"}, "confidence": {"type": "number", "minimum": 0, "maximum": 1}, "applies_to": {"type": "array", "items": {"type": "string"}}}}},
+        "confirm": {"type": "array", "items": {"type": "string"}},
+        "retire": {"type": "array", "items": {"type": "object", "required": ["id", "why"], "properties": {"id": {"type": "string"}, "why": {"type": "string"}}}}
+      }
+    }
+  }
+}
