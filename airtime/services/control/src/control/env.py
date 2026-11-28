@@ -22,9 +22,12 @@ class Env(BaseSettings):
     youtube_url: str = "http://127.0.0.1:8003"
     engine_url: str = "http://127.0.0.1:8004"
 
-    # How often the worker advances productions and tasks, and polls brain runs.
+    # How often the worker looks for work, and how often a brain run, engine job, upload or
+    # analytics export in progress is polled.
     control_tick_s: float = 5.0
-    control_brain_poll_s: float = 3.0
+    control_poll_s: float = 3.0
+    # How long a service that stopped answering is waited for before the step gives up.
+    control_unreachable_grace_s: float = 300.0
     # Pause between a failed upload attempt and the next one.
     control_upload_retry_s: float = 30.0
     # Run the worker and the crons in this process (tests drive the worker themselves).
