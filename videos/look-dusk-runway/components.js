@@ -473,9 +473,18 @@ async function airfield(T, w, o = {}) {
     const g = new T.BufferGeometry(); g.setAttribute('position', new T.Float32BufferAttribute(pos, 3)); g.setIndex(idx); g.computeVertexNormals();
     const m = new T.Mesh(g, dark); m.material.side = T.DoubleSide; w.scene.add(m);
   }
-  const hangarMat = w.mat('#6d737b', { roughness: 0.7 });
+  /* hangars: walls, a barrel roof, and a ribbed door facing the runway */
+  const hangarMat = w.mat('#8a9098', { roughness: 0.7 }), roofMat = w.mat('#5e646c', { roughness: 0.6, side: T.DoubleSide });
+  const doorMat = w.mat('#b9bec4', { roughness: 0.6 }), ribMat = w.mat('#7a8088', { roughness: 0.6 });
   for (const [x, z, wd, ht, dp] of [[320, -520, 70, 22, 60], [410, -650, 90, 26, 70], [300, -760, 50, 16, 40], [-380, -900, 60, 18, 50], [520, -980, 40, 14, 40]]) {
-    const b = new T.Mesh(new T.BoxGeometry(wd, ht, dp), hangarMat); b.position.set(x, ht / 2, z); b.castShadow = true; w.scene.add(b);
+    const g = new T.Group(); g.position.set(x, 0, z); w.scene.add(g);
+    const wallH = ht * 0.62, face = -Math.sign(x) * (wd / 2 + 0.05);
+    const walls = new T.Mesh(new T.BoxGeometry(wd, wallH, dp), hangarMat); walls.position.y = wallH / 2; walls.castShadow = true; g.add(walls);
+    const roof = new T.Mesh(new T.CylinderGeometry(dp / 2, dp / 2, wd, 32, 1, false, 0, Math.PI), roofMat);
+    roof.rotation.z = Math.PI / 2; roof.scale.set((ht - wallH) / (dp / 2), 1, 1); roof.position.y = wallH; roof.castShadow = true;   // the arch faces the runway
+    const roofG = new T.Group(); roofG.add(roof); g.add(roofG);
+    const door = new T.Mesh(new T.PlaneGeometry(dp * 0.86, wallH * 0.86), doorMat); door.position.set(face, wallH * 0.43, 0); door.rotation.y = -Math.sign(x) * Math.PI / 2; g.add(door);
+    for (let k = 1; k < 8; k++) { const rib = new T.Mesh(new T.PlaneGeometry(0.5, wallH * 0.86), ribMat); rib.position.set(face - Math.sign(x) * 0.05, wallH * 0.43, -dp * 0.43 + (k * dp * 0.86) / 8); rib.rotation.y = door.rotation.y; g.add(rib); }
   }
   {
     const tw = new T.Group(); tw.position.set(470, 0, -860); w.scene.add(tw);

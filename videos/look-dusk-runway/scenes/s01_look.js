@@ -15,7 +15,7 @@
   const world = world3d(async (T, w) => {
     await w.atmosphere({
       sun: SUN, sunColor: [11, 5.8, 2.4], zenith: [0.035, 0.11, 0.40], horizon: [1.0, 0.72, 0.46], ground: [0.06, 0.06, 0.05],
-      sunSize: 0.009, clouds: 0.25, cloudHeight: 2400, cloudScale: 1300, wind: [0.0012, 0.0004], stars: 0,
+      sunSize: 0.009, clouds: 0.5, cloudHeight: 1800, cloudScale: 700, wind: [0.0012, 0.0004], stars: 0,
       haze: { density: 0.00012, falloff: 0.03, tint: [0.8, 0.74, 0.72], sunScatter: 0.004 }, env: 0.8,
     });
     sunL = w.sun({ dir: [SUN[0] * 300, SUN[1] * 300, SUN[2] * 300], intensity: 6.0, color: '#ffbf7a', area: 40 });
@@ -30,15 +30,17 @@
     };
   }, { film: { samples: 16, shutter: 0.5, aperture: 0.02, focus: 200, exposure: 1.0, saturation: 1.12, contrast: 1.06 } });
 
-  /* the camera: fixed at the runway edge, a long lens widening from 16° to 44° as the aircraft
-     comes, a gentle handheld drift, focus on the aircraft */
+  /* the camera: fixed at the runway edge on a long lens, framed tight on the aircraft: the frame's
+     width at the aircraft closes from 26 m to 21 m as it comes, so it grows and fills the picture,
+     the wingtips leaving the frame; a gentle handheld drift, focus on the aircraft */
   const cam = (t) => {
-    const z = zAt(t), tgt = [0, 3.2, z + 3];
+    const z = zAt(t), tgt = [0, 3.6, z + 7];
     const sh = handheld(t, 0.035, 3, 0.6);
-    const k = tw(t, 0, 6, E.ioSine), fov = lerp(16, 44, k);
+    const k = tw(t, 0, 6, E.ioSine);
     const d = Math.hypot(tgt[0] - CAM[0], tgt[1] - CAM[1], tgt[2] - CAM[2]);
-    const to = [tgt[0], tgt[1] + d * Math.tan(fov * 0.22 * Math.PI / 180), tgt[2]];   // aim above the aircraft: it sits in the lower third, under the sky
-    return { from: CAM, to: [to[0] + sh[0] * d * 0.05, to[1] + sh[1] * d * 0.05, to[2]], fov, focus: d };
+    const fov = 2 * Math.atan(lerp(26, 21, k) / 2 / d / (1080 / 1920)) * 180 / Math.PI;
+    const to = [tgt[0], tgt[1] + d * Math.tan(fov * 0.06 * Math.PI / 180), tgt[2]];   // the aircraft a little below the middle
+    return { from: CAM, to: [to[0] + sh[0] * d * 0.02, to[1] + sh[1] * d * 0.02, to[2]], fov, focus: d };
   };
 
   addScene('look', function (ctx, t) {
