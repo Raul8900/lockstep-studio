@@ -1,0 +1,52 @@
+[project]
+name = "airtime-youtube"
+version = "0.1.0"
+description = "Airtime youtube: deterministic YouTube Studio automation over the Chrome DevTools protocol"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn>=0.32",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+    "httpx>=0.27",
+    "playwright>=1.51",
+    "pyyaml>=6.0",
+    "pillow>=11.0",
+]
+
+[project.scripts]
+airtime-youtube = "youtube.__main__:main"
+airtime-mock-studio = "youtube.mockstudio.server:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+    "ruff>=0.8",
+    "jsonschema>=4.23",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/youtube"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
+testpaths = ["tests"]
+markers = [
+    "browser: needs a Chromium reached over CDP (started by the test session)",
+]
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "ASYNC", "RUF"]
+ignore = ["RUF001", "RUF002", "RUF003", "E501"]
