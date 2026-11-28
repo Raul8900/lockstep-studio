@@ -1,0 +1,13 @@
+# The Claude Code accounts on this machine, used like T3 uses them: brain picks one per run and
+# fails over when one hits a usage limit or is signed out. Claude always runs on the host.
+strategy: least_used          # least_used | ordered
+cooldown_default_min: 60      # when a limit message has no parsable reset time
+status_ttl_s: 300             # how long a `claude auth status` result is trusted
+
+accounts:
+  - id: main
+    config_dir: ~/.claude     # the default directory: CLAUDE_CONFIG_DIR is left unset for it
+    enabled: true
+  - id: second
+    config_dir: ~/.claude-second
+    enabled: true
