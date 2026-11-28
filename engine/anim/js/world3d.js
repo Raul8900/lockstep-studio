@@ -26,6 +26,10 @@
      view3d(ctx, lab, t, camPath(t, [[c.a, { from: [0, 2, 8], to: [0, 1, 0] }], [c.b, { from: [2, 1.4, 3], to: [0, 1.2, 0] }]]));
      view3d(ctx, lab, t, orbit(t, { center: [0, 1, 0], radius: 5, height: 1.8, speed: 0.15 }));
 
+   A film world (world3d(build, { film: { … } }), film3d.js) is rendered many times a frame for
+   motion blur, depth of field and anti-aliasing, with fog, bloom, tone mapping and grain; its
+   camera may be a function of t, so the camera moves inside the shutter too.
+
    A world is drawn with a transparent background unless it has a sky, a background colour
    (w.background('#101418')) — so a 3D object can stand in
    a photograph: draw photo() first, then view3d() over it.
@@ -195,6 +199,7 @@ async function load3D() {
     w.camera = new T3.PerspectiveCamera(40, W / H, 0.05, 500);
     const api = _worldAPI(w);
     if (typeof kit3d === 'function') Object.assign(api, kit3d(T3, api, w));   // kit3d.js: things built in code
+    if (typeof film3d === 'function') Object.assign(api, film3d(T3, api, w)); // film3d.js: sky, shaders, the film camera
     w.update = (await w.build(T3, api)) || null;
     if (w.o.exposure != null) w.exposure = w.o.exposure;
     w.ready = true;
@@ -208,6 +213,8 @@ function view3d(ctx, w, t, cam, o = {}) {
   if (!w.ready) return null;
   const a = o.alpha == null ? 1 : o.alpha;
   if (a <= 0.003) return null;
+  if (w.o.film && typeof filmRender === 'function') return filmRender(ctx, w, t, cam, o);   // film3d.js
+  if (typeof cam === 'function') cam = cam(t);
   if (w.update) w.update(t);
   const c = w.camera, f = cam.from || [0, 1.6, 6], to = cam.to || [0, 1, 0];
   c.position.set(f[0], f[1], f[2]); c.up.set(0, 1, 0);

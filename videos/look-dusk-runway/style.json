@@ -1,0 +1,8 @@
+{
+  "name": "film-dusk",
+  "about": "A look test for film worlds: the 3D world does its own light, lens and grade, so the 2D finish stays out of the way.",
+  "palette": { "accent": "#FFB23F", "alert": "#FF4A3D", "good": "#7CE0A0", "subject": "#8CC8FF", "data": "#C9B8FF" },
+  "grade": { "contrast": 1.0, "saturate": 1.0, "brightness": 1.0 },
+  "post": { "bloom": 0, "vignette": 0, "scrim": 0, "dither": 0 },
+  "transition": { "default": "cut", "duration": 0.3 }
+}

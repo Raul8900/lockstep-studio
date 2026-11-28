@@ -47,7 +47,10 @@ const ENGINE = __dirname;
 const ANIM = path.join(ENGINE, 'anim');
 const ASSETS = path.join(ENGINE, '..', 'assets');
 let STYLE_OVERRIDE = null;      // transitions --style file.json: preview a style other than the video's own
-const W = 1080, H = 1920, FPS = 30, CHUNK = 150;
+const W = 1080, H = 1920, FPS = 30;
+/* frames handed to a worker at a time; film worlds take ~20 s a frame, so a smaller chunk
+   (LOCKSTEP_CHUNK=30) keeps every worker busy to the end of a short shot */
+const CHUNK = Math.max(1, parseInt(process.env.LOCKSTEP_CHUNK || '150', 10));
 const CLIP_W = 1440;            // film frames are cut to at most this width (room for a pan) at the frame's height
 const MIME = { '.wav': 'audio/wav', '.mp3': 'audio/mpeg', '.m4a': 'audio/mp4', '.woff2': 'font/woff2', '.ttf': 'font/ttf', '.otf': 'font/otf', '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.css': 'text/css', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.glb': 'model/gltf-binary', '.gltf': 'model/gltf+json', '.bin': 'application/octet-stream', '.hdr': 'application/octet-stream', '.mp4': 'video/mp4' };
 
@@ -177,6 +180,8 @@ async function openPage(browser, port, debugSafe, special) {
   page.on('pageerror', (e) => console.error('[pageerror]', e.message));
   page.on('console', (m) => { if (m.type() === 'error' && !/404/.test(m.text())) console.error('[console]', m.text()); });
   if (debugSafe) await page.addInitScript(() => { window.DEBUG_SAFE = true; });
+  if (process.env.LOCKSTEP_FILM)        await page.addInitScript((j) => { window.FILM_OVERRIDE = JSON.parse(j); }, process.env.LOCKSTEP_FILM);   // look-dev: film settings to try
+  if (process.env.LOCKSTEP_FILM_SAMPLES) await page.addInitScript((n) => { window.FILM_SAMPLES = n; }, +process.env.LOCKSTEP_FILM_SAMPLES);   // quick looks at a film world
   if (special && special.look) await page.addInitScript(() => { window.LOOK_MODE = true; });
   if (special && special.transitions) await page.addInitScript(() => { window.TRANS_MODE = true; });
   await page.goto(`http://127.0.0.1:${port}/index.html`);
@@ -188,8 +193,12 @@ async function openPage(browser, port, debugSafe, special) {
 
 /* One place to start Chromium. (Forcing SwiftShader with --use-angle=swiftshader made every frame
    about 6x slower — it moves 2D canvases onto the software GPU too — so it is not set: headless
-   Chromium already runs WebGL in software where there is no GPU.) */
-const launchBrowser = () => chromium.launch();
+   Chromium already runs WebGL in software where there is no GPU.)
+   LOCKSTEP_CHROMIUM names a Chromium to use instead of Playwright's own (a machine where Playwright's
+   download is unavailable); LOCKSTEP_CHROMIUM_ARGS adds switches to it. */
+const launchBrowser = () => (process.env.LOCKSTEP_CHROMIUM
+  ? chromium.launch({ executablePath: process.env.LOCKSTEP_CHROMIUM, args: (process.env.LOCKSTEP_CHROMIUM_ARGS || '').split(/\s+/).filter(Boolean) })
+  : chromium.launch());
 
 async function withPage(debugSafe, fn, special) {
   const server = await startServer(); const port = server.address().port;

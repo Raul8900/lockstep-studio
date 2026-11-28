@@ -1,0 +1,7 @@
+{
+  "title": "Look test: an airliner braking at dusk",
+  "output": "look_dusk_runway",
+  "max_seconds": 10,
+  "chapters": [ { "id": "look", "mood": "drone" } ],
+  "lint": { "ignore": [ { "rule": "hex-colour", "file": "components.js", "why": "the real materials of the airliner and the airfield" } ] }
+}

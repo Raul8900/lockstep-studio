@@ -170,6 +170,46 @@ real people appear in real photographs.
 
 Rendering in software takes about 0.2 s a frame with shadows; that is fine for a minute of 3D.
 
+### Film worlds (`film3d.js`): the cinematic look
+
+Pass `{ film: { … } }` as the second argument of `world3d` and `view3d` renders the world like a
+camera instead of a viewport: each frame is the average of `samples` renders spread across the
+shutter (real motion blur) and the lens aperture (real depth of field), in HDR, then bloom,
+halation, an anamorphic streak, lens flare, AgX tone mapping, a lift/gamma/gain grade, chromatic
+aberration and grain. `videos/look-dusk-runway/` is the worked example (an airliner braking on a
+wet runway at dusk, every surface a shader); read its scene and `components.js` before building one.
+
+```js
+const world = world3d(async (T, w) => {
+  await w.atmosphere({ sun: [-0.36, -0.03, -0.93], sunColor: [22, 7.5, 2], zenith: [...], horizon: [...],
+                       clouds: 0.36, stars: 0.25, haze: { density: 0.0008, falloff: 0.045, tint: [...] } });
+  const disc = w.surface({ color: '#8a9096', metalness: 0.8, uniforms: { uGlow: { value: [0, 0, 0] } },
+    glsl: { albedo: `rough = 0.3 + 0.3 * fbm(P.xz * 4.0); h = 0.002 * vnoise(P.xz * 80.0); emit = uGlow * smoothstep(0.4, 0.8, L.y);`,
+            light: `outgoingLight *= 0.9;` } });
+  // each frame: disc.uniforms.uGlow.value = blackbody(900) — hot metal glowing
+  return (t) => { /* poses from t */ };
+}, { film: { samples: 16, shutter: 0.5, aperture: 0.07, focus: 300, exposure: 1.15, bloom: 0.55, threshold: 2.5 } });
+addScene('look', (ctx, t) => view3d(ctx, world, t, (tt) => ({ from, to, fov, focus })));   // cam may be a function of t: it moves inside the shutter
+```
+
+| `w.` | |
+|---|---|
+| `await atmosphere(o)` | an analytic sky in linear HDR (sun disc, twilight glow, forward scatter, a cloud deck lit from below, stars) that also lights the world (PMREM), plus height fog with sky in-scatter: distance turns blue and soft |
+| `surface({ color, roughness, metalness, uniforms, bump, glsl: { pars, albedo, light } })` → material with `.uniforms` | a physical material whose look is written in GLSL: `albedo` sets `base`, `rough`, `metal`, `h` (relief), `emit`, `wet` from `P` (world position), `L` (object position), `UV`, `N`; `light` changes `outgoingLight` after lighting; `pars` holds your own functions. `uT` is the time; the noise library (`fbm`, `ridged`, `voronoi`, `vnoise`) is always there |
+| `mirror({ y, res })` → `{ glsl, uniforms, hide(obj) }` | a planar reflection: `mirror(P, N, rough)` in a surface's `light` code returns the reflected world, blurred by roughness and stretched (wet-road light streaks) |
+| `lights(list, o)` | point lights that stay a crisp size at any distance (runway, city, cockpit lights) |
+| `puffs(n, o)` → `.set(i, at, size, alpha, seed)` · `.commit()` | soft lit smoke, spray and dust |
+| `lathe(profile, o)` · `wing(o)` | bodies of revolution (fuselages, bottles, rockets) and aerofoil wings |
+| `blackbody(K)` · `handheld(t, amp, seed, freq)` | the colour of hot metal; a camera operator's drift |
+
+Film settings (`FILM_DEFAULTS` in film3d.js): `samples`, `shutter` (0.5 = 180°), `aperture`
+(metres; 0 = everything sharp), `focus`, `exposure`, `bloom`, `threshold`, `bloomScatter` (how far
+the glow spreads), `halation`, `streak`, `flare`, `vignette`, `aberration`, `grain`, `saturation`,
+`contrast`, `lift`/`gamma`/`gain`. Look-dev without editing code:
+`LOCKSTEP_FILM='{"exposure":1.4}' LOCKSTEP_FILM_SAMPLES=1 node engine/render.js <video> still 3s`.
+Cost: about 1.2 s a sample in software, so 16 samples ≈ 20 s a frame; a 6-second shot renders in
+about an hour. Look-dev at 1 sample, render at 16.
+
 ## Overlays (`overlays.js`)
 
 Drawn over a picture, film or 3D, with a soft shadow that reads on anything; each builds in with
