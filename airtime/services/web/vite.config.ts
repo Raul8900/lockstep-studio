@@ -41,6 +41,8 @@ const proxy = mock
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), ...(mock ? [mswWorker()] : [])],
+  // A compile-time flag, so the production build drops the mocks entirely.
+  define: { __AIRTIME_MOCK__: JSON.stringify(mock) },
   server: { host: '127.0.0.1', port: 5173, proxy },
   preview: { host: '127.0.0.1', port: 4173, proxy },
   // Pages are lazy-loaded routes, so the chart library only loads with the pages that draw charts.
