@@ -1,0 +1,16 @@
+# brain's roles. Every run is `claude -p` on the host (see claude.yaml for the accounts).
+defaults:
+  model: claude-opus-5-5
+  effort: max
+  max_turns: 30
+  timeout_s: 1800
+
+roles:
+  ideator:      {tools: [WebSearch, WebFetch], max_turns: 40}
+  strategist:   {tools: [WebSearch, WebFetch], max_turns: 40}
+  brief_writer: {tools: [WebSearch, WebFetch], max_turns: 40}
+  critic:       {tools: [Read], max_turns: 25, timeout_s: 1200}
+  analyst:      {tools: [Read], max_turns: 25, timeout_s: 1200}
+  seo:          {tools: [], max_turns: 6, timeout_s: 900}
+  translator:   {tools: [], max_turns: 6, timeout_s: 900}
+  learner:      {tools: [], max_turns: 6, timeout_s: 900}
