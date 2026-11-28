@@ -28,8 +28,10 @@
      w.mirror(o)       a planar reflection (a wet runway, a lake) a surface can sample
      w.lights(list)    point lights as glowing dots that stay visible however far away
      w.puffs(n, o)     soft particles (smoke, steam, dust) placed every frame
-     w.lathe(profile)  a smooth body of revolution (fuselages, bottles, nacelles)
-     w.wing(o)         a tapered, swept wing with a real aerofoil section (wings, fins, blades)
+     w.lathe(profile)  a smooth body of revolution (bottles, nacelles, wheels)
+     w.loft(stations)  a smooth body from measured cross-sections (fuselages, hulls, cars)
+     w.wing(o)         a tapered, swept wing with a real aerofoil section (wings, fins, blades),
+                       straight or kinked (o.stations)
    Helpers: blackbody(kelvin) → linear RGB; handheld(t, amp, seed) → handheld camera offsets.
    ===================================================================== */
 
@@ -363,10 +365,16 @@ diffuseColor.rgb = base; _pRough = rough; _pMetal = metal; _pH = h; _pEmit = emi
         glsl: /* glsl */`
 vec3 mirror(vec3 P, vec3 N, float rough){
   vec4 rp = uMirrorMat * vec4(P, 1.0); vec2 uv = rp.xy / rp.w * 0.5 + 0.5;
-  uv += N.xz * vec2(0.6, 1.0) * 0.08;
-  float r = 1.5 + rough * 48.0; vec3 c = vec3(0.0); float ws = 0.0;
-  for (int i = 0; i < 12; i++) { float a = float(i) * 2.39996, rr = sqrt((float(i) + 0.5) / 12.0);
-    vec2 o = vec2(cos(a), sin(a)) * rr * r * uMirrorTexel * vec2(0.7, 5.0); float w = 1.0 - rr * 0.5;
+  /* relief only nudges the lookup: a bumped normal tilts the reflection by a few pixels, never by a
+     share of the frame (an earlier N.xz * 0.08 moved every reflection up to 8% of the frame away) */
+  uv += clamp(N.xz, -0.2, 0.2) * vec2(0.6, 1.0) * 0.006;
+  /* the blur: a disc stretched a little down the screen (wet-road light streaks), its pattern turned
+     at random per pixel and per film sample, so the samples average into a smooth streak instead of
+     repeating a bright light as a ladder of dots */
+  float r = 1.0 + rough * 36.0; vec3 c = vec3(0.0); float ws = 0.0;
+  float rot = 6.2831853 * fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(0.06711056, 0.00583715))) + fract(uT * 61.7));
+  for (int i = 0; i < 16; i++) { float a = float(i) * 2.39996 + rot, rr = sqrt((float(i) + 0.5) / 16.0);
+    vec2 o = vec2(cos(a), sin(a)) * rr * r * uMirrorTexel * vec2(1.0, 2.2); float w = 1.0 - rr * 0.6;
     c += texture2D(tMirror, clamp(uv + o, 0.001, 0.999)).rgb * w; ws += w; }
   return c / ws;
 }`,
@@ -475,25 +483,82 @@ void main(){ float r = length(vQ); if (r > 1.0) discard;
       return geo;
     },
 
+    /* a smooth body from measured cross-sections, for anything that is not round: a fuselage (a
+       blunt nose, a tail that sweeps up, a deeper belly), a hull, a car. stations [{ z, top, bot,
+       hw, yw, e }, …] in order along z, read off reference drawings: at z the section is two halves
+       meeting at height yw, where the body is widest (half-width hw), the upper half reaching
+       y = top and the lower half y = bot. Each half is a superellipse of exponent e (2 an ellipse,
+       2.2–3 fuller and boxier; o.exp for all), the lower half eb if given (a flat, wide belly). Between stations every value follows a monotone
+       cubic, so the outline is smooth and never bulges past the measurements. hw 0 makes a point
+       (a nose tip); open ends are capped. o.samples along z (packed toward the ends), o.segments
+       around. uv: x along 0..1, y around 0..1 from the top. geo.userData.at(z) → { top, bot, hw,
+       yw, e, eb } at z, to place windows, doors and parts exactly on the skin. */
+    loft(stations, o = {}) {
+      const st = stations.slice().sort((a, b) => a.z - b.z), zs = st.map((s) => s.z);
+      const ex = o.exp || 2;
+      const f = {}; for (const k of ['top', 'bot', 'hw', 'yw', 'e', 'eb']) f[k] = _monotone(zs, st.map((s) => (s[k] != null ? s[k] : k === 'e' ? ex : k === 'eb' ? (s.e != null ? s.e : ex) : 0)));
+      const at = (z) => ({ top: f.top(z), bot: f.bot(z), hw: Math.max(0, f.hw(z)), yw: f.yw(z), e: f.e(z), eb: f.eb(z) });
+      const NZ = o.samples || 240, NA = o.segments || 128, z0 = zs[0], z1 = zs[zs.length - 1];
+      const pos = [], uv = [], idx = [];
+      const pe = (c, e) => Math.sign(c) * Math.pow(Math.abs(c), 2 / e);
+      for (let i = 0; i <= NZ; i++) {
+        const u = i / NZ, ue = 0.35 * u + 0.65 * (0.5 - 0.5 * Math.cos(Math.PI * u)), z = z0 + (z1 - z0) * ue, S = at(z);
+        for (let j = 0; j <= NA; j++) {
+          const th = (j / NA) * Math.PI * 2, sn = Math.sin(th), cs = Math.cos(th);
+          const e = cs >= 0 ? S.e : S.eb, x = S.hw * pe(sn, e), y = S.yw + (cs >= 0 ? S.top - S.yw : S.yw - S.bot) * pe(cs, e);
+          pos.push(x, y, z); uv.push(ue, j / NA);
+        }
+      }
+      const row = NA + 1;
+      for (let i = 0; i < NZ; i++) for (let j = 0; j < NA; j++) { const a = i * row + j, b = a + row; idx.push(a, b, a + 1, a + 1, b, b + 1); }
+      /* caps on ends that are not points */
+      for (const [ri, zz, flip] of [[0, z0, true], [NZ, z1, false]]) {
+        const S = at(zz); if (S.hw < 1e-4) continue;
+        const c = pos.length / 3; pos.push(0, (S.top + S.bot) / 2, zz); uv.push(ri / NZ, 0.5);
+        for (let j = 0; j < NA; j++) { const a = ri * row + j; if (flip) idx.push(c, a + 1, a); else idx.push(c, a, a + 1); }
+      }
+      const g = new T.BufferGeometry();
+      g.setAttribute('position', new T.Float32BufferAttribute(pos, 3)); g.setAttribute('uv', new T.Float32BufferAttribute(uv, 2)); g.setIndex(idx);
+      g.computeVertexNormals();
+      /* outward normals: check the crown of the middle section points up, flip the winding if not */
+      const mid = (NZ >> 1) * row, nrm = g.attributes.normal;
+      if (nrm.getY(mid) < 0) { const ix = g.index.array; for (let k = 0; k < ix.length; k += 3) { const t0 = ix[k]; ix[k] = ix[k + 1]; ix[k + 1] = t0; } g.computeVertexNormals(); }
+      g.userData.at = at;
+      return g;
+    },
+
     /* a wing (or fin, or blade) along +x from its root: o.span, o.root / o.tip (chord, m), o.sweep
        (leading-edge sweep, radians), o.dihedral (radians), o.thick (thickness / chord, 0.12),
-       o.camber (0.02), o.twist (tip washout, radians); built in the xz plane, chord along +z
-       (leading edge at z = 0 at the root) */
+       o.camber (0.02), o.twist (tip washout, radians); built in the xz plane, chord running back
+       along −z (leading edge at z = 0 at the root). A real planform (a kinked trailing edge, a wing
+       root hidden in the body) comes from o.stations [{ s, le, c, y, twist, thick }, …]: at span s,
+       the leading edge le metres back, chord c, raised y; straight lines between them; they replace
+       span, root, tip, sweep, dihedral and twist. */
     wing(o = {}) {
       const span = o.span || 10, root = o.root || 4, tip = o.tip || 1.2, sweep = o.sweep || 0.4, dih = o.dihedral || 0, th = o.thick || 0.12, cam = o.camber == null ? 0.02 : o.camber, tw = o.twist || 0;
       const NS = o.spanSegs || 24, NC = o.chordSegs || 40;
-      const af = (x) => { // NACA 4-digit, x 0..1: [upper, lower] y / chord
+      const af = (x, th) => { // NACA 4-digit, x 0..1: [upper, lower] y / chord
         const yt = 5 * th * (0.2969 * Math.sqrt(x) - 0.126 * x - 0.3516 * x * x + 0.2843 * x ** 3 - 0.1036 * x ** 4);
         const p = 0.4, yc = x < p ? cam / (p * p) * (2 * p * x - x * x) : cam / ((1 - p) ** 2) * ((1 - 2 * p) + 2 * p * x - x * x);
         return [yc + yt, yc - yt];
       };
+      const ST = o.stations && o.stations.slice().sort((p, q) => p.s - q.s);
+      const stAt = (x) => {                              // the planform at span x, from the stations
+        let i = 0; while (i < ST.length - 2 && x > ST[i + 1].s) i++;
+        const p = ST[i], q = ST[i + 1], k = Math.min(1, Math.max(0, (x - p.s) / (q.s - p.s || 1)));
+        const L = (a, b, d) => (a == null ? d : a) + ((b == null ? d : b) - (a == null ? d : a)) * k;
+        return { c: L(p.c, q.c, 1), le: L(p.le, q.le, 0), y: L(p.y, q.y, 0), tw: L(p.twist, q.twist, 0), th: L(p.thick, q.thick, th) };
+      };
+      const s0 = ST ? ST[0].s : 0, s1 = ST ? ST[ST.length - 1].s : span;
       const pos = [], idx = [], uv = [];
       for (let s = 0; s <= NS; s++) {
-        const u = s / NS, x = u * span, c = root + (tip - root) * u, le = Math.tan(sweep) * x, yOff = Math.tan(dih) * x, a = -tw * u;
+        const u = s / NS, x = s0 + (s1 - s0) * u;
+        let c = root + (tip - root) * u, le = Math.tan(sweep) * x, yOff = Math.tan(dih) * x, a = -tw * u, thk = th;
+        if (ST) { const q = stAt(x); c = q.c; le = q.le; yOff = q.y; a = -q.tw; thk = q.th; }
         for (let k = 0; k <= NC * 2; k++) {
           const side = k <= NC ? 0 : 1, kk = k <= NC ? NC - k : k - NC;
           const xc = 0.5 - 0.5 * Math.cos(Math.PI * kk / NC);
-          const yy = af(xc)[side] * c, zz = xc * c;
+          const yy = af(xc, thk)[side] * c, zz = xc * c;
           const zr = zz * Math.cos(a) - yy * Math.sin(a), yr = zz * Math.sin(a) + yy * Math.cos(a);
           pos.push(x, yOff + yr, -(le + zr)); uv.push(u, k / (NC * 2));
         }
@@ -513,6 +578,25 @@ void main(){ float r = length(vQ); if (r > 1.0) discard;
   };
   return api;
 }
+/* a monotone cubic through (xs[i], ys[i]) (Fritsch–Carlson): smooth, and never overshoots the points */
+function _monotone(xs, ys) {
+  const n = xs.length; if (n === 1) return () => ys[0];
+  const d = [], m = new Array(n);
+  for (let i = 0; i < n - 1; i++) d.push((ys[i + 1] - ys[i]) / (xs[i + 1] - xs[i]));
+  m[0] = d[0]; m[n - 1] = d[n - 2];
+  for (let i = 1; i < n - 1; i++) m[i] = d[i - 1] * d[i] <= 0 ? 0 : (d[i - 1] + d[i]) / 2;
+  for (let i = 0; i < n - 1; i++) {
+    if (d[i] === 0) { m[i] = m[i + 1] = 0; continue; }
+    const a = m[i] / d[i], b = m[i + 1] / d[i], h = a * a + b * b;
+    if (h > 9) { const t = 3 / Math.sqrt(h); m[i] = t * a * d[i]; m[i + 1] = t * b * d[i]; }
+  }
+  return (x) => {
+    if (x <= xs[0]) return ys[0]; if (x >= xs[n - 1]) return ys[n - 1];
+    let i = 0; while (x > xs[i + 1]) i++;
+    const hh = xs[i + 1] - xs[i], t = (x - xs[i]) / hh, t2 = t * t, t3 = t2 * t;
+    return (2 * t3 - 3 * t2 + 1) * ys[i] + (t3 - 2 * t2 + t) * hh * m[i] + (-2 * t3 + 3 * t2) * ys[i + 1] + (t3 - t2) * hh * m[i + 1];
+  };
+}
 function _strHash(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return (h >>> 0).toString(36); }
 function _glslType(v, T) {
   if (typeof v === 'number') return 'float';
@@ -525,9 +609,11 @@ function _glslType(v, T) {
 /* ---------- the film pipeline ---------- */
 const _F = { ready: false };
 const FILM_DEFAULTS = {
+  /* clean and stylised by default: the lens effects are there to be reached for, one at a time,
+     where they help the read (a glow on a hot brake, a little bloom on a landing light) */
   samples: 12, shutter: 0.5, aperture: 0, focus: 20, exposure: 1,
-  bloom: 0.8, threshold: 1.2, knee: 0.6, bloomRadius: 1, bloomScatter: 0.7, halation: 0.04, streak: 0, streakTint: [0.55, 0.7, 1.0], streakThreshold: 3,
-  vignette: 0.35, aberration: 0.004, grain: 0.035, saturation: 1.0, contrast: 1.0, lift: [0, 0, 0], gamma: [1, 1, 1], gain: [1, 1, 1], toe: 0,
+  bloom: 0.12, threshold: 2.5, knee: 0.6, bloomRadius: 1, bloomScatter: 0.6, halation: 0, streak: 0, streakTint: [0.55, 0.7, 1.0], streakThreshold: 3,
+  vignette: 0.2, aberration: 0, grain: 0.01, saturation: 1.0, contrast: 1.0, lift: [0, 0, 0], gamma: [1, 1, 1], gain: [1, 1, 1], toe: 0,
   flare: 0, flareColor: [1, 0.6, 0.35], near: 0.25, far: 6000, jitter: 1,
 };
 

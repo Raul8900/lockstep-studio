@@ -44,6 +44,10 @@ Open the image and check, for every still:
 - Is every picture sharp at the size it is shown? A 640 px photo pushed in to fill 1920 px is mush:
   find a larger one.
 - At the first and last still of the scene: is the frame already (still) full and moving?
+- For a real object built in 3D (an aircraft, a car, a bridge): does its silhouette match the
+  reference drawings from the side, top and front (scene-api.md, Film worlds)? Hold the full-size
+  still next to a reference photo: nose, tail, wing and engine positions, proportions. Anything
+  shiny, wet or glowing that the story does not need comes out.
 
 Sample densely around cues — the frame 0.1 s before, on, and 0.3 s after each reveal — and at
 least every 1–2 seconds elsewhere. View small text at full size, not only on the sheet.
