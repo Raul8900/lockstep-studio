@@ -1,0 +1,12 @@
+# Fake mode: no real Claude, YouTube, engine or network. A separate compose project, so its
+# database volume and containers never mix with the real ones. Use: airtime/scripts/airtime --fake up
+# (which also reads .env.fake, whose AIRTIME_DATA_DIR is <data>/fake).
+name: airtime-fake
+
+services:
+  control:
+    environment: {AIRTIME_FAKE: "1"}
+  scout:
+    environment: {AIRTIME_FAKE: "1"}
+  youtube:
+    environment: {AIRTIME_FAKE: "1"}

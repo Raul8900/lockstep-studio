@@ -1,0 +1,328 @@
+#!/usr/bin/env bash
+# airtime — run Airtime on this machine.
+#
+#   airtime [--fake] <command> [args]
+#
+#   init [--dry-run] [--force] [--data-dir DIR]   write .env and .env.fake, create the data folder,
+#                                                 install the host services' systemd --user units
+#   up                     start the containers and the host services, wait until all are healthy
+#   down                   stop them (data is kept)
+#   status                 health of every service, Chrome, the YouTube session and the Claude accounts
+#   logs <service> [-f]    logs of one service
+#   chrome [--reseed|--dry-run]   start the Airtime Chrome (a copy of the Lockstep-Studio profile)
+#   calibrate              check every YouTube Studio selector; leaves only a private draft
+#   smoke                  the whole pipeline end to end in fake mode
+#   serve <brain|engine-bridge>   run one host service in the foreground (systemd uses this)
+#   dev <service>          run one service in the foreground for debugging
+#
+# --fake uses .env.fake and the separate `airtime-fake` compose project: no real Claude, YouTube,
+# engine or network. Real and fake stacks share ports, so only one runs at a time.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/.." && pwd)"
+export DOCKER_CONTEXT="${DOCKER_CONTEXT:-default}"
+HOST_SERVICES=(brain engine-bridge)
+COMPOSE_SERVICES=(postgres control web scout youtube)
+FAKE=0
+
+die() { echo "airtime: $*" >&2; exit 1; }
+info() { echo "› $*"; }
+
+env_file() { if ((FAKE)); then echo "$ROOT/.env.fake"; else echo "$ROOT/.env"; fi; }
+
+load_env() {
+  local file
+  file="$(env_file)"
+  [[ -f $file ]] || die "missing $file — run: airtime/scripts/airtime init"
+  set -a
+  # shellcheck disable=SC1090
+  source "$file"
+  set +a
+  export DOCKER_CONTEXT="${DOCKER_CONTEXT:-default}"
+}
+
+compose() {
+  local files=(-f "$ROOT/compose.yaml")
+  if ((FAKE)); then files+=(-f "$ROOT/compose.fake.yaml"); fi
+  docker compose --project-directory "$ROOT" "${files[@]}" --env-file "$(env_file)" "$@"
+}
+
+unit_name() { if ((FAKE)); then echo "airtime-fake-$1"; else echo "airtime-$1"; fi; }
+
+is_host_service() { local s; for s in "${HOST_SERVICES[@]}"; do [[ $s == "$1" ]] && return 0; done; return 1; }
+
+service_port() {
+  case $1 in
+    control) echo "${CONTROL_PORT:-8000}" ;;
+    brain) echo "${BRAIN_PORT:-8001}" ;;
+    scout) echo "${SCOUT_PORT:-8002}" ;;
+    youtube) echo "${YOUTUBE_PORT:-8003}" ;;
+    engine-bridge) echo "${ENGINE_BRIDGE_PORT:-8004}" ;;
+    web) echo "${WEB_PORT:-8080}" ;;
+    postgres) echo "${POSTGRES_PORT:-5433}" ;;
+    *) die "unknown service: $1" ;;
+  esac
+}
+
+healthy() {  # healthy <service> → 0 when it answers
+  local svc=$1 port
+  port="$(service_port "$svc")"
+  case $svc in
+    postgres) (exec 3<>"/dev/tcp/127.0.0.1/$port") 2>/dev/null ;;
+    web) curl -fsS -m 3 -o /dev/null "http://127.0.0.1:$port/" ;;
+    *) curl -fsS -m 3 -o /dev/null "http://127.0.0.1:$port/healthz" ;;
+  esac
+}
+
+host_entry() {  # the console script each host service's pyproject defines
+  case $1 in
+    brain) echo "airtime-brain" ;;
+    engine-bridge) echo "airtime-engine-bridge" ;;
+    *) die "not a host service: $1" ;;
+  esac
+}
+
+# ---------------------------------------------------------------------------------------- init
+
+write_env() {  # write_env <file> <fake 0|1> <data dir> <dry-run 0|1> <force 0|1>
+  local file=$1 fake=$2 data=$3 dry=$4 force=$5 engine_repo uv claude tz host_path dir
+  engine_repo="$(git -C "$ROOT" worktree list --porcelain | awk '/^worktree /{print $2; exit}')"
+  uv="$(command -v uv || true)"
+  claude="$(command -v claude || true)"
+  [[ -n $uv ]] || die "uv is not on PATH (https://docs.astral.sh/uv/)"
+  [[ -n $claude ]] || echo "warning: claude is not on PATH; brain and engine-bridge need it" >&2
+  tz="$(timedatectl show -p Timezone --value 2>/dev/null || cat /etc/timezone 2>/dev/null || echo Etc/UTC)"
+  # PATH for the host services: the current PATH, plus the folders of uv and claude, without duplicates.
+  host_path=""
+  for dir in "$(dirname "$uv")" ${claude:+"$(dirname "$claude")"} ${PATH//:/ }; do
+    [[ -d $dir && :$host_path: != *":$dir:"* ]] && host_path="${host_path:+$host_path:}$dir"
+  done
+  local content
+  content="$(cat <<ENV
+# Written by airtime/scripts/airtime init on $(date -u +%Y-%m-%dT%H:%M:%SZ). See .env.example.
+AIRTIME_ROOT=$ROOT
+AIRTIME_DATA_DIR=$data
+AIRTIME_CONFIG_DIR=$ROOT/config
+AIRTIME_UID=$(id -u)
+AIRTIME_GID=$(id -g)
+AIRTIME_FAKE=$fake
+TZ=$tz
+AIRTIME_MODEL=claude-opus-5-5
+AIRTIME_EFFORT=max
+AIRTIME_CLAUDE_BIN=${claude:-claude}
+AIRTIME_CLAUDE_CONFIG_DIRS=$HOME/.claude,$HOME/.claude-second
+AIRTIME_UV=$uv
+AIRTIME_HOST_PATH=$host_path
+CONTROL_PORT=8000
+BRAIN_PORT=8001
+SCOUT_PORT=8002
+YOUTUBE_PORT=8003
+ENGINE_BRIDGE_PORT=8004
+WEB_PORT=8080
+POSTGRES_PORT=5433
+POSTGRES_PASSWORD=airtime
+DATABASE_URL=postgresql+psycopg://airtime:airtime@127.0.0.1:5433/airtime
+CONTROL_URL=http://127.0.0.1:8000
+BRAIN_URL=http://127.0.0.1:8001
+SCOUT_URL=http://127.0.0.1:8002
+YOUTUBE_URL=http://127.0.0.1:8003
+ENGINE_URL=http://127.0.0.1:8004
+CHROME_PROFILE_NAME=Lockstep-Studio
+AIRTIME_CHROME_USER_DATA_DIR=$HOME/.config/airtime-chrome
+CHROME_CDP_PORT=9222
+CHROME_CDP_URL=http://127.0.0.1:9222
+ENGINE_REPO=$engine_repo
+ENGINE_REF=engine
+ENGINE_SOURCE=ref
+ENGINE_ENV_DIR=$engine_repo
+ENGINE_MAX_CONCURRENCY=1
+ENGINE_JOB_TIMEOUT_MIN=240
+DOCKER_CONTEXT=default
+ENV
+)"
+  if ((dry)); then
+    echo "── would write $file"; echo "$content"; return
+  fi
+  if [[ -f $file && $force -eq 0 ]]; then
+    info "$file exists; kept (use --force to rewrite it)"; return
+  fi
+  printf '%s\n' "$content" >"$file"
+  chmod 600 "$file"
+  info "wrote $file"
+}
+
+cmd_init() {
+  local dry=0 force=0 data="${XDG_DATA_HOME:-$HOME/.local/share}/airtime"
+  while (($#)); do
+    case $1 in
+      --dry-run) dry=1 ;;
+      --force) force=1 ;;
+      --data-dir) data="${2:?--data-dir needs a folder}"; shift ;;
+      *) die "init: unknown option $1" ;;
+    esac
+    shift
+  done
+  [[ $data == /* ]] || die "--data-dir must be absolute"
+  write_env "$ROOT/.env" 0 "$data" "$dry" "$force"
+  write_env "$ROOT/.env.fake" 1 "$data/fake" "$dry" "$force"
+  if ((dry)); then
+    bash "$ROOT/scripts/install-host-services.sh" --dry-run
+    return
+  fi
+  mkdir -p "$data"/{engine,artifacts,publish,youtube,brain,scout} "$data/fake"
+  bash "$ROOT/scripts/install-host-services.sh"
+  info "next: airtime/scripts/airtime up    (and airtime/scripts/airtime chrome for YouTube)"
+}
+
+# ------------------------------------------------------------------------------- up and down
+
+other_mode_running() {
+  local unit
+  if ((FAKE)); then unit="airtime-brain"; else unit="airtime-fake-brain"; fi
+  systemctl --user is-active --quiet "$unit" 2>/dev/null
+}
+
+start_host_service() {
+  local svc=$1 unit
+  unit="$(unit_name "$svc")"
+  if systemctl --user is-active --quiet "$unit" 2>/dev/null; then
+    info "$unit already running"; return
+  fi
+  if ((FAKE)); then
+    systemd-run --user --quiet --collect --unit="$unit" --property=Restart=on-failure \
+      --property=RestartSec=3 -- "$ROOT/scripts/airtime" --fake serve "$svc"
+  else
+    systemctl --user start "$unit" || die "could not start $unit — run: airtime/scripts/airtime init"
+  fi
+  info "started $unit"
+}
+
+stop_host_service() {
+  local unit
+  unit="$(unit_name "$1")"
+  systemctl --user stop "$unit" 2>/dev/null || true
+}
+
+wait_healthy() {
+  local deadline=$((SECONDS + ${1:-240})) svc pending
+  while :; do
+    pending=()
+    for svc in "${COMPOSE_SERVICES[@]}" "${HOST_SERVICES[@]}"; do healthy "$svc" || pending+=("$svc"); done
+    ((${#pending[@]} == 0)) && { info "all services healthy"; return 0; }
+    ((SECONDS >= deadline)) && { echo "still not healthy: ${pending[*]}" >&2; return 1; }
+    sleep 3
+  done
+}
+
+cmd_up() {
+  load_env
+  docker info >/dev/null 2>&1 || die "Docker Engine is not reachable (DOCKER_CONTEXT=$DOCKER_CONTEXT); is docker.service running?"
+  other_mode_running && die "the $( ((FAKE)) && echo real || echo fake ) stack is running; stop it first: airtime/scripts/airtime $( ((FAKE)) || echo '--fake ' )down"
+  mkdir -p "$AIRTIME_DATA_DIR"
+  info "containers: ${COMPOSE_SERVICES[*]}"
+  compose up -d --build --remove-orphans
+  local svc
+  for svc in "${HOST_SERVICES[@]}"; do start_host_service "$svc"; done
+  wait_healthy 300
+  echo "dashboard: http://127.0.0.1:${WEB_PORT:-8080}"
+}
+
+cmd_down() {
+  load_env
+  local svc
+  for svc in "${HOST_SERVICES[@]}"; do stop_host_service "$svc"; done
+  compose down --remove-orphans
+}
+
+# ------------------------------------------------------------------------------------ status
+
+cmd_status() {
+  load_env
+  local svc where
+  printf '%-14s %-7s %-6s %s\n' SERVICE WHERE PORT HEALTH
+  for svc in "${COMPOSE_SERVICES[@]}" "${HOST_SERVICES[@]}"; do
+    if is_host_service "$svc"; then where=host; else where=docker; fi
+    printf '%-14s %-7s %-6s %s\n' "$svc" "$where" "$(service_port "$svc")" "$(healthy "$svc" && echo ok || echo DOWN)"
+  done
+  local chrome
+  chrome="$(curl -fsS -m 3 "http://127.0.0.1:${CHROME_CDP_PORT:-9222}/json/version" 2>/dev/null | jq -r '.Browser // empty' 2>/dev/null || true)"
+  echo "chrome (CDP ${CHROME_CDP_PORT:-9222}): ${chrome:-not running — airtime/scripts/airtime chrome}"
+  if healthy youtube; then
+    curl -fsS -m 30 "http://127.0.0.1:$(service_port youtube)/v1/session" 2>/dev/null \
+      | jq -r '"youtube: logged_in=\(.youtube.logged_in) channel=\(.youtube.channel_name // "-")"' 2>/dev/null || echo "youtube: session unknown"
+  fi
+  if healthy brain; then
+    curl -fsS -m 30 "http://127.0.0.1:$(service_port brain)/v1/accounts" 2>/dev/null | jq -r '
+      "claude (\(.strategy)):", (.accounts[] | "  \(.id)  signed_in=\(.logged_in)  cooldown=\(.cooling_down_until // "-")  5h_tokens=\((.usage_5h.input_tokens // 0) + (.usage_5h.output_tokens // 0))  \(.config_dir)")' 2>/dev/null \
+      || echo "claude: accounts unknown"
+  fi
+}
+
+cmd_logs() {
+  load_env
+  local svc=${1:?logs needs a service}; shift
+  if is_host_service "$svc"; then
+    journalctl --user -u "$(unit_name "$svc")" -n 200 --no-pager "$@"
+  else
+    compose logs --tail=200 "$@" "$svc"
+  fi
+}
+
+# ------------------------------------------------------------------------- serve, dev, others
+
+cmd_serve() {
+  load_env
+  local svc=${1:?serve needs brain or engine-bridge}
+  is_host_service "$svc" || die "serve runs a host service (brain or engine-bridge); containers run with: airtime up"
+  export PATH="${AIRTIME_HOST_PATH:-$PATH}" AIRTIME_HOST=127.0.0.1
+  # Never let a parent Claude session or an API key leak into the services (addendum A).
+  unset ANTHROPIC_API_KEY ANTHROPIC_AUTH_TOKEN ANTHROPIC_BASE_URL CLAUDECODE CLAUDE_CONFIG_DIR
+  local var
+  while read -r var; do unset "$var"; done < <(compgen -e | grep -E '^(CLAUDE_CODE_|CLAUDE_AGENT_)' || true)
+  cd "$ROOT/services/$svc"
+  exec "${AIRTIME_UV:-uv}" run --project "$ROOT/services/$svc" --frozen "$(host_entry "$svc")"
+}
+
+cmd_dev() {
+  local svc=${1:?dev needs a service}
+  if is_host_service "$svc"; then cmd_serve "$svc"; else load_env; compose up --build "$svc"; fi
+}
+
+cmd_chrome() {
+  load_env
+  exec bash "$ROOT/services/youtube/scripts/chrome-airtime.sh" "$@"
+}
+
+cmd_calibrate() {
+  load_env
+  healthy youtube || die "youtube is not running: airtime/scripts/airtime up"
+  curl -fsS -m 900 -X POST "http://127.0.0.1:$(service_port youtube)/v1/calibrate" | jq .
+}
+
+main() {
+  while [[ ${1:-} == --* ]]; do
+    case $1 in
+      --fake) FAKE=1 ;;
+      --help) sed -n '2,22p' "${BASH_SOURCE[0]}"; exit 0 ;;
+      *) die "unknown option $1" ;;
+    esac
+    shift
+  done
+  local cmd=${1:-help}; shift || true
+  case $cmd in
+    init) cmd_init "$@" ;;
+    up) cmd_up ;;
+    down) cmd_down ;;
+    status) cmd_status ;;
+    logs) cmd_logs "$@" ;;
+    serve) cmd_serve "$@" ;;
+    dev) cmd_dev "$@" ;;
+    chrome) cmd_chrome "$@" ;;
+    calibrate) cmd_calibrate ;;
+    smoke) exec bash "$ROOT/scripts/smoke.sh" "$@" ;;
+    help|-h) sed -n '2,22p' "${BASH_SOURCE[0]}" ;;
+    *) die "unknown command: $cmd (airtime help)" ;;
+  esac
+}
+
+main "$@"

@@ -1,0 +1,96 @@
+# Airtime's containers. brain and engine-bridge are NOT here: they run on the host because they
+# drive the host's Claude Code CLI (see docs/PLAN.md, addendum A). Every service uses the host
+# network and binds 127.0.0.1 only, so containers, host services and Chrome meet on loopback.
+#
+# Use the CLI rather than calling compose directly:  airtime/scripts/airtime up
+# (it passes --env-file .env, sets DOCKER_CONTEXT=default and starts the host services).
+name: airtime
+
+x-service: &service
+  network_mode: host
+  restart: unless-stopped
+  user: "${AIRTIME_UID:-1000}:${AIRTIME_GID:-1000}"
+  volumes:
+    - ${AIRTIME_DATA_DIR:?run airtime init}:${AIRTIME_DATA_DIR}
+    - ./config:/config:ro
+  logging:
+    driver: json-file
+    options: {max-size: "10m", max-file: "3"}
+
+x-env: &env
+  AIRTIME_DATA_DIR: ${AIRTIME_DATA_DIR}
+  AIRTIME_CONFIG_DIR: /config
+  AIRTIME_FAKE: ${AIRTIME_FAKE:-0}
+  AIRTIME_HOST: 127.0.0.1
+  TZ: ${TZ:-Etc/UTC}
+
+x-build-args: &build-args
+  AIRTIME_UID: ${AIRTIME_UID:-1000}
+  AIRTIME_GID: ${AIRTIME_GID:-1000}
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: airtime
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-airtime}
+      POSTGRES_DB: airtime
+      PGPORT: ${POSTGRES_PORT:-5433}          # 5432 belongs to a local Postgres on this machine
+    command: ["postgres", "-c", "listen_addresses=127.0.0.1"]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -p ${POSTGRES_PORT:-5433} -U airtime -d airtime"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  control:
+    <<: *service
+    build: {context: ./services/control, args: *build-args}
+    image: airtime/control:local
+    depends_on:
+      postgres: {condition: service_healthy}
+    environment:
+      <<: *env
+      CONTROL_PORT: ${CONTROL_PORT:-8000}
+      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://airtime:airtime@127.0.0.1:5433/airtime}
+      BRAIN_URL: ${BRAIN_URL:-http://127.0.0.1:8001}
+      SCOUT_URL: ${SCOUT_URL:-http://127.0.0.1:8002}
+      YOUTUBE_URL: ${YOUTUBE_URL:-http://127.0.0.1:8003}
+      ENGINE_URL: ${ENGINE_URL:-http://127.0.0.1:8004}
+
+  web:                                       # no data mount; the image runs nginx as its own non-root user
+    network_mode: host
+    restart: unless-stopped
+    logging: {driver: json-file, options: {max-size: "10m", max-file: "3"}}
+    build: {context: ./services/web}
+    image: airtime/web:local
+    depends_on: [control]
+    environment:
+      WEB_PORT: ${WEB_PORT:-8080}
+      CONTROL_URL: ${CONTROL_URL:-http://127.0.0.1:8000}
+
+  scout:
+    <<: *service
+    build: {context: ./services/scout, args: *build-args}
+    image: airtime/scout:local
+    environment:
+      <<: *env
+      SCOUT_PORT: ${SCOUT_PORT:-8002}
+      YOUTUBE_URL: ${YOUTUBE_URL:-http://127.0.0.1:8003}
+
+  youtube:
+    <<: *service
+    build: {context: ./services/youtube, args: *build-args}
+    image: airtime/youtube:local
+    shm_size: 256m
+    environment:
+      <<: *env
+      YOUTUBE_PORT: ${YOUTUBE_PORT:-8003}
+      CHROME_CDP_URL: ${CHROME_CDP_URL:-http://127.0.0.1:9222}
+
+volumes:
+  pgdata: {}
