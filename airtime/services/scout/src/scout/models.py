@@ -1,14 +1,14 @@
-"""Contract G (scout) and the parts of contract H (youtube search) scout reads, as pydantic models.
+"""Contract G (scout) and the part of contract H (youtube search) scout reads, as pydantic models.
 
 The canonical JSON Schemas are airtime/contracts/scout.schema.json and youtube.schema.json. Scout
 adds a few optional fields the schemas allow: `detail` on an item, `sources` on a pack, and
-`errors` on a pack and on a probe ({source, key, code, message}).
+`errors` on a probe; pack and probe errors are objects {source, key, code, message}.
 """
 
 from datetime import date, datetime
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_serializer
 
 
 class Metric(BaseModel):
@@ -22,7 +22,7 @@ class SignalItem(BaseModel):
     url: str | None = None
     language: str | None = None
     rank: int
-    metric: Metric
+    metric: Metric | None = None
     first_seen: datetime
     category: str | None = None
     detail: str | None = None  # one line of context, e.g. the headline a trend comes from
@@ -59,12 +59,6 @@ class SignalsResponse(BaseModel):
     packs: list[SignalPack]
 
 
-def normalize_language(value: str) -> str:
-    """'PT-br' -> 'pt-BR': the language in lower case, a region in upper case."""
-    base, _, region = value.strip().partition("-")
-    return f"{base.lower()}-{region.upper()}" if region else base.lower()
-
-
 class ProbeQuery(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
 
@@ -79,12 +73,12 @@ class ProbeQuery(BaseModel):
 
     @field_validator("language")
     @classmethod
-    def _language_case(cls, value: str | None) -> str | None:
-        return normalize_language(value) if value else None
+    def _language_lower(cls, value: str | None) -> str | None:
+        return value.lower() if value else None
 
 
 class ProbeRequest(BaseModel):
-    queries: list[ProbeQuery] = Field(min_length=1)
+    queries: list[ProbeQuery] = Field(min_length=1, max_length=50)
     max_results: int = Field(default=20, ge=1, le=100)
 
 
@@ -103,10 +97,26 @@ class VideoResult(BaseModel):
 class ProbeStats(BaseModel):
     model_config = ConfigDict(extra="ignore")
 
-    result_count: int = 0
+    result_count: int | None = None  # left out of the JSON when unknown (the schema has no null)
     median_views: int | float | None = None
     recent_breakouts: int | None = None
     shorts_share: float | None = None
+
+    @model_serializer(mode="wrap")
+    def _drop_unknown_count(self, handler):
+        data = handler(self)
+        if data.get("result_count") is None:
+            data.pop("result_count", None)
+        return data
+
+
+class SearchResponse(BaseModel):
+    """What the youtube service's POST /v1/search returns: the results and stats of a probe."""
+
+    model_config = ConfigDict(extra="ignore")
+
+    results: list[VideoResult] = Field(default_factory=list)
+    stats: ProbeStats | None = None
 
 
 class TopicProbe(BaseModel):
@@ -133,10 +143,7 @@ class SourceKeyHealth(BaseModel):
     consecutive_failures: int = 0
     item_count: int | None = None
     latency_ms: int | None = None
-    error_code: str | None = None
     error: str | None = None
-    cached_at: datetime | None = None
-    expires_at: datetime | None = None
 
 
 class SourceHealth(BaseModel):
@@ -145,12 +152,10 @@ class SourceHealth(BaseModel):
     kind: Literal["signal", "probe"]
     endpoint: str
     ttl_s: int
-    min_interval_s: float | None = None
     status: Literal["ok", "degraded", "down", "unknown"]
     last_attempt_at: datetime | None = None
     last_success_at: datetime | None = None
     last_error: str | None = None
-    consecutive_failures: int = 0
     keys: list[SourceKeyHealth] = Field(default_factory=list)
 
 

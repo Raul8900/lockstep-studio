@@ -10,15 +10,16 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 DEFAULT_USER_AGENT = "Airtime/0.1 (self-hosted trend research)"
 
 # Prefixes typed into YouTube's search box per language. Their completions are what people in a
-# market are searching for right now; the "how does … work" family surfaces explainer demand.
+# market search for right now (Google also matches the seed inside a query, so a Hindi or Japanese
+# "how does it work" seed brings back "<thing> कैसे काम करता है" and "<thing> 仕組み 解説").
 DEFAULT_SEEDS: dict[str, list[str]] = {
     "en": ["how does", "what happened to", "why is"],
-    "hi": ["कैसे काम करता है", "कैसे बनता है", "क्यों होता है"],
+    "hi": ["कैसे काम करता है", "क्यों होता है", "कैसे बनता है"],
     "de": ["wie funktioniert", "warum ist", "was passiert"],
     "fr": ["comment fonctionne", "pourquoi", "c'est quoi"],
     "pt": ["como funciona", "por que", "o que é"],
     "es": ["cómo funciona", "por qué", "qué es"],
-    "ja": ["仕組み 解説", "仕組み", "なぜ"],
+    "ja": ["仕組み 解説", "なぜ", "どうなる"],
 }
 
 
@@ -35,17 +36,20 @@ class Settings(BaseSettings):
     config_dir: Path = Field(default=Path("/config"), validation_alias="AIRTIME_CONFIG_DIR")
     fake: bool = Field(default=False, validation_alias="AIRTIME_FAKE")
     youtube_url: str = Field(default="http://127.0.0.1:8003", validation_alias="YOUTUBE_URL")
-    host: str = Field(default="127.0.0.1", validation_alias=AliasChoices("SCOUT_HOST", "AIRTIME_HOST"))
+    host: str = Field(
+        default="127.0.0.1", validation_alias=AliasChoices("SCOUT_HOST", "AIRTIME_HOST")
+    )
 
     # Scout's own (SCOUT_*).
     port: int = 8002
     user_agent: str = DEFAULT_USER_AGENT
-    http_timeout_s: float = 15.0
+    http_timeout_s: float = Field(default=15.0, gt=0)
     http_retries: int = Field(default=2, ge=0, le=5)
     default_max_age_h: float = Field(default=24.0, gt=0)
     items_per_source: int = Field(default=20, ge=1, le=200)
+    # A key (one source for one market or language) is never fetched more often than this, even
+    # when a caller asks for fresher data or the last attempt failed.
     min_refetch_s: int = Field(default=300, ge=0)
-    refresh_interval_min: int = Field(default=0, ge=0)
     retention_days: int = Field(default=30, ge=1)
 
     ttl_google_trends_s: int = Field(default=3600, ge=60)
@@ -56,12 +60,9 @@ class Settings(BaseSettings):
     ttl_youtube_search_s: int = Field(default=43200, ge=0)
 
     wikimedia_max_lag_days: int = Field(default=3, ge=1, le=14)
-    hn_max_items: int = Field(default=30, ge=1, le=100)
     autocomplete_seeds: dict[str, list[str]] = Field(default_factory=dict)
 
     youtube_timeout_s: float = Field(default=90.0, gt=0)
-    youtube_concurrency: int = Field(default=1, ge=1, le=8)
-    probe_max_queries: int = Field(default=50, ge=1, le=500)
     breakout_max_age_days: float = Field(default=30.0, gt=0)
     breakout_min_views: int = Field(default=50_000, ge=0)
 
@@ -74,7 +75,7 @@ class Settings(BaseSettings):
         return self.config_dir / "markets.yaml"
 
     def seeds_for(self, language: str) -> list[str]:
-        """Seeds for a language: SCOUT_AUTOCOMPLETE_SEEDS overrides the defaults per language."""
+        """Seeds for a language: SCOUT_AUTOCOMPLETE_SEEDS (JSON) overrides the defaults."""
         if language in self.autocomplete_seeds:
             return list(self.autocomplete_seeds[language])
-        return list(DEFAULT_SEEDS.get(language, []))
+        return list(DEFAULT_SEEDS.get(language, DEFAULT_SEEDS["en"]))
