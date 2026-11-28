@@ -1,0 +1,212 @@
+@import 'tailwindcss';
+
+/* Dark mode follows the `dark` class that theme-init.js / lib/theme.ts put on <html>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Colour roles. Components use these tokens only (bg-surface, text-fg-2, border-line, …), so the
+ * two themes are a swap of variables. Series and status steps come from the validated reference
+ * palette of the dataviz method (categorical slots in fixed order, status reserved for state).
+ */
+:root {
+  color-scheme: light;
+  --page: #f6f6f7;
+  --surface: #ffffff;
+  --surface-2: #f4f4f6;
+  --surface-3: #ebebef;
+  --line: #e5e5ea;
+  --line-strong: #d0d0d7;
+  --fg: #18181b;
+  --fg-2: #5b5b66;
+  --fg-3: #8c8c96;
+
+  --accent: #2370cd;
+  --accent-hover: #1b64be;
+  --accent-soft: rgb(35 112 205 / 0.1);
+  --accent-ink: #1b64be;
+  --on-accent: #ffffff;
+
+  --good: #0aac23;
+  --good-ink: #006c10;
+  --good-soft: rgb(10 172 35 / 0.1);
+  --warn: #fbb315;
+  --warn-ink: #8a5300;
+  --warn-soft: rgb(251 179 21 / 0.16);
+  --serious: #f18a59;
+  --serious-ink: #a3431b;
+  --serious-soft: rgb(241 138 89 / 0.14);
+  --bad: #dc3c3d;
+  --bad-ink: #b42324;
+  --bad-soft: rgb(220 60 61 / 0.1);
+
+  --grid: #ececef;
+  --axis: #c2c2c8;
+  --deemph: #b9b9c2;
+  --series-1: #257de0;
+  --series-2: #f47230;
+  --series-3: #00b894;
+  --series-4: #f2a600;
+  --series-5: #ee7fac;
+  --series-6: #008a17;
+  --series-7: #6a4ce2;
+  --series-8: #ec4647;
+  --seq-100: #cce3fd;
+  --seq-250: #84b9f3;
+  --seq-450: #257de0;
+  --seq-600: #1757ac;
+  --band-a: rgb(35 112 205 / 0.05);
+  --band-b: rgb(35 112 205 / 0.11);
+}
+
+.dark {
+  color-scheme: dark;
+  --page: #0e0f11;
+  --surface: #17181b;
+  --surface-2: #1e1f23;
+  --surface-3: #27282d;
+  --line: #2a2b31;
+  --line-strong: #3b3c44;
+  --fg: #ececef;
+  --fg-2: #a3a3ad;
+  --fg-3: #6f6f7a;
+
+  --accent: #338ced;
+  --accent-hover: #519ced;
+  --accent-soft: rgb(51 140 237 / 0.16);
+  --accent-ink: #6aabf1;
+  --on-accent: #ffffff;
+
+  --good: #0aac23;
+  --good-ink: #53c556;
+  --good-soft: rgb(10 172 35 / 0.16);
+  --warn: #fbb315;
+  --warn-ink: #f4c45a;
+  --warn-soft: rgb(251 179 21 / 0.14);
+  --serious: #f18a59;
+  --serious-ink: #f5a47e;
+  --serious-soft: rgb(241 138 89 / 0.16);
+  --bad: #dc3c3d;
+  --bad-ink: #f07172;
+  --bad-soft: rgb(220 60 61 / 0.18);
+
+  --grid: #2a2b30;
+  --axis: #47474e;
+  --deemph: #55555e;
+  --series-1: #338ced;
+  --series-2: #e76624;
+  --series-3: #00a888;
+  --series-4: #d28e05;
+  --series-5: #e24d8b;
+  --series-6: #0aac23;
+  --series-7: #9887ef;
+  --series-8: #eb6263;
+  --seq-100: #0e3d7e;
+  --seq-250: #1757ac;
+  --seq-450: #338ced;
+  --seq-600: #84b9f3;
+  --band-a: rgb(51 140 237 / 0.06);
+  --band-b: rgb(51 140 237 / 0.14);
+}
+
+@theme inline {
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-fg-3: var(--fg-3);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-ink: var(--accent-ink);
+  --color-on-accent: var(--on-accent);
+  --color-good: var(--good);
+  --color-good-ink: var(--good-ink);
+  --color-good-soft: var(--good-soft);
+  --color-warn: var(--warn);
+  --color-warn-ink: var(--warn-ink);
+  --color-warn-soft: var(--warn-soft);
+  --color-serious: var(--serious);
+  --color-serious-ink: var(--serious-ink);
+  --color-serious-soft: var(--serious-soft);
+  --color-bad: var(--bad);
+  --color-bad-ink: var(--bad-ink);
+  --color-bad-soft: var(--bad-soft);
+  --color-series-1: var(--series-1);
+  --color-series-2: var(--series-2);
+  --color-series-3: var(--series-3);
+  --color-deemph: var(--deemph);
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--line);
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  body {
+    background: var(--page);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: var(--accent-soft);
+  }
+  input,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+  summary {
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Recharts: keep its focus outline off the whole svg; marks carry their own hover state. */
+.recharts-wrapper:focus,
+.recharts-surface:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
