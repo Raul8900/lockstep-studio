@@ -1,0 +1,25 @@
+# How control scores a finished cut. The critic (brain) scores every dimension except `technical`,
+# which control computes from the handoff's QA. Total = Σ weight × score / 100 (0–100).
+threshold: 90          # a cut with a total ≥ threshold and no failed hard gate passes
+max_rounds: 2          # revision rounds after the first cut (so at most 3 cuts)
+
+dimensions:
+  - {id: hook,      weight: 15, what: "The first 1–2 seconds stop the scroll: a clear question, surprise or stake, said and shown at once"}
+  - {id: retention, weight: 15, what: "Every beat earns the next; no slack; a payoff that lands; loops cleanly into a rewatch"}
+  - {id: visuals,   weight: 15, what: "Every shot shows what the line says; motion never stops; real footage is used as evidence and given time"}
+  - {id: demand,    weight: 15, what: "Real, current search and browse demand in the target markets for this topic and angle"}
+  - {id: packaging, weight: 10, what: "Title, thumbnail frame and first frame promise the same thing, honestly, and make people want it"}
+  - {id: seo,       weight: 10, what: "Title, description, tags, hashtags and captions use the words viewers actually search, per market and language"}
+  - {id: accuracy,  weight: 10, what: "Every claim is true and sourced; numbers, names and dates are right"}
+  - {id: technical, weight: 5,  deterministic: true, what: "Engine QA: loudness, sync, transcription errors, frozen or black frames, decode errors, lint"}
+  - {id: policy,    weight: 5,  what: "Safe for advertisers and YouTube policy: licences credited, no misleading claims, not made for kids, honest altered-content flag"}
+
+hard_gates:            # a failed gate caps the total at threshold − 1, whatever the other scores
+  - {dimension: technical, min: 60}
+  - {dimension: accuracy,  min: 70}
+  - {dimension: policy,    min: 70}
+
+calibration:           # re-fit the weights against real results
+  min_videos: 8        # videos with analytics before any weight moves
+  max_weight_change: 0.5   # a weight stays within ±50 % of its default
+  window_days: 60
