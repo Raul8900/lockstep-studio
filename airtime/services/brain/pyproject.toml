@@ -1,0 +1,39 @@
+[project]
+name = "airtime-brain"
+version = "0.1.0"
+description = "Airtime brain: every AI call through the host's Claude Code CLI, and the Claude account pool"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn>=0.30",
+    "pydantic>=2.7",
+    "pydantic-settings>=2.3",
+    "pyyaml>=6.0",
+    "jsonschema>=4.22",
+    "pillow>=10.4",
+]
+
+[project.scripts]
+airtime-brain = "brain.app:main"
+
+[dependency-groups]
+dev = ["pytest>=8.2", "httpx>=0.27", "ruff>=0.6"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/brain"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
