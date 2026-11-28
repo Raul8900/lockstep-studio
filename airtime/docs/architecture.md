@@ -32,7 +32,7 @@ scout/cache.db                           cached signals
 ## Why brain and engine-bridge run on the host
 
 Claude Code runs on your subscription through the config folders you are signed in with
-(`~/.claude`, `~/.claude-second`). Putting it in a container would mean copying credentials into
+(`~/.claude`, `~/.claude-second`, `~/.claude-third`, any `~/.claude*`). Putting it in a container would mean copying credentials into
 images; running it on the host uses exactly what T3 uses. The engine also needs the host's tool
 chain (Python venv, Node, Playwright, ffmpeg, the voice model), which `bin/lockstep setup` already
 installed in your checkout; engine-bridge links those into each job worktree.

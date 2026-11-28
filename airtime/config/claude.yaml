@@ -1,13 +1,25 @@
-# The Claude Code accounts on this machine, used like T3 uses them: brain picks one per run and
-# fails over when one hits a usage limit or is signed out. Claude always runs on the host.
+# The Claude Code accounts on this machine, used like T3 uses them: brain finds every config folder
+# (~/.claude, ~/.claude-second, ~/.claude-third, …), checks which are signed in, picks one per run
+# and fails over when one hits a usage limit or is signed out. Claude always runs on the host.
 strategy: least_used          # least_used | ordered
 cooldown_default_min: 60      # when a limit message has no parsable reset time
 status_ttl_s: 300             # how long a `claude auth status` result is trusted
 
+# Every folder matching these patterns that holds a Claude Code login (.credentials.json or
+# .claude.json) is an account too. Discovery runs again at every status refresh, so an account
+# signed in later (`CLAUDE_CONFIG_DIR=~/.claude-fourth claude auth login`) is used without a restart.
+# A discovered account's id is its folder name without ".claude-" (`~/.claude` is `main`).
+discover: ["~/.claude", "~/.claude-*"]
+
+# Explicit entries override a discovered folder with the same path: use them to disable an account
+# or to fix the order for `strategy: ordered` (explicit entries first, then discovered ones by name).
 accounts:
   - id: main
     config_dir: ~/.claude     # the default directory: CLAUDE_CONFIG_DIR is left unset for it
     enabled: true
   - id: second
     config_dir: ~/.claude-second
+    enabled: true
+  - id: third
+    config_dir: ~/.claude-third
     enabled: true

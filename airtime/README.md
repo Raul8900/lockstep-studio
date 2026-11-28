@@ -22,7 +22,7 @@ public sources.
    free trends     claude -p   claude -p + the
                    8 roles     explainer-video skill
                      │              │
-                     └── your Claude accounts (~/.claude, ~/.claude-second), picked per run
+                     └── every signed-in ~/.claude* account, picked per run
 ```
 
 - **Containers** (Docker Compose, host network): postgres, control, web, scout, youtube.

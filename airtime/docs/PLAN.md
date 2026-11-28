@@ -75,7 +75,17 @@ accounts:
   - `POST /v1/accounts/{id}/refresh` → re-runs the status check now
 - engine-bridge leases an account from brain for every engine session and releases it with the
   outcome and usage. If brain is unreachable it falls back to `AIRTIME_CLAUDE_CONFIG_DIRS`
-  (comma-separated, in order) with the same limit detection.
+  (comma-separated, in order; empty means every `~/.claude*` folder) with the same limit detection.
+
+### B2. Accounts are discovered (update, 2026-11-28 evening)
+
+The accounts change: `~/.claude` and `~/.claude-second` are now signed out and `~/.claude-third` is
+signed in. So the pool is dynamic: `config/claude.yaml` has `discover: ["~/.claude", "~/.claude-*"]`,
+and every matching folder that holds `.credentials.json` or `.claude.json` is an account (id = the
+folder name without `.claude-`; `~/.claude` is `main`), found again at every status refresh, so an
+account signed in later is used without a restart. Explicit `accounts` entries override a discovered
+folder with the same resolved path (to disable it or fix its order); `GET /v1/accounts` marks
+`discovered: true|false`. The pool must work with any subset signed in, including exactly one.
 
 ### C. The engine under test is the `engine` branch
 

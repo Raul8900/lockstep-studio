@@ -6,50 +6,189 @@
   "$defs": {
     "tally": {
       "type": "object",
-      "properties": {"input_tokens": {"type": "integer"}, "output_tokens": {"type": "integer"}, "runs": {"type": "integer"}}
+      "properties": {
+        "input_tokens": {
+          "type": "integer"
+        },
+        "output_tokens": {
+          "type": "integer"
+        },
+        "runs": {
+          "type": "integer"
+        }
+      }
     },
     "account": {
-      "type": "object", "required": ["id", "config_dir", "enabled", "logged_in"],
+      "type": "object",
+      "required": [
+        "id",
+        "config_dir",
+        "enabled",
+        "logged_in"
+      ],
       "properties": {
-        "id": {"type": "string"},
-        "config_dir": {"type": "string"},
-        "enabled": {"type": "boolean"},
-        "logged_in": {"type": ["boolean", "null"]},
-        "subscription_type": {"type": ["string", "null"]},
-        "org_name": {"type": ["string", "null"]},
-        "cooling_down_until": {"type": ["string", "null"]},
-        "last_error": {"type": ["string", "null"]},
-        "last_used_at": {"type": ["string", "null"]},
-        "usage_5h": {"$ref": "#/$defs/tally"},
-        "usage_7d": {"$ref": "#/$defs/tally"}
+        "id": {
+          "type": "string"
+        },
+        "config_dir": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "logged_in": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "subscription_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "org_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cooling_down_until": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "last_error": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "last_used_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "usage_5h": {
+          "$ref": "#/$defs/tally"
+        },
+        "usage_7d": {
+          "$ref": "#/$defs/tally"
+        },
+        "discovered": {
+          "type": "boolean",
+          "description": "true when the account came from a `discover` pattern rather than an explicit entry"
+        }
       },
-      "not": {"required": ["email"]}
+      "not": {
+        "required": [
+          "email"
+        ]
+      }
     },
     "accounts": {
-      "type": "object", "required": ["strategy", "accounts"],
-      "properties": {"strategy": {"enum": ["least_used", "ordered"]}, "accounts": {"type": "array", "items": {"$ref": "#/$defs/account"}}}
+      "type": "object",
+      "required": [
+        "strategy",
+        "accounts"
+      ],
+      "properties": {
+        "strategy": {
+          "enum": [
+            "least_used",
+            "ordered"
+          ]
+        },
+        "accounts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/account"
+          }
+        }
+      }
     },
     "lease_request": {
-      "type": "object", "required": ["purpose"],
-      "properties": {"purpose": {"type": "string"}, "exclude": {"type": "array", "items": {"type": "string"}}}
+      "type": "object",
+      "required": [
+        "purpose"
+      ],
+      "properties": {
+        "purpose": {
+          "type": "string"
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
     },
     "lease": {
-      "type": "object", "required": ["lease_id", "account_id", "config_dir", "set_env", "unset_env"],
+      "type": "object",
+      "required": [
+        "lease_id",
+        "account_id",
+        "config_dir",
+        "set_env",
+        "unset_env"
+      ],
       "properties": {
-        "lease_id": {"type": "string"},
-        "account_id": {"type": "string"},
-        "config_dir": {"type": "string"},
-        "set_env": {"type": "object", "additionalProperties": {"type": "string"}},
-        "unset_env": {"type": "array", "items": {"type": "string"}}
+        "lease_id": {
+          "type": "string"
+        },
+        "account_id": {
+          "type": "string"
+        },
+        "config_dir": {
+          "type": "string"
+        },
+        "set_env": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "unset_env": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     },
     "release_request": {
-      "type": "object", "required": ["outcome"],
+      "type": "object",
+      "required": [
+        "outcome"
+      ],
       "properties": {
-        "outcome": {"enum": ["ok", "rate_limited", "auth_failed", "error"]},
-        "resets_at": {"type": ["string", "null"]},
-        "message": {"type": ["string", "null"]},
-        "usage": {"$ref": "common.schema.json#/$defs/usage"}
+        "outcome": {
+          "enum": [
+            "ok",
+            "rate_limited",
+            "auth_failed",
+            "error"
+          ]
+        },
+        "resets_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "message": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "usage": {
+          "$ref": "common.schema.json#/$defs/usage"
+        }
       }
     }
   },

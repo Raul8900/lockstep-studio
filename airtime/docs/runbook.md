@@ -8,8 +8,9 @@ make an alias). Everything binds 127.0.0.1.
 1. **Docker.** Airtime uses the native Docker Engine (`systemctl status docker`), not Docker
    Desktop. The CLI sets `DOCKER_CONTEXT=default` for you.
 2. **Claude.** Sign in to at least one account on this machine: `claude` in a terminal for
-   `~/.claude`, or `CLAUDE_CONFIG_DIR=~/.claude-second claude` for the second one. Accounts are
-   listed in `config/claude.yaml`; add or disable accounts there.
+   `~/.claude`, or `CLAUDE_CONFIG_DIR=~/.claude-third claude` for another folder. brain finds every
+   `~/.claude*` folder by itself (`discover` in `config/claude.yaml`) and uses the signed-in ones;
+   disable or order accounts there.
 3. **Set up.** `airtime init` writes `airtime/.env` and `.env.fake` (absolute paths for this
    machine), creates `~/.local/share/airtime`, and installs the systemd `--user` units for brain
    and engine-bridge. `airtime init --dry-run` shows what it would write.
